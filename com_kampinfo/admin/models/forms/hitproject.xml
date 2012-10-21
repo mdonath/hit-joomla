@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field	name="id"
+				type="hidden"
+		/>
+		<field	name="jaar"
+				type="text"
+				label="COM_KAMPINFO_HITPROJECT_JAAR_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_JAAR_DESC"
+				size="4"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inschrijvingStartdatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inschrijvingEinddatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_EIND_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_EIND_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inschrijvingWijzigenTotDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_WIJZIGENTOT_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_WIJZIGENTOT_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inschrijvingKosteloosAnnulerenDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_KOSTELOOSANNULEREN_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_KOSTELOOSANNULEREN_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inschrijvingGeenRestitutieDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_GEENRESTITUTIE_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_GEENRESTITUTIE_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="inningsdatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INNINGSDATUM_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INNINGSDATUM_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+	</fieldset>
+</form>

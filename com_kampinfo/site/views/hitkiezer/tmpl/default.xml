@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_KAMPINFO_HITKIEZER_VIEW_DEFAULT_TITLE">
+		<message>COM_KAMPINFO_HITKIEZER_VIEW_DEFAULT_DESC</message>
+	</layout>
+	<fields 
+			name="request"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<fieldset
+				name="request"
+		>
+			<field
+					name="jaar"
+					type="Project"
+					label="COM_KAMPINFO_HITKIEZER_FIELD_JAAR_LABEL"
+					description="COM_KAMPINFO_HITKIEZER_FIELD_JAAR_DESC"
+			/>
+		</fieldset>
+	</fields>
+</metadata>

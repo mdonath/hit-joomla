@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset
+			name="hitsite"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="id"
+				type="hidden"
+		/>
+		<field
+				name="jaar"
+				type="Project"
+				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
+				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
+				class="inputbox"
+				required="true"
+		/>
+		<field
+				name="naam"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_NAAM_LABEL"
+				description="COM_KAMPINFO_HITSITE_NAAM_DESC"
+				size="50"
+				class="inputbox"
+				required="true"
+				default=""
+		/>
+		<field
+				name="code"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CODE_LABEL"
+				description="COM_KAMPINFO_HITSITE_CODE_DESC"
+				size="20"
+				class="inputbox"
+				required="true"
+				default=""
+		/>
+		<field
+				name="deelnemersnummer"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_LABEL"
+				description="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_DESC"
+				size="50"
+				class="inputbox"
+				default=""
+		/>
+	
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+	
+		<field
+				name="hitCourantTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
+				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
+		<field
+				name="contactPersoonNaam"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
+				size="50"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="contactPersoonEmail"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
+				size="50"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="contactPersoonTelefoon"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
+				size="50"
+				class="inputbox"
+				default=""
+		/>
+	</fieldset>
+
+</form>

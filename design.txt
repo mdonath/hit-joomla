@@ -1,0 +1,27 @@
+Wat is er nu?
+=============
+
+* Een overzicht van alle kampen per plaats:
+
+	foreach (plaats : plaatsen) {
+		Plaats.naam
+		foreach (kamp : plaats.kampen) {
+			Kamp.naam | kamp.leeftijd | kamp.groep | kamp.iconen
+		}
+	}
+
+* Een vol indicator per kamponderdeel [in artikel]
+
+* De HIT kiezer die interactief op basis van keuze van gebruiker de meest
+  geschikte activiteit laat zien.
+
+Wat wil ik?
+===========
+
+Een Joomla component om van het javascript af te zijn. In elk geval bij het plaatsen
+van de functionaliteit op de site, bijvoorbeeld dmv een plugin.
+
+Een datamodel voor meerdere jaren.
+
+
+	
