@@ -32,8 +32,8 @@ $project = $this->project;
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
-			<td class="kolom2">8-88</td>
-			<td class="kolom3">1-10</td>
+			<td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>-<?php echo($kamp->maximumLeeftijd); ?></td>
+			<td class="kolom3"><?php echo($kamp->groep); ?></td>
 			<td class="kolom4">
 				<img src="https://hit.scouting.nl/images/iconen25pix/vol.gif" alt="Dit kamp is vol!" title="Zo goed als vol"/>
 				<img src="https://hit.scouting.nl/images/iconen25pix/hike.gif" />

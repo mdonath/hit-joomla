@@ -2,7 +2,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-$project = $this->project;
+$kampen = $this->project;
 ?>
 <h1>HIT Kiezer in <?php echo $this->jaar; ?></h1>
 <p>Met de HIT-kiezer kun je kijken welke HIT er bij jou past, op basis van je leeftijd
@@ -45,7 +45,7 @@ $project = $this->project;
 		<br>
 		<fieldset>
 			<!-- Placeholder voor het aantal vind-resultaten. -->
-			<legend>Gevonden kampen: <span id="count">2</span></legend>
+			<legend>Gevonden kampen: <span id="count"><?php echo(count($kampen)); ?></span></legend>
 		    <p>Je ziet nu hier de HITs waarvan de HIT-kiezer denkt dat die het beste bij je passen.
 	   		   Succes met je keuze!</p>
 	
@@ -53,7 +53,7 @@ $project = $this->project;
 			<div id="kampen">
 			<ul id="kampList">
 			
-				<?php foreach($project as $kamp) { ?>
+				<?php foreach($kampen as $kamp) { ?>
 				<li><a href="https://hit.scouting.nl/hits-in-<?php echo($kamp->plaats);?>/<?php echo($kamp->naam);?>" title="leeftijd: 18-40, prijs € 40. Nog voldoende plaatsen beschikbaar."><?php echo($kamp->naam);?></a><span class="score" title="score">[100%]</span></li>
 				<?php }?>
 			</ul>

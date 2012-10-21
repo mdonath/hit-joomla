@@ -23,7 +23,66 @@
 				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
 				size="50"
 				class="inputbox"
+				required="true"
 				default=""
+		/>
+		<field
+				name="deelnemersnummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
+				size="10"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="minimumLeeftijd"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_MINLFT_LABEL"
+				description="COM_KAMPINFO_HITCAMP_MINLFT_DESC"
+				size="2"
+				class="inputbox"
+				default="8"
+		/>
+		<field
+				name="maximumLeeftijd"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_MAXLFT_LABEL"
+				description="COM_KAMPINFO_HITCAMP_MAXLFT_DESC"
+				size="3"
+				class="inputbox"
+				default="88"
+		/>
+		<field
+				name="deelnamekosten"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_PRIJS_LABEL"
+				description="COM_KAMPINFO_HITCAMP_PRIJS_DESC"
+				size="3"
+				class="inputbox"
+				default="88"
+		/>
+		<field
+				name="groep"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_GROEP_LABEL"
+				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				size="20"
+				class="inputbox"
+				default="1 - 2 pers."
+		/>
+
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+	
+		<field
+				name="websiteTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_WEBSITETEKST_LABEL"
+				description="COM_KAMPINFO_HITCAMP_WEBSITETEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
 		/>
 
 	</fieldset>

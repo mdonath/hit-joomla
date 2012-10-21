@@ -45,19 +45,6 @@
 				class="inputbox"
 				default=""
 		/>
-	
-		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
-		<field type="spacer" name="myspacer" label="" />
-	
-		<field
-				name="hitCourantTekst"
-				type="editor"
-				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
-				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
-				width="300"
-				class="inputbox"
-				filter="safehtml"
-		/>
 		<field
 				name="contactPersoonNaam"
 				type="text"
@@ -85,6 +72,18 @@
 				class="inputbox"
 				default=""
 		/>
+		
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+	
+		<field
+				name="hitCourantTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
+				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
 	</fieldset>
-
 </form>
