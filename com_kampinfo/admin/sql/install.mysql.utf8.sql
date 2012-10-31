@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `#__kampinfo_hitproject`;
 DROP TABLE IF EXISTS `#__kampinfo_hitsite`;
 DROP TABLE IF EXISTS `#__kampinfo_hitcamp`;
+DROP TABLE IF EXISTS `#__kampinfo_hiticon`;
 
 
 CREATE TABLE `#__kampinfo_hitproject` (
@@ -40,6 +41,15 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`deelnamekosten`						SMALLINT(3)
 ,	`groep`									VARCHAR(20)
 ,	`websiteTekst`							TEXT
+,	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `#__kampinfo_hiticon` (
+	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
+,	`volgorde`								INT(10)			NOT NULL
+,	`bestandsnaam`							VARCHAR(20)		NOT NULL
+,	`tekst`									VARCHAR(255)	NOT NULL
+,	`soort`									CHAR(1)
 ,	PRIMARY KEY (`id`)
 );
 
@@ -99,4 +109,62 @@ INSERT INTO `#__kampinfo_hitcamp` (
 ,	('MPSE', 'baarn-2013', 18, 32, 90, 'Chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop ')
 ,	('LAN-HIT', 'harderwijk-2013', 14, 20, 90, 'Typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ ')
 ,	('Bourgondische Bier Brouwers', 'zeeland-2013', 18, 40, 90, 'Brouw eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat ')
+;
+
+INSERT INTO `#__kampinfo_hiticon` (
+	`volgorde`
+,	`bestandsnaam`
+,	`tekst`
+,	`soort`
+) VALUES
+	(1, 'staand', 'Staand kamp', 'B')
+,	(2, 'fiets', 'Trekken per fiets', 'B')
+,	(3, 'hike', 'Trekken met rugzak', 'B')
+,	(4, 'kano', 'Trekken per kano', 'B')
+,	(5, 'zeilboot', 'Trekkend per boot', 'B')
+,	(6, 'geenrugz', 'Lopen zonder rugzak', 'B')
+,	(7, 'hikevr', 'Lopen met een ander voorwerp', 'B')
+,	(8, 'auto', 'Trekkend per auto', 'B')
+
+,	(9, '0pers', 'Inschrijven per persoon', 'I')
+,	(10, 'groepje', 'Inschrijven per groep', 'I')
+
+,	(11, 'tent', 'Overnachten in een zelfmeegenomen tent', 'O')
+,	(12, 'friet', 'Overnachten in een frietbuil', 'O')
+,	(13, 'nacht', 'Overnachten zonder tent', 'O')
+,	(14, 'tent_opgezet', 'Overnachten in tenten verzorgd door staf', 'O')
+,	(15, 'gebouw', 'Overnachten in gebouw', 'O')
+,	(16, 'bootslaap', 'Overnachten op een boot', 'O')
+
+,	(17, '5km', 'Totale afstand is 5 km', 'A')
+,	(18, '15km', 'Totale afstand is 15 km', 'A')
+,	(19, '20km', 'Totale afstand is 20 km', 'A')
+,	(20, '25km', 'Totale afstand is 25 km', 'A')
+,	(21, '30km', 'Totale afstand is 30 km', 'A')
+,	(22, '35km', 'Totale afstand is 35 km', 'A')
+,	(23, '40km', 'Totale afstand is 40 km', 'A')
+,	(24, '45km', 'Totale afstand is 45 km', 'A')
+,	(25, '50km', 'Totale afstand is 50 km', 'A')
+,	(26, '55km', 'Totale afstand is 55 km', 'A')
+,	(27, '60km', 'Totale afstand is 60 km', 'A')
+,	(28, '80km', 'Totale afstand is 80 km', 'A')
+,	(29, '100km', 'Totale afstand is 100 km', 'A')
+,	(30, '120km', 'Totale afstand is 120 km', 'A')
+
+,	(31, 'vuur', 'Koken op houtvuur zonder pannen', 'K')
+,	(32, 'opvuur', 'Koken op houtvuur met pannen', 'K')
+,	(33, 'gas', 'Koken op gas met pannen', 'K')
+,	(34, 'stafkookt', 'Gekookt door de staf', 'K')
+
+,	(35, 'k_ks', 'Kennis van kaart en kompas op eenvoudig niveau', '?')
+,	(36, 'k_kv', 'Kennis van kaart en kompas op gevorderd niveau', '?')
+,	(37, 'k_kgv', 'Kennis van kaart en kompas op specialistisch niveau', '?')
+,	(38, 'insigne', 'Activiteit waarmee een insigne kan worden behaald', '?')
+
+,	(39, 'zwem', 'Zwemdiploma verplicht', '?')
+,	(40, 'mobieltje', 'Mobieltje meenemen', '?')
+,	(41, 'geenmobieltje', 'Mobieltjes zijn verboden', '?')
+,	(42, 'rolstoel', 'Geschikt voor minder validen (rolstoel)', '?')
+,	(43, 'vraagt', 'Vraagteken Mysterie elementen', '?')
+,	(44, 'buitenland', 'Buitenland - ID kaart of paspoort verplicht', '?')
 ;

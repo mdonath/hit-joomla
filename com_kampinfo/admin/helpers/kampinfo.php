@@ -12,6 +12,7 @@ abstract class KampInfoHelper {
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
+		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
 		// set some global property
 		$document = JFactory :: getDocument();
 		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
@@ -22,6 +23,8 @@ abstract class KampInfoHelper {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITSITES_DOCTITLE'));
 		} elseif ($submenu == 'hitcamps') {
 				$document->setTitle(JText :: _('COM_KAMPINFO_HITCAMPS_DOCTITLE'));
+		} elseif ($submenu == 'hiticons') {
+				$document->setTitle(JText :: _('COM_KAMPINFO_HITICONS_DOCTITLE'));
 		}
 	}
 	
@@ -96,5 +99,15 @@ abstract class KampInfoHelper {
 		}
 
 		return $options;
+	}
+	
+	public static function getHitIconSoortOptions() {
+		return array (
+			"?" => "Gewoon",
+			"B" => "Beweging",
+			"I" => "Inschrijven",
+			"O" => "Overnachten",
+			"A" => "Afstand",
+			"K" => "Koken");
 	}
 }
