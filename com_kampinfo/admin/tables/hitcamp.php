@@ -24,9 +24,11 @@ class KampInfoTableHitCamp extends JTable
     { 
 		if (is_array($this->icoontjes)) {
 		    $this->icoontjes = implode(',', $this->icoontjes);
+		    $this->activiteitengebieden = implode(',', $this->activiteitengebieden);
 		}
 		else {
     		$this->icoontjes = implode(',', array());
+    		$this->activiteitengebieden = implode(',', array());
     	}
    
 		// Attempt to store the data.

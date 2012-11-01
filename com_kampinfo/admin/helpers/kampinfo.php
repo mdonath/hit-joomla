@@ -146,7 +146,20 @@ abstract class KampInfoHelper {
 
 		return $options;
 	}
-	
+
+	public static function getActivityAreaOptions() {
+		return array (
+			(object) array("value" => "buitenleven", "text" => "")
+		,	(object) array("value" => "expressie", "text" => "")
+		,	(object) array("value" => "identiteit", "text" => "")
+		,	(object) array("value" => "internationaal", "text" => "")
+		,	(object) array("value" => "samenleving", "text" => "")
+		,	(object) array("value" => "sportenspel", "text" => "")
+		,	(object) array("value" => "uitdagend", "text" => "")
+		,	(object) array("value" => "veiligengezond", "text" => "")
+		);
+	}
+
 	public static function getHitIconSoortOptions() {
 		return array (
 			"?" => "Gewoon",

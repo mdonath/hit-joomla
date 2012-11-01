@@ -9,9 +9,13 @@ $activiteit = $this->activiteit;
 		<tr>
 			<td>
 				<p>
-					<img src="https://hit.scouting.nl/images/stories/activiteitengebieden/uitdagend.png" alt="Uitdagende Scoutingtechnieken: activiteiten rondom een techniek, zoals hakken, stoken, kaart en kompas, routetechnieken, pionieren, zeilen en kamperen." title="Uitdagende Scoutingtechnieken: activiteiten rondom een techniek, zoals hakken, stoken, kaart en kompas, routetechnieken, pionieren, zeilen en kamperen." style="margin: 0pt; border: 0pt none;" />
-					<img src="https://hit.scouting.nl/images/stories/activiteitengebieden/expressie.png"  alt="Expressie: activiteiten waarmee je je kunt uitdrukken, zoals dansen, filmen, handvaardigheid, toneelspelen, muziek maken, schrijven." title="Expressie: activiteiten waarmee je je kunt uitdrukken, zoals dansen, filmen, handvaardigheid, toneelspelen, muziek maken, schrijven." style="margin: 0pt; border: 0pt none;" border="0" />
-					<img src="https://hit.scouting.nl/images/stories/activiteitengebieden/buitenleven.png" alt="Buitenleven: activiteiten rondom het beleven van de natuur en overleven in de natuur, zoals survival, kennis van plant en dier, milieu, natuurbeheer en weer." title="Buitenleven: activiteiten rondom het beleven van de natuur en overleven in de natuur, zoals survival, kennis van plant en dier, milieu, natuurbeheer en weer." style="margin: 0pt; border: 0pt none;" border="0" />
+				<?php
+					// TODO: alt-text door in model al activiteitengebied-objecten te maken
+					$activiteit->activiteitengebieden = explode(',', $activiteit->activiteitengebieden);
+					foreach ($activiteit->activiteitengebieden as $activiteitengebied) {
+						echo '<img src="media/com_kampinfo/images/activiteitengebieden/'.$activiteitengebied.'.png"/>';
+					}
+				?>
 				</p>
 			</td>
 		</tr>

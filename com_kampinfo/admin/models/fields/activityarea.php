@@ -65,7 +65,7 @@ class JFormFieldActivityarea extends JFormField {
 	public function getOptions() {
 		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
-		$options = KampInfoHelper :: getHitIconOptions();
+		$options = KampInfoHelper :: getActivityAreaOptions();
 		
 		// Merge any additional options in the XML definition.
 		$options = array_merge($this->getOptionsFromFormDefinition(), $options);

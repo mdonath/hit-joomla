@@ -88,9 +88,17 @@
 
 		<field
 				name="icoontjes"
-				type="icon"
+				type="Icon"
 				label="Icoontjes"
 				description="Dit zijn de icoontjes"
+				class="inputbox"
+		/>
+		
+		<field
+				name="activiteitengebieden"
+				type="Activityarea"
+				label="Activiteitengebieden"
+				description="Dit zijn de activiteitengebieden"
 				class="inputbox"
 		/>
 

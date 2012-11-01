@@ -42,6 +42,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`groep`									VARCHAR(20)
 ,	`websiteTekst`							TEXT
 ,	`icoontjes`								TEXT
+,	`activiteitengebieden`					TEXT
 ,	PRIMARY KEY (`id`)
 );
 
