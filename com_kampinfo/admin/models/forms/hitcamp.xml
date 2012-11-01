@@ -84,6 +84,15 @@
 				class="inputbox"
 				filter="safehtml"
 		/>
+		<field type="spacer" name="myspacer" label="Iconen" />
+
+		<field
+				name="icoontjes"
+				type="icon"
+				label="Icoontjes"
+				description="Dit zijn de icoontjes"
+				class="inputbox"
+		/>
 
 	</fieldset>
 </form>

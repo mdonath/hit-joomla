@@ -65,7 +65,15 @@ $activiteit = $this->activiteit;
 		</tr>
 		<tr>
 			<td>
-				<div style="text-align: right;" mce_style="text-align: right;"><img src="https://hit.scouting.nl/images/iconen40pix/hike.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/hike.gif" alt="Trekken met rugzak" title="Trekken met rugzak" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/kano.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/kano.gif" alt="Trekken per kano" title="Trekken per kano" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/groepje.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/groepje.gif" alt="Inschrijven per groep" title="Inschrijven per groep" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/tent.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/tent.gif" alt="Overnachten in een zelfmeegenomen tent" title="Overnachten in een zelfmeegenomen tent" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/50km.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/50km.gif" alt="Totale afstand is 50 km" title="Totale afstand is 50 km" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/vuur.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/vuur.gif" alt="Koken op houtvuur zonder pannen" title="Koken op houtvuur zonder pannen" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/opvuur.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/opvuur.gif" alt="Koken op houtvuur met pannen" title="Koken op houtvuur met pannen" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/k_kv.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/k_kv.gif" alt="Kennis van kaart en kompas op gevorderd niveau" title="Kennis van kaart en kompas op gevorderd niveau" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /><img src="https://hit.scouting.nl/images/iconen40pix/zwem.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/zwem.gif" alt="Zwemdiploma verplicht" title="Zwemdiploma verplicht" style="margin: 0pt;" mce_style="margin: 0pt;" border="0" /></div>
+				<div style="text-align: right;">
+				<?php
+					// TODO: alt-text door in model al icoon-objecten te maken
+					$activiteit->icoontjes = explode(',', $activiteit->icoontjes);
+					foreach ($activiteit->icoontjes as $icoon) {
+						echo '<img src="media/com_kampinfo/images/iconen40pix/'.$icoon.'.gif"/>';
+					}
+				?>
+				</div>
 			</td>
 		</tr>
 		<tr>

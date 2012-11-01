@@ -100,6 +100,52 @@ abstract class KampInfoHelper {
 
 		return $options;
 	}
+
+	public static function getSelectedHitIcons($deelnemersnummer) {
+	$options = array ();
+
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('bestandsnaam');
+		$query->from('#__kampinfo_camp_icon');
+		$query->where('deelnemersnummer = '.$db->quote($db->getEscaped($deelnemersnummer)));
+		$query->order('volgorde');
+
+		// Get the options.
+		$db->setQuery($query);
+
+		$options = $db->loadObjectList();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+
+		return $options;
+	}
+	public static function getHitIconOptions() {
+		$options = array ();
+
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('bestandsnaam As value, tekst As text');
+		$query->from('#__kampinfo_hiticon');
+		$query->order('volgorde');
+
+		// Get the options.
+		$db->setQuery($query);
+
+		$options = $db->loadObjectList();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+
+		return $options;
+	}
 	
 	public static function getHitIconSoortOptions() {
 		return array (

@@ -19,18 +19,20 @@ $plaats = $this->plaats;
 		<?php foreach ($plaats->kampen as $kamp) { ?>
 		<tr>
 			<td class="kolom1">
-				<a href="/hits-in-<?php echo($plaats->naam); ?>/<?php echo($kamp->naam); ?>">
+				<a href="index.php?option=com_kampinfo&amp;view=activiteit&amp;id=<?php echo($kamp->id); ?>">
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
 			<td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>-<?php echo($kamp->maximumLeeftijd); ?></td>
 			<td class="kolom3"><?php echo($kamp->groep); ?></td>
 			<td class="kolom4">
-				<img src="https://hit.scouting.nl/images/iconen25pix/vol.gif" alt="Dit kamp is vol!" title="Zo goed als vol"/>
-				<img src="https://hit.scouting.nl/images/iconen25pix/hike.gif" />
-				<img src="https://hit.scouting.nl/images/iconen25pix/groepje.gif" />
-				<img src="https://hit.scouting.nl/images/iconen25pix/hike.gif" />
-				<img src="https://hit.scouting.nl/images/iconen25pix/groepje.gif" />
+				<?php
+					// TODO: alt-text door in model al icoon-objecten te maken
+					$kamp->icoontjes = explode(',', $kamp->icoontjes);
+					foreach ($kamp->icoontjes as $icoon) {
+						echo '<img src="media/com_kampinfo/images/iconen25pix/'.$icoon.'.gif"/>';
+					}
+				?>
 			</td>
 		</tr>
 		<?php } ?>

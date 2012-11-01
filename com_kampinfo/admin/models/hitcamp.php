@@ -36,4 +36,13 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		}
 		return $data;
 	}
+	
+	public function getItem($pk = null)
+	{
+		if ($item = parent::getItem($pk)) {
+			$item->icoontjes = explode(',', $item->icoontjes);
+		}
+		   
+		return $item;
+	}
 }
