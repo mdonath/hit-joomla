@@ -4,6 +4,7 @@ defined('_JEXEC') or die('Restricted Access');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
+$this->state->set('list.columnCount', '9');
 ?>
 <tr>
 	<th width="5">

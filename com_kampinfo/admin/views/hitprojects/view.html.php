@@ -4,48 +4,21 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+// import default KampInfo view
+include_once dirname(__FILE__).'/../default/view.html.php';
+
 // import Joomla view library
 jimport('joomla.application.component.view');
 
 /**
- * HitProjects View
+ * HitProjects View.
  */
-class KampInfoViewHitProjects extends JViewLegacy {
+class KampInfoViewHitProjects extends KampInfoViewListDefault {
 
-	protected $items;
-	protected $pagination;
-	protected $state;
-
-	function display($tpl = null) {
-
-		// Get data from the model
-		$this->items		= $this->get('Items');
-		$this->pagination	= $this->get('Pagination');
-		$this->state		= $this->get('State');
-
-		// Check for errors
-		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
-			return false;
-		}
-
-		// Set the toolbar
-		$this->addToolBar();
-
-		// Display the template
-		parent :: display($tpl);
-	}
-
-	/**
-	 * Setting the toolbar
-	 */
-	protected function addToolBar() {
-		JToolBarHelper :: title(JText :: _('COM_KAMPINFO_HITPROJECTS_MANAGER'), 'kampinfo');
-
-		JToolBarHelper :: addNewX('hitproject.add');
-		JToolBarHelper :: editListX('hitproject.edit');
-		JToolBarHelper :: divider();
-		JToolBarHelper :: deleteListX('', 'hitprojects.delete');
+	function __construct($config = null) {
+		$this->toolbarTitle = 'COM_KAMPINFO_HITPROJECTS_MANAGER';
+		$this->entityName = 'hitproject';
+		parent :: __construct($config);
 	}
 
 }
