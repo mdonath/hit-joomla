@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset
+			name="import"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="jaar"
+				type="Project"
+				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
+				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
+				class="inputbox"
+				required="true"
+		/>
+		<field
+				name="import_kampgegevens"
+				type="file"
+				label="Kampgegevens"
+				description="Importeer de export uit ScoutsOnline (.csv)"
+				class="inputbox"
+				required="true"
+		/>
+	</fieldset>
+</form>

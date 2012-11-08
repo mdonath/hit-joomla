@@ -20,7 +20,7 @@ class KampInfoTableHitCamp extends JTable
 		parent::__construct('#__kampinfo_hitcamp', 'id', $db);
 	}
         
-  public function store($updateNulls = false)
+	public function store($updateNulls = false)
     { 
 		if (is_array($this->icoontjes)) {
 		    $this->icoontjes = implode(',', $this->icoontjes);

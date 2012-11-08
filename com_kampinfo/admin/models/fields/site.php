@@ -6,6 +6,9 @@ jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
 JFormHelper :: loadFieldClass('list');
 
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
+
+
 class JFormFieldSite extends JFormFieldList {
 
 	protected $type = 'Site';
@@ -13,7 +16,6 @@ class JFormFieldSite extends JFormFieldList {
 	// getLabel() left out
 
 	public function getOptions() {
-		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
 		$options = KampInfoHelper :: getHitSiteOptions();
 		

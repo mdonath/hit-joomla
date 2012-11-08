@@ -6,7 +6,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modeladmin');
  
 /**
- * HelloWorld Model
+ * HitProject Model.
  */
 class KampInfoModelHitProject extends JModelAdmin
 {

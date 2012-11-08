@@ -56,5 +56,6 @@ class KampInfoController extends JControllerLegacy {
 
 		parent::display();
 
-		return $this;	}
+		return $this;
+	}
 }

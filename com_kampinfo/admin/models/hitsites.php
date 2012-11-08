@@ -7,7 +7,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.modellist');
 
 /**
- * HitProjects Model.
+ * HitSites Model.
  */
 class KampInfoModelHitSites extends JModelList {
 
