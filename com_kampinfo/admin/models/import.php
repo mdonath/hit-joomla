@@ -18,31 +18,39 @@ class KampInfoModelImport extends JModelAdmin
     
 	function import() {
 		$app = JFactory::getApplication();
-		$app->enqueueMessage(explode("<br>", $_POST));
-	
-		$jaar = JRequest::getInt('jaar');
+        $jinput = $app->input;   
+        $formdata = $jinput->get('jform', array(), 'array');
+		$jaar = $formdata["jaar"];
 
 		if ($jaar < 2000) {
 			$app->enqueueMessage('Geen jaartal opgegeven');
-		} else {
-			$file = $this->getUploadedFile();
-	
-	
-			$mapper = new Mapper($this->getKampenMapping());
-			$rows = $mapper->read($file);
-	
-			$count = count($rows);
-	
-			$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-	
-			if ($count > 0) {
-				self::verwijderJaar($jaar);
-				$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
-		
-				self::updateKampen($rows,  $jaar);
-				$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
-			}
+			return false;
 		}
+		$app->enqueueMessage('Voor het jaartal ' . $jaar);
+
+		$file = self::getUploadedFile();
+		$app->enqueueMessage('File: ' . $file);
+
+		if (!$file) {
+			$app->enqueueMessage('Geen file geupload?!');
+			return false;			
+		}
+		$mapper = new Mapper($this->getKampenMapping());
+		$rows = $mapper->read($file);
+
+		$count = count($rows);
+
+		if ($count == 0) {
+			$app->enqueueMessage('geen rijen gevonden');
+			return false;
+		}
+
+		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
+		self::verwijderJaar($jaar);
+		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
+
+		self::updateKampen($rows,  $jaar);
+		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
 		return true;
 	}
 
@@ -57,13 +65,17 @@ class KampInfoModelImport extends JModelAdmin
 	
 	private function verwijderJaar($jaar) {
 		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
+		$query = "DELETE c FROM #__kampinfo_hitcamp c "
+			. "JOIN #__kampinfo_hitsite s ON c.hitsite=s.code "
+			. "AND s.jaar = ". ($db->getEscaped($jaar));
 		
-		$query->delete();
-		$query->from('#__kampinfo_hitcamp c');
-		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite=s.code');
-		$query->where('jaar = ' . ($db->getEscaped($jaar)));
-		
+		$db->setQuery($query);
+		$db->query();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
 	}
 	protected function getUploadedFile()
 	{
@@ -74,25 +86,19 @@ class KampInfoModelImport extends JModelAdmin
 			return false;
 		}
 
-		// Get the uploaded file information
-		$userfile = JRequest::getVar('import_kampgegevens', null, 'files', 'array');
-
+		$jFileInput = new JInput($_FILES);
+		$uploadedFile = $jFileInput->get('jform',array(),'array');
+		
 		// If there is no uploaded file, we have a problem...
-		if (!is_array($userfile)) {
-			$app->enqueueMessage(JText::_('geen bestand geselecteerd'));
-			return false;
-		}
-
-		// Check if there was a problem uploading the file.
-		if ($userfile['error'] || $userfile['size'] < 1) {
-			$app->enqueueMessage(JText::_('er is een fout upgetreden tijdens het uploaden'));
-			return false;
+		if (!is_array($uploadedFile)) {
+		    JError::raiseWarning('', 'No file was selected.');
+		    return false;
 		}
 
 		// Build the appropriate paths
 		$config		= JFactory::getConfig();
-		$tmp_dest	= $config->get('tmp_path') . '/' . $userfile['name'];
-		$tmp_src	= $userfile['tmp_name'];
+		$tmp_src	= $uploadedFile['tmp_name']['import_kampgegevens'];
+		$tmp_dest	= $config->get('tmp_path') . '/' . $uploadedFile['name']['import_kampgegevens'];
 
 		// Move uploaded file
 		$uploaded = JFile::upload($tmp_src, $tmp_dest);

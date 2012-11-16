@@ -3,12 +3,10 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('behavior.tooltip');
-
-//	enctype="multipart/form-data" 
 ?>
 
-
 <form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
+	enctype="multipart/form-data" 
 	method="post"
 	name="adminForm"
 	id="adminForm"
