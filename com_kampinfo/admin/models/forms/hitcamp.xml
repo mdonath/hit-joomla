@@ -17,30 +17,77 @@
 				required="true"
 		/>
 		<field
+				name="deelnemersnummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
+				maxlength="8"
+				size="10"
+				class="inputbox"
+				default=""
+		/>
+		<field
 				name="naam"
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_NAAM_LABEL"
 				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
-				size="50"
+				maxlength="255"
+				size="30"
 				class="inputbox"
 				required="true"
 				default=""
 		/>
 		<field
-				name="deelnemersnummer"
+				name="titeltekst"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
-				size="10"
+				label="titeltekst"
+				description="Titeltekst"
+				maxlength="255"
+				size="30"
 				class="inputbox"
+				required="true"
 				default=""
+		/>
+		<field
+				name="startDatumTijd"
+				type="calendar"
+				label="Start datum/tijd"
+				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
+				size="20"
+				maxlength="19"
+				class="inputbox"
+				required="true"
+				format="%Y-%m-%d %H:%M:%S"
+				filter="user_utc"
+		/>
+		<field
+				name="eindDatumTijd"
+				type="calendar"
+				label="Eind datum/tijd"
+				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
+				size="20"
+				class="inputbox"
+				required="true"
+				format="%Y-%m-%d %H:%M:%S"
+				filter="user_utc"
+		/>
+		<field
+				name="deelnamekosten"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_PRIJS_LABEL"
+				description="COM_KAMPINFO_HITCAMP_PRIJS_DESC"
+				size="3"
+				maxlength="3"
+				class="inputbox"
+				default="88"
 		/>
 		<field
 				name="minimumLeeftijd"
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_MINLFT_LABEL"
 				description="COM_KAMPINFO_HITCAMP_MINLFT_DESC"
-				size="2"
+				size="3"
+				maxlength="3"
 				class="inputbox"
 				default="8"
 		/>
@@ -50,31 +97,171 @@
 				label="COM_KAMPINFO_HITCAMP_MAXLFT_LABEL"
 				description="COM_KAMPINFO_HITCAMP_MAXLFT_DESC"
 				size="3"
+				maxlength="3"
 				class="inputbox"
 				default="88"
 		/>
+
 		<field
-				name="deelnamekosten"
+				name="subgroepsamenstellingMinimum"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_PRIJS_LABEL"
-				description="COM_KAMPINFO_HITCAMP_PRIJS_DESC"
-				size="3"
-				class="inputbox"
-				default="88"
-		/>
-		<field
-				name="groep"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_GROEP_LABEL"
+				label="Subgroep min."
 				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
-				size="20"
+				size="3"
+				maxlength="2"
 				class="inputbox"
-				default="1 - 2 pers."
+		/>
+		<field
+				name="subgroepsamenstellingMaximum"
+				type="text"
+				label="Subgroep max."
+				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="subgroepsamenstellingExtra"
+				type="text"
+				label="Subgroep delen door"
+				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				size="3"
+				maxlength="1"
+				class="inputbox"
+		/>
+<!-- WEBSITE -->
+		<field
+				name="websiteAdres"
+				type="text"
+				label="Website adres"
+				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto1"
+				type="text"
+				label="Foto 1"
+				description="Foto 1"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto2"
+				type="text"
+				label="Foto 2"
+				description="Foto 2"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto3"
+				type="text"
+				label="Foto 3"
+				description="Foto 3"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactTelefoonnummer"
+				type="text"
+				label="Website contact Tel."
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactEmailadres"
+				type="text"
+				label="Website contact Email"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactPersoon"
+				type="text"
+				label="Website contactpersoon"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+<!-- AANTAL DEELNEMERS -->
+		<field
+				name="minimumAantalDeelnemers"
+				type="text"
+				label="Minimum aantal deelnemers"
+				description=""
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalDeelnemers"
+				type="text"
+				label="Maximum aantal deelnemers"
+				description=""
+				size="3"
+				maxlength="3"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalSubgroepjes"
+				type="text"
+				label="Maximum aantal subgroepjes"
+				description=""
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalUitEenGroep"
+				type="text"
+				label="Maximum aantal uit één groep"
+				description=""
+				size="3"
+				maxlength="3"
+				class="inputbox"
+		/>
+		<field
+				name="margeAantalDagenTeJong"
+				type="text"
+				label="Marge te jong"
+				description=""
+				size="3"
+				maxlength="2"
+				class="inputbox"
+				default="90"
+		/>
+		<field
+				name="margeAantalDagenTeOud"
+				type="text"
+				label="Marge te oud"
+				description=""
+				size="3"
+				maxlength="2"
+				class="inputbox"
+				default="90"
+		/>
+		<field
+				name="redenAfwijkingMarge"
+				type="text"
+				label="Reden afwijking marge"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
 		/>
 
 		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
 		<field type="spacer" name="myspacer" label="" />
-	
 		<field
 				name="websiteTekst"
 				type="editor"
@@ -84,8 +271,8 @@
 				class="inputbox"
 				filter="safehtml"
 		/>
-		<field type="spacer" name="myspacer" label="Iconen" />
 
+		<field type="spacer" name="myspacer" label="Iconen" />
 		<field
 				name="icoontjes"
 				type="Icon"
@@ -99,6 +286,13 @@
 				type="Activityarea"
 				label="Activiteitengebieden"
 				description="Dit zijn de activiteitengebieden"
+				class="inputbox"
+		/>
+		<field
+				name="doelgroepen"
+				type="Targetgroup"
+				label="Doelgroepen"
+				description="Dit zijn de doelgroepen"
 				class="inputbox"
 		/>
 

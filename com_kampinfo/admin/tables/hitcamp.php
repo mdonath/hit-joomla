@@ -21,14 +21,16 @@ class KampInfoTableHitCamp extends JTable
 	}
         
 	public function store($updateNulls = false)
-    { 
+    {
 		if (is_array($this->icoontjes)) {
 		    $this->icoontjes = implode(',', $this->icoontjes);
 		    $this->activiteitengebieden = implode(',', $this->activiteitengebieden);
+		    $this->doelgroepen = implode(',', $this->doelgroepen);
 		}
 		else {
     		$this->icoontjes = implode(',', array());
     		$this->activiteitengebieden = implode(',', array());
+    		$this->doelgroepen = implode(',', array());
     	}
    
 		// Attempt to store the data.

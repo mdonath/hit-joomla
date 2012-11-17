@@ -32,17 +32,39 @@ CREATE TABLE `#__kampinfo_hitsite` (
 );
 
 CREATE TABLE `#__kampinfo_hitcamp` (
-	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
-,	`deelnemersnummer`						INT(10)		NOT NULL
-,	`hitsite`								VARCHAR(20)	NOT NULL
-,	`naam`									VARCHAR(50)	NOT NULL
+	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
+,	`deelnemersnummer`						INT(10)			NOT NULL
+,	`hitsite`								VARCHAR(20)		NOT NULL
+,	`naam`									VARCHAR(255)	NOT NULL
+,	`activiteitengebieden`					TEXT
+,	`titeltekst`							VARCHAR(255)
+,	`startDatumTijd`						DATETIME
+,	`eindDatumTijd`							DATETIME
+,	`deelnamekosten`						SMALLINT(3)
 ,	`minimumLeeftijd`						TINYINT
 ,	`maximumLeeftijd`						TINYINT
-,	`deelnamekosten`						SMALLINT(3)
-,	`groep`									VARCHAR(20)
-,	`websiteTekst`							TEXT
+,	`subgroepsamenstellingMinimum`			SMALLINT(2)
+,	`subgroepsamenstellingMaximum`			SMALLINT(2)
+,	`subgroepsamenstellingExtra`			SMALLINT(1)
 ,	`icoontjes`								TEXT
-,	`activiteitengebieden`					TEXT
+,	`websiteAdres`							VARCHAR(255)
+,	`websiteTekst`							TEXT
+,	`webadresFoto1`							VARCHAR(255)
+,	`webadresFoto2`							VARCHAR(255)
+,	`webadresFoto3`							VARCHAR(255)
+,	`websiteContactTelefoonnummer`			VARCHAR(255)
+,	`websiteContactEmailadres`				VARCHAR(255)
+,	`websiteContactpersoon`					VARCHAR(255)
+,	`minimumAantalDeelnemers`				SMALLINT(3)
+,	`maximumAantalDeelnemers`				SMALLINT(3)
+,	`maximumAantalSubgroepjes`				SMALLINT(3)
+,	`maximumAantalUitEenGroep`				SMALLINT(3)
+,	`margeAantalDagenTeJong`				SMALLINT(3)
+,	`margeAantalDagenTeOud`					SMALLINT(3)
+,	`redenAfwijkingMarge`					VARCHAR(255)
+,	`doelgroepen`							TEXT
+,	`akkoordHitKamp`						BOOLEAN
+,	`akkoordHitPlaats`						BOOLEAN
 ,	PRIMARY KEY (`id`)
 );
 

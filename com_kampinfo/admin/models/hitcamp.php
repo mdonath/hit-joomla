@@ -42,6 +42,7 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		if ($item = parent::getItem($pk)) {
 			$item->icoontjes = explode(',', $item->icoontjes);
 			$item->activiteitengebieden = explode(',', $item->activiteitengebieden);
+			$item->doelgroepen = explode(',', $item->doelgroepen);
 		}
 		   
 		return $item;

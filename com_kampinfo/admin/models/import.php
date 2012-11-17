@@ -58,6 +58,8 @@ class KampInfoModelImport extends JModelAdmin
 		foreach ($rows as $kamp) {
 			$table = $this->getTable();
 			$kamp->hitsite = strtolower($kamp->plaatsNaam) . '-'. $jaar;
+			$kamp->startDatumTijd = $kamp->startDatumTijd->format('Y-m-d H:i:s');
+			$kamp->eindDatumTijd = $kamp->eindDatumTijd->format('Y-m-d H:i:s');
 			$table->bind($kamp);
 			$table->store($kamp);
 		}
@@ -132,7 +134,7 @@ class KampInfoModelImport extends JModelAdmin
 	private function getKampenMapping() {
 		$mapping = array(
 		  'deelnemersnummer'												=> new GewoonVeld('deelnemersnummer')
-		, 'HIT-Kamp in HIT-Plaats'											=> new GewoonVeld('plaatsNaam')
+		, 'HIT-Kamp in HIT-Plaats'											=> new GewoonVeld('plaatsNaam') // icm jaar -> hitsite
 		, 'HIT-Kamp naam'													=> new GewoonVeld('naam')
 		//, 'HIT-Kamp Contactpersoon voor helpdesk'							=> new IgnoredVeld()
 		//, 'HIT-Kamp Contactpersoon Emailadres voor Helpdesk'				=> new IgnoredVeld()
@@ -147,7 +149,7 @@ class KampInfoModelImport extends JModelAdmin
 		, 'HIT-Kamp Activiteitengebieden: Samenleving'						=> new ActiviteitengebiedVeld('samenleving')
 		, 'HIT-Kamp Activiteitengebieden: Veilig en Gezond'					=> new ActiviteitengebiedVeld('veiligengezond')
 		, 'HIT-Kamp titeltekst'												=> new GewoonVeld('titeltekst')
-		, 'HIT-Kamp Couranttekst'											=> new GewoonVeld('courantTekst')
+		//, 'HIT-Kamp Couranttekst'											=> new GewoonVeld('courantTekst')
 		, 'HIT-Kamp Startdatum'												=> new DatumVeld('startDatumTijd')
 		, 'HIT-Kamp Starttijd'												=> new TijdVeld('startDatumTijd')
 		, 'HIT-Kamp Einddatum'												=> new DatumVeld('eindDatumTijd')
@@ -222,7 +224,7 @@ class KampInfoModelImport extends JModelAdmin
 		, 'Maximum aantal uit 1 Scoutinggroep'								=> new GewoonVeld('maximumAantalUitEenGroep')
 		, 'Aantal dagen dat een deelnemer te jong mag zijn (standaard 90 dagen)'	=> new GewoonVeld('margeAantalDagenTeJong')
 		, 'Aantal dagen dat een deelnemer te oud mag zijn (standaard 90 dagen)'		=> new GewoonVeld('margeAantalDagenTeOud')
-		, 'Reden afwijking 90 dagen uitzondering'									=> new GewoonVeld('redenGeenMarge')
+		, 'Reden afwijking 90 dagen uitzondering'									=> new GewoonVeld('redenAfwijkingMarge')
 		, 'Welke doelgroep mag alleen inschrijven voor deze HIT. (optioneel): Bevers 5-7 jaar'				=> new DoelgroepVeld('bevers')
 		, 'Welke doelgroep mag alleen inschrijven voor deze HIT. (optioneel): Welpen 7-11 jaar'				=> new DoelgroepVeld('welpen')
 		, 'Welke doelgroep mag alleen inschrijven voor deze HIT. (optioneel): Scouts 11-15 jaar'			=> new DoelgroepVeld('scouts')

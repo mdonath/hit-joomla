@@ -153,14 +153,26 @@ abstract class KampInfoHelper {
 
 	public static function getActivityAreaOptions() {
 		return array (
-			(object) array("value" => "buitenleven", "text" => "")
-		,	(object) array("value" => "expressie", "text" => "")
-		,	(object) array("value" => "identiteit", "text" => "")
-		,	(object) array("value" => "internationaal", "text" => "")
-		,	(object) array("value" => "samenleving", "text" => "")
-		,	(object) array("value" => "sportenspel", "text" => "")
-		,	(object) array("value" => "uitdagend", "text" => "")
-		,	(object) array("value" => "veiligengezond", "text" => "")
+			(object) array("value" => "buitenleven", "text" => "Buitenleven")
+		,	(object) array("value" => "expressie", "text" => "Expressie")
+		,	(object) array("value" => "identiteit", "text" => "Identiteit")
+		,	(object) array("value" => "internationaal", "text" => "Internationaal")
+		,	(object) array("value" => "samenleving", "text" => "Samenleving")
+		,	(object) array("value" => "sportenspel", "text" => "Sport en Spel")
+		,	(object) array("value" => "uitdagend", "text" => "Uitdagende Scoutingtechnieken")
+		,	(object) array("value" => "veiligengezond", "text" => "Veilig en Gezond")
+		);
+	}
+	
+	public static function getTargetgroupOptions() {
+		return array (
+			(object) array("value" => "bevers", "text" => "Bevers 5-7 jaar")
+		,	(object) array("value" => "welpen", "text" => "Welpen 7-11 jaar")
+		,	(object) array("value" => "scouts", "text" => "Scouts 11-15 jaar")
+		,	(object) array("value" => "explorers", "text" => "Explorers 15-18 jaar")
+		,	(object) array("value" => "roverscouts", "text" => "Roverscouts 18 t/m 21 jaar")
+		,	(object) array("value" => "plusscouts", "text" => "Plusscouts 21+")
+		,	(object) array("value" => "ndlg", "text" => "Volwassenen (ndlg)")
 		);
 	}
 
