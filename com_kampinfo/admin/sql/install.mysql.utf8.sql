@@ -116,29 +116,6 @@ INSERT INTO `#__kampinfo_hitsite` (
 ;
 
 
-
-
-
-INSERT INTO `#__kampinfo_hitcamp` (
-	`deelnemersnummer`
-,	`naam`
-,	`hitsite`
-,	`minimumLeeftijd`
-,	`maximumLeeftijd`
-,	`deelnamekosten`
-,	`websiteTekst`
-) VALUES
-	(125001, 'Stookkamp', 'mook-2012', 8, 14, 50, 'Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken!')
-,	(135001, 'Stookkamp', 'mook-2013', 8, 14, 50, 'Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken Fikkiestoken!')
-,	(123001, 'Kokkamp eXtreme', 'harderwijk-2012', 10, 15, 90, 'Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! Lekker eten! ')
-,	(135002, 'Kokkamp eXtreme', 'mook-2013', 14, 18, 100, 'Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! Explosief bakken!!! ')
-,	(131001, 'Punniken voor gevorderden', 'alphen-2013', 18, 32, 40, 'Punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik punnik ')
-,	(133001, 'Jongerenhike in Dwingeloo', 'dwingeloo-2013', 18, 32, 40, 'Zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip zuip: verzuipen in de regen natuurlijk.')
-,	(132001, 'MPSE', 'baarn-2013', 18, 32, 90, 'Chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop chop ')
-,	(134001, 'LAN-HIT', 'harderwijk-2013', 14, 20, 90, 'Typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ typ ')
-,	(136001, 'Bourgondische Bier Brouwers', 'zeeland-2013', 18, 40, 90, 'Brouw eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat eet drink rij repeat ')
-;
-
 INSERT INTO `#__kampinfo_hiticon` (
 	`volgorde`
 ,	`bestandsnaam`

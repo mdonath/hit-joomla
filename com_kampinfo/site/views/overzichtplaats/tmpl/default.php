@@ -30,6 +30,8 @@ $plaats = $this->plaats;
 					$subgroepMax = $kamp->subgroepsamenstellingMaximum;
 					if ($subgroepMin == 0 || $subgroepMax == 0) {
 						echo('&nbsp;');						
+					} elseif ($subgroepMin == $subgroepMax) {
+						echo("$subgroepMin pers.");
 					} else {
 						echo("$subgroepMin - $subgroepMax pers.");
 					}

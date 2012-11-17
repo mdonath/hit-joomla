@@ -42,7 +42,15 @@ $activiteit = $this->activiteit;
 		<tr>
 			<td valign="top"><b>Datum</b></td>
 			<td valign="top">:</td>
-			<td valign="top">7 april t/m 9 april</td>
+			<td valign="top">
+			<?php
+				$start = new JDate($activiteit->startDatumTijd);
+				$startF = $start->format('j F');
+				$eind = new JDate($activiteit->eindDatumTijd);
+				$eindF = $eind->format('j F');
+				echo("$startF t/m $eindF");
+			?>
+			</td>
 		</tr>
 		<tr>
 			<td valign="top"><b>Leeftijd</b></td>
@@ -52,7 +60,19 @@ $activiteit = $this->activiteit;
 		<tr>
 			<td valign="top"><b>Groep</b></td>
 			<td valign="top">:</td>
-			<td valign="top"><?php echo($activiteit->groep); ?> pers.</td>
+			<td valign="top">
+			<?php
+				$subgroepMin = $activiteit->subgroepsamenstellingMinimum;
+				$subgroepMax = $activiteit->subgroepsamenstellingMaximum;
+				if ($subgroepMin == 0 || $subgroepMax == 0) {
+					echo('&nbsp;');						
+				} elseif ($subgroepMin == $subgroepMax) {
+					echo("$subgroepMin pers.");
+				} else {
+					echo("$subgroepMin - $subgroepMax pers.");
+				}
+			?>
+			</td>
 		</tr>
 		<tr>
 			<td valign="top"><b>Prijs</b></td>
@@ -83,14 +103,14 @@ $activiteit = $this->activiteit;
 		<tr>
 			<td>
 				<div>
-					<h2>Dit is de subkop</h2>
+					<h2><?php echo($activiteit->titeltekst);?></h2>
 					<h2></h2>
 				</div>
 			</td>
 		</tr>
 	</tbody>
 </table>
-
+<?php $heeftEenYoutubeFilmpje = false; ?>
 <table border="0">
 	<tbody>
 		<tr>
@@ -98,12 +118,30 @@ $activiteit = $this->activiteit;
 			<?php echo($activiteit->websiteTekst); ?>
 			</td>
 			<td valign="top" width="190">
-				<img src="https://hit.scouting.nl/images/stories/hitkampenfotos/img-150646-1-b.jpg" alt="Foto 1" border="0" width="180" />
-				<br /><br />
-				<img src="https://hit.scouting.nl/images/stories/hitkampenfotos/img-150646-3-b.jpg" alt="Foto 2" border="0" width="180" />
-				<br /><br /><br />
+				<?php if (!empty($activiteit->webadresFoto1) and $activiteit->webadresFoto1 != 'http://') { ?>
+					<img src="<?php echo($activiteit->webadresFoto1); ?>" alt="Foto 1" border="0" width="180" /><br /><br />
+				<?php } ?>
+				<?php if (!empty($activiteit->webadresFoto2) and $activiteit->webadresFoto2 != 'http://') { ?>
+					<img src="<?php echo($activiteit->webadresFoto2); ?>" alt="Foto 2" border="0" width="180" /><br /><br />
+				<?php } ?>
+				<?php if (!$heeftEenYoutubeFilmpje and !empty($activiteit->webadresFoto3) and $activiteit->webadresFoto3 != 'http://') { ?>
+					<img src="<?php echo($activiteit->webadresFoto3); ?>" alt="Foto 3" border="0" width="180" /><br /><br />
+				<?php } ?>
 			</td>
 		</tr>
+		
+		<?php if ($heeftEenYoutubeFilmpje and !empty($activiteit->webadresFoto3)  and $activiteit->webadresFoto3 != 'http://') { ?>
+		<tr>
+			<td colspan="2">
+				<object width="670" height="400">
+					<param name="movie" value="<?php echo($activiteit->webadresFoto3); ?>"></param>
+					<param name="allowFullScreen" value="true"></param>
+					<param name="allowscriptaccess" value="always"></param>
+					<embed src="<?php echo($activiteit->webadresFoto3); ?>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="670" height="400"></embed>
+				</object>
+			</td>
+		</tr>
+		<?php } ?>
 	</tbody>
 </table>
 
@@ -113,7 +151,10 @@ $activiteit = $this->activiteit;
 			<td><img src="https://hit.scouting.nl/images/iconen40pix/info.gif" alt="Meer informatie? Mail of bel naar de contactpersoon van deze HIT" border="0" /></td>
 			<td>
 				<p>
-					Bel bij vragen Wouter en Bram: 06-13946054<br /> <a href="mailto:jongerenhike@gmail.com" >Mail naar jongerenhike@gmail.com</a>
+					<?php if (!empty($activiteit->websiteContactTelefoonnummer)) { ?>
+						Bel bij vragen <?php echo($activiteit->websiteContactpersoon); ?>: <?php echo($activiteit->websiteContactTelefoonnummer); ?><br />
+					<?php } ?>
+					<a href="mailto:<?php echo($activiteit->websiteContactEmailadres); ?>" >Mail naar <?php echo($activiteit->websiteContactEmailadres); ?></a>
 					<br mce_bogus="1" />
 				</p>
 			</td>
@@ -122,8 +163,8 @@ $activiteit = $this->activiteit;
 			<td><img src="https://hit.scouting.nl/images/iconen40pix/web.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/web.gif" alt="Link naar een website over dit HIT onderdeel" border="0" /></td>
 			<td>
 				<p>
-					<a href="http://www.wix.com/jongerenhike/2012">http://www.wix.com/jongerenhike/2012</a>
-					<br mce_bogus="1" />
+					<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a>
+					<br/>
 				</p>
 			</td>
 		</tr>
@@ -132,10 +173,30 @@ $activiteit = $this->activiteit;
 
 
 <h2>Aanvullende info:</h2>
+<!--
 <p>VOLVOL!<br />
-	Er kunnen maximaal 150 deelnemers meedoen aan deze activiteit.
-	Totale afstand die tijdens deze HIT gelopen wordt is maximaal 50 kilometer.
-	Dit HIT-Kamp start op 7 april om 14:00 uur en duurt tot en met 9 april 18:00 uur.
+-->
+
+	<?php if(!empty($activiteit->maximumAantalUitEenGroep)) { ?>
+	Er mogen maximaal <?php echo($activiteit->maximumAantalUitEenGroep); ?> leden uit dezelfde Scoutinggroep meedoen.
+	<?php } ?>
+
+	Er kunnen maximaal <?php echo($activiteit->maximumAantalDeelnemers); ?> deelnemers meedoen aan deze activiteit.
+
+	<!-- Totale afstand die tijdens deze HIT afgelegd wordt is maximaal 50 kilometer. -->
+
+	<?php
+		$startDF = $start->format('j F');
+		$startTF = $start->format('H:i');
+		$eindDTF = $eind->format('j F H:i');
+		$begintOpGoedeVrijdag = $start->format('N') == '5'; // vrijdag
+	?>
+	Dit HIT-Kamp start op <?php echo($startDF); ?> om <?php echo($startTF); ?> uur en duurt tot en met <?php echo($eindDTF); ?> uur.
+	
+	<?php if($begintOpGoedeVrijdag) {?>
+	Dit HIT-Kamp begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
+	Mogelijk biedt <a href="https://hit.scouting.nl/downloads/doc_download/9-brief-om-vrij-te-krijgen-voor-goede-vrijdag" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
+	<?php } // TODO url voor vrijvraagbrief ?>
 </p>
 
 <input style="float: right" value="Direct inschrijven" type="BUTTON" />
