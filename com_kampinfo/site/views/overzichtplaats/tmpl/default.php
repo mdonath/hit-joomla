@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access');
 
 $plaats = $this->plaats;
 ?>
-<h1>De HIT's van HIT <?php echo $plaats->naam; ?></h1>
+<p><strong>De HIT's van HIT <?php echo $plaats->naam; ?></strong></p>
 
 <table id="overzicht">
 	<thead>
@@ -23,8 +23,18 @@ $plaats = $this->plaats;
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
-			<td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>-<?php echo($kamp->maximumLeeftijd); ?></td>
-			<td class="kolom3"><?php echo($kamp->groep); ?></td>
+			<td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>&nbsp;-&nbsp;<?php echo($kamp->maximumLeeftijd); ?></td>
+			<td class="kolom3">
+				<?php
+					$subgroepMin = $kamp->subgroepsamenstellingMinimum;
+					$subgroepMax = $kamp->subgroepsamenstellingMaximum;
+					if ($subgroepMin == 0 || $subgroepMax == 0) {
+						echo('&nbsp;');						
+					} else {
+						echo("$subgroepMin - $subgroepMax pers.");
+					}
+				?>
+			</td>
 			<td class="kolom4">
 				<?php
 					// TODO: alt-text door in model al icoon-objecten te maken

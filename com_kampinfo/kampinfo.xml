@@ -45,6 +45,7 @@
         <media destination="com_kampinfo" folder="media">
                 <filename>index.html</filename>
                 <folder>images</folder>
+                <folder>css</folder>
         </media>
  
         <administration>

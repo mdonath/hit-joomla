@@ -21,6 +21,10 @@ class KampInfoViewOverzichtplaats extends JView {
 			JError :: raiseError(500, implode('<br />', $errors));
 			return false;
 		}
+		
+		$document =& JFactory::getDocument();
+		$document->addStyleSheet(JURI::base() . "media/com_kampinfo/css/overzicht.css",'text/css',"screen");
+		
 		// Display the view
 		parent :: display($tpl);
 	}
