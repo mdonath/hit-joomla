@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="quickicon" method="upgrade">
+	<name>Snelkoppeling - KampInfo</name>
+	<author>Martijn Donath</author>
+	<creationDate>November 2012</creationDate>
+	<copyright>Copyright (C) 2012 Martijn Donath. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>martijn.donath@gmail.com</authorEmail>
+	<version>0.0.1</version>
+	<description>Snelkoppeling voor KampInfo.</description>
+	<files>
+		<filename plugin="kampinfoicon">kampinfoicon.php</filename>
+		<filename>index.html</filename>
+	</files>
+</extension>
