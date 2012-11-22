@@ -1,4 +1,4 @@
-<?php
+	<?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
@@ -241,6 +241,7 @@ class KampInfoModelImport extends JModelAdmin
 		//, 'Opmerkingen voor Helpdesk:'										=> new IgnoredVeld()
 		, 'Akkoord HIT-kamp'												=> new GewoonVeld('akkoordHitKamp')
 		, 'Akkoord HIT-plaats'												=> new GewoonVeld('akkoordHitPlaats')
+		, 'Shantiformuliernummer'											=> new GewoonVeld('shantiFormuliernummer')
 		);
 		return $mapping;		
 	}

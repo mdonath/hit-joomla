@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset
+		name="preferences"
+		label="COM_KAMPINFO_PREFERENCES_LABEL"
+		description="COM_KAMPINFO_PREFERENCES_DESCRIPTION"
+		>
+		<field
+			name="vrijVraagBriefUrl"
+			type="text"
+			size="40"
+			label="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_LABEL"
+			description="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_DESC"
+			/>
+	</fieldset>
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			filter="rules"
+			validate="rules"
+			component="com_kampinfo"
+			section="component" />
+	</fieldset>
+</config>

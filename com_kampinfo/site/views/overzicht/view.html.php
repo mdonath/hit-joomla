@@ -24,7 +24,7 @@ class KampInfoViewOverzicht extends JView {
 		}
 		
 		$document =& JFactory::getDocument();
-		$document->addStyleSheet(JURI::base() . "media/com_kampinfo/css/overzicht.css",'text/css',"screen");
+		$document->addStyleSheet(JURI::base() . 'media/com_kampinfo/css/overzicht.css', 'text/css', 'screen');
 		
 		// Display the view
 		parent :: display($tpl);

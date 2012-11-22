@@ -1,8 +1,19 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
+// config
+$params = &JComponentHelper::getParams('com_kampinfo');
+$vrijVraagBriefUrl = $params->get('vrijVraagBriefUrl');
+ 
+// model
 $activiteit = $this->activiteit;
+
+$start = new JDate($activiteit->startDatumTijd);
+$eind = new JDate($activiteit->eindDatumTijd);
+
+function isEmptyUrl($url) {
+	return empty($url) or $url == 'http://'; 
+}
+
 ?>
 <table border="0">
 	<tbody>
@@ -44,9 +55,7 @@ $activiteit = $this->activiteit;
 			<td valign="top">:</td>
 			<td valign="top">
 			<?php
-				$start = new JDate($activiteit->startDatumTijd);
 				$startF = $start->format('j F');
-				$eind = new JDate($activiteit->eindDatumTijd);
 				$eindF = $eind->format('j F');
 				echo("$startF t/m $eindF");
 			?>
@@ -104,13 +113,12 @@ $activiteit = $this->activiteit;
 			<td>
 				<div>
 					<h2><?php echo($activiteit->titeltekst);?></h2>
-					<h2></h2>
 				</div>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<?php $heeftEenYoutubeFilmpje = false; ?>
+<?php $heeftEenYoutubeFilmpje = strpos($activiteit->webadresFoto3, 'www.youtube.com') !== false; ?>
 <table border="0">
 	<tbody>
 		<tr>
@@ -118,19 +126,19 @@ $activiteit = $this->activiteit;
 			<?php echo($activiteit->websiteTekst); ?>
 			</td>
 			<td valign="top" width="190">
-				<?php if (!empty($activiteit->webadresFoto1) and $activiteit->webadresFoto1 != 'http://') { ?>
+				<?php if (!isEmptyUrl($activiteit->webadresFoto1)) { ?>
 					<img src="<?php echo($activiteit->webadresFoto1); ?>" alt="Foto 1" border="0" width="180" /><br /><br />
 				<?php } ?>
-				<?php if (!empty($activiteit->webadresFoto2) and $activiteit->webadresFoto2 != 'http://') { ?>
+				<?php if (!isEmptyUrl($activiteit->webadresFoto2)) { ?>
 					<img src="<?php echo($activiteit->webadresFoto2); ?>" alt="Foto 2" border="0" width="180" /><br /><br />
 				<?php } ?>
-				<?php if (!$heeftEenYoutubeFilmpje and !empty($activiteit->webadresFoto3) and $activiteit->webadresFoto3 != 'http://') { ?>
+				<?php if (!($heeftEenYoutubeFilmpje or isEmptyUrl($activiteit->webadresFoto3))) { ?>
 					<img src="<?php echo($activiteit->webadresFoto3); ?>" alt="Foto 3" border="0" width="180" /><br /><br />
 				<?php } ?>
 			</td>
 		</tr>
 		
-		<?php if ($heeftEenYoutubeFilmpje and !empty($activiteit->webadresFoto3)  and $activiteit->webadresFoto3 != 'http://') { ?>
+		<?php if ($heeftEenYoutubeFilmpje) { ?>
 		<tr>
 			<td colspan="2">
 				<object width="670" height="400">
@@ -147,6 +155,7 @@ $activiteit = $this->activiteit;
 
 <table border="0">
 	<tbody>
+		<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres)) { ?>
 		<tr>
 			<td><img src="https://hit.scouting.nl/images/iconen40pix/info.gif" alt="Meer informatie? Mail of bel naar de contactpersoon van deze HIT" border="0" /></td>
 			<td>
@@ -154,27 +163,31 @@ $activiteit = $this->activiteit;
 					<?php if (!empty($activiteit->websiteContactTelefoonnummer)) { ?>
 						Bel bij vragen <?php echo($activiteit->websiteContactpersoon); ?>: <?php echo($activiteit->websiteContactTelefoonnummer); ?><br />
 					<?php } ?>
-					<a href="mailto:<?php echo($activiteit->websiteContactEmailadres); ?>" >Mail naar <?php echo($activiteit->websiteContactEmailadres); ?></a>
-					<br mce_bogus="1" />
+					<?php if (!empty($activiteit->websiteContactEmailadres)) { ?>
+						<a href="mailto:<?php echo($activiteit->websiteContactEmailadres); ?>" >Mail naar <?php echo($activiteit->websiteContactEmailadres); ?></a><br />
+					<?php } ?>
 				</p>
 			</td>
 		</tr>
+		<?php } ?>
+		<?php if (!empty($activiteit->websiteAdres)) { ?>
 		<tr>
-			<td><img src="https://hit.scouting.nl/images/iconen40pix/web.gif" mce_src="https://hit.scouting.nl/images/iconen40pix/web.gif" alt="Link naar een website over dit HIT onderdeel" border="0" /></td>
+			<td><img src="https://hit.scouting.nl/images/iconen40pix/web.gif" alt="Link naar een website over dit HIT onderdeel" border="0" /></td>
 			<td>
 				<p>
-					<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a>
-					<br/>
+					<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a><br/>
 				</p>
 			</td>
 		</tr>
+		<?php } ?>
 	</tbody>
 </table>
 
 
 <h2>Aanvullende info:</h2>
+<p>
 <!--
-<p>VOLVOL!<br />
+VOLVOL!<br />
 -->
 
 	<?php if(!empty($activiteit->maximumAantalUitEenGroep)) { ?>
@@ -195,10 +208,11 @@ $activiteit = $this->activiteit;
 	
 	<?php if($begintOpGoedeVrijdag) {?>
 	Dit HIT-Kamp begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
-	Mogelijk biedt <a href="https://hit.scouting.nl/downloads/doc_download/9-brief-om-vrij-te-krijgen-voor-goede-vrijdag" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
+	Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
 	<?php } // TODO url voor vrijvraagbrief ?>
 </p>
-
-<input style="float: right" value="Direct inschrijven" type="BUTTON" />
+<?php if ($activiteit->shantiFormuliernummer > 0) { ?>
+	<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('https://sol.scouting.nl/frontend/sol/index.php?task=as_registration&amp;action=add&amp;frm_id=<?php echo($activiteit->shantiFormuliernummer); ?>')" />
+<?php } ?>
 <br />
 </div>

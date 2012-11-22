@@ -63,6 +63,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`margeAantalDagenTeOud`					SMALLINT(3)
 ,	`redenAfwijkingMarge`					VARCHAR(255)
 ,	`doelgroepen`							TEXT
+,	`shantiFormuliernummer`					INT(10)
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
 ,	PRIMARY KEY (`id`)

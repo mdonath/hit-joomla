@@ -7,11 +7,10 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.application.component.view');
 
 /**
- * HTML View class voor het Overzicht
+ * HTML View class voor een HIT Kamponderdeel.
  */
 class KampInfoViewActiviteit extends JView {
 	
-	// Overwriting JView display method
 	function display($tpl = null) {
 		// Assign data to the view
 		$this->activiteit= $this->get('Activiteit');
@@ -21,6 +20,10 @@ class KampInfoViewActiviteit extends JView {
 			JError :: raiseError(500, implode('<br />', $errors));
 			return false;
 		}
+
+		$document =& JFactory::getDocument();
+		$document->addStyleSheet(JURI::base() . "media/com_kampinfo/css/activiteit.css", 'text/css', "screen");
+		
 		// Display the view
 		parent :: display($tpl);
 	}
