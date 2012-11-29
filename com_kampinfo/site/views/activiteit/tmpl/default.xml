@@ -13,12 +13,14 @@
 			<field
 					name="jaar"
 					type="Project"
+					required="true"
 					label="Jaar"
 					description="COM_KAMPINFO_ACTIVITEIT_JAAR_DESC"
 			/>
 			<field
 					name="deelnemersnummer"
-					type="text"
+					type="Deelnemersnummer"
+					required="true"
 					label="Deelnemersnummer"
 					description="COM_KAMPINFO_ACTIVITEIT_ID_JAAR_DESC"
 			/>

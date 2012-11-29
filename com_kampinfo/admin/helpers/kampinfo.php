@@ -1,7 +1,4 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die;
-
+<?php defined('_JEXEC') or die;
 
 /**
  * KampInfo component helper.
@@ -21,13 +18,17 @@ abstract class KampInfoHelper {
 
 		if ($submenu == 'hitprojects') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITPROJECTS_DOCTITLE'));
-		} elseif ($submenu == 'hitsites') {
+		}
+		elseif ($submenu == 'hitsites') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITSITES_DOCTITLE'));
-		} elseif ($submenu == 'hitcamps') {
+		}
+		elseif ($submenu == 'hitcamps') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITCAMPS_DOCTITLE'));
-		} elseif ($submenu == 'hiticons') {
+		}
+		elseif ($submenu == 'hiticons') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITICONS_DOCTITLE'));
-		} elseif ($submenu == 'import') {
+		}
+		elseif ($submenu == 'import') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_IMPORT_DOCTITLE'));
 		}
 	}
@@ -56,7 +57,34 @@ abstract class KampInfoHelper {
 			JError :: raiseWarning(500, $db->getErrorMsg());
 		}
 
-		return $options;	
+		return $options;
+	}
+
+	public static function getDeelnemersnummerOptions() {
+		$options = array ();
+
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('c.deelnemersnummer As value, concat(s.jaar, " - ", s.naam, " - ", c.naam, " (", c.deelnemersnummer, ")") As text');
+		$query->from('#__kampinfo_hitcamp c');
+
+		$query->select('s.naam as plaats, s.id as hitsite_id');
+		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite=s.code');
+
+		$query->order('s.jaar, s.naam, c.naam');
+
+		// Get the options.
+		$db->setQuery($query);
+
+		$options = $db->loadObjectList();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+
+		return $options;
 	}
 
 	public static function getHitProjectOptions() {
@@ -81,7 +109,7 @@ abstract class KampInfoHelper {
 
 		return $options;
 	}
-	
+
 	public static function getHitSiteOptions() {
 		$options = array ();
 
@@ -106,14 +134,14 @@ abstract class KampInfoHelper {
 	}
 
 	public static function getSelectedHitIcons($deelnemersnummer) {
-	$options = array ();
+		$options = array ();
 
 		$db = JFactory :: getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('bestandsnaam');
 		$query->from('#__kampinfo_camp_icon');
-		$query->where('deelnemersnummer = '.$db->quote($db->getEscaped($deelnemersnummer)));
+		$query->where('deelnemersnummer = ' . $db->quote($db->getEscaped($deelnemersnummer)));
 		$query->order('volgorde');
 
 		// Get the options.
@@ -153,26 +181,71 @@ abstract class KampInfoHelper {
 
 	public static function getActivityAreaOptions() {
 		return array (
-			(object) array("value" => "buitenleven", "text" => "Buitenleven")
-		,	(object) array("value" => "expressie", "text" => "Expressie")
-		,	(object) array("value" => "identiteit", "text" => "Identiteit")
-		,	(object) array("value" => "internationaal", "text" => "Internationaal")
-		,	(object) array("value" => "samenleving", "text" => "Samenleving")
-		,	(object) array("value" => "sportenspel", "text" => "Sport en Spel")
-		,	(object) array("value" => "uitdagend", "text" => "Uitdagende Scoutingtechnieken")
-		,	(object) array("value" => "veiligengezond", "text" => "Veilig en Gezond")
+			(object) array (
+				"value" => "buitenleven",
+				"text" => "Buitenleven"
+			),
+			(object) array (
+				"value" => "expressie",
+				"text" => "Expressie"
+			),
+			(object) array (
+				"value" => "identiteit",
+				"text" => "Identiteit"
+			),
+			(object) array (
+				"value" => "internationaal",
+				"text" => "Internationaal"
+			),
+			(object) array (
+				"value" => "samenleving",
+				"text" => "Samenleving"
+			),
+			(object) array (
+				"value" => "sportenspel",
+				"text" => "Sport en Spel"
+			),
+			(object) array (
+				"value" => "uitdagend",
+				"text" => "Uitdagende Scoutingtechnieken"
+			),
+			(object) array (
+				"value" => "veiligengezond",
+				"text" => "Veilig en Gezond"
+			)
 		);
 	}
-	
+
 	public static function getTargetgroupOptions() {
 		return array (
-			(object) array("value" => "bevers", "text" => "Bevers 5-7 jaar")
-		,	(object) array("value" => "welpen", "text" => "Welpen 7-11 jaar")
-		,	(object) array("value" => "scouts", "text" => "Scouts 11-15 jaar")
-		,	(object) array("value" => "explorers", "text" => "Explorers 15-18 jaar")
-		,	(object) array("value" => "roverscouts", "text" => "Roverscouts 18 t/m 21 jaar")
-		,	(object) array("value" => "plusscouts", "text" => "Plusscouts 21+")
-		,	(object) array("value" => "ndlg", "text" => "Volwassenen (ndlg)")
+			(object) array (
+				"value" => "bevers",
+				"text" => "Bevers 5-7 jaar"
+			),
+			(object) array (
+				"value" => "welpen",
+				"text" => "Welpen 7-11 jaar"
+			),
+			(object) array (
+				"value" => "scouts",
+				"text" => "Scouts 11-15 jaar"
+			),
+			(object) array (
+				"value" => "explorers",
+				"text" => "Explorers 15-18 jaar"
+			),
+			(object) array (
+				"value" => "roverscouts",
+				"text" => "Roverscouts 18 t/m 21 jaar"
+			),
+			(object) array (
+				"value" => "plusscouts",
+				"text" => "Plusscouts 21+"
+			),
+			(object) array (
+				"value" => "ndlg",
+				"text" => "Volwassenen (ndlg)"
+			)
 		);
 	}
 
@@ -183,6 +256,7 @@ abstract class KampInfoHelper {
 			"I" => "Inschrijven",
 			"O" => "Overnachten",
 			"A" => "Afstand",
-			"K" => "Koken");
+			"K" => "Koken"
+		);
 	}
 }
