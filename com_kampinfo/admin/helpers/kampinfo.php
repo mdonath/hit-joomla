@@ -31,9 +31,9 @@ abstract class KampInfoHelper {
 			$document->setTitle(JText :: _('COM_KAMPINFO_IMPORT_DOCTITLE'));
 		}
 	}
-	
+
 	public static function getHitActiviteitOptions() {
-	$options = array ();
+		$options = array ();
 
 		$db = JFactory :: getDbo();
 		$query = $db->getQuery(true);

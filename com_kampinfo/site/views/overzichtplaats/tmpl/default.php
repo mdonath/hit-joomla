@@ -3,8 +3,21 @@
 defined('_JEXEC') or die('Restricted access');
 
 $plaats = $this->plaats;
+
+function activiteitURL($plaats, $kamp) {
+	$jaar = $plaats->jaar;
+	$deelnemersnummer = $kamp->deelnemersnummer;
+	return "index.php?option=com_kampinfo&amp;view=activiteit&amp;jaar=$jaar&amp;deelnemersnummer=$deelnemersnummer";
+}
+
+function plaatsURL($plaats) {
+	$code = $plaats->code;
+	return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
+}
 ?>
-<p><strong>De HIT's van HIT <?php echo $plaats->naam; ?></strong></p>
+<div class="overzichtHeader">
+	<p><strong>De HIT's van HIT <?php echo $plaats->naam; ?></strong></p>
+</div>
 
 <table id="overzicht">
 	<thead>
@@ -19,9 +32,7 @@ $plaats = $this->plaats;
 		<?php foreach ($plaats->kampen as $kamp) { ?>
 		<tr>
 			<td class="kolom1">
-				<a href="index.php?option=com_kampinfo&amp;view=activiteit&amp;id=<?php echo($kamp->id); ?>">
-					<?php echo($kamp->naam); ?>
-				</a>
+				<a href="<?php echo(activiteitURL($plaats, $kamp)); ?>"><?php echo($kamp->naam); ?>	</a>
 			</td>
 			<td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>&nbsp;-&nbsp;<?php echo($kamp->maximumLeeftijd); ?></td>
 			<td class="kolom3">
@@ -39,10 +50,10 @@ $plaats = $this->plaats;
 			</td>
 			<td class="kolom4">
 				<?php
-					// TODO: alt-text door in model al icoon-objecten te maken
-					$kamp->icoontjes = explode(',', $kamp->icoontjes);
 					foreach ($kamp->icoontjes as $icoon) {
-						echo '<img src="media/com_kampinfo/images/iconen25pix/'.$icoon.'.gif"/>';
+						$b = $icoon->naam;
+						$a = $icoon->tekst;
+						echo ("<img src=\"media/com_kampinfo/images/iconen25pix/$b.gif\" title=\"$a\"/>");
 					}
 				?>
 			</td>

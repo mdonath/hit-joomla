@@ -94,16 +94,16 @@ function isEmptyUrl($url) {
 <table style="width: 100%;" border="0" cellpadding="0">
 	<tbody>
 		<tr>
-			<td><br mce_bogus="1" /></td>
+			<td><br /></td>
 		</tr>
 		<tr>
 			<td>
 				<div style="text-align: right;">
 				<?php
-					// TODO: alt-text door in model al icoon-objecten te maken
-					$activiteit->icoontjes = explode(',', $activiteit->icoontjes);
 					foreach ($activiteit->icoontjes as $icoon) {
-						echo '<img src="media/com_kampinfo/images/iconen40pix/'.$icoon.'.gif"/>';
+						$b = $icoon->naam;
+						$a = $icoon->tekst;
+						echo ("<img src=\"media/com_kampinfo/images/iconen40pix/$b.gif\" title=\"$a\"/>");
 					}
 				?>
 				</div>
@@ -118,12 +118,16 @@ function isEmptyUrl($url) {
 		</tr>
 	</tbody>
 </table>
-<?php $heeftEenYoutubeFilmpje = strpos($activiteit->webadresFoto3, 'www.youtube.com') !== false; ?>
+<?php
+	$dotcom = strpos($activiteit->webadresFoto3, 'www.youtube.com') !== false;
+	$dotbe = strpos($activiteit->webadresFoto3, 'youtu.be') !== false;
+	$heeftEenYoutubeFilmpje = $dotcom || $dotbe;
+?>
 <table border="0">
 	<tbody>
 		<tr>
 			<td valign="top" width="480">
-			<?php echo($activiteit->websiteTekst); ?>
+				<p><?php echo($activiteit->websiteTekst); ?></p>
 			</td>
 			<td valign="top" width="190">
 				<?php if (!isEmptyUrl($activiteit->webadresFoto1)) { ?>

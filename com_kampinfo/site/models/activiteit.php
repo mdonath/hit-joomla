@@ -1,26 +1,30 @@
-<?php
-
-
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
+include_once dirname(__FILE__).'/kampinfomodelparent.php';
 
 /**
  * KampInfo Activiteit Model
  */
-class KampInfoModelActiviteit extends JModelItem {
+class KampInfoModelActiviteit extends KampInfoModelParent {
 
 	public function getActiviteit() {
-		$id = JRequest :: getInt('id');
-		
-		$activiteit = $this->getHitKamp($id);
-		
+		$jaar = JRequest :: getInt('jaar');
+		$deelnemersnummer = JRequest :: getInt('deelnemersnummer');
+		if (!empty($jaar) and !empty($deelnemersnummer)) {
+			$activiteit = $this->getHitKampById($jaar, $deelnemersnummer);
+		} else {
+			JError :: raiseWarning(404, "Kamp met deelnemersnummer $deelnemersnummer bestaat niet in $jaar.");
+		}
 	 	return $activiteit;
 	}
 
-	function getHitKamp($id) {
+	public function getIconenLijst() {
+		
+	}
+
+	function getHitKampById($jaar, $deelnemersnummer) {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
@@ -33,9 +37,8 @@ class KampInfoModelActiviteit extends JModelItem {
 		$query->select('p.jaar as jaar, p.id as hitproject_id');
 		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.jaar=p.jaar');
 
-		if (!empty ($id)) {
-			$query->where('(c.id= ' . (int)($db->getEscaped($id)) . ')');
-		}
+		$query->where('(s.jaar = ' . (int)($db->getEscaped($jaar)) . ')');
+		$query->where('(c.deelnemersnummer = ' . (int)($db->getEscaped($deelnemersnummer)) . ')');
 
 		$db->setQuery($query);
 		$activiteiten = $db->loadObjectList();
@@ -46,9 +49,11 @@ class KampInfoModelActiviteit extends JModelItem {
 		}
 		
 		if (count($activiteiten) != 1) {
-			JError :: raiseWarning(500, '0 of meer dan 1 gevonden met id '. $id);
+			JError :: raiseWarning(500, "0 of meer dan 1 gevonden met deelnemersnummer $deelnemersnummer in jaar $jaar.");
 		}
-		return $activiteiten[0];
+		$activiteit = $activiteiten[0];
+
+		$activiteit->icoontjes =  $this->getBeperkteIconenLijst(explode(',', $activiteit->icoontjes));
+		return $activiteit;
 	}
- 
 }

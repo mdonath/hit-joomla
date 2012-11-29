@@ -1,26 +1,25 @@
 <?php
-
-
-// No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
+include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 
 /**
  * KampInfo Overzichtplaats Model
  */
-class KampInfoModelOverzichtplaats extends JModelItem {
+class KampInfoModelOverzichtplaats extends KampInfoModelParent {
 
 	public function getPlaats() {
 		$filterPlaatscode = JRequest :: getString('plaats');
-		
+
 		$plaats = $this->getHitPlaats($filterPlaatscode);
-		$plaats->kampen = $this->getHitKampen($plaats->code);
+
+		$iconenLijst = $this->getIconenLijst();
+		$plaats->kampen = $this->getHitKampen($plaats->code, $iconenLijst);
 
 		return $plaats;
 	}
-
 
 	function getHitPlaats($filterPlaatscode) {
 		$db = JFactory :: getDBO();
@@ -34,18 +33,5 @@ class KampInfoModelOverzichtplaats extends JModelItem {
 		$plaats = $db->loadObjectList();
 		return $plaats[0];
 	}
-	
-	function getHitKampen($plaats) {
-		$db = JFactory :: getDBO();
 
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.hitsite = ' . $db->quote($db->getEscaped($plaats)) . ')');
-		$query->order('c.naam');
-
-		$db->setQuery($query);
-		$kampenInPlaats = $db->loadObjectList();
-		return $kampenInPlaats;
-	}
 }

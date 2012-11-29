@@ -13,7 +13,7 @@ class KampInfoViewActiviteit extends JView {
 	
 	function display($tpl = null) {
 		// Assign data to the view
-		$this->activiteit= $this->get('Activiteit');
+		$this->activiteit = $this->get('Activiteit');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -23,7 +23,8 @@ class KampInfoViewActiviteit extends JView {
 
 		$document =& JFactory::getDocument();
 		$document->addStyleSheet(JURI::base() . "media/com_kampinfo/css/activiteit.css", 'text/css', "screen");
-		
+		$document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
+
 		// Display the view
 		parent :: display($tpl);
 	}

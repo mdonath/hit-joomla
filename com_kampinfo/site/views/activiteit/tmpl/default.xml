@@ -11,9 +11,15 @@
 				name="request"
 		>
 			<field
-					name="id"
-					type="Activiteit"
-					label="COM_KAMPINFO_ACTIVITEIT_FIELD_ID_LABEL"
+					name="jaar"
+					type="Project"
+					label="Jaar"
+					description="COM_KAMPINFO_ACTIVITEIT_JAAR_DESC"
+			/>
+			<field
+					name="deelnemersnummer"
+					type="text"
+					label="Deelnemersnummer"
 					description="COM_KAMPINFO_ACTIVITEIT_ID_JAAR_DESC"
 			/>
 		</fieldset>
