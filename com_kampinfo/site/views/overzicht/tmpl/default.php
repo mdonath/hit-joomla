@@ -12,7 +12,8 @@ function activiteitURL($plaats, $kamp) {
 
 function plaatsURL($plaats) {
 	$code = $plaats->code;
-	return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
+	// return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
+	return "hits-in-" . strtolower($plaats->naam);
 }
 ?> 
 
