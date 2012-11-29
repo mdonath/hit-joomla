@@ -53,7 +53,8 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		}
 		$activiteit = $activiteiten[0];
 
-		$activiteit->icoontjes =  $this->getBeperkteIconenLijst(explode(',', $activiteit->icoontjes));
+		$activiteit->icoontjes =  $this->createIcons($activiteit->icoontjes);
+		$activiteit->activiteitengebieden = $this->createActiviteitengebieden($activiteit->activiteitengebieden); 
 		return $activiteit;
 	}
 }

@@ -21,10 +21,8 @@ function isEmptyUrl($url) {
 			<td>
 				<p>
 				<?php
-					// TODO: alt-text door in model al activiteitengebied-objecten te maken
-					$activiteit->activiteitengebieden = explode(',', $activiteit->activiteitengebieden);
-					foreach ($activiteit->activiteitengebieden as $activiteitengebied) {
-						echo '<img src="media/com_kampinfo/images/activiteitengebieden/'.$activiteitengebied.'.png"/>';
+					foreach ($activiteit->activiteitengebieden as $gebied) {
+						echo '<img src="media/com_kampinfo/images/activiteitengebieden/'.$gebied->value.'.png" title="'.$gebied->text.'"/>';
 					}
 				?>
 				</p>

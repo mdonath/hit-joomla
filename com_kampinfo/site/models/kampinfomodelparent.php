@@ -30,14 +30,18 @@ abstract class KampInfoModelParent extends JModelItem {
 		return $kampenInPlaats;
 	}
 
-	public function getBeperkteIconenLijst($namen) {
+	/**
+	 * @param $namen - comma separated string
+	 */
+	public function createIcons($namen) {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.bestandsnaam as naam, i.tekst');
 		$query->from('#__kampinfo_hiticon i');
+
 		$values=array();
-		foreach($namen as $naam) {
+		foreach(explode(',', $namen) as $naam) {
 			$values[] = $db->quote($db->getEscaped($naam));
 		}
 		$query->where('i.bestandsnaam in (' . implode(',', $values) . ')');
@@ -52,6 +56,20 @@ abstract class KampInfoModelParent extends JModelItem {
 		}
 		
 		return $icons;
+	}
+
+	function createActiviteitengebieden($activiteitengebieden) {
+		$activiteitengebieden = explode(',', $activiteitengebieden);
+		$options = KampInfoHelper :: getActivityAreaOptions();
+		$result = array();
+		foreach ($activiteitengebieden as $gebied) {
+			foreach($options as $option) {
+				if ($option->value == $gebied) {
+					$result[] = $option;
+				}
+			}
+		}
+		return $result;		
 	}
 
 	function explodeIcoontjes($kamp, $iconenLijst) {
