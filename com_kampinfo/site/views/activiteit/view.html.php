@@ -21,8 +21,9 @@ class KampInfoViewActiviteit extends JView {
 			return false;
 		}
 
+		JHTML::stylesheet("activiteit.css", "media/com_kampinfo/css/");
+
 		$document =& JFactory::getDocument();
-		$document->addStyleSheet(JURI::base() . "media/com_kampinfo/css/activiteit.css", 'text/css', "screen");
 		$document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 
 		// Display the view

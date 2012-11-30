@@ -143,12 +143,7 @@ function isEmptyUrl($url) {
 		<?php if ($heeftEenYoutubeFilmpje) { ?>
 		<tr>
 			<td colspan="2">
-				<object width="670" height="400">
-					<param name="movie" value="<?php echo($activiteit->webadresFoto3); ?>"></param>
-					<param name="allowFullScreen" value="true"></param>
-					<param name="allowscriptaccess" value="always"></param>
-					<embed src="<?php echo($activiteit->webadresFoto3); ?>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="670" height="400"></embed>
-				</object>
+				<iframe width="670" height="400" src="<?php echo($activiteit->webadresFoto3); ?>" frameborder="0" allowfullscreen></iframe>
 			</td>
 		</tr>
 		<?php } ?>

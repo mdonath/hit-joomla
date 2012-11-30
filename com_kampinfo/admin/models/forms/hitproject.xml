@@ -60,5 +60,21 @@
 				class="inputbox"
 				default=""
 		/>
+		<field	name="vrijdag"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_VRIJDAG_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_VRIJDAG_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
+		<field	name="maandag"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_MAANDAG_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_MAANDAG_DESC"
+				format="%Y-%m-%d"
+				class="inputbox"
+				default=""
+		/>
 	</fieldset>
 </form>

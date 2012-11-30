@@ -56,6 +56,8 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`websiteContactEmailadres`				VARCHAR(255)
 ,	`websiteContactpersoon`					VARCHAR(255)
 ,	`minimumAantalDeelnemers`				SMALLINT(3)
+,	`aantalDeelnemers`						SMALLINT(3)
+,	`gereserveerd`							SMALLINT(3)
 ,	`maximumAantalDeelnemers`				SMALLINT(3)
 ,	`maximumAantalSubgroepjes`				SMALLINT(3)
 ,	`maximumAantalUitEenGroep`				SMALLINT(3)
@@ -89,9 +91,11 @@ INSERT INTO `#__kampinfo_hitproject` (
 ,	`inschrijvingKosteloosAnnulerenDatum`
 ,	`inschrijvingGeenRestitutieDatum`
 ,	`inningsdatum`
+,	`vrijdag`
+,	`maandag`
 ) VALUES
-	(2012, '2012-01-02', '2012-03-09', '2012-03-09', '2012-03-09', '2012-03-10', '2012-03-19')
-,	(2013, '2013-01-02', '2013-03-09', '2013-03-09', '2013-03-09', '2013-03-10', '2013-03-19')
+	(2012, '2012-01-02', '2012-03-09', '2012-03-09', '2012-03-09', '2012-03-10', '2012-03-19', '2012-04-06', '2012-04-09')
+,	(2013, '2013-01-03', '2013-03-09', '2013-03-09', '2013-03-09', '2013-03-10', '2013-03-19', '2013-03-29', '2013-04-01')
 ;
 
 INSERT INTO `#__kampinfo_hitsite` (
