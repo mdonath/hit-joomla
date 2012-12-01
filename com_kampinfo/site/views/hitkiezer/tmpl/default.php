@@ -1,38 +1,37 @@
 <?php defined('_JEXEC') or die('Restricted access');?>
 
-<div class="rt-joomla component-content">
-	<div class="rt-article">
-		<div class="item-page">
-			<div class="module-content-pagetitle">
-				<div class="module-tm">
-					<div class="module-tl">
-						<div class="module-tr"></div>
-					</div>
-				</div>
-				<div class="module-l">
-					<div class="module-r">
-						<div class="rt-headline">
-							<div class="module-title">
-								<div class="module-title2">
-									<h1 class="title rt-pagetitle">HIT Kiezer</h1>
-								</div>
-							</div>
-						</div>
-						<div class="clear"></div>
-					</div>
+<div class="rt-article">
+	<div class="item-page">
+		<div class="module-content-pagetitle">
+			<div class="module-tm">
+				<div class="module-tl">
+					<div class="module-tr"></div>
 				</div>
 			</div>
-
-			<div class="module-content">
-				<div class="module-tm">
-					<div class="module-tl">
-						<div class="module-tr"></div>
+			<div class="module-l">
+				<div class="module-r">
+					<div class="rt-headline">
+						<div class="module-title">
+							<div class="module-title2">
+								<h1 class="title rt-pagetitle">HIT Kiezer</h1>
+							</div>
+						</div>
 					</div>
+					<div class="clear"></div>
 				</div>
-				<div class="module-l">
-					<div class="module-r">
-						<div class="module-inner">
-							<div class="module-inner2">
+			</div>
+		</div>
+
+		<div class="module-content">
+			<div class="module-tm">
+				<div class="module-tl">
+					<div class="module-tr"></div>
+				</div>
+			</div>
+			<div class="module-l">
+				<div class="module-r">
+					<div class="module-inner">
+						<div class="module-inner2">
 
 <p>	Met de HIT-kiezer kun je kijken welke HIT er bij jou past, op basis van je leeftijd
 	tijdens de HIT, je budget, en de dingen die je absoluut wel of absoluut niet leuk vindt.
@@ -85,7 +84,6 @@
 	</form>
 </div>
 
-							</div>
 						</div>
 					</div>
 				</div>
