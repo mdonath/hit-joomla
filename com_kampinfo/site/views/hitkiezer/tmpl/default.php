@@ -3,11 +3,6 @@
 <div class="rt-article">
 	<div class="item-page">
 		<div class="module-content-pagetitle">
-			<div class="module-tm">
-				<div class="module-tl">
-					<div class="module-tr"></div>
-				</div>
-			</div>
 			<div class="module-l">
 				<div class="module-r">
 					<div class="rt-headline">
@@ -23,11 +18,6 @@
 		</div>
 
 		<div class="module-content">
-			<div class="module-tm">
-				<div class="module-tl">
-					<div class="module-tr"></div>
-				</div>
-			</div>
 			<div class="module-l">
 				<div class="module-r">
 					<div class="module-inner">
