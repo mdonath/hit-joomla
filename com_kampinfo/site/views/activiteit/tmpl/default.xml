@@ -15,7 +15,7 @@
 					type="Project"
 					required="true"
 					label="Jaar"
-					value="2013"
+					default="2013"
 					description="COM_KAMPINFO_ACTIVITEIT_JAAR_DESC"
 			/>
 			<field

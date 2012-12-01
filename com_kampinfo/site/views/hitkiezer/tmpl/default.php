@@ -46,10 +46,10 @@
 		</p>
 	
 		<p><strong>Stap 2:</strong> Geef het bedrag aan dat je maximaal voor de HIT wilt betalen.</p>
-		<label for="budget">Maximaal €&nbsp;</label>
+		<p>Maximaal €&nbsp;
 		<select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore">
 			<option value="-1"></option>
-		</select>
+		</select></p>
 			
 		<p><strong>Stap 3:</strong> Klik op de icoontjes die passen bij wat je graag wilt bij een HIT, of juist niet.</p>
 		<ul>

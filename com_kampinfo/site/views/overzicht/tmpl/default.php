@@ -1,34 +1,74 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
+
+function activiteitURL($plaats, $kamp, $use=TRUE) {
+	if ($use) {
+		$jaar = $plaats->jaar;
+		$deelnemersnummer = $kamp->deelnemersnummer;
+		return "index.php?option=com_kampinfo&amp;view=activiteit&amp;jaar=$jaar&amp;deelnemersnummer=$deelnemersnummer";
+	} else {
+		return plaatsURL($plaats, $use) . "/" . aliassify($kamp);
+	}
+}
+function plaatsURL($plaats, $use=TRUE) {
+	if ($use) {
+		$code = $plaats->code;
+		return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
+	} else {
+		return "hits-in-" . strtolower($plaats->naam);
+	}
+}
+
+function aliassify($kamp) {
+	$pat = array();
+	$rep = array();
+
+	$pat[] = '/ - /';			$rep[] = '-';
+	$pat[] = '/ /';				$rep[] = '-';
+	$pat[] = '/[^a-z0-9\-]/';	$rep[] = '';
+	$pat[] = '/-+/';			$rep[] = '-';
+
+	return preg_replace($pat, $rep, strtolower($kamp->naam));
+}
+
+// config
+$params = &JComponentHelper::getParams('com_kampinfo');
+$useComponentUrls = $params->get('useComponentUrls') == 1;
 
 $project = $this->project;
-
-function activiteitURL($plaats, $kamp) {
-	$jaar = $plaats->jaar;
-	$deelnemersnummer = $kamp->deelnemersnummer;
-	return "index.php?option=com_kampinfo&amp;view=activiteit&amp;jaar=$jaar&amp;deelnemersnummer=$deelnemersnummer";
-}
-
-function plaatsURL($plaats) {
-	$code = $plaats->code;
-	// return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
-	return "hits-in-" . strtolower($plaats->naam);
-}
 ?> 
+<div class="rt-article">
+	<div class="item-page">
+		<div class="module-content-pagetitle">
+			<div class="module-l">
+				<div class="module-r">
+					<div class="rt-headline">
+						<div class="module-title">
+							<div class="module-title2">
+								<h1 class="title rt-pagetitle">HIT-activiteiten <?php echo ($project->jaar); ?></h1>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
 
-<div class="overzichtHeader">
-	<p><strong>In dit overzicht vind je alle HITs van <?php echo $project->jaar; ?>, gesorteerd per HIT-plaats. </strong></p>
-	<p>Vind je het moeilijk een keuze te maken? Gebruik dan de speciale <a href="hit-activiteiten-<?php echo($project->jaar);?>/hit-kiezer">HIT-kiezer</a>!
-	   Hiermee kun je kijken welke HIT er bij je past, op basis van je leeftijd tijdens de HIT, je budget, en dingen die je graag
-	   wilt doen bij een HIT of juist liever niet.</p>
-</div>
+		<div class="module-content">
+			<div class="module-l">
+				<div class="module-r">
+					<div class="module-inner">
+						<div class="module-inner2">
+
+<p><strong>In dit overzicht vind je alle HITs van <?php echo ($project->jaar); ?>, gesorteerd per HIT-plaats. </strong></p>
+<p>Vind je het moeilijk een keuze te maken? Gebruik dan de speciale <a href="hit-activiteiten-<?php echo($project->jaar);?>/hit-kiezer-<?php echo($project->jaar);?>">HIT-kiezer</a>!
+   Hiermee kun je kijken welke HIT er bij je past, op basis van je leeftijd tijdens de HIT, je budget, en dingen die je graag
+   wilt doen bij een HIT of juist liever niet.</p>
 
 <table id="overzicht">
 	<?php foreach ($project->plaatsen as $plaats) { ?>
 	<thead>
 		<tr>
-			<th class="kolom1"><a href="<?php echo(plaatsURL($plaats)); ?>"><?php echo($plaats->naam);?></a></th>
+			<th class="kolom1"><a href="<?php echo(plaatsURL($plaats, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
 			<th class="kolom2">Leeftijd</th>
 			<th class="kolom3">Groep</th>
 			<th class="kolom4">&nbsp;</th>
@@ -38,7 +78,7 @@ function plaatsURL($plaats) {
 		<?php foreach ($plaats->kampen as $kamp) { ?>
 		<tr>
 			<td class="kolom1">
-				<a href="<?php echo(activiteitURL($plaats, $kamp)); ?>">
+				<a href="<?php echo(activiteitURL($plaats, $kamp, $useComponentUrls)); ?>">
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
@@ -58,7 +98,6 @@ function plaatsURL($plaats) {
 			</td>
 			<td class="kolom4">
 				<?php
-					// TODO: alt-text door in model al icoon-objecten te maken
 					foreach ($kamp->icoontjes as $icoon) {
 						echo '<img src="media/com_kampinfo/images/iconen25pix/'.$icoon->naam.'.gif" title="'.$icoon->tekst.'"/>';
 					}
@@ -74,3 +113,11 @@ function plaatsURL($plaats) {
 		</tr>
 	</tfoot>
 </table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
