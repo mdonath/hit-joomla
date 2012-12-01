@@ -120,29 +120,27 @@ var filter = {
 		},
 		leeftijdOpPeildatum: function() {
 			var leeftijdInJaren = -1;
-			var leeftijdInDagen = this.leeftijdOpPeilDatumInDagen();
-			if (leeftijdInDagen != -1) {
-				leeftijdInJaren = Math.floor(leeftijdInDagen / 365.25); // in jaren
+			if (this.geboortedatum != null) {
+				var leeftijdInJaren = this.peildatum.getFullYear() - this.geboortedatum.getFullYear();
+				var verjaardagInHitJaar = createDate(
+						this.peildatum.getFullYear(),
+						this.geboortedatum.getMonth() + 1,
+						this.geboortedatum.getDate());
+				if (verjaardagInHitJaar > this.peildatum) {
+					leeftijdInJaren--;
+				}
 			}
 			return leeftijdInJaren;
 		},
-		leeftijdOpPeilDatumInDagen: function() {
-			var leeftijdInDagen = -1;
-			if (this.geboortedatum != null) {
-				var verschil = this.peildatum.getTime() - this.geboortedatum.getTime(); // in millis
-				leeftijdInDagen = Math.ceil(verschil / (1000 * 60 * 60 * 24)); // in dagen
-			}
-			return leeftijdInDagen;			
-		},
 		filterLeeftijd: function (kamp) {
 			var geborenNa = createDate(
-					this.peildatum.getFullYear() - kamp.maximumLeeftijd - 1, // -1; want hele jaar telt mee 
-					this.peildatum.getMonth() + 1, // 0-based
-					this.peildatum.getDate() - 90);
+					kamp.eindDatumTijd.getFullYear() - kamp.maximumLeeftijd - 1, // -1; want hele jaar telt mee 
+					kamp.eindDatumTijd.getMonth() + 1, // 0-based
+					kamp.eindDatumTijd.getDate() - kamp.margeAantalDagenTeOud + 1); // +1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
 			var geborenVoor = createDate(
-					this.peildatum.getFullYear() - kamp.minimumLeeftijd, 
-					this.peildatum.getMonth() + 1, // 0-based 
-					this.peildatum.getDate() + 90);
+					kamp.startDatumTijd.getFullYear() - kamp.minimumLeeftijd, 
+					kamp.startDatumTijd.getMonth() + 1, // 0-based 
+					kamp.startDatumTijd.getDate() + kamp.margeAantalDagenTeJong);
 			return this.geboortedatum == null || this.geboortedatum >= geborenNa && this.geboortedatum <= geborenVoor;
 		},
 		filterBudget: function (kamp) {
@@ -192,20 +190,24 @@ function initVelden() {
 			.appendTo("#geboortejaar");
 	}
  	
- 	// prijzen
+
+ 	// prijzen, score, plaatsnaam en start/einddatumtijd
  	var prijzen = new Array();
  	$.each(hit.hitPlaatsen, function(i, plaats) {
-		 	$.each(plaats.kampen, function(j, kamp) {
-		 		var found = false;
-	 		 	$.each(prijzen, function(k, prijs) {
-		 			found = found || (prijs == kamp.deelnamekosten);
-		 		});
-		 		if (!found){
-		 			prijzen.push(kamp.deelnamekosten);
-		 		}
-			});
+ 		$.each(plaats.kampen, function(j, kamp) {
+	 		var found = false;
+ 		 	$.each(prijzen, function(k, prijs) {
+	 			found = found || (prijs == kamp.deelnamekosten);
+	 		});
+	 		if (!found){
+	 			prijzen.push(kamp.deelnamekosten);
+	 		}
+			kamp.score = 0;
+			kamp.plaats = plaats.naam;
+			kamp.startDatumTijd = parseDate(kamp.startDatumTijd);
+			kamp.eindDatumTijd = parseDate(kamp.eindDatumTijd);
+		});
     });
- 	
 	prijzen.sort(function(a,b){return a - b;}); // sorteer numeriek	 	
  	$.each(prijzen, function(i, prijs) {
  		$("<option>")
@@ -213,15 +215,8 @@ function initVelden() {
 			.text(prijs)
 			.appendTo("#budget");
 	});
-	
-	$.each(hit.hitPlaatsen, function(i, plaats) {
-		$.each(plaats.kampen, function(j, kamp) {
-			kamp.score = 0;
-			kamp.plaats = plaats.naam;
-		});
-	});
-	
-	$('.cookiestore').cookieBind();
+
+ 	$('.cookiestore').cookieBind();
 	filter.peildatum = parseDate(hit.vrijdag);
 	filter.plaats = $.getUrlVar('plaats');
 

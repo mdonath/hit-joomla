@@ -27,12 +27,8 @@ class KampInfoViewHitkiezer extends JView {
 		$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
 		$document->addScript("media/com_kampinfo/js/jquery.cookies.2.2.0.min.js");
 
-		//$document->addScript("media/com_kampinfo/js/hit-data-2012-json.js");
-
 		$json = json_encode($this->project);
 		$document->addScriptDeclaration('var hit = '.$json);		
-		
-		//$document->addScript("media/com_kampinfo/js/hit2012aantal.js");
 
 		$document->addScript("media/com_kampinfo/js/common.js");
 		$document->addScript("media/com_kampinfo/js/hitkiezer.js");

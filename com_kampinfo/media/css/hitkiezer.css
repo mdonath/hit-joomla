@@ -10,6 +10,7 @@
 
 div#pictos img {
     border: 2px solid black;
+    margin: 0px;
 }
 
 div#kampen {
@@ -19,12 +20,19 @@ div#kampen {
 
 div#kampen li {
 	list-style: decimal;
+	background-image: none !important;
 }
 
 div#kampen li .score {
 	float: right;
 	font-size: x-small;
 	width: 2em;
+}
+
+fieldset {
+	border: 2px groove #aaa !important;
+	padding: 1em !important;
+	margin-bottom: 1em !important;
 }
 
 legend {
