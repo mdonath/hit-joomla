@@ -1,18 +1,23 @@
 <?php defined('_JEXEC') or die('Restricted access');
 
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfo.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
+
 // config
 $params = &JComponentHelper::getParams('com_kampinfo');
 $vrijVraagBriefUrl = $params->get('vrijVraagBriefUrl');
- 
+$activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
+$activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
+$iconFolderLarge = $params->get('iconFolderLarge');
+$iconExtension = $params->get('iconExtension');
+$shantiUrl = $params->get('shantiUrl');
+
 // model
 $activiteit = $this->activiteit;
 
 $start = new JDate($activiteit->startDatumTijd);
 $eind = new JDate($activiteit->eindDatumTijd);
 
-function isEmptyUrl($url) {
-	return empty($url) or $url == 'http://'; 
-}
 
 ?>
 <div class="rt-article">
@@ -27,7 +32,7 @@ function isEmptyUrl($url) {
 									<p>
 										<?php
 											foreach ($activiteit->activiteitengebieden as $gebied) {
-												echo '<img src="media/com_kampinfo/images/activiteitengebieden/'.$gebied->value.'.png" title="'.$gebied->text.'"/> ';
+												echo(KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $gebied->value, $activiteitengebiedenExtension, $gebied->text) . ' ');
 											}
 										?>
 									</p>
@@ -97,12 +102,10 @@ function isEmptyUrl($url) {
 					<div class="module-inner">
 						<div class="module-inner2">
 							<div>
-								<div class="iconlist" style="float:right"
+								<div class="iconlist" style="float:right">
 								<?php
 									foreach ($activiteit->icoontjes as $icoon) {
-										$b = $icoon->naam;
-										$a = $icoon->tekst;
-										echo ("<img src=\"media/com_kampinfo/images/iconen40pix/$b.gif\" title=\"$a\"/>");
+										echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $icoon->naam, $iconExtension, $icoon->tekst));
 									}
 								?>
 								</div>
@@ -115,9 +118,7 @@ function isEmptyUrl($url) {
 								<h2><?php echo($activiteit->titeltekst);?></h2>
 							<?php } ?>
 							<?php
-								$dotcom = strpos($activiteit->webadresFoto3, 'www.youtube.com') !== false;
-								$dotbe = strpos($activiteit->webadresFoto3, 'youtu.be') !== false;
-								$heeftEenYoutubeFilmpje = $dotcom || $dotbe;
+								$heeftEenYoutubeFilmpje = KampInfoUrlHelper::isYoutubeFilmpje($activiteit->webadresFoto3);
 							?>
 							<table border="0">
 								<tbody>
@@ -126,13 +127,13 @@ function isEmptyUrl($url) {
 											<p><?php echo($activiteit->websiteTekst); ?></p>
 										</td>
 										<td class="articleFotos">
-											<?php if (!isEmptyUrl($activiteit->webadresFoto1)) { ?>
+											<?php if (!KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto1)) { ?>
 												<img src="<?php echo($activiteit->webadresFoto1); ?>" alt="" border="0" width="180" /><br /><br />
 											<?php } ?>
-											<?php if (!isEmptyUrl($activiteit->webadresFoto2)) { ?>
+											<?php if (!KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto2)) { ?>
 												<img src="<?php echo($activiteit->webadresFoto2); ?>" alt="" border="0" width="180" /><br /><br />
 											<?php } ?>
-											<?php if (!($heeftEenYoutubeFilmpje or isEmptyUrl($activiteit->webadresFoto3))) { ?>
+											<?php if (!($heeftEenYoutubeFilmpje or KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto3))) { ?>
 												<img src="<?php echo($activiteit->webadresFoto3); ?>" alt="" border="0" width="180" /><br /><br />
 											<?php } ?>
 										</td>
@@ -152,7 +153,7 @@ function isEmptyUrl($url) {
 								<tbody>
 									<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres)) { ?>
 									<tr>
-										<td><img src="media/com_kampinfo/images/iconen40pix/info.gif" alt="Meer informatie? Mail of bel naar de contactpersoon van deze HIT" border="0" /></td>
+										<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'info', $iconExtension, '','Meer informatie? Mail of bel naar de contactpersoon van deze HIT')); ?></td>
 										<td>
 											<p>
 												<?php if (!empty($activiteit->websiteContactTelefoonnummer)) { ?>
@@ -167,7 +168,7 @@ function isEmptyUrl($url) {
 									<?php } ?>
 									<?php if (!empty($activiteit->websiteAdres)) { ?>
 									<tr>
-										<td><img src="media/com_kampinfo/images/iconen40pix/web.gif" alt="Link naar een website over dit HIT onderdeel" border="0" /></td>
+										<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'web', $iconExtension, '','Link naar een website over dit HIT onderdeel')); ?></td>
 										<td>
 											<p>
 												<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a><br/>
@@ -196,14 +197,14 @@ function isEmptyUrl($url) {
 									$begintOpGoedeVrijdag = $start->format('N') == '5'; // vrijdag
 								?>
 								Dit HIT-Kamp start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
-								
+
 								<?php if($begintOpGoedeVrijdag) {?>
 								Dit HIT-Kamp begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
 								Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
-								<?php } // TODO url voor vrijvraagbrief ?>
+								<?php } ?>
 							</p>
 							<?php if ($activiteit->shantiFormuliernummer > 0) { ?>
-								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('https://sol.scouting.nl/frontend/sol/index.php?task=as_registration&amp;action=add&amp;frm_id=<?php echo($activiteit->shantiFormuliernummer); ?>')" />
+								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
 							<?php } ?>
 							<br />
 						</div>

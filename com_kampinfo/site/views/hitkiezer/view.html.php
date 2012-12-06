@@ -1,5 +1,4 @@
-<?php
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
 jimport('joomla.application.component.view');
@@ -21,6 +20,10 @@ class KampInfoViewHitkiezer extends JView {
 			return false;
 		}
 
+		$params = &JComponentHelper::getParams('com_kampinfo');
+		$iconFolderLarge = $params->get('iconFolderLarge');
+		$iconExtension = $params->get('iconExtension');
+
 		$document =& JFactory :: getDocument();
 		JHTML::stylesheet("hitkiezer.css", "media/com_kampinfo/css/");
 
@@ -28,10 +31,12 @@ class KampInfoViewHitkiezer extends JView {
 		$document->addScript("media/com_kampinfo/js/jquery.cookies.2.2.0.min.js");
 
 		$json = json_encode($this->project);
-		$document->addScriptDeclaration('var hit = '.$json);		
+		$document->addScriptDeclaration('var hit = '.$json);
 
 		$document->addScript("media/com_kampinfo/js/common.js");
 		$document->addScript("media/com_kampinfo/js/hitkiezer.js");
+
+		$document->addScriptDeclaration('kampinfoConfig.iconFolderLarge = "'.JURI::root().$iconFolderLarge . '"; kampinfoConfig.iconExtension="'. $iconExtension .'"');		
 		
 		// Display the view
 		parent :: display($tpl);

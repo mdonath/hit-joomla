@@ -1,29 +1,31 @@
-<?php
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfo.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
+/**
+ * Veld voor activiteitengebieden.
+ */
 class JFormFieldActivityarea extends JFormField {
 
 	protected $type = 'Activityarea';
 	protected $forceMultiple = true;
 
 	/**
-	 * Method to get the field input markup for check boxes.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   11.1
 	 */
 	protected function getInput()
 	{
+		$params = &JComponentHelper::getParams('com_kampinfo');
+		$activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
+		$activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
+	
 		// Initialize variables.
 		$html = array();
 
 		// Initialize some field attributes.
-		$class = $this->element['class'] ? ' class="checkboxes ' . (string) $this->element['class'] . '"' : ' class="checkboxes"';
+		$class = $this->element['class'] ? ' class="checkboxes '. (string) $this->element['class'] .'"' : ' class="checkboxes"';
 
 		// Start the checkbox field output.
 		$html[] = '<fieldset id="' . $this->id . '"' . $class . '>';
@@ -40,7 +42,6 @@ class JFormFieldActivityarea extends JFormField {
 			$checked = (in_array((string) $option->value, (array) $this->value) ? ' checked="checked"' : '');
 			$class = !empty($option->class) ? ' class="' . $option->class . '"' : '';
 			$disabled = !empty($option->disable) ? ' disabled="disabled"' : '';
-
 			// Initialize some JavaScript option attributes.
 			$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
@@ -49,7 +50,7 @@ class JFormFieldActivityarea extends JFormField {
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = '<img src="../media/com_kampinfo/images/activiteitengebieden/' . $option->value . '.png" alt="'. JText::_($option->text) . '"/>';
+			$html[] = KampInfoUrlHelper :: imgUrl($activiteitengebiedenFolder, $option->value, $activiteitengebiedenExtension, JText::_($option->text));
 			$html[] =  JText::_($option->text) . '</label>';
 			$html[] = '</li>';
 		}
@@ -63,8 +64,6 @@ class JFormFieldActivityarea extends JFormField {
 	
 
 	public function getOptions() {
-		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
-
 		$options = KampInfoHelper :: getActivityAreaOptions();
 		
 		// Merge any additional options in the XML definition.

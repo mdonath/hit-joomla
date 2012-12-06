@@ -157,7 +157,6 @@ var filter = {
 function init() {
 	fixStupidBrowsers();
 	extend();
-	verwerkDeelnemerAantallen();
 	initVelden();
 	repaint();
 }
@@ -315,7 +314,7 @@ function filterPictogrammen() {
 			.attr({
 				id: icoon.bestandsnaam,
 				onclick: "selectIcoonEvent('" + icoon.bestandsnaam + "')",
-				src: "../media/com_kampinfo/images/iconen40pix/" + icoon.bestandsnaam+".gif",
+				src: kampinfoConfig.iconFolderLarge + '/' + icoon.bestandsnaam + kampinfoConfig.iconExtension,
 				border: 3,
 				alt: icoon.tekst,
 				title: icoon.tekst,

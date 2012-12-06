@@ -1,10 +1,13 @@
-<?php
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfourl.php';
 
+/**
+ * Field voor icoontjes.
+ */
 class JFormFieldIcon extends JFormField {
 
 	protected $type = 'Icon';
@@ -19,6 +22,11 @@ class JFormFieldIcon extends JFormField {
 	 */
 	protected function getInput()
 	{
+		$params = &JComponentHelper::getParams('com_kampinfo');
+		$iconFolderSmall = $params->get('iconFolderSmall');
+		$iconFolderLarge = $params->get('iconFolderLarge');
+		$iconExtension = $params->get('iconExtension');
+		
 		// Initialize variables.
 		$html = array();
 
@@ -49,8 +57,8 @@ class JFormFieldIcon extends JFormField {
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = '<img src="../media/com_kampinfo/images/iconen25pix/' . $option->value . '.gif" alt="'. JText::_($option->text) . '"/>';
-			$html[] = '<img src="../media/com_kampinfo/images/iconen40pix/' . $option->value . '.gif" alt="'. JText::_($option->text) . '"/>';
+			$html[] = KampInfoUrlHelper :: imgUrl($iconFolderSmall, $option->value, $iconExtension, '', JText::_($option->text));
+			$html[] = KampInfoUrlHelper :: imgUrl($iconFolderLarge, $option->value, $iconExtension, '', JText::_($option->text));
 			$html[] =  JText::_($option->text) . '</label>';
 			$html[] = '</li>';
 		}
@@ -64,8 +72,6 @@ class JFormFieldIcon extends JFormField {
 	
 
 	public function getOptions() {
-		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
-
 		$options = KampInfoHelper :: getHitIconOptions();
 		
 		// Merge any additional options in the XML definition.

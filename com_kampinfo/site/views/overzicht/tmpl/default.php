@@ -1,38 +1,12 @@
 <?php defined('_JEXEC') or die('Restricted access');
 
-function activiteitURL($plaats, $kamp, $use=TRUE) {
-	if ($use) {
-		$jaar = $plaats->jaar;
-		$deelnemersnummer = $kamp->deelnemersnummer;
-		return "index.php?option=com_kampinfo&amp;view=activiteit&amp;jaar=$jaar&amp;deelnemersnummer=$deelnemersnummer";
-	} else {
-		return plaatsURL($plaats, $use) . "/" . aliassify($kamp);
-	}
-}
-function plaatsURL($plaats, $use=TRUE) {
-	if ($use) {
-		$code = $plaats->code;
-		return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
-	} else {
-		return "hits-in-" . strtolower($plaats->naam);
-	}
-}
-
-function aliassify($kamp) {
-	$pat = array();
-	$rep = array();
-
-	$pat[] = '/ - /';			$rep[] = '-';
-	$pat[] = '/ /';				$rep[] = '-';
-	$pat[] = '/[^a-z0-9\-]/';	$rep[] = '';
-	$pat[] = '/-+/';			$rep[] = '-';
-
-	return preg_replace($pat, $rep, strtolower($kamp->naam));
-}
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 // config
 $params = &JComponentHelper::getParams('com_kampinfo');
 $useComponentUrls = $params->get('useComponentUrls') == 1;
+$iconFolderSmall = $params->get('iconFolderSmall');
+$iconExtension = $params->get('iconExtension');
 
 $project = $this->project;
 ?> 
@@ -68,7 +42,7 @@ $project = $this->project;
 	<?php foreach ($project->plaatsen as $plaats) { ?>
 	<thead>
 		<tr>
-			<th class="kolom1"><a href="<?php echo(plaatsURL($plaats, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
+			<th class="kolom1"><a href="<?php echo(KampInfoUrlHelper::plaatsURL($plaats, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
 			<th class="kolom2">Leeftijd</th>
 			<th class="kolom3">Groep</th>
 			<th class="kolom4">&nbsp;</th>
@@ -78,7 +52,7 @@ $project = $this->project;
 		<?php foreach ($plaats->kampen as $kamp) { ?>
 		<tr>
 			<td class="kolom1">
-				<a href="<?php echo(activiteitURL($plaats, $kamp, $useComponentUrls)); ?>">
+				<a href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $useComponentUrls)); ?>">
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
@@ -99,7 +73,7 @@ $project = $this->project;
 			<td class="kolom4">
 				<?php
 					foreach ($kamp->icoontjes as $icoon) {
-						echo '<img src="media/com_kampinfo/images/iconen25pix/'.$icoon->naam.'.gif" title="'.$icoon->tekst.'"/>';
+						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst));
 					}
 				?>
 			</td>

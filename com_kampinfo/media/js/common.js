@@ -1,23 +1,9 @@
 // Copyright (c) 2012, HIT Scouting Nederland
 
-/**
- * Werkt het datamodel bij met de huidige stand van zaken mbt de inschrijving.
- */
-function verwerkDeelnemerAantallen() {
-	if (window.inschrijvingen) {
-		$.each(hit.hitPlaatsen, function(p, plaats) {
-			$.each(plaats.kampen, function(k, kamp) {
-				$.each(inschrijvingen.kampen, function(i, inschrijving) {
-					if (inschrijving != null && kamp.shantiformuliernummer == inschrijving.formuliernummer) {
-						kamp.gereserveerd = inschrijving.gereserveerd;
-						kamp.aantalDeelnemers = inschrijving.aantalDeelnemers;
-						kamp.maximumAantalDeelnemers = inschrijving.maximumAantalDeelnemers;
-					}
-				});				
-			});
-		});
-	}
-}
+var kampinfoConfig = {
+		"iconFolderLarge" : null,
+		"iconExtension" : null
+};
 
 /**
  * Geeft een tekst terug waaraan af te lezen is wanneer de gegevens voor het laatst zijn bijgewerkt.

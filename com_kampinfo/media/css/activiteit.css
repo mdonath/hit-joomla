@@ -24,6 +24,9 @@ td.articleTekst {
 	width: 480px;
 	padding-right: 15px;
 }
+.articleTekst p {
+	padding-bottom: .5em;
+}
 
 td.articleFotos {
 	vertical-align: top;

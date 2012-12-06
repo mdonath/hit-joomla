@@ -1,17 +1,18 @@
-<?php
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
 JFormHelper :: loadFieldClass('list');
+
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
+
 
 class JFormFieldTargetgroup extends JFormField {
 
 	protected $type = 'Targetgroup';
 	protected $forceMultiple = true;
 
-protected function getInput()
+	protected function getInput()
 	{
 		// Initialize variables.
 		$html = array();
@@ -55,8 +56,6 @@ protected function getInput()
 	}
 
 	public function getOptions() {
-		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
-
 		$options = KampInfoHelper :: getTargetgroupOptions();
 		
 		// Merge any additional options in the XML definition.

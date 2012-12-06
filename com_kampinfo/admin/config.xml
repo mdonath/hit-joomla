@@ -4,7 +4,7 @@
 		name="preferences"
 		label="COM_KAMPINFO_PREFERENCES_LABEL"
 		description="COM_KAMPINFO_PREFERENCES_DESCRIPTION"
-		>
+	>
 		<field
 			name="vrijVraagBriefUrl"
 			type="text"
@@ -12,6 +12,62 @@
 			label="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_LABEL"
 			description="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_DESC"
 		/>
+		
+		<field
+			name="shantiUrl"
+			type="text"
+			size="120"
+			default="https://sol.scouting.nl/frontend/sol/index.php?task=as_registration&amp;action=add&amp;frm_id="
+			label="COM_KAMPINFO_PREFS_SHANTIURL_LABEL"
+			description="COM_KAMPINFO_PREFS_SHANTIURL_DESC"
+		/>
+		
+		<field
+			name="iconFolderSmall"
+			type="text"
+			size="80"
+			default="media/com_kampinfo/images/iconen25pix"
+			label="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_LABEL"
+			description="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_DESC"
+		/>
+		<field
+			name="iconFolderLarge"
+			type="text"
+			size="80"
+			default="media/com_kampinfo/images/iconen40pix"
+			label="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_LABEL"
+			description="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_DESC"
+		/>
+		<field
+			name="iconExtension"
+			type="list"
+			default=".gif"
+			label="COM_KAMPINFO_PREFS_ICONEXTENSION_LABEL"
+			description="COM_KAMPINFO_PREFS_ICONEXTENSION_DESC"
+		>
+			<option value=".gif">GIF</option>
+			<option value=".png">PNG</option>
+			<option value=".jpg">JPG</option>
+		</field>
+		<field
+			name="activiteitengebiedenFolder"
+			type="text"
+			size="80"
+			default="media/com_kampinfo/images/activiteitengebieden"
+			label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_LABEL"
+			description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_DESC"
+		/>
+		<field
+			name="activiteitengebiedenExtension"
+			type="list"
+			default=".png"
+			label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_LABEL"
+			description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_DESC"
+		>
+			<option value=".gif">GIF</option>
+			<option value=".png">PNG</option>
+			<option value=".jpg">JPG</option>
+		</field>
 		<field
 			name="useComponentUrls"
 			type="radio"
