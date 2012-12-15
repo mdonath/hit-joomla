@@ -1,0 +1,104 @@
++==================================+
+| BEPALING LEEFTIJD DOOR HITKIEZER |
++==================================+
+
+De HIT-kiezer bepaalt op basis van een aantal parameters of een deelnemer de juiste leeftijd heeft.
+Dit gebeurt in JavaScript.
+
+
+Bij het bepalen van de juist leeftijd wordt gebruik gemaakt van:
+- door gebruiker ingevulde geboortedatum (gebdat)
+- begin- en einddatum van het kamp (kamp.begin, kamp.eind)
+- de leeftijdsgrenzen van het kamp (min.lft en max.lft)
+- de mogelijke afwijkingsmarges van die leeftijden (marge.te.oud, marge.te.jong)
+
+
+Businessrules:
+- Een deelnemer die niet te jong mag zijn (marge.te.jong = 0), mag uiterlijk OP de eerste
+  dag van het kamp jarig zijn. De deelnemer is dan precies oud genoeg.
+- Een deelnemer die niet te oud mag zijn (marge.te.oud = 0), mag pas de dag NA de HIT de
+  maximumleeftijd bereiken.
+  De deelnemer is dan geen moment tijdens de HIT te oud geweest.
+
+
++============+
+| Voorbeeld: |
++============+
+
+Uitgangspunten van het nu volgende voorbeeld:
+- Het kamponderdeel draait van vr 28-3-2013 t/m 01-4-2013.
+- Leeftijdsgrenzen zijn 5 jaar t/m 10 jaar (rekent makkelijker)
+- Deelnemers mogen precies 10 dagen te jong of te oud zijn.
+
+                        +-10---9876----5----4----3----2----1----0-+             [= marge.te.oud]
+                                    +--0----1----2----3----4----5---6789---10-+ [= marge.te.jong]
+                                    +---------(kamp)---------+                  [= kamp.begin tm kamp.eind]
+ 2002        2008        2013        2013                                 2013
+| 23 | .... | 08 | .... | 23 | .... | 28 | 29 | 30 | 31 | 01 | 02 | .... | 08 |
+|  3 |      |  4 |      |  3 |      |  3 |  3 |  3 |  3 |  4 |  4 |      |  4 |
+--------//----------//----------//---------------------------------------------
+               +----//----------//------------------------------------------+   [= jongste deelnemer]
++----------------------------+                                                  [= oudste deelnemer]
+
+Om te bepalen of je jong of oud genoeg bent, wordt uitgerekend wat de minimale en maximale geboortedatum moet
+zijn van een deelnemer.
+
+** Eerst geboortedatum van de oudste: **
+Als hij 0 dagen te oud mag zijn, dan zou hij jarig moeten zijn op 02 april, dan is hij tijdens de HIT geen enkele dag te oud.
+Als hij 1 dag   te oud mag zijn, dan zou hij jarig moeten zijn op 01 april. Dan is hij alleen op de laatste dag van de HIT precies 1 dag te oud.
+Als hij 2 dagen te oud mag zijn, dan 31 maart.
+ :
+ :
+Als hij 10 dagen te oud mag zijn, dan 23 maart.
+==> DUS: deelnemer moet op of na 23 maart jarig zijn (marge = 10).
+
+Als de maximumleeftijd 1 jaar was, dan zou hij geboren moeten zijn op of na 23-03-2011, want op 23-03-2013 wordt hij 2 jaar, en dat is te oud.
+Als maximum  2 jaar, dan 23-03-2010
+Als maximum  3 jaar, dan 23-03-2009
+ :
+ :
+Als maximum  9 jaar, dan 23-03-2003
+Als maximum 10 jaar, dan 23-03-2002
+
+==> DUS:
+    bij een maximum leeftijd van 10 jaar, een marge van 10 dagen en einddatum 1 april
+    -> dan moet een deelnemer geboren zijn op of na 23-03-2002.
+
+** Nu de geboortedatum van de jongste: **
+Als hij 0 dagen te jong mag zijn, dan zou hij jarig moeten zijn op 29 maart. Hij is op die dag precies oud genoeg.
+Als hij 1 dag   te jong mag zijn, dan zou hij jarig mogen zijn op 30 maart. Hij is dan alleen de eerste dag precies 1 dag te jong.
+Als hij 2 dagen te jong mag zijn, dan zou hij jarig mogen zijn op 31 maart.
+ :
+ :
+Als hij 10 dagen te jong mag zijn, dan zou hij jarig mogen zijn op 8 april.
+==> DUS: deelnemer moet voor of uiterlijk OP 8 april jarig zijn (marge = 10).
+
+Als de minimumleeftijd 1 jaar was, dan zou hij geboren moeten zijn op of voor 08-04-2012, want dan wordt hij 1 jaar.
+Als minimum  2 jaar, dan 08-04-2011.
+Als minimum  3 jaar, dan 08-04-2010.
+Als minimum  4 jaar, dan 08-04-2009.
+Als minimum  5 jaar, dan 08-04-2008.
+==> DUS: deelnemer moet voor of uiterlijk op 08-04-2008 jarig zijn, anders is hij te jong.
+
+
+Nu kunnen we bepalen of een deelnemer oud genoeg is, want de geboortedatum moet tussen
+23-03-2002 en 08-04-2008 liggen.
+
+
++===========+
+| Formules: |
++===========+
+
+Nu kunnen we ook de formules bepalen om het uit te rekenen:
+
+Verjaardag oudste deelnemer = {
+	jaar  = YEAR(kamp.einddatum) - max.lft - 1		// minus 1; het is tot en MET maximum leeftijd
+	maand = MONTH(kamp.einddatum) + 1					// MONTH is zerobased; daarom plus 1
+	dag   = DAY(kamp.einddatum) - marge.te.oud + 1		// plus 1; met marge=0 mag je op laatste dag niet jarig zijn
+}
+
+Verjaardag jongste deelnemer = {
+	jaar  = YEAR(kamp.begindatum) - min.lft
+	maand = MONTH(kamp.begindatum) + 1					// MONTH is zerobased; daarom plus 1
+	dag   = DAY(kamp.begindatum) + marge.te.jong
+}
