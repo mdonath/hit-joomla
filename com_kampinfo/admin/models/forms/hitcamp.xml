@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset
+				name="inschrijvingen"
+				addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="shantiFormuliernummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
+				maxlength="3"
+				size="2"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="aantalDeelnemers"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_LABEL"
+				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
+				maxlength="3"
+				size="2"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="gereserveerd"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
+				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
+				maxlength="3"
+				size="2"
+				class="inputbox"
+				default=""
+		/>
+	</fieldset>
+	
+	<fieldset
 				name="hitcamp"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
@@ -38,21 +74,10 @@
 				default=""
 		/>
 		<field
-				name="titeltekst"
-				type="text"
-				label="titeltekst"
-				description="Titeltekst"
-				maxlength="255"
-				size="30"
-				class="inputbox"
-				required="true"
-				default=""
-		/>
-		<field
 				name="startDatumTijd"
 				type="calendar"
-				label="Start datum/tijd"
-				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
+				label="COM_KAMPINFO_HITCAMP_STARTDATETIME_LABEL"
+				description="COM_KAMPINFO_HITCAMP_STARTDATETIME_DESC"
 				size="20"
 				maxlength="19"
 				class="inputbox"
@@ -63,8 +88,8 @@
 		<field
 				name="eindDatumTijd"
 				type="calendar"
-				label="Eind datum/tijd"
-				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
+				label="COM_KAMPINFO_HITCAMP_EINDDATETIME_LABEL"
+				description="COM_KAMPINFO_HITCAMP_EINDDATETIME_DESC"
 				size="20"
 				class="inputbox"
 				required="true"
@@ -84,8 +109,8 @@
 		<field
 				name="minimumLeeftijd"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_MINLFT_LABEL"
-				description="COM_KAMPINFO_HITCAMP_MINLFT_DESC"
+				label="COM_KAMPINFO_HITCAMP_LEEFTIJD_MIN_LABEL"
+				description="COM_KAMPINFO_HITCAMP_LEEFTIJD_MIN_DESC"
 				size="3"
 				maxlength="3"
 				class="inputbox"
@@ -94,8 +119,8 @@
 		<field
 				name="maximumLeeftijd"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_MAXLFT_LABEL"
-				description="COM_KAMPINFO_HITCAMP_MAXLFT_DESC"
+				label="COM_KAMPINFO_HITCAMP_LEEFTIJD_MAX_LABEL"
+				description="COM_KAMPINFO_HITCAMP_LEEFTIJD_MAX_DESC"
 				size="3"
 				maxlength="3"
 				class="inputbox"
@@ -105,8 +130,8 @@
 		<field
 				name="subgroepsamenstellingMinimum"
 				type="text"
-				label="Subgroep min."
-				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MIN_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -114,8 +139,8 @@
 		<field
 				name="subgroepsamenstellingMaximum"
 				type="text"
-				label="Subgroep max."
-				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MAX_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -123,77 +148,14 @@
 		<field
 				name="subgroepsamenstellingExtra"
 				type="text"
-				label="Subgroep delen door"
-				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_DESC"
 				size="3"
 				maxlength="1"
 				class="inputbox"
 		/>
-<!-- WEBSITE -->
-		<field
-				name="websiteAdres"
-				type="text"
-				label="Website adres"
-				description="COM_KAMPINFO_HITCAMP_GROEP_DESC"
-				size="50"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="webadresFoto1"
-				type="text"
-				label="Foto 1"
-				description="Foto 1"
-				size="50"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="webadresFoto2"
-				type="text"
-				label="Foto 2"
-				description="Foto 2"
-				size="50"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="webadresFoto3"
-				type="text"
-				label="Foto 3"
-				description="Foto 3"
-				size="50"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="websiteContactTelefoonnummer"
-				type="text"
-				label="Website contact Tel."
-				description=""
-				size="30"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="websiteContactEmailadres"
-				type="text"
-				label="Website contact Email"
-				description=""
-				size="30"
-				maxlength="255"
-				class="inputbox"
-		/>
-		<field
-				name="websiteContactPersoon"
-				type="text"
-				label="Website contactpersoon"
-				description=""
-				size="30"
-				maxlength="255"
-				class="inputbox"
-		/>
-<!-- AANTAL DEELNEMERS -->
+		
+		<!-- AANTAL DEELNEMERS -->
 		<field
 				name="minimumAantalDeelnemers"
 				type="text"
@@ -259,6 +221,90 @@
 				maxlength="255"
 				class="inputbox"
 		/>
+		
+	</fieldset>
+	
+<!-- WEBSITE -->
+	
+	<fieldset
+				name="siteEnCourant"
+				addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="titeltekst"
+				type="text"
+				label="Titeltekst"
+				description="Titeltekst"
+				maxlength="255"
+				size="30"
+				class="inputbox"
+				required="true"
+				default=""
+		/>
+	
+		<field
+				name="websiteAdres"
+				type="text"
+				label="Website adres"
+				description=""
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto1"
+				type="text"
+				label="Foto 1"
+				description="Foto 1"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto2"
+				type="text"
+				label="Foto 2"
+				description="Foto 2"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="webadresFoto3"
+				type="text"
+				label="Foto 3"
+				description="Foto 3"
+				size="50"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactTelefoonnummer"
+				type="text"
+				label="Website contact Tel."
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactEmailadres"
+				type="text"
+				label="Website contact Email"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
+				name="websiteContactPersoon"
+				type="text"
+				label="Website contactpersoon"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
 
 		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
 		<field type="spacer" name="myspacer" label="" />
@@ -272,7 +318,7 @@
 				filter="safehtml"
 		/>
 
-		<field type="spacer" name="myspacer" label="Iconen" />
+		<field type="spacer" name="myspacer" label="" />
 		<field
 				name="icoontjes"
 				type="Icon"

@@ -54,5 +54,39 @@ abstract class KampInfoUrlHelper {
 
 		return preg_replace($pat, $rep, strtolower($kamp->naam));
 	}
+	
+
+	public static function fuzzyIndicatieVol($kamp) {
+		$result;
+		if (KampInfoUrlHelper::isVol($kamp)) {
+			if ($kamp->aantalDeelnemers < $kamp->gereserveerd) {
+				$eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
+				$result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
+			} else {
+				$result = "Vol: inschrijven is niet meer mogelijk.";
+			}
+		} else {
+			$watMaaktHetKampVol = max($kamp->maximumAantalDeelnemers/10, $kamp->subgroepsamenstellingMinimum);
+			$over = $kamp->maximumAantalDeelnemers - $kamp->gereserveerd;
+			if ($watMaaktHetKampVol < $over) {
+				if ($kamp->gereserveerd == 0) {
+					$result = "Nog ruim voldoende plaatsen beschikbaar.";
+				} else {
+					$result = "Nog voldoende plaatsen beschikbaar.";
+				}
+			} else {
+				$result = "Bijna vol: Nog ". $over ." ". KampInfoUrlHelper::meervoudPlaats($over) ." beschikbaar.";
+			}
+		}
+		return $result;
+	}
+	public static function meervoudPlaats($eenAantal) {
+		return "plaats". (($eenAantal!=1) ? "en" : "");
+	}
+	
+	public static function isVol($kamp) {
+		return $kamp->gereserveerd >= $kamp->maximumAantalDeelnemers;
+	}
+	
 
 }

@@ -9,6 +9,7 @@ $vrijVraagBriefUrl = $params->get('vrijVraagBriefUrl');
 $activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
 $activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
 $iconFolderLarge = $params->get('iconFolderLarge');
+$iconFolderSmall = $params->get('iconFolderSmall');
 $iconExtension = $params->get('iconExtension');
 $shantiUrl = $params->get('shantiUrl');
 
@@ -182,10 +183,13 @@ $eind = new JDate($activiteit->eindDatumTijd);
 							
 							<h2>Aanvullende info:</h2>
 							<p>
-							<!--
-							VOLVOL!<br />
-							-->
-							
+								<?php 
+								if (KampInfoUrlHelper::isVol($activiteit)) {
+									echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp)));
+									echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($kamp) ."</span>");
+								}
+									
+								?>
 								<?php if(!empty($activiteit->maximumAantalUitEenGroep)) { ?>
 								Er mogen maximaal <?php echo($activiteit->maximumAantalUitEenGroep); ?> leden uit dezelfde Scoutinggroep meedoen.
 								<?php } ?>

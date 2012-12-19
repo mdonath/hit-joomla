@@ -9,13 +9,31 @@ JHtml::_('behavior.tooltip');
       id="hitcamp-form"
 >
 	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_DETAILS' ); ?></legend>
+		<legend><?php echo JText::_( 'COM_KAMPINFO_INSCHRIJVINGEN_DETAILS' ); ?></legend>
 		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset() as $field): ?>
+			<?php foreach($this->form->getFieldset('inschrijvingen') as $field): ?>
 				<li><?php echo $field->label;echo $field->input;?></li>
 			<?php endforeach; ?>
 		</ul>
 	</fieldset>
+	<fieldset class="adminform">
+		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_DETAILS' ); ?></legend>
+		<ul class="adminformlist">
+			<?php foreach($this->form->getFieldset('hitcamp') as $field): ?>
+				<li><?php echo $field->label;echo $field->input;?></li>
+			<?php endforeach; ?>
+		</ul>
+	</fieldset>
+	
+	<fieldset class="adminform">
+		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_SITE_DETAILS' ); ?></legend>
+		<ul class="adminformlist">
+			<?php foreach($this->form->getFieldset('siteEnCourant') as $field): ?>
+				<li><?php echo $field->label;echo $field->input;?></li>
+			<?php endforeach; ?>
+		</ul>
+	</fieldset>
+	
 	<div>
 		<input type="hidden" name="task" value="hitcamp.edit" />
 		<?php echo JHtml::_('form.token'); ?>

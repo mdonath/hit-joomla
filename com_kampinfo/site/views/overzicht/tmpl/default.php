@@ -8,7 +8,12 @@ $useComponentUrls = $params->get('useComponentUrls') == 1;
 $iconFolderSmall = $params->get('iconFolderSmall');
 $iconExtension = $params->get('iconExtension');
 
+$aantalIngeschreven = 0;
+$aantalGereserveerd = 0;
+
 $project = $this->project;
+
+
 ?> 
 <div class="rt-article">
 	<div class="item-page">
@@ -50,9 +55,15 @@ $project = $this->project;
 	</thead>
 	<tbody>
 		<?php foreach ($plaats->kampen as $kamp) { ?>
+		<?php 
+				$aantalIngeschreven += $kamp->aantalDeelnemers;
+				$aantalGereserveerd += $kamp->gereserveerd;
+		?>
 		<tr>
 			<td class="kolom1">
-				<a href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $useComponentUrls)); ?>">
+				<a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $useComponentUrls)); ?>"
+					title="<?php echo(KampInfoUrlHelper::fuzzyIndicatieVol($kamp)); ?>"
+				>
 					<?php echo($kamp->naam); ?>
 				</a>
 			</td>
@@ -72,10 +83,13 @@ $project = $this->project;
 			</td>
 			<td class="kolom4">
 				<?php
+					if (KampInfoUrlHelper::isVol($kamp)) {
+						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp)));
+					}
 					foreach ($kamp->icoontjes as $icoon) {
 						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst));
 					}
-				?>
+					?>
 			</td>
 		</tr>
 		<?php } ?>
@@ -83,7 +97,7 @@ $project = $this->project;
 	<?php } ?>
 	<tfoot>
 		<tr>
-			<th colspan="4">Laatst bijgewerkt op: {vandaag}, ingeschreven: {0}, gereserveerd: {0}</th>	
+			<th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.</th>
 		</tr>
 	</tfoot>
 </table>
