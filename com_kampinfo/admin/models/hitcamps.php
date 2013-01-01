@@ -20,7 +20,11 @@ class KampInfoModelHitCamps extends JModelList {
 				'id',
 				'jaar',
 				'plaats',
-				'naam'
+				'deelnemersnummer',
+				'shantiFormuliernummer',
+				'naam',
+				'gereserveerd',
+				'aantalDeelnemers'
 			);
 		}
 

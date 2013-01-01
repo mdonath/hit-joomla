@@ -23,6 +23,24 @@
 		/>
 		
 		<field
+			name="useComponentUrls"
+			type="radio"
+			default="0"
+			label="COM_KAMPINFO_PREFS_USECOMPONENTURLS_LABEL"
+			description="COM_KAMPINFO_PREFS_USECOMPONENTURLS_DESC"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+	</fieldset>
+
+	
+	<fieldset
+		name="icons"
+		label="Icoontjes"
+		description="Configuratie mbt de iconen en afbeeldingen"
+	>
+		<field
 			name="iconFolderSmall"
 			type="text"
 			size="80"
@@ -68,23 +86,107 @@
 			<option value=".png">PNG</option>
 			<option value=".jpg">JPG</option>
 		</field>
-		<field
-			name="useComponentUrls"
-			type="radio"
-			default="0"
-			label="COM_KAMPINFO_PREFS_USECOMPONENTURLS_LABEL"
-			description="COM_KAMPINFO_PREFS_USECOMPONENTURLS_DESC"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 	</fieldset>
+	
+	
+	<fieldset
+		name="Soap"
+		label="Soap-koppeling"
+		description="Configuratie van de Soap-koppeling."
+	>
+		<field
+			name="soapUser"
+			type="text"
+			size="20"
+			label="SOL User"
+			description="SOL gebruikersnaam om mee in te loggen."
+		/>
+		<field
+			name="soapPassword"
+			type="password"
+			size="20"
+			label="SOL Password"
+			description="SOL wachtwoord om mee in te loggen."
+		/>
+		<field
+			name="soapRolemask"
+			type="text"
+			default="63,%SNID%,35,9121,9,1"
+			size="30"
+			label="SOL Rolmasker"
+			description="SOL rol om mee in te loggen, op de plek van '%SNID%' wordt het scoutinglidnummer van de gebruiker ingevuld."
+		/>
+		<field
+			name="soapSui"
+			type="text"
+			default="hit"
+			size="8"
+			label="SOL Unique Id"
+			description="Het unieke ID om de SOAP verbinding mee op te zetten."
+		/>
+		<field
+			name="soapPrivateKey"
+			type="textarea"
+			label="SOL Private RSA Key"
+			cols="66"
+			description="De private key om SOAP messages te signeren."
+		/>
+		<field
+			name="soapWsdl"
+			type="text"
+			default="http://sol.scouting.nl/frontend/sol/sol.wsdl"
+			size="80"
+			label="SOL WSDL"
+			description="De url van de wsdl voor de SOAP-koppeling."
+		/>
+	</fieldset>
+	
+	
+	<fieldset
+		name="AutoDownload"
+		label="Formulieren Download"
+		description="Automatisch downloaden en importeren van formulieren uit SOL"
+	>
+		<field
+			name="downloadJaar"
+			type="text"
+			default="2013"
+			size="4"
+			label="Jaar"
+			description="Voor welk jaar is de download?"
+		/>
+		<field
+			name="downloadFormIdKampRegistratie"
+			type="text"
+			default="5687"
+			size="8"
+			label="Kampregistratie Formulier ID"
+			description="Het id van het formulier met Kampregistraties."
+		/>
+		<field
+			name="downloadKampRegistratiePartsIds"
+			type="text"
+			default="1000"
+			size="50"
+			label="Kampregistratie subselectie"
+			description="Hiermee kun je de te downloaden onderdelen aangeven (vaak op basis van status). De id's moeten gescheiden worden door komma's en mag geen spaties bevatten!"
+		/>
+		<field
+			name="downloadEventIdInschrijvingen"
+			type="text"
+			default="3331"
+			size="8"
+			label="Event ID Inschrijvingen"
+			description="Het event id met alle inschrijfformulieren."
+		/>
+	</fieldset>
+
+	
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"
 		description="JCONFIG_PERMISSIONS_DESC"
-		>
-
+	>
 		<field
 			name="rules"
 			type="rules"

@@ -59,7 +59,6 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 
 		$db->setQuery($query);
 		$project = $db->loadObjectList();
-
 		if ($db->getErrorNum()) {
 			JError :: raiseWarning(500, $db->getErrorMsg());
 		}
@@ -84,7 +83,7 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
-		$query->select('c.deelnemersnummer,c.naam,c.shantiformuliernummer,c.minimumLeeftijd,c.maximumLeeftijd,c.deelnamekosten,c.minimumAantalDeelnemers,c.maximumAantalDeelnemers,c.aantalDeelnemers,c.gereserveerd,c.subgroepsamenstellingMinimum,c.icoontjes,c.margeAantalDagenTeJong,c.margeAantalDagenTeOud, c.startDatumTijd, c.eindDatumTijd');
+		$query->select('c.deelnemersnummer,c.naam,c.shantiFormuliernummer,c.minimumLeeftijd,c.maximumLeeftijd,c.deelnamekosten,c.minimumAantalDeelnemers,c.maximumAantalDeelnemers,c.aantalDeelnemers,c.gereserveerd,c.subgroepsamenstellingMinimum,c.icoontjes,c.margeAantalDagenTeJong,c.margeAantalDagenTeOud, c.startDatumTijd, c.eindDatumTijd');
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite = ' . $db->quote($db->getEscaped($plaats)) . ')');
 		$query->order('c.naam');

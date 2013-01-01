@@ -9,8 +9,8 @@
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
 				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
-				maxlength="3"
-				size="2"
+				maxlength="6"
+				size="6"
 				class="inputbox"
 				default=""
 		/>
@@ -20,7 +20,7 @@
 				label="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_LABEL"
 				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
 				maxlength="3"
-				size="2"
+				size="3"
 				class="inputbox"
 				default=""
 		/>
@@ -30,7 +30,7 @@
 				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
 				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
 				maxlength="3"
-				size="2"
+				size="3"
 				class="inputbox"
 				default=""
 		/>

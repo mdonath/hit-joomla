@@ -10,7 +10,7 @@ $controller = JController::getInstance('KampInfo');
 
 // require helper file
 JLoader::register('KampInfoHelper', JPATH_COMPONENT_ADMINISTRATOR.'/helpers/kampinfo.php');
- 
+
 // Perform the Request task
 $input = JFactory::getApplication()->input;
 $controller->execute($input->getCmd('task'));

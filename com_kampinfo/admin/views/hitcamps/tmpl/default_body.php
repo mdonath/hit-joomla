@@ -1,7 +1,6 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die('Restricted Access');
+<?php defined('_JEXEC') or die('Restricted Access');
 ?>
+
 <?php foreach($this->items as $i => $item): ?>
 	<tr class="row<?php echo $i % 2; ?>">
 		<td>
@@ -21,9 +20,21 @@ defined('_JEXEC') or die('Restricted Access');
 			</a>
 		</td>
 		<td>
+			<?php echo JText::_($item->deelnemersnummer); ?>
+		</td>
+		<td>
+			<?php echo JText::_($item->shantiFormuliernummer); ?>
+		</td>
+		<td>
 			<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitcamp.edit&id='.(int)$item->id); ?>">
 				<?php echo $item->naam; ?>
 			</a>
+		</td>
+		<td>
+			<?php echo JText::_($item->gereserveerd); ?>
+		</td>
+				<td>
+			<?php echo JText::_($item->aantalDeelnemers); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

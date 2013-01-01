@@ -20,6 +20,8 @@ class KampInfoViewImport extends JView {
 		$this->item=$item;
 		
 		JToolBarHelper :: title('Import', 'kampinfo');
+		JToolBarHelper :: preferences('com_kampinfo');
+		
 		parent :: display($tpl);
 	}
 

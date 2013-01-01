@@ -1,0 +1,60 @@
+<?php
+
+include_once "SolSoapClient.php";
+
+class SolDownload {
+
+	public function downloadForm($user, $password, $role, $sui, $keypriv, $wsdl, $frm_id, $parts) {
+		$client = new SolSoapClient($sui, $keypriv, $wsdl);
+
+		try {
+			self::signOnWithRole($client, $user, $password, $role);
+			$form_data = $client->doTAB("as_form", "report", "part_data", array('frm_id' => $frm_id, 'prt_st_id' => $parts));
+			$result = self :: toXml($form_data);
+			$soap = $client->logout();
+
+			return $result;
+		} catch (Exception $e) {
+			// En nou?
+			return false;
+		}
+	}
+
+	public function downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $evt_id) {
+		$client = new SolSoapClient($sui, $keypriv, $wsdl);
+
+		try {
+			self::signOnWithRole($client, $user, $password, $role);
+			$form_data = $client->doTAB("as_event", "forms", "export", array('evt_id' => $evt_id));
+			$result = self :: toXml($form_data);
+			$soap = $client->logout();
+
+			return $result;
+		} catch (Exception $e) {
+			// En nou?
+			return false;
+		}
+	}
+
+	private static function signOnWithRole($client, $user, $password, $role) {
+		$soap = $client->signOn($user, $password);
+		self::switchToRole($client, str_replace('%SNID%',$soap['per_id'], $role));
+	}
+
+	private static function switchToRole($client, $role) {
+		$switched_role = $client->doTAB("ma_function", "edit", "changeRole", array('role_id'=>$role));
+
+		$document = DomDocument::loadXML($switched_role);
+		$XPath = new DomXPath($document);
+		$nodes = $XPath->query("//result/var[@name='sess_id']");
+		foreach ($nodes as $node) {
+			$client->pub_session_id = $node->textContent;
+		}
+	}
+
+	private static function toXml($form_data) {
+		$document = DomDocument::loadXML($form_data);
+		$document->formatOutput = true;
+		return $document->saveXML();
+	}
+}

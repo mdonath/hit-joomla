@@ -1,13 +1,11 @@
-<?php
-// No direct access
-defined('_JEXEC') or die('Restricted access');
- 
+<?php defined('_JEXEC') or die('Restricted access');
+
 // import Joomla table library
 jimport('joomla.database.table');
- 
+
 /**
  * HIT Camp Table class
- */
+*/
 class KampInfoTableHitCamp extends JTable
 {
 	/**
@@ -15,24 +13,31 @@ class KampInfoTableHitCamp extends JTable
 	 *
 	 * @param object Database connector object
 	 */
-	function __construct(&$db) 
+	function __construct(&$db)
 	{
 		parent::__construct('#__kampinfo_hitcamp', 'id', $db);
 	}
-        
+
 	public function store($updateNulls = false)
-    {
+	{
 		if (is_array($this->icoontjes)) {
-		    $this->icoontjes = implode(',', $this->icoontjes);
-		    $this->activiteitengebieden = implode(',', $this->activiteitengebieden);
-		    $this->doelgroepen = implode(',', $this->doelgroepen);
+			$this->icoontjes = implode(',', $this->icoontjes);
+		} else {
+			$this->icoontjes = '';
 		}
-		else {
-    		$this->icoontjes = implode(',', array());
-    		$this->activiteitengebieden = implode(',', array());
-    		$this->doelgroepen = implode(',', array());
-    	}
-   
+
+		if (is_array($this->activiteitengebieden)) {
+			$this->activiteitengebieden = implode(',', $this->activiteitengebieden);
+		} else {
+			$this->activiteitengebieden = '';
+		}
+
+		if (is_array($this->doelgroepen)) {
+			$this->doelgroepen = implode(',', $this->doelgroepen);
+		} else {
+			$this->doelgroepen = '';
+		}
+		 
 		// Attempt to store the data.
 		return parent::store($updateNulls);
 	}
