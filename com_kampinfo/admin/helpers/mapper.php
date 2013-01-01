@@ -1,11 +1,101 @@
 <?php
 
-class Mapper {
-	private $mapping;
-	private $columns;
-	
+abstract class AbstractMapper {
+	protected $mapping;
+	protected $columns;
+
 	public function __construct($mapping) {
 		$this->mapping = $mapping;
+	}
+
+	protected function isMappable($name) {
+		return  (array_key_exists($name, $this->mapping));
+	}
+
+}
+
+class XmlMapper extends AbstractMapper {
+
+	public function __construct($mapping) {
+		parent :: __construct($mapping);
+	}
+
+	public function read($filename) {
+		$document = $this->readXmlFromFile($filename);
+		$this->leesHeader($document);
+		return $this->leesData($document);
+	}
+	
+	public function readString($xml) {
+		$document = $this->readXmlFromString($xml);
+		$this->leesHeader($document);
+		return $this->leesData($document);
+	}
+	
+	private function readXmlFromString($xml) {
+		$document = $this->createDomDocument();
+		$document->loadXml($xml);
+		return $document;
+	}
+	
+	private function readXmlFromFile($filename) {
+		$document = $this->createDomDocument();
+		$document->load($filename);
+		return $document;
+	}
+
+	private function createDomDocument() {
+		$document = new DOMDocument('1.0', 'utf-8');
+		$document->formatOutput = false;
+		$document->preserveWhiteSpace = false;
+		return $document;
+	}
+	
+	private function leesHeader($document) {
+		$domxpath = new DOMXPath($document);
+		$elements = $domxpath->query('//listheader/row/*');
+
+		$rows = array();
+		if (!is_null($elements)) {
+			foreach ($elements as $element) {
+				$nodes = $element->childNodes;
+				foreach ($nodes as $node) {
+					$rows[] = $node->nodeValue;
+				}
+			}
+		}
+		$this->columns = $rows;
+	}
+
+	private function leesData($document) {
+		$rows = array();
+
+		$domxpath = new DOMXPath($document);
+		$elements = $domxpath->query('//listbody/row');
+
+		if (!is_null($elements)) {
+			foreach ($elements as $element) {
+				$data = $element->childNodes;
+				$object = new stdClass();
+				$num = $data->length;
+				for ($i = 0; $i < $num; $i++) {
+					$kolom = $this->columns[$i];
+					if ($this->isMappable($kolom)) {
+						$veld = $this->mapping[$kolom];
+						$veld->set($object, $data->item($i)->nodeValue);
+					}
+				}
+				$rows[] = $object;
+			}
+		}
+		return $rows;
+	}
+}
+
+class CsvMapper extends AbstractMapper {
+
+	public function __construct($mapping) {
+		parent :: __construct($mapping);
 	}
 
 	public function read($file) {
@@ -17,13 +107,13 @@ class Mapper {
 		}
 		return $rows;
 	}
-	
+
 	private function leesHeader($handle) {
 		$this->columns = $this->readLine($handle);
 	}
 
 	private function leesData($handle) {
-		$rows = array();    
+		$rows = array();
 		while (($data = $this->readLine($handle)) !== FALSE) {
 			$object = new stdClass();
 			$num = count($data);
@@ -38,41 +128,38 @@ class Mapper {
 		}
 		return $rows;
 	}
-	
+
 	private function readLine($handle) {
 		return fgetcsv($handle, 0, ",");
 	}
-	
-	private function isMappable($name) {
-		return  (array_key_exists($name, $this->mapping));
-	}
+
 }
 
 /** Baseclass voor alle soorten importvelden. */
 abstract class ImportVeld {
 	private $kolom;
 	private $actief;
-	
+
 	public function __construct($kolom, $actief=true) {
 		$this->kolom = $kolom;
 		$this->actief = $actief;
 	}
-	
+
 	public function isActief() {
 		return $this->actief;
 	}
-	
+
 	public function getKolom() {
 		return $this->kolom;
 	}
-	
+
 	public function set($object, $value) {
 		if($this->isActief()) {
 			$kolom = $this->kolom;
 			$object->$kolom = $this->convert($value);
 		}
 	}
-	
+
 	public function convert($value) {
 		return $value; //iconv('UTF-8', 'ASCII//TRANSLIT', $value);
 	}
@@ -97,7 +184,7 @@ class DatumVeld extends ImportVeld {
 	public function __construct($kolom, $actief=true) {
 		parent::__construct($kolom, $actief);
 	}
-	
+
 	public function set($object, $value) {
 		if($this->isActief() && $value != '') {
 			$kolom = $this->getKolom();
@@ -118,7 +205,7 @@ class TijdVeld extends ImportVeld {
 	public function __construct($kolom, $actief=true) {
 		parent::__construct($kolom, $actief);
 	}
-	
+
 	public function set($object, $value) {
 		if($this->isActief() && $value != '') {
 			$kolom = $this->getKolom();
@@ -151,7 +238,7 @@ abstract class ArrayVeld extends ImportVeld {
 			array_push($object->$kolom, $this->mapValue($this->convert($value)));
 		}
 	}
-	
+
 	function mapValue($value) {
 		return $this->key;
 	}
