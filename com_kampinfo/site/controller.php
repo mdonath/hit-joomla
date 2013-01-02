@@ -8,6 +8,6 @@ jimport('joomla.application.component.controller');
 /**
  * KampInfo Component Controller
  */
-class KampInfoController extends JController
+class KampInfoController extends JControllerLegacy
 {
 }

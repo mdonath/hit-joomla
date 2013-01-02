@@ -156,6 +156,14 @@
 			description="Voor welk jaar is de download?"
 		/>
 		<field
+			name="downloadSecret"
+			type="text"
+			default="paaskonijn"
+			size="8"
+			label="Secret"
+			description="De secret handshake voor het extern aanschoppen van de download van inschrijvingen"
+		/>
+		<field
 			name="downloadFormIdKampRegistratie"
 			type="text"
 			default="5687"
