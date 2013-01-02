@@ -67,6 +67,20 @@ abstract class KampInfoModelParent extends JModelItem {
 		}
 		return $result;		
 	}
+	
+	function createDoelgroepen($doelgroepen) {
+		$doelgroepenLookup = array();
+		foreach (KampInfoHelper :: getTargetgroupOptions() as $v) {
+			$doelgroepenLookup[$v->value] = $v->text;
+		}
+		$result = '';
+		$sep = '';
+		foreach (explode(',', $doelgroepen) as $doelgroep) {
+			$result .= $sep . $doelgroepenLookup[$doelgroep];
+			$sep = ', ';
+		}
+		return $result;
+	}
 
 	function explodeIcoontjes($kamp, $iconenLijst) {
 		if (empty($iconenLijst)) {

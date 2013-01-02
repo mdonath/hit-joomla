@@ -19,7 +19,6 @@ $activiteit = $this->activiteit;
 $start = new JDate($activiteit->startDatumTijd);
 $eind = new JDate($activiteit->eindDatumTijd);
 
-
 ?>
 <div class="rt-article">
 	<div class="item-page">
@@ -188,8 +187,8 @@ $eind = new JDate($activiteit->eindDatumTijd);
 									echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit)));
 								}
 								echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ."</span>");
-									
 								?>
+
 								<?php if(!empty($activiteit->maximumAantalUitEenGroep)) { ?>
 								Er mogen maximaal <?php echo($activiteit->maximumAantalUitEenGroep); ?> leden uit dezelfde Scoutinggroep meedoen.
 								<?php } ?>
@@ -207,9 +206,13 @@ $eind = new JDate($activiteit->eindDatumTijd);
 								Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
 								<?php } ?>
 							</p>
+							<?php if (!empty($activiteit->doelgroepen)) { ?>
+								<p>Let op: Inschrijven is alleen mogelijk voor de volgende doelgroepen: <?php echo $activiteit->doelgroepen; ?>. Het is daarom belangrijk dat je met de juiste rol bent ingelogd in ScoutsOnline.</p>
+							<?php } ?>
 							<?php if ($activiteit->shantiFormuliernummer > 0) { ?>
 								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
 							<?php } ?>
+							<br />
 							<br />
 						</div>
 					</div>

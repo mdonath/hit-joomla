@@ -220,27 +220,27 @@ abstract class KampInfoHelper {
 		return array (
 			(object) array (
 				"value" => "bevers",
-				"text" => "Bevers 5-7 jaar"
+				"text" => "Bevers (5-7 jaar)"
 			),
 			(object) array (
 				"value" => "welpen",
-				"text" => "Welpen 7-11 jaar"
+				"text" => "Welpen (7-11 jaar)"
 			),
 			(object) array (
 				"value" => "scouts",
-				"text" => "Scouts 11-15 jaar"
+				"text" => "Scouts (11-15 jaar)"
 			),
 			(object) array (
 				"value" => "explorers",
-				"text" => "Explorers 15-18 jaar"
+				"text" => "Explorers (15-18 jaar)"
 			),
 			(object) array (
 				"value" => "roverscouts",
-				"text" => "Roverscouts 18 t/m 21 jaar"
+				"text" => "Roverscouts (18 t/m 21 jaar)"
 			),
 			(object) array (
 				"value" => "plusscouts",
-				"text" => "Plusscouts 21+"
+				"text" => "Plusscouts (21+)"
 			),
 			(object) array (
 				"value" => "ndlg",
