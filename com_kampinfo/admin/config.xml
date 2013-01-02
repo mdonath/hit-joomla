@@ -199,8 +199,9 @@
 			name="rules"
 			type="rules"
 			label="JCONFIG_PERMISSIONS_LABEL"
-			filter="rules"
+			class="inputbox"
 			validate="rules"
+			filter="rules"
 			component="com_kampinfo"
 			section="component" />
 	</fieldset>

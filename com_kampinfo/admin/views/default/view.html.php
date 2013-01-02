@@ -54,7 +54,9 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		JToolBarHelper :: editListX($this->entityName . '.edit');
 		JToolBarHelper :: divider();
 		JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
-		JToolBarHelper::preferences('com_kampinfo');
+		if (JFactory::getUser()->authorise('core.admin', 'com_helloworld'))     {
+			JToolBarHelper :: preferences('com_kampinfo');
+		}
 	}
 	
 }
