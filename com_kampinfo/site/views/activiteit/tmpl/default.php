@@ -185,9 +185,9 @@ $eind = new JDate($activiteit->eindDatumTijd);
 							<p>
 								<?php 
 								if (KampInfoUrlHelper::isVol($activiteit)) {
-									echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp)));
-									echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($kamp) ."</span>");
+									echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit)));
 								}
+								echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ."</span>");
 									
 								?>
 								<?php if(!empty($activiteit->maximumAantalUitEenGroep)) { ?>

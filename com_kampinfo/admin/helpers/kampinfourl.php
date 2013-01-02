@@ -57,9 +57,8 @@ abstract class KampInfoUrlHelper {
 	
 
 	public static function fuzzyIndicatieVol($kamp) {
-		$result;
 		if (KampInfoUrlHelper::isVol($kamp)) {
-			if ($kamp->aantalDeelnemers < $kamp->gereserveerd) {
+			if (intval($kamp->aantalDeelnemers) < intval($kamp->gereserveerd)) {
 				$eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
 				$result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
 			} else {
@@ -85,7 +84,7 @@ abstract class KampInfoUrlHelper {
 	}
 	
 	public static function isVol($kamp) {
-		return $kamp->gereserveerd >= $kamp->maximumAantalDeelnemers;
+		return intval($kamp->gereserveerd) >= intval($kamp->maximumAantalDeelnemers);
 	}
 	
 
