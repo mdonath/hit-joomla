@@ -97,7 +97,10 @@ $project = $this->project;
 	<?php } ?>
 	<tfoot>
 		<tr>
-			<th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.</th>
+			<th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.
+			<?php if (!empty($project->laatstBijgewerktOp)) { ?>
+			 Laatst bijgewerkt op: <?php echo($project->laatstBijgewerktOp  /*->format('d-m-Y H:i')*/); ?></th>
+			<?php } ?>
 		</tr>
 	</tfoot>
 </table>

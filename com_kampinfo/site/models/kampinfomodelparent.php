@@ -26,6 +26,26 @@ abstract class KampInfoModelParent extends JModelItem {
 		return $kampenInPlaats;
 	}
 
+	protected function getLaatstBijgewerktOp($jaar) {
+		$db = JFactory :: getDBO();
+		
+		$query = $db->getQuery(true);
+		$query->select('max(bijgewerktOp) as bijgewerktOp');
+		$query->from('#__kampinfo_downloads');
+		$query->where('(jaar = ' . (int)($db->getEscaped($jaar)) .')');
+		$query->where('(soort = '. $db->quote($db->getEscaped('INSC')) .')');
+		
+		$db->setQuery($query);
+		$bijgewerktOp = $db->loadResult();
+		
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		
+		return $bijgewerktOp;
+	}
+
 	/**
 	 * @param $namen - comma separated string
 	 */

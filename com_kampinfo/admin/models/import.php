@@ -44,7 +44,18 @@ class KampInfoModelImport extends JModelAdmin
 		$mapper = new XmlMapper(self::getKampenMapping());
 		$rows = $mapper->readString($result);
 
-		return self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
+		$result = self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
+		$this->updateLaatstBijgewerkt($jaar, 'KAMP', 'Aantal rijen vervangen: ' . count($rows));
+		return $result;
+	}
+
+	private function updateLaatstBijgewerkt($jaar, $soort, $melding) {
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+		$query->insert('#__kampinfo_downloads');
+		$query->set("jaar=". (int)($db->getEscaped($jaar)) .', soort = '. $db->quote($db->getEscaped($soort)).', melding = '. $db->quote($db->getEscaped($melding)));
+		$db->setQuery($query);
+		$db->query();
 	}
 
 	public function importKampgegevens() {
@@ -74,7 +85,6 @@ class KampInfoModelImport extends JModelAdmin
 	}
 
 	private function verwijderEnImporteerKampgegevens($app, $rows, $jaar) {
-
 		$count = count($rows);
 
 		if ($count == 0) {
@@ -124,7 +134,9 @@ class KampInfoModelImport extends JModelAdmin
 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
 
 		$count = self::updateInschrijvingen($rows,  $jaar);
-		$app->enqueueMessage("Er zijn nu $count kampen bijgewerkt met hun inschrijvingen");
+		$msg = "Er zijn nu $count kampen bijgewerkt met hun inschrijvingen";
+		$app->enqueueMessage($msg);
+		$this->updateLaatstBijgewerkt($jaar, 'INSC', $msg);
 		return true;
 	}
 
@@ -180,14 +192,14 @@ class KampInfoModelImport extends JModelAdmin
 							. " c.hitsite = s.code AND s.jaar = ". ($db->getEscaped($jaar))
 							. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
 							;
-			$db->setQuery($query);
-			$db->execute();
-			// Check for a database error.
-			if ($db->getErrorNum()) {
-				JError :: raiseWarning(500, $db->getErrorMsg());
-			}
-			// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
-			$count += $db->getAffectedRows();
+							$db->setQuery($query);
+							$db->execute();
+							// Check for a database error.
+							if ($db->getErrorNum()) {
+								JError :: raiseWarning(500, $db->getErrorMsg());
+							}
+							// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
+							$count += $db->getAffectedRows();
 		}
 		return $count;
 	}

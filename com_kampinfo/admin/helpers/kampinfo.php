@@ -11,7 +11,8 @@ abstract class KampInfoHelper {
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
-
+		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
+		
 		// set some global property
 		$document = JFactory :: getDocument();
 		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
@@ -30,6 +31,9 @@ abstract class KampInfoHelper {
 		}
 		elseif ($submenu == 'import') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_IMPORT_DOCTITLE'));
+		}
+		elseif ($submenu == 'downloads') {
+			$document->setTitle(JText :: _('COM_KAMPINFO_DOWNLOADS_DOCTITLE'));
 		}
 	}
 

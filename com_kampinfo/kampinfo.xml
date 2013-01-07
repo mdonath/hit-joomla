@@ -2,14 +2,14 @@
 <extension type="component" version="2.5.0" method="upgrade">
  
         <name>COM_KAMPINFO</name>
-        <!-- The following elements are optional and free of formatting constraints -->
+
         <creationDate>October 2012</creationDate>
         <author>Martijn Donath</author>
         <authorEmail>martijn.donath@gmail.com</authorEmail>
         <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
         <license>LGPL</license>
         <!--  The version string is recorded in the components table -->
-        <version>0.0.3</version>
+        <version>0.0.4</version>
         <!-- The description is optional and defaults to the name -->
         <description>COM_KAMPINFO_DESCRIPTION</description>
  

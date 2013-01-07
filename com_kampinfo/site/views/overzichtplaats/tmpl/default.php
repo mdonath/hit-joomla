@@ -89,11 +89,13 @@ $plaats = $this->plaats;
 		</tr>
 		<?php } ?>
 	</tbody>
+	<?php if ($aantalIngeschreven > 75) { ?>
 	<tfoot>
 		<tr>
 			<th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.</th>
 		</tr>
 	</tfoot>
+	<?php } ?>
 </table>
 <br />
 <p>Zit er wat voor je bij? Schrijf je snel in en kom met Pasen naar <?php echo($plaats->naam); ?>!</p>

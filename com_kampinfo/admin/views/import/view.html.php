@@ -20,7 +20,7 @@ class KampInfoViewImport extends JView {
 		$this->item=$item;
 
 		JToolBarHelper :: title('Import', 'kampinfo');
-		if (JFactory::getUser()->authorise('core.admin', 'com_helloworld'))     {
+		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo'))     {
 			JToolBarHelper :: preferences('com_kampinfo');
 		}
 

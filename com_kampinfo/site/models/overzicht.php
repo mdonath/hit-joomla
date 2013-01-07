@@ -23,6 +23,7 @@ class KampInfoModelOverzicht extends KampInfoModelParent {
 		foreach ($project->plaatsen as $plaats) {
 			$plaats->kampen = $this->getHitKampen($plaats->code, $iconenLijst);
 		}
+		$project->laatstBijgewerktOp = $this->getLaatstBijgewerktOp($filterJaar);
 		return $project;
 	}
 

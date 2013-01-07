@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `#__kampinfo_hitproject`;
 DROP TABLE IF EXISTS `#__kampinfo_hitsite`;
 DROP TABLE IF EXISTS `#__kampinfo_hitcamp`;
 DROP TABLE IF EXISTS `#__kampinfo_hiticon`;
-
+DROP TABLE IF EXISTS `#__kampinfo_downloads`;
 
 CREATE TABLE `#__kampinfo_hitproject` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
@@ -80,46 +80,14 @@ CREATE TABLE `#__kampinfo_hiticon` (
 ,	PRIMARY KEY (`id`)
 );
 
-
-
--- TEST DATA
-INSERT INTO `#__kampinfo_hitproject` (
-	`jaar`
-,	`inschrijvingStartdatum`
-,	`inschrijvingEinddatum`
-,	`inschrijvingWijzigenTotDatum`
-,	`inschrijvingKosteloosAnnulerenDatum`
-,	`inschrijvingGeenRestitutieDatum`
-,	`inningsdatum`
-,	`vrijdag`
-,	`maandag`
-) VALUES
-	(2012, '2012-01-02', '2012-03-09', '2012-03-09', '2012-03-09', '2012-03-10', '2012-03-19', '2012-04-06', '2012-04-09')
-,	(2013, '2013-01-03', '2013-03-03', '2013-03-09', '2013-03-09', '2013-03-10', '2013-03-11', '2013-03-29', '2013-04-01')
-;
-
-INSERT INTO `#__kampinfo_hitsite` (
-	`naam`
-,	`deelnemersnummer`
-,	`code`
-,	`jaar`
-,	`contactPersoonEmail`
-) VALUES
-	('Alphen', 121000, 'alphen-2012', 2012, 'voorzitter@hitalphen.scouting.nl')
-,	('Dwingeloo', 122000, 'dwingeloo-2012', 2012, 'voorzitter@hitdwingeloo.scouting.nl')
-,	('Harderwijk', 123000, 'harderwijk-2012', 2012, 'voorzitter@hitharderwijk.scouting.nl')
-,	('Hilversum', 124000, 'hilversum-2012', 2012, 'voorzitter@hithilversum.scouting.nl')
-,	('Mook', 125000, 'mook-2012', 2012, 'voorzitter@hitmook.scouting.nl')
-,	('Zeeland', 126000, 'zeeland-2012', 2012, 'voorzitter@hitzeeland.scouting.nl')
-
-,	('Alphen', 131000, 'alphen-2013', 2013, 'voorzitter@hitalphen.scouting.nl')
-,	('Baarn', 132000, 'baarn-2013', 2013, 'voorzitter@hithilversum.scouting.nl')
-,	('Dwingeloo', 13300, 'dwingeloo-2013', 2013, 'voorzitter@hitdwingeloo.scouting.nl')
-,	('Harderwijk', 134000, 'harderwijk-2013', 2013, 'voorzitter@hitharderwijk.scouting.nl')
-,	('Mook', 135000, 'mook-2013', 2013, 'voorzitter@hitmook.scouting.nl')
-,	('Zeeland', 136000, 'zeeland-2013', 2013, 'voorzitter@hitzeeland.scouting.nl')
-;
-
+CREATE TABLE `#__kampinfo_downloads` (
+	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
+,	`jaar`									YEAR(4)		NOT NULL
+,	`soort`									VARCHAR(4)	NOT NULL
+,	`bijgewerktOp`							TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP
+,	`melding`								TEXT
+,	PRIMARY KEY (`id`)
+);
 
 INSERT INTO `#__kampinfo_hiticon` (
 	`volgorde`
