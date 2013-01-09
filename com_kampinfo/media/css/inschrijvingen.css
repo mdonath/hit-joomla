@@ -1,0 +1,10 @@
+.leeg {background-color: red; }
+.nogNietGenoeg {background-color: pink; }
+.quaReserveringen {background-color: orange; }
+.quaInschrijvingen {background-color: yellow; }
+.overDeHelft {background-color: lightgreen; }
+.zoGoedAlsVol {background-color: lime; }
+.vol {background-color: green; }
+.proppievol {background-color: purple; }
+
+.leeg, .vol, .proppievol { color: white; }

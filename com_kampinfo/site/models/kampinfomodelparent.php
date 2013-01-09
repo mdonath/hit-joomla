@@ -106,10 +106,13 @@ abstract class KampInfoModelParent extends JModelItem {
 		if (empty($iconenLijst)) {
 			$iconenLijst = $this->getIconenLijst();
 		}
-		$icoontjes = explode(',', $kamp->icoontjes);
+
 		$nieuweIcoontjes = array();
-		foreach ($icoontjes as $icoon) {
-			$nieuweIcoontjes[] = $iconenLijst[$icoon];
+		if (!empty($kamp->icoontjes)) {
+			$icoontjes = explode(',', $kamp->icoontjes);
+			foreach ($icoontjes as $icoon) {
+				$nieuweIcoontjes[] = $iconenLijst[$icoon];
+			}
 		}
 		return $nieuweIcoontjes;
 	}
