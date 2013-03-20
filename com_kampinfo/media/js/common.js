@@ -60,9 +60,12 @@ function meervoudPlaats(eenAantal) {
  * @returns {Boolean} Of een kamp al volgereserveerd is.
  */
 function isVol(kamp) {
-	return kamp.gereserveerd >= kamp.maximumAantalDeelnemers;
+	return kamp.gereserveerd >= kamp.maximumAantalDeelnemers || isVolQuaGroepjes(kamp); 
 }
 
+function isVolQuaGroepjes(kamp) {
+	return kamp.aantalSubgroepen >0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
+}
 /**
  * Past de naam aan op de manier waarop Joomla dat ook gedaan heeft.
  *
@@ -75,7 +78,7 @@ function urlified(naam) {
 		.replace(/ /g, "-")
 		.replace(/°/g, "d")
 		.replace(/º/g, "o")
-		.replace(/&/g, "a")
+		.replace(/&/g, "")
 		.toLowerCase()
 		.replace(/[^a-z0-9\-]/g, "")
 		.replace(/-+/g, "-")

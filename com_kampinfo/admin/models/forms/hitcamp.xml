@@ -34,6 +34,17 @@
 				class="inputbox"
 				default=""
 		/>
+		<field
+				name="aantalSubgroepen"
+				type="text"
+				label="Aantal subgroepen"
+				description="Het huidige aantal ingeschreven subgroepen"
+				maxlength="3"
+				size="3"
+				class="inputbox"
+				default=""
+		/>
+			
 	</fieldset>
 	
 	<fieldset

@@ -8,3 +8,28 @@
 .proppievol {background-color: purple; }
 
 .leeg, .vol, .proppievol { color: white; }
+
+.kolom2, .kolom3, .kolom4, .kolom5, .kolom7, .kolom8, .kolom9 {
+        text-align: right;
+}
+.kolom6 {
+	width: 200px;
+	white-space: nowrap;
+}
+
+
+.progressbar {
+        text-align: center;
+        background-color: lime;
+        float: left;
+}
+div + div.progressbar {
+        background-color: yellow !important;
+        float: left;
+}
+
+div + div + div.progressbar {
+        background-color: green !important;
+        color: white;
+        float: left;
+}

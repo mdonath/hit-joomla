@@ -62,7 +62,11 @@ abstract class KampInfoUrlHelper {
 				$eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
 				$result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
 			} else {
-				$result = "Vol: inschrijven is niet meer mogelijk.";
+				if (self::isVolQuaGroepjes($kamp)) {
+					$result = "Vol: Maximum aantal groepjes is bereikt. Inschrijven is niet meer mogelijk";
+				} else {
+					$result = "Vol: inschrijven is niet meer mogelijk.";
+				}
 			}
 		} else {
 			$watMaaktHetKampVol = max($kamp->maximumAantalDeelnemers/10, $kamp->subgroepsamenstellingMinimum);
@@ -84,8 +88,11 @@ abstract class KampInfoUrlHelper {
 	}
 	
 	public static function isVol($kamp) {
-		return intval($kamp->gereserveerd) >= intval($kamp->maximumAantalDeelnemers);
+		return intval($kamp->gereserveerd) >= intval($kamp->maximumAantalDeelnemers) || self::isVolQuaGroepjes($kamp);
 	}
 	
+	public static function isVolQuaGroepjes($kamp) {
+		return intval($kamp->maximumAantalSubgroepjes) > 0 && intval($kamp->aantalSubgroepen) >= intval($kamp->maximumAantalSubgroepjes);	
+	}
 
 }

@@ -2,6 +2,7 @@
 
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/mapper.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolDownload.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -15,6 +16,9 @@ jimport('joomla.filesystem.file');
 class KampInfoModelImport extends JModelAdmin
 {
 
+	/**
+	 * Downloadt de kampgegevens uit SOL en overschrijft de huidige gegevens.
+	 */
 	public function downloadKampgegevens() {
 		$app = JFactory::getApplication();
 
@@ -41,7 +45,7 @@ class KampInfoModelImport extends JModelAdmin
 		$result = $sol->downloadForm($user, $password, $role, $sui, $keypriv, $wsdl, $frm_id, $parts);
 
 		// Importeer gegevens
-		$mapper = new XmlMapper(self::getKampenMapping());
+		$mapper = new XmlMapper(self::getKampgegevensMapping());
 		$rows = $mapper->readString($result);
 
 		$result = self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
@@ -49,15 +53,9 @@ class KampInfoModelImport extends JModelAdmin
 		return $result;
 	}
 
-	private function updateLaatstBijgewerkt($jaar, $soort, $melding) {
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-		$query->insert('#__kampinfo_downloads');
-		$query->set("jaar=". (int)($db->getEscaped($jaar)) .', soort = '. $db->quote($db->getEscaped($soort)).', melding = '. $db->quote($db->getEscaped($melding)));
-		$db->setQuery($query);
-		$db->query();
-	}
-
+	/**
+	 * Importeert de kampgegevens via een upload van een CSV.
+	 */
 	public function importKampgegevens() {
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
@@ -78,27 +76,10 @@ class KampInfoModelImport extends JModelAdmin
 		}
 		$app->enqueueMessage('File: ' . $file);
 
-		$mapper = new CsvMapper(self::getKampenMapping());
+		$mapper = new CsvMapper(self::getKampgegevensMapping());
 		$rows = $mapper->read($file);
 
 		return self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
-	}
-
-	private function verwijderEnImporteerKampgegevens($app, $rows, $jaar) {
-		$count = count($rows);
-
-		if ($count == 0) {
-			$app->enqueueMessage('geen rijen gevonden');
-			return false;
-		}
-		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-
-		self::verwijderJaar($jaar);
-		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
-
-		self::updateKampen($rows,  $jaar);
-		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
-		return true;
 	}
 
 	public function downloadInschrijvingen() {
@@ -124,7 +105,7 @@ class KampInfoModelImport extends JModelAdmin
 		$eventId = $params->get('downloadEventIdInschrijvingen');
 
 		$sol = new SolDownload();
-		$result = $sol->downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $eventId);
+		$result = $sol->downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $eventId, 'forms');
 
 		// Importeer gegevens
 		$mapper = new XmlMapper(self::getInschrijvingenMapping());
@@ -176,32 +157,106 @@ class KampInfoModelImport extends JModelAdmin
 		return true;
 	}
 
-	private function updateInschrijvingen($rows, $jaar) {
-		$db = JFactory :: getDbo();
-		$count = 0;
-		foreach ($rows as $inschrijving) {
-			$aantalDeelnemers = $inschrijving->aantalDeelnemers;
-			$gereserveerd = $inschrijving->gereserveerd;
-			if (empty($gereserveerd)) {
-				$gereserveerd = 0;
-			}
-			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s SET"
-					. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
-					. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
-					. " WHERE "
-							. " c.hitsite = s.code AND s.jaar = ". ($db->getEscaped($jaar))
-							. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
-							;
-							$db->setQuery($query);
-							$db->execute();
-							// Check for a database error.
-							if ($db->getErrorNum()) {
-								JError :: raiseWarning(500, $db->getErrorMsg());
-							}
-							// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
-							$count += $db->getAffectedRows();
+	/**
+	 * https://sol.scouting.nl/index.php
+	 * ?task=as_event
+	 * &action=participants
+	 * &evt_id=3331
+	 * &button=export
+	 * &export=true
+	 * &tev_id=1
+	 * &partViewRights=1
+	 * @return boolean
+	 */
+	public function downloadDeelnemergegevens() {
+		$app = JFactory::getApplication();
+	
+		$params = &JComponentHelper::getParams('com_kampinfo');
+	
+		// Voor welk jaar staat in de configuratie
+		$jaar = $params->get('downloadJaar');
+		if ($jaar < 2000) {
+			$app->enqueueMessage('Geen jaartal opgegeven');
+			return false;
 		}
-		return $count;
+	
+		// Via Soap Downloaden
+		$user = $params->get('soapUser');
+		$password = $params->get('soapPassword');
+		$role = $params->get('soapRolemask');
+		$sui = $params->get('soapSui');
+		$keypriv = $params->get('soapPrivateKey');
+		$wsdl = $params->get('soapWsdl');
+	
+		$eventId = $params->get('downloadEventIdInschrijvingen');
+	
+		$sol = new SolDownload();
+		$result = $sol->downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $eventId, 'participants');
+	print_r($result);
+
+	// Importeer gegevens
+		$mapper = new XmlMapper(self::getDeelnemergegevensMapping($jaar));
+		$rows = $mapper->readString($result);
+	print_r($rows);
+		$count = count($rows);
+		
+		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
+		
+		$count = self::updateDeelnemergegevens($rows,  $jaar);
+		$msg = "Er zijn nu $count deelnemers toegevoegd.";
+
+		$app->enqueueMessage($msg);
+		$this->updateLaatstBijgewerkt($jaar, 'DEEL', $msg);
+		
+		return true;
+	}
+
+	/**
+	 * Importeert de deelnemers via een upload van een CSV.
+	 */
+	public function importDeelnemergegevens() {
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		$formdata = $jinput->get('jform', array(), 'array');
+		$jaar = $formdata["jaar"];
+
+		if ($jaar < 2000) {
+			$app->enqueueMessage('Geen jaartal opgegeven');
+			return false;
+		}
+		$app->enqueueMessage('Voor het jaartal ' . $jaar);
+
+		$file = self::getUploadedFile('import_deelnemers');
+
+		if (!$file) {
+			$app->enqueueMessage('Geen file geupload?!');
+			return false;
+		}
+		$app->enqueueMessage('File: ' . $file);
+
+		$mapper = new CsvMapper(self::getDeelnemergegevensMapping($jaar));
+		$rows = $mapper->read($file);
+
+		$count = self::updateDeelnemergegevens($rows,  $jaar);
+		$app->enqueueMessage("Er zijn nu $count deelnemers toegevoegd.");
+		return true;
+	}
+
+	private function verwijderEnImporteerKampgegevens($app, $rows, $jaar) {
+		$count = count($rows);
+
+		if ($count == 0) {
+			$app->enqueueMessage('geen rijen gevonden');
+			return false;
+		}
+		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
+
+		self::verwijderJaar($jaar);
+		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
+
+		self::updateKampen($rows,  $jaar);
+		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
+		return true;
 	}
 
 	private function updateKampen($rows, $jaar) {
@@ -229,6 +284,91 @@ class KampInfoModelImport extends JModelAdmin
 			JError :: raiseWarning(500, $db->getErrorMsg());
 		}
 	}
+
+	private function updateInschrijvingen($rows, $jaar) {
+		$db = JFactory :: getDbo();
+		$count = 0;
+		foreach ($rows as $inschrijving) {
+			$aantalDeelnemers = $inschrijving->aantalDeelnemers;
+			$gereserveerd = $inschrijving->gereserveerd;
+			$aantalSubgroepen = $inschrijving->aantalSubgroepen;
+			if (empty($gereserveerd)) {
+				$gereserveerd = 0;
+			}
+			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s SET"
+					. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
+					. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
+					. ", c.aantalSubgroepen = " .	(int)($db->getEscaped($aantalSubgroepen))
+					. " WHERE "
+					. " c.hitsite = s.code AND s.jaar = ". ($db->getEscaped($jaar))
+					. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
+					;
+			$db->setQuery($query);
+			$db->execute();
+			// Check for a database error.
+			if ($db->getErrorNum()) {
+				JError :: raiseWarning(500, $db->getErrorMsg());
+			}
+			// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
+			$count += $db->getAffectedRows();
+		}
+		return $count;
+	}
+	
+	private function updateDeelnemergegevens($rows, $jaar) {
+		$db = JFactory :: getDbo();
+		
+		$maxDeelnemernummer = $this->bepaalHoogsteDeelnemernummerOpDitMoment($jaar);
+		
+		$count = 0;
+		$moetInserten = $maxDeelnemernummer == null;
+		foreach ($rows as $deelnemer) {
+			if ($moetInserten) {
+				$formulier = array();
+				preg_match("/HIT (\w+) (.*)/", $deelnemer->formulier, $formulier);
+				
+				$db = JFactory :: getDbo();
+				$query = $db->getQuery(true);
+				$query->insert('#__kampinfo_deelnemers');
+				$query->set(
+						'jaar = '. (int)($db->getEscaped($jaar)) .
+						', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
+						', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
+						', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
+						', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
+						', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
+						', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]).'-'.$jaar)) .
+						', hitcamp = ' . $db->quote($db->getEscaped($formulier[2]))
+				);
+				$db->setQuery($query);
+				$db->query();
+				$count++;
+			}
+			$moetInserten = $moetInserten || $deelnemer->dlnnr == $maxDeelnemernummer;
+		}
+		return $count;
+	}
+
+	private function bepaalHoogsteDeelnemernummerOpDitMoment($jaar) {
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+		$query->select('max(dlnnr) as laatste');
+		$query->from('#__kampinfo_deelnemers');
+		$query->where('(jaar = ' . (int)($db->getEscaped($jaar)) . ')');
+		$db->setQuery($query);
+		
+		$row = $db->loadObjectList();
+		
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		if ($row != null || count($row) != 0) {
+			return $row[0]->laatste;
+		}
+		return null;
+	}
+
 	protected function getUploadedFile($fieldname)
 	{
 		$app = JFactory::getApplication();
@@ -258,6 +398,22 @@ class KampInfoModelImport extends JModelAdmin
 		return $tmp_dest;
 	}
 
+
+	/**
+	 * Werkt de tabel met logging mbt updates bij.
+	 * @param unknown $jaar
+	 * @param unknown $soort
+	 * @param unknown $melding
+	 */
+	private function updateLaatstBijgewerkt($jaar, $soort, $melding) {
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+		$query->insert('#__kampinfo_downloads');
+		$query->set("jaar=". (int)($db->getEscaped($jaar)) .', soort = '. $db->quote($db->getEscaped($soort)).', melding = '. $db->quote($db->getEscaped($melding)));
+		$db->setQuery($query);
+		$db->query();
+	}
+
 	public function getForm($data = array(), $loadData = true)
 	{
 		return self::loadForm(
@@ -281,7 +437,7 @@ class KampInfoModelImport extends JModelAdmin
 		return JTable :: getInstance($type, $prefix, $config);
 	}
 
-	private function getKampenMapping() {
+	private function getKampgegevensMapping() {
 		$mapping = array(
 		  'deelnemersnummer'												=> new GewoonVeld('deelnemersnummer')
 				, 'HIT-Kamp in HIT-Plaats'											=> new GewoonVeld('plaatsNaam') // icm jaar -> hitsite
@@ -398,108 +554,26 @@ class KampInfoModelImport extends JModelAdmin
 
 	private function getInschrijvingenMapping() {
 		$mapping = array(
-		  'Locatie' => new IgnoredVeld()
-		  // 		, 'Formulier' => new IgnoredVeld()
+				'Locatie' => new IgnoredVeld()
 				, 'Formuliernummer' => new GewoonVeld('shantiFormuliernummer')
 				, 'Aantal dln\'s' => new GewoonVeld('aantalDeelnemers')
-				// 		, 'Minimum aantal deelnemers' => new IgnoredVeld()
-				// 		, 'Maximum aantal deelnemers' => new IgnoredVeld()
-				// 		, 'Maximum aantal leden uit 1 groep' => new IgnoredVeld()
-				// 		, 'Minimum leeftijd' => new IgnoredVeld()
-				// 		, 'Maximum leeftijd' => new IgnoredVeld()
-				// 		, 'Db_field_frm_evt_id' => new IgnoredVeld()
-				// 		, 'Formulier actief' => new IgnoredVeld()
-				// 		, 'Transactiegroepnummer' => new IgnoredVeld()
-				// 		, 'Transactiegroep naam' => new IgnoredVeld()
-				// 		, 'Startdatum inschrijving' => new IgnoredVeld()
-				// 		, 'Einddatum inschrijving' => new IgnoredVeld()
-				// 		, 'Min.aantal groepen' => new IgnoredVeld()
-				// 		, 'Max.aantal groepen' => new IgnoredVeld()
-				// 		, 'Annuleringspercentage' => new IgnoredVeld()
-				// 		, 'Annuleringsbedrag' => new IgnoredVeld()
-				// 		, 'Annuleringsdatum 1' => new IgnoredVeld()
-				// 		, 'Annuleringsdatum 2' => new IgnoredVeld()
-				// 		, 'Opvolgend formulier' => new IgnoredVeld()
-				// 		, 'Gewijzigd op' => new IgnoredVeld()
-				// 		, 'Db_field_frm_create_ts' => new IgnoredVeld()
-				// 		, 'Eenmaal inschrijven' => new IgnoredVeld()
-				// 		, 'Mail naar organisatie' => new IgnoredVeld()
-				// 		, 'Wijzigingsmail naar organisatie' => new IgnoredVeld()
-				// 		, 'Organisatie mailadres' => new IgnoredVeld()
-				// 		, 'Code type formulier' => new IgnoredVeld()
-				// 		, 'Db_field_fty_nm' => new IgnoredVeld()
-				// 		, 'Gekoppeld formulier' => new IgnoredVeld()
-				// 		, 'Deelnemer kan gegevens wijzigen tot' => new IgnoredVeld()
-				// 		, 'Mailadres inschrijvingvragen' => new IgnoredVeld()
-				// 		, 'Url algemene voorwaarden' => new IgnoredVeld()
-				// 		, 'Gewijzigd door' => new IgnoredVeld()
-				// 		, 'Inschrijven alleen met specifieke functies' => new IgnoredVeld()
-				// 		, 'Aantal deelbaar door' => new IgnoredVeld()
-				// 		, 'Locatie' => new IgnoredVeld()
-				// 		, 'Locatiewebsite' => new IgnoredVeld()
-				// 		, 'Aangemaakt door' => new IgnoredVeld()
-				// 		, 'Starttijd' => new IgnoredVeld()
-				// 		, 'Eindtijd' => new IgnoredVeld()
-				// 		, 'Maximum aantal deelnemers uit andere organisaties' => new IgnoredVeld()
-				// 		, 'Wachtlijst' => new IgnoredVeld()
-				// 		, 'Gebruik groepsrekening mogelijk voor machtiging' => new IgnoredVeld()
-				// 		, 'Website (deel)evenement' => new IgnoredVeld()
-				// 		, 'Annuleren verplicht met reden' => new IgnoredVeld()
-				// 		, 'Alleen deelnemers met emailadres' => new IgnoredVeld()
-				// 		, 'Alleen deelnmers met machtiging' => new IgnoredVeld()
-				// 		, 'Deelnemerstype' => new IgnoredVeld()
-				// 		, 'Alleen deelname op groepsrekening' => new IgnoredVeld()
-				// 		, 'Aantal dagen incompleet ploegje' => new IgnoredVeld()
-				// 		, 'Inschrijver moet aan doelgroep voldoen' => new IgnoredVeld()
-				// 		, 'Dln\'s andere org\'s' => new IgnoredVeld()
 				, 'Gereserveerd' => new GewoonVeld('gereserveerd')
-				// 		, 'Subgroepen' => new IgnoredVeld()
-				// 		, 'Db_field_fte_id' => new IgnoredVeld()
-				// 		, 'Subgroepcategorie' => new IgnoredVeld()
-				// 		, 'Zichtbaar' => new IgnoredVeld()
-				// 		, 'Verplicht voor de deelnemer' => new IgnoredVeld()
-				// 		, 'Minimum aantal deelnemers in subgroep' => new IgnoredVeld()
-				// 		, 'Deelnemers in subgroep tellen mee voor totaal' => new IgnoredVeld()
-				// 		, 'Minimum aantal subgroepen' => new IgnoredVeld()
-				// 		, 'Maximum aantal subgroepen' => new IgnoredVeld()
-				// 		, 'Modulo' => new IgnoredVeld()
-				// 		, 'Deelnemers mogen subgroep maken' => new IgnoredVeld()
-				// 		, 'Dagen incompleet' => new IgnoredVeld()
-				// 		, 'Automatische mail naar de deelnemers' => new IgnoredVeld()
-				// 		, 'Cc naar organisatie' => new IgnoredVeld()
-				// 		, 'Telt het max.aantal mee' => new IgnoredVeld()
-				// 		, 'Contactpersoon vermelden bij subgroep' => new IgnoredVeld()
-				// 		, 'Toelichting subgroepcategorie' => new IgnoredVeld()
-				// 		, 'Formulier startdatum' => new IgnoredVeld()
-				// 		, 'Einddatum' => new IgnoredVeld()
-				// 		, 'Formulier actief' => new IgnoredVeld()
-				// 		, 'Tonen vanaf' => new IgnoredVeld()
-				// 		, 'Tonen t/m' => new IgnoredVeld()
-				// 		, 'Titel' => new IgnoredVeld()
-				// 		, 'Omschrijving' => new IgnoredVeld()
-				// 		, 'Db_field_ttar_restricted_yn' => new IgnoredVeld()
-				// 		, 'Voor iedereen' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_section_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_organisation_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_region_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_country_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_youth_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_staff_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_5_7_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_7_11_cubs_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_10_15_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_14_17_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_16_23_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_23plus_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_16_23_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_age_ndlg_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_land_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_water_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_air_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_disabled_person_yn' => new IgnoredVeld()
-				// 		, 'Db_field_tpre_music_yn' => new IgnoredVeld()
-				// 		, 'Functie' => new IgnoredVeld()
+				, 'Subgroepen' => new GewoonVeld('aantalSubgroepen')
 		);
 		return $mapping;
 	}
+
+	private function getDeelnemergegevensMapping($jaar) {
+		$mapping = array(
+				'Dln.nr.' => new GewoonVeld('dlnnr')
+	 		, 'Lid plaats' => new GewoonVeld('plaats')
+	 		, 'Land' => new GewoonVeld('land')
+	 		, 'Lid geboortedatum' => new LeeftijdVeld('leeftijd', $jaar)
+	 		, 'Lid geslacht' => new GeslachtVeld('geslacht')
+	 		, 'Datum inschrijving' => new DatumVeld('datumInschrijving')
+	 		, 'Formulier' => new GewoonVeld('formulier')
+		);
+		return $mapping;
+	}
+
 }

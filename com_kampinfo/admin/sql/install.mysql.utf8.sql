@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `#__kampinfo_hitsite`;
 DROP TABLE IF EXISTS `#__kampinfo_hitcamp`;
 DROP TABLE IF EXISTS `#__kampinfo_hiticon`;
 DROP TABLE IF EXISTS `#__kampinfo_downloads`;
+DROP TABLE IF EXISTS `#__kampinfo_deelnemers`;
 
 CREATE TABLE `#__kampinfo_hitproject` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
@@ -59,6 +60,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`aantalDeelnemers`						SMALLINT(3)
 ,	`gereserveerd`							SMALLINT(3)
 ,	`maximumAantalDeelnemers`				SMALLINT(3)
+,	`aantalSubgroepen`						SMALLINT(2)
 ,	`maximumAantalSubgroepjes`				SMALLINT(3)
 ,	`maximumAantalUitEenGroep`				SMALLINT(3)
 ,	`margeAantalDagenTeJong`				SMALLINT(3)
@@ -88,6 +90,20 @@ CREATE TABLE `#__kampinfo_downloads` (
 ,	`melding`								TEXT
 ,	PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `#__kampinfo_deelnemers` (
+	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
+,	`jaar`									YEAR(4)			NOT NULL
+,	`dlnnr`									INT(10)			NOT NULL
+,	`herkomst`								VARCHAR(60)		NOT NULL
+,	`leeftijd`								TINYINT			NOT NULL
+,	`geslacht`								CHAR(1)			NOT NULL
+,	`datumInschrijving`						DATE			NOT NULL
+,	`hitsite`								VARCHAR(20)		NOT NULL
+,	`hitcamp`								VARCHAR(255)	NOT NULL
+,	PRIMARY KEY (`id`)
+);
+
 
 INSERT INTO `#__kampinfo_hiticon` (
 	`volgorde`

@@ -6,7 +6,7 @@
 
 	<!-- The name of your extension's main XML file -->
 	<property name="cfg.name" value="kampinfo" />
-	<property name="xml.version" value="0.0.4" />
+	<property name="xml.version" value="0.0.6" />
 	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
 	<property name="cfg.prefix" value="com_" />
 	<!-- Relative path to your project -->
@@ -14,7 +14,7 @@
 	<!-- Relative path to store the packages -->
 	<property name="cfg.packages" value="../packages" />
 	<!-- Absolute path to local server -->
-	<property name="cfg.serverpath" value="C:\wamp\www\HIT" />
+	<property name="cfg.serverpath" value="/var/www/HIT" />
 
 	<target name="init">
 		<xmlproperty file="${cfg.dir}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />

@@ -1,5 +1,7 @@
 <?php
 
+include_once "kampinfo.php";
+
 abstract class AbstractMapper {
 	protected $mapping;
 	protected $columns;
@@ -176,6 +178,33 @@ class IgnoredVeld extends ImportVeld {
 class GewoonVeld extends ImportVeld {
 	public function __construct($kolom, $actief=true) {
 		parent::__construct($kolom, $actief);
+	}
+}
+
+/** Bewaart alleen de eerste letter. */
+class GeslachtVeld extends ImportVeld {
+	public function __construct($kolom, $actief=true) {
+		parent::__construct($kolom, $actief);
+	}
+	
+	public function convert($value) {
+		return substr($value, 0, 1);
+	}
+}
+
+/** Bewaart alleen de leeftijd tijdens de HIT. */
+class LeeftijdVeld extends ImportVeld {
+	private $jaar;
+	public function __construct($kolom, $jaar, $actief=true) {
+		parent::__construct($kolom, $actief);
+		$this->jaar = $jaar;
+	}
+	
+	public function convert($value) {
+		$date = DateTime::createFromFormat('d-m-Y', $value);
+		$eersteHitdag = KampInfoHelper::eersteHitDag($this->jaar);
+		$interval = $eersteHitdag->diff($date);
+		return $interval->y;
 	}
 }
 

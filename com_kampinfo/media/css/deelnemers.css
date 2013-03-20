@@ -1,0 +1,5 @@
+table.inschrijvingen th.data,
+table.inschrijvingen td.data {
+	text-align: right;
+	font-size: xx-small;
+} 

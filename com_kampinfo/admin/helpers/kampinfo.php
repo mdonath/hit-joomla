@@ -1,9 +1,34 @@
-<?php defined('_JEXEC') or die;
+<?php
 
 /**
  * KampInfo component helper.
  */
 abstract class KampInfoHelper {
+
+	/**
+	 * 
+	 * @param unknown $jaar
+	 * @return De dat
+	 */
+	public static function eersteHitDag($jaar) { // VRUDAG DUS
+		$paasKalender = array(
+				2008 => DateTime::createFromFormat('d-m-Y', '21-03-2008'),
+				2009 => DateTime::createFromFormat('d-m-Y', '10-04-2009'),
+				2010 => DateTime::createFromFormat('d-m-Y', '02-04-2010'),
+				2011 => DateTime::createFromFormat('d-m-Y', '22-04-2011'),
+				2012 => DateTime::createFromFormat('d-m-Y', '06-04-2012'),
+				2013 => DateTime::createFromFormat('d-m-Y', '29-03-2013'),
+				2013 => DateTime::createFromFormat('d-m-Y', '18-04-2014'),
+				2014 => DateTime::createFromFormat('d-m-Y', '03-04-2015'),
+				2015 => DateTime::createFromFormat('d-m-Y', '25-03-2016'),
+				2016 => DateTime::createFromFormat('d-m-Y', '14-04-2017'),
+				2017 => DateTime::createFromFormat('d-m-Y', '30-03-2018'),
+				2018 => DateTime::createFromFormat('d-m-Y', '19-04-2019'),
+				2019 => DateTime::createFromFormat('d-m-Y', '10-04-2020'),
+				2020 => DateTime::createFromFormat('d-m-Y', '02-04-2021'),
+		);
+		return $paasKalender[$jaar];
+	}
 
 	public static function addSubmenu($submenu) {
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');

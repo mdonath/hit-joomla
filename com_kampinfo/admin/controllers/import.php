@@ -42,5 +42,23 @@ class KampInfoControllerImport extends JControllerForm {
 		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
+
+	public function importDeelnemers() {
+		$model = $this->getModel('import');
+	
+		$model->importDeelnemergegevens();
+	
+		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		return true;
+	}
+
+	public function downloadDeelnemers() {
+		$model = $this->getModel('import');
+	
+		$model->downloadDeelnemergegevens();
+	
+		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		return true;
+	}
 	
 }

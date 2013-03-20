@@ -23,7 +23,7 @@
 		/>
 	</fieldset>
 	
-		<fieldset
+	<fieldset
 			name="importInschrijvingen"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
@@ -45,4 +45,28 @@
 				required="true"
 		/>
 	</fieldset>
+
+	<fieldset
+			name="importDeelnemers"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="jaar"
+				type="Project"
+				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
+				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
+				class="inputbox"
+				default="2013"
+				required="true"
+		/>
+		<field
+				name="import_deelnemers"
+				type="file"
+				label="Deelnemers"
+				description="Importeer de export uit ScoutsOnline (.csv)"
+				class="inputbox"
+				required="true"
+		/>
+	</fieldset>
+	
 </form>

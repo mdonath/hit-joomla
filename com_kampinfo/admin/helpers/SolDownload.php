@@ -5,40 +5,42 @@ include_once "SolSoapClient.php";
 class SolDownload {
 
 	public function downloadForm($user, $password, $role, $sui, $keypriv, $wsdl, $frm_id, $parts) {
-		$client = new SolSoapClient($sui, $keypriv, $wsdl);
+		return $this->download($user, $password, $role, $sui, $keypriv, $wsdl
+				, 'as_form', 'report', 'part_data', array('frm_id' => $frm_id, 'prt_st_id' => $parts));
+	}
+	
+	public function downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $evt_id, $what) {
+		return $this->download($user, $password, $role, $sui, $keypriv, $wsdl
+				, 'as_event', $what, 'export', array('evt_id' => $evt_id));
+	}
 
+	public function downloadHelp($user, $password, $role, $sui, $keypriv, $wsdl, $clientName) {
+		return $this->download($user, $password, $role, $sui, $keypriv, $wsdl
+				, 'soap_client', 'list', 'tab', array('scl_nm' => $clientName));
+	}
+
+	public function download($user, $password, $role, $sui, $keypriv, $wsdl, $task, $action, $button, $params) {
+		$client = new SolSoapClient($sui, $keypriv, $wsdl);
+	
 		try {
 			self::signOnWithRole($client, $user, $password, $role);
-			$form_data = $client->doTAB("as_form", "report", "part_data", array('frm_id' => $frm_id, 'prt_st_id' => $parts));
+			$form_data = $client->doTAB($task, $action, $button, $params);
 			$result = self :: toXml($form_data);
 			$soap = $client->logout();
-
+	
 			return $result;
 		} catch (Exception $e) {
 			// En nou?
+			print_r($e);
 			return false;
 		}
 	}
-
-	public function downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $evt_id) {
-		$client = new SolSoapClient($sui, $keypriv, $wsdl);
-
-		try {
-			self::signOnWithRole($client, $user, $password, $role);
-			$form_data = $client->doTAB("as_event", "forms", "export", array('evt_id' => $evt_id));
-			$result = self :: toXml($form_data);
-			$soap = $client->logout();
-
-			return $result;
-		} catch (Exception $e) {
-			// En nou?
-			return false;
-		}
-	}
-
+	
+	
 	private static function signOnWithRole($client, $user, $password, $role) {
 		$soap = $client->signOn($user, $password);
-		self::switchToRole($client, str_replace('%SNID%',$soap['per_id'], $role));
+		$per_id = $soap['per_id'];
+		//self::switchToRole($client, str_replace('%SNID%', $per_id, $role));
 	}
 
 	private static function switchToRole($client, $role) {
