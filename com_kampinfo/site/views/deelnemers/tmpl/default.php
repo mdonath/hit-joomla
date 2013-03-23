@@ -12,11 +12,9 @@ $project = $this->project;
 
 $project->inschrijvingStartdatum = new DateTime($project->inschrijvingStartdatum);
 $project->inschrijvingEinddatum = new DateTime($project->inschrijvingEinddatum);
+$project->laatsteInschrijvingOp = new DateTime($project->laatsteInschrijvingOp);
 
-$today = new DateTime();
-if ($project->inschrijvingEinddatum > $today) {
-	$laatsteDatum = $today;
-}
+$laatsteDatum = $project->laatsteInschrijvingOp;
 
 $datumKolommen = array();
 $datumHeaders = array();
