@@ -18,8 +18,9 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		
 		$project = $this->getHitProjectRow($filterJaar);
 		$project->laatstBijgewerktOp = $this->getLaatstBijgewerktOp($filterJaar);
-
-		$kampen = $this->getDeelnemerInschrijvingen($filterJaar, $project->inschrijvingStartdatum, $project->inschrijvingEinddatum);
+		$project->laatsteInschrijvingOp = $this->getLaatsteInschrijvingOp($filterJaar);
+		
+		$kampen = $this->getDeelnemerInschrijvingen($filterJaar, $project->inschrijvingStartdatum, $project->laatsteInschrijvingOp);
 
 		$plaatsen = array();
 		foreach ($kampen as $kamp) {
@@ -78,6 +79,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		$query->from('#__kampinfo_hitcamp c');
 		$query->leftJoin('#__kampinfo_hitsite s on (c.hitsite = s.code)');
 		$query->leftJoin('#__kampinfo_deelnemers d on (soundex(left(d.hitcamp, 21)) = soundex(left(c.naam,21)) and d.hitsite = c.hitsite)');
+		$query->where('(s.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
 		$query->group(" d.hitsite, d.hitcamp ");
 		$query->order('c.hitsite, c.naam');
 		$db->setQuery($query);
@@ -86,6 +88,22 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		return $plaatsenInJaar;
 	}
 	
+	function getLaatsteInschrijvingOp($jaar) {
+		$db = JFactory :: getDBO();
+	
+		$query = $db->getQuery(true);
+		$query->select('max(d.datumInschrijving) as laatsteInschrijving');
+		$query->from('#__kampinfo_deelnemers d');
+		$query->where('(d.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
+		
+		$db->setQuery($query);
+		$result = $db->loadObjectList();
+		
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		return $result[0]->laatsteInschrijving;
+	}
 
 	function getHitProjectRow($jaar) {
 		$db = JFactory :: getDBO();
