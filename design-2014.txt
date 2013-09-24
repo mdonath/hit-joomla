@@ -1,0 +1,55 @@
+Doelstellingen voor HIT-2014
+============================
+
+1. Invoeren van Kampregistratie door C-team en Onderdeelmdw's via KampInfoJoomla
+2. Gegevens inschrijfformulieren geautomatiseerd aanleveren aan SOL
+3. Meerrrr statistieken
+
+
+
+Uitwerking
+==========
+
+
+1. Invoeren Kampregistratie
+---------------------------
+Bezoekers van hit.scouting.nl kunnen geautoriseerd worden zodat zij gebruik kunnen maken van
+een frontend voorziening waarmee kampregistratie gegevens kunnen worden ingevoerd.
+
+TODO:
+* Aanpassen datamodel
+  - Ontbrekende kolommen tov SOL-Kampregistratie
+  - Doorvoeren in SQL-scripts 
+* Backend uitbreiden met nieuwe kolommen
+* Front-end uitbreiden met nieuwe schermen voor het invoeren van gegevens.
+* ?
+
+
+
+2. Geautomatiseerd aanleveren gegevens inschrijfformulieren
+-----------------------------------------------------------
+De huidige manier waarbij de inschrijfformulieren worden gevuld door gegevens worden over te
+typen is foutgevoelig en zorgt voor inconsistenties waardoor (bijvoorbeeld) het koppelen van
+KampInfo met data uit SOL lastig(er) wordt omdat er niet meer te matchen is op naam.
+
+Daarnaast is het ook erg arbeidsintensief, omdat de gegevens ook nog eens uitgebreid
+gecontroleerd moeten worden.
+
+Een oplossing is om deze formulieren geautomatiseerd te vullen met een tool als bijvoorbeeld
+Selenium. Het gaat dan sneller, het kan vaker (bijvoorbeeld elke dag) en levert minder
+typefouten op.
+
+TODO:
+* Uitzoeken wat de beste tool en aanpak is.
+
+
+
+3. Meer statistieken
+--------------------
+Er lijkt op twee moment behoefte te zijn aan statistieken.
+In de beginfase, om te bepalen waar het gat in de markt is.
+Tijdens de inschrijving, om te zien welke kampen goed gaan.
+
+TODO:
+* Verder uitzoeken wat de exact behoefte is.
+  - Zie notulen PT opstartvergadering 2014 
