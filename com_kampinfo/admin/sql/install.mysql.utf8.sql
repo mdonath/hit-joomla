@@ -29,6 +29,7 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`contactPersoonNaam`					VARCHAR(50)
 ,	`contactPersoonEmail`					VARCHAR(50)
 ,	`contactPersoonTelefoon`				VARCHAR(50)
+,	`akkoordHitPlaats`						BOOLEAN
 ,	PRIMARY KEY (`id`)
 );
 
@@ -68,6 +69,13 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`redenAfwijkingMarge`					VARCHAR(255)
 ,	`doelgroepen`							TEXT
 ,	`shantiFormuliernummer`					INT(10)
+,	`doelstelling`							TEXT
+,	`hitCourantTekst`						TEXT
+,	`helpdeskOpmerkingen`					TEXT
+,	`helpdeskOverschrijdingAantal`			SMALLINT(3)
+,	`helpdeskOverschrijdingLeeftijd` 		BOOLEAN
+,	`helpdeskTeJongMagAantal`				SMALLINT(3)
+,	`helpdeskTeOudMagAantal`				SMALLINT(3)
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
 ,	PRIMARY KEY (`id`)

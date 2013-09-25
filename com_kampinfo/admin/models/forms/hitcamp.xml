@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+    <fieldset
+        		name="akkoorden"
+	>
+		<field
+				name="akkoordHitKamp"
+				type="radio"
+				label="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_LABEL"
+				description="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_DESC"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+        <field
+				name="akkoordHitPlaats"
+				type="radio"
+				label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
+				description="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_DESC"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+    </fieldset>
+    
 	<fieldset
 				name="inschrijvingen"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
@@ -84,6 +111,18 @@
 				required="true"
 				default=""
 		/>
+		
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+		<field
+				name="doelstelling"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
 		<field
 				name="startDatumTijd"
 				type="calendar"
@@ -115,7 +154,7 @@
 				size="3"
 				maxlength="3"
 				class="inputbox"
-				default="88"
+				default=""
 		/>
 		<field
 				name="minimumLeeftijd"
@@ -252,7 +291,29 @@
 				required="true"
 				default=""
 		/>
-	
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+		<field
+				name="hitCourantTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_LABEL"
+				description="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacerWebsiteTekst1" label="" />
+		<field type="spacer" name="myspacerWebsiteTekst2" label="" />
+				<field
+				name="websiteTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_WEBSITETEKST_LABEL"
+				description="COM_KAMPINFO_HITCAMP_WEBSITETEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
 		<field
 				name="websiteAdres"
 				type="text"
@@ -317,19 +378,9 @@
 				class="inputbox"
 		/>
 
-		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
-		<field type="spacer" name="myspacer" label="" />
-		<field
-				name="websiteTekst"
-				type="editor"
-				label="COM_KAMPINFO_HITCAMP_WEBSITETEKST_LABEL"
-				description="COM_KAMPINFO_HITCAMP_WEBSITETEKST_DESC"
-				width="300"
-				class="inputbox"
-				filter="safehtml"
-		/>
+		
 
-		<field type="spacer" name="myspacer" label="" />
+		<field type="spacer" name="myspacerIcoontjes" label="" />
 		<field
 				name="icoontjes"
 				type="Icon"
@@ -354,4 +405,61 @@
 		/>
 
 	</fieldset>
+	
+	<fieldset
+        		name="helpdesk"
+	>
+		 <field type="spacer" name="myspacerHelpdeskOpmerkingen" label="" />
+				<field
+				name="helpdeskOpmerkingen"
+				type="editor"
+				label="Opmerkingen"
+				description="Hier kun je opmerkingen voor de helpdesk kwijt"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
+		<field
+				name="helpdeskOverschrijdingAantal"
+				type="text"
+				label="Overschrijding aantal"
+				description="Hoeveel extra deelnemers mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
+				size="3"
+				maxlength="3"
+				class="inputbox"
+				default="0"
+		/>
+		 
+		<field
+				name="helpdeskOverschrijdingLeeftijd"
+				type="radio"
+				label="Mogen er oudere of jongere deelnemers ingeschreven worden"
+				description="COM_KAMPINFO_HITCAMP_HELPDESKOVERSCHRIJDINGLFT_DESC"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+        <field
+				name="helpdeskTeJongMagAantal"
+				type="text"
+				label="Hoeveel te jong"
+				description="Hoeveel deelnemers die te jong zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
+				size="3"
+				maxlength="3"
+				class="inputbox"
+				default="0"
+		/>
+        <field
+				name="helpdeskTeOudMagAantal"
+				type="text"
+				label="Hoeveel te oud"
+				description="Hoeveel deelnemers die te oud zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
+				size="3"
+				maxlength="3"
+				class="inputbox"
+				default="0"
+		/>
+    </fieldset>
 </form>

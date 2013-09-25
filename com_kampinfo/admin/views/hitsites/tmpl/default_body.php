@@ -21,6 +21,9 @@ defined('_JEXEC') or die('Restricted Access');
 			</a>
 		</td>
 		<td>
+			<?php echo JText::_($item->akkoordHitPlaats == 0 ? 'JNO' : 'JYES'); ?>
+		</td>
+		<td>
 			<?php echo $item->deelnemersnummer; ?>
 		</td>
 		<td>
