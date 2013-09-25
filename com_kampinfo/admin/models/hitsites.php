@@ -36,7 +36,7 @@ class KampInfoModelHitSites extends JModelList {
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('s.id,s.naam,s.code,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
+		$query->select('s.id,s.naam,s.code,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
 		$query->from('#__kampinfo_hitsite s');
 
 		$query->select('p.jaar as jaar, p.id as hitproject_id');

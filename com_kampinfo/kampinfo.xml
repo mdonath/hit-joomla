@@ -9,7 +9,7 @@
         <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
         <license>LGPL</license>
         <!--  The version string is recorded in the components table -->
-        <version>0.0.6</version>
+        <version>0.1.0</version>
         <!-- The description is optional and defaults to the name -->
         <description>COM_KAMPINFO_DESCRIPTION</description>
  

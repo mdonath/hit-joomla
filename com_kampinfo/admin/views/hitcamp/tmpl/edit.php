@@ -17,6 +17,14 @@ JHtml::_('behavior.tooltip');
 		</ul>
 	</fieldset>
 	<fieldset class="adminform">
+		<legend><?php echo JText::_( 'COM_KAMPINFO_AKKOORD_DETAILS' ); ?></legend>
+		<ul class="adminformlist">
+			<?php foreach($this->form->getFieldset('akkoorden') as $field): ?>
+				<li><?php echo $field->label;echo $field->input;?></li>
+			<?php endforeach; ?>
+		</ul>
+	</fieldset>
+	<fieldset class="adminform">
 		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_DETAILS' ); ?></legend>
 		<ul class="adminformlist">
 			<?php foreach($this->form->getFieldset('hitcamp') as $field): ?>
@@ -29,6 +37,14 @@ JHtml::_('behavior.tooltip');
 		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_SITE_DETAILS' ); ?></legend>
 		<ul class="adminformlist">
 			<?php foreach($this->form->getFieldset('siteEnCourant') as $field): ?>
+				<li><?php echo $field->label;echo $field->input;?></li>
+			<?php endforeach; ?>
+		</ul>
+	</fieldset>
+	<fieldset class="adminform">
+		<legend><?php echo JText::_( 'COM_KAMPINFO_HELPDESK_DETAILS' ); ?></legend>
+		<ul class="adminformlist">
+			<?php foreach($this->form->getFieldset('helpdesk') as $field): ?>
 				<li><?php echo $field->label;echo $field->input;?></li>
 			<?php endforeach; ?>
 		</ul>
