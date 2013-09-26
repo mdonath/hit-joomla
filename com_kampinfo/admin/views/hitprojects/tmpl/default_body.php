@@ -11,9 +11,13 @@ defined('_JEXEC') or die('Restricted Access');
                         <?php echo JHtml::_('grid.id', $i, $item->id); ?>
                 </td>
                 <td>
+                	<?php if ($this->canDo->get('hitproject.edit')) { ?>
                         <a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitproject.edit&id='.(int)$item->id); ?>">
                         	<?php echo $item->jaar; ?>
                         </a>
+                    <?php } else { ?>
+                    	<?php echo $item->jaar; ?>
+                    <?php } ?>
                 </td>
                 <td>
                         <?php echo $item->inschrijvingStartdatum; ?>

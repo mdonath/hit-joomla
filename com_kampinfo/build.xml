@@ -6,7 +6,7 @@
 
 	<!-- The name of your extension's main XML file -->
 	<property name="cfg.name" value="kampinfo" />
-	<property name="xml.version" value="0.1.0" />
+	<property name="xml.version" value="0.1.2" />
 	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
 	<property name="cfg.prefix" value="com_" />
 	<!-- Relative path to your project -->

@@ -5,12 +5,33 @@
  */
 abstract class KampInfoHelper {
 
+	/**         
+	 * Get the actions         
+	 */
+	public static function getActions($entity = 'component', $entityId = 0) {
+		jimport('joomla.access.access');
+		$user = JFactory::getUser();
+		$result = new JObject;
+		if (empty($entity) or empty($entityId)) {
+			$assetName = 'com_kampinfo';
+		} else {
+			$assetName = 'com_kampinfo.'.$entity.'.'.(int) $entityId;
+		}
+		$actions = JAccess::getActions('com_kampinfo', $entity);
+		echo '<h1>'.$assetName.'</h1>';
+		foreach ($actions as $action) {
+			$result->set($action->name, $user->authorise($action->name, $assetName));
+			echo '<p>'.$action->name.': "'. $result->get($action->name) .'"</p>';
+		}
+		return $result;
+	}
+
 	/**
 	 * 
 	 * @param unknown $jaar
 	 * @return De dat
 	 */
-	public static function eersteHitDag($jaar) { // VRUDAG DUS
+	public static function eersteHitDag($jaar) { // VRIJDAG DUS
 		$paasKalender = array(
 				2008 => DateTime::createFromFormat('d-m-Y', '21-03-2008'),
 				2009 => DateTime::createFromFormat('d-m-Y', '10-04-2009'),
@@ -31,12 +52,16 @@ abstract class KampInfoHelper {
 	}
 
 	public static function addSubmenu($submenu) {
+		$canDo = KampInfoHelper :: getActions();
+		
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
+		if ($canDo->get('core.admin')) {
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
+		}
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
 		
 		// set some global property

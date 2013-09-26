@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted Access');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
-$this->state->set('list.columnCount', '9');
+$this->state->set('list.columnCount', '10');
 ?>
 <tr>
 	<th width="5">
@@ -33,5 +33,8 @@ $this->state->set('list.columnCount', '9');
 	</th>
 	<th>
 		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITCAMPS_HEADING_REGISTERED', 'aantalDeelnemers', $listDirn, $listOrder); ?>
+	</th>
+	<th width="5%">
+		<?php echo JHtml::_('grid.sort', 'JSTATUS', 'published', $listDirn, $listOrder); ?>
 	</th>
 </tr>

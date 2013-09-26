@@ -24,7 +24,8 @@ class KampInfoModelHitCamps extends JModelList {
 				'shantiFormuliernummer',
 				'naam',
 				'gereserveerd',
-				'aantalDeelnemers'
+				'aantalDeelnemers',
+				'published'
 			);
 		}
 
@@ -37,7 +38,8 @@ class KampInfoModelHitCamps extends JModelList {
 		$filterSearch = $this->getState('filter.search');
 		$filterJaar = $this->getState('filter.jaar');
 		$filterPlaats = $this->getState('filter.plaats');
-
+		$filterPublished = $this->getState('filter.published');
+		
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
@@ -59,7 +61,12 @@ class KampInfoModelHitCamps extends JModelList {
 		if (!empty ($filterPlaats)) {
 			$query->where('(s.code = ' . $db->quote($db->getEscaped($filterPlaats)) . ')');
 		}
-
+		if (is_numeric($filterPublished)) {
+			$query->where('(c.published = '. (int)($db->getEscaped($filterPublished)) .')');
+		} elseif ($filterPublished === '') {
+			$query->where('(c.published IN (0,1))');
+		}
+		
 		if ($listOrder === 'plaats') {
 			$listOrder = 's.naam';
 		}
@@ -80,5 +87,7 @@ class KampInfoModelHitCamps extends JModelList {
 		$this->setState('filter.jaar', $state);
 		$state = $this->getUserStateFromRequest($this->context . '.filter.plaats', 'filter_plaats', '', 'string');
 		$this->setState('filter.plaats', $state);
+		$state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
+		$this->setState('filter.published', $state);
 	}
 }

@@ -12,3 +12,8 @@ defined('_JEXEC') or die;
 	<option value=""><?php echo JText::_('COM_KAMPINFO_SELECT_HITSITE');?></option>
 	<?php echo JHtml::_('select.options', KampInfoHelper :: getHitSiteOptions(), 'value', 'text', $this->escape($this->state->get('filter.plaats'))); ?>
 </select>
+
+<select name="filter_published" class="inputbox" onchange="this.form.submit()">
+	<option value=""><?php echo JText::_('JOPTION_SELECT_PUBLISHED');?></option>
+	<?php echo JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->escape($this->state->get('filter.published')), true); ?>
+</select>
