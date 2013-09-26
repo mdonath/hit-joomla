@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <access component="com_kampinfo">
-        <section name="component">
-                <action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
-                <action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-        </section>
+
+	<section name="component">
+		<action name="core.admin"  title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		
+		<action name="hitproject.create"  title="Maak HIT Project"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hitproject.delete"  title="Verwijder HIT Project"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hitproject.edit"    title="Bewerk HIT Project"    description="JACTION_EDIT_COMPONENT_DESC" />
+
+		<action name="hitsite.create"  title="Maak HIT Plaats"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hitsite.delete"  title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hitsite.edit"    title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
+
+		<action name="hitcamp.create"  title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hitcamp.delete"  title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hitcamp.edit"    title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="hitcamp.edit.own"   title="Bewerk eigen HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		
+		<action name="hiticon.create"  title="Maak HIT Icoon"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hiticon.delete"  title="Verwijder HIT Icoon"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hiticon.edit"    title="Bewerk HIT Icoon"    description="JACTION_EDIT_COMPONENT_DESC" />
+	</section>
+	
+	<section name="hitsite">
+		<action name="hitsite.delete"  title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hitsite.edit"    title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
+	</section>
+	
+	<section name="hitcamp">
+		<action name="hitcamp.delete"  title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="hitcamp.edit"    title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		<action name="hitcamp.edit.own"   title="Bewerk eigen HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
+	</section>
+			
 </access>

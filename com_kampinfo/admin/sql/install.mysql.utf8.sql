@@ -21,6 +21,7 @@ CREATE TABLE `#__kampinfo_hitproject` (
 
 CREATE TABLE `#__kampinfo_hitsite` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
+,	`asset_id`								INT(10)		NOT NULL	DEFAULT '0'
 ,	`deelnemersnummer`						INT(10)		NOT NULL
 ,	`jaar`									YEAR(4)		NOT NULL
 ,	`code`									VARCHAR(20)	NOT NULL
@@ -35,6 +36,7 @@ CREATE TABLE `#__kampinfo_hitsite` (
 
 CREATE TABLE `#__kampinfo_hitcamp` (
 	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
+,	`asset_id`								INT(10)			NOT NULL	DEFAULT '0'
 ,	`deelnemersnummer`						INT(10)			NOT NULL
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
@@ -78,6 +80,9 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`helpdeskTeOudMagAantal`				SMALLINT(3)
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
+,	`published`								SMALLINT(3) NOT NULL default '0'
+,	`publish_up`							DATETIME NOT NULL default '0000-00-00 00:00:00'
+,	`publish_down`							DATETIME NOT NULL default '0000-00-00 00:00:00'
 ,	PRIMARY KEY (`id`)
 );
 

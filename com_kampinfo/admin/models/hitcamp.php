@@ -37,8 +37,7 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		return $data;
 	}
 	
-	public function getItem($pk = null)
-	{
+	public function getItem($pk = null) {
 		if ($item = parent::getItem($pk)) {
 			$item->icoontjes = explode(',', $item->icoontjes);
 			$item->activiteitengebieden = explode(',', $item->activiteitengebieden);
@@ -46,5 +45,15 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		}
 		   
 		return $item;
+	}
+	
+	/**
+	 * Method to check if it's OK to delete a hitcamp. Overwrites JModelAdmin::canDelete
+	 */
+	protected function canDelete($record) {
+		if( !empty( $record->id ) ){
+			$user = JFactory::getUser();
+			return $user->authorise("hitcamp.delete", "com_kampinfo.hitcamp." . $record->id );
+		}
 	}
 }

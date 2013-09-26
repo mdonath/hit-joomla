@@ -58,4 +58,15 @@ class KampInfoModelHitSite extends JModelAdmin
                 }
                 return $data;
         }
+        
+        /**
+         * Method to check if it's OK to delete a hitcamp. Overwrites JModelAdmin::canDelete
+         */
+        protected function canDelete($record) {
+        	if( !empty( $record->id ) ){
+        		$user = JFactory::getUser();
+        		return $user->authorise("hitsite.delete", "com_kampinfo.hitsite." . $record->id );
+        	}
+        }
+        
 }

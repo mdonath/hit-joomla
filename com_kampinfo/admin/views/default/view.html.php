@@ -18,6 +18,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 
 	protected $toolbarTitle;
 	protected $entityName;
+	protected $canDo;
 
 	function __construct($config = null) {
 		parent :: __construct($config);
@@ -30,6 +31,9 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
+
+		// What Access Permissions does this user have? What can (s)he do?
+		$this->canDo = KampInfoHelper::getActions();
 
 		// Check for errors
 		if (count($errors = $this->get('Errors'))) {
@@ -49,11 +53,23 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 	 */
 	protected function addToolBar() {
 		JToolBarHelper :: title(JText :: _($this->toolbarTitle), 'kampinfo');
-
-		JToolBarHelper :: addNewX($this->entityName . '.add');
-		JToolBarHelper :: editListX($this->entityName . '.edit');
+		if ($this->canDo->get($this->entityName.'.create')) {
+			JToolBarHelper :: addNewX($this->entityName . '.add');
+		}
+		if ($this->canDo->get($this->entityName.'.edit')) {
+			JToolBarHelper :: editListX($this->entityName . '.edit');
+		}
+			if ($this->canDo->get($this->entityName.'.delete')) {
+			JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
+		}
+		if ($this->entityName == 'hitcamp') {
+			if ($this->canDo->get($this->entityName.'.edit.state')) {
+				JToolBarHelper :: divider();
+				JToolBarHelper :: publish($this->entityName . 's.publish', 'JTOOLBAR_PUBLISH', true);
+				JToolBarHelper :: unpublish($this->entityName . 's.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			}
+		}
 		JToolBarHelper :: divider();
-		JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
 		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo'))     {
 			JToolBarHelper :: preferences('com_kampinfo');
 		}
@@ -65,11 +81,15 @@ abstract class KampInfoViewItemDefault extends JView {
 
 	protected $entityName;
 	protected $prefix;
+	protected $canDo;
 
 	public function display($tpl = null) {
 		// get the Data
 		$form = $this->get('Form');
 		$item = $this->get('Item');
+
+		// What Access Permissions does this user have? What can (s)he do?
+		$this->canDo = KampInfoHelper::getActions($this->entityName, $this->item->id);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -97,7 +117,11 @@ abstract class KampInfoViewItemDefault extends JView {
 		$input = JFactory :: getApplication()->input;
 		$input->set('hidemainmenu', true);
 		JToolBarHelper :: title(JText :: _($this->prefix . ($this->isNieuwItem() ? '_MANAGER_NEW' : '_MANAGER_EDIT')), 'kampinfo');
-		JToolBarHelper :: save($this->entityName . '.save');
+		if ($this->canDo->get($this->entityName . '.create') or $this->canDo->get($this->entityName . '.edit')) {
+			JToolBarHelper :: apply($this->entityName . '.apply');
+			JToolBarHelper :: save($this->entityName . '.save');
+		}
+		
 		JToolBarHelper :: cancel($this->entityName .'.cancel', $this->isNieuwItem() ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
 	}
 

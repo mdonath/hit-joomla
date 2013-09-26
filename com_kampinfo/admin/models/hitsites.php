@@ -30,9 +30,10 @@ class KampInfoModelHitSites extends JModelList {
 	protected function getListQuery() {
 		$listOrder = $this->state->get('list.ordering', 'jaar');
 		$listDirn = $this->state->get('list.direction', 'asc');
+		
 		$filterSearch = $this->getState('filter.search');
 		$filterJaar = $this->getState('filter.jaar');
-		
+
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);

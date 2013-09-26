@@ -205,4 +205,5 @@
 			component="com_kampinfo"
 			section="component" />
 	</fieldset>
+
 </config>
