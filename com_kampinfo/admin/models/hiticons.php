@@ -36,7 +36,7 @@ class KampInfoModelHitIcons extends JModelList {
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('*');
+		$query->select('i.*');
 		$query->from('#__kampinfo_hiticon i');
 
 		if (!empty ($filterSearch)) {

@@ -8,8 +8,7 @@ jimport('joomla.application.component.controllerform');
 /**
  * HitCamp Controller
  */
-class KampInfoControllerHitCamp extends JControllerForm
-{
+class KampInfoControllerHitCamp extends JControllerForm {
 	/**
 	 * Implement to allowAdd or not
 	 *
@@ -19,8 +18,7 @@ class KampInfoControllerHitCamp extends JControllerForm
 	 * @param array $data
 	 * @return bool
 	 */
-	protected function allowAdd($data = array())
-	{
+	protected function allowAdd($data = array()) {
 		return parent::allowAdd($data);
 	}
 	

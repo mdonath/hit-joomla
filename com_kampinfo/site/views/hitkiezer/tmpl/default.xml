@@ -11,7 +11,7 @@
 				name="request"
 		>
 			<field
-					name="jaar"
+					name="project_id"
 					type="Project"
 					label="COM_KAMPINFO_HITKIEZER_FIELD_JAAR_LABEL"
 					description="COM_KAMPINFO_HITKIEZER_FIELD_JAAR_DESC"

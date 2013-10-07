@@ -14,7 +14,13 @@ defined('_JEXEC') or die('Restricted Access');
 			<?php echo $item->volgorde; ?>
 		</td>
 		<td>
-			<?php echo $item->bestandsnaam; ?>
+			<?php if ($this->canDo->get('hiticon.edit')) { ?>
+				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hiticon.edit&id='.(int)$item->id); ?>">
+					<?php echo $item->bestandsnaam; ?>
+				</a>
+			<?php } else { ?>
+				<?php echo $item->bestandsnaam; ?>
+			<?php } ?>
 		</td>
 		<td>
 			<?php echo $item->tekst; ?>

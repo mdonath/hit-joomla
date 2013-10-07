@@ -22,6 +22,7 @@ CREATE TABLE `#__kampinfo_hitproject` (
 CREATE TABLE `#__kampinfo_hitsite` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
 ,	`asset_id`								INT(10)		NOT NULL	DEFAULT '0'
+,	`hitproject_id`							INT(11)		NOT NULL
 ,	`deelnemersnummer`						INT(10)		NOT NULL
 ,	`jaar`									YEAR(4)		NOT NULL
 ,	`code`									VARCHAR(20)	NOT NULL
@@ -39,6 +40,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`asset_id`								INT(10)			NOT NULL	DEFAULT '0'
 ,	`deelnemersnummer`						INT(10)			NOT NULL
 ,	`hitsite`								VARCHAR(20)		NOT NULL
+,	`hitsite_id`							INT(11)			NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
 ,	`activiteitengebieden`					TEXT
 ,	`titeltekst`							VARCHAR(255)

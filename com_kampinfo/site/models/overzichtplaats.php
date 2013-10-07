@@ -11,27 +11,14 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelOverzichtplaats extends KampInfoModelParent {
 
 	public function getPlaats() {
-		$filterPlaatscode = JRequest :: getString('plaats');
+		$hitsiteId = JRequest :: getString('hitsite_id');
 
-		$plaats = $this->getHitPlaats($filterPlaatscode);
+		$plaats = $this->getHitPlaats($hitsiteId);
 
 		$iconenLijst = $this->getIconenLijst();
-		$plaats->kampen = $this->getHitKampen($plaats->code, $iconenLijst);
+		$plaats->kampen = $this->getHitKampen($plaats->id, $iconenLijst);
 
 		return $plaats;
-	}
-
-	function getHitPlaats($filterPlaatscode) {
-		$db = JFactory :: getDBO();
-
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__kampinfo_hitsite s');
-		$query->where('(s.code = ' . $db->quote($db->getEscaped($filterPlaatscode)) . ')');
-
-		$db->setQuery($query);
-		$plaats = $db->loadObjectList();
-		return $plaats[0];
 	}
 
 }

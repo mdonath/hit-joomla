@@ -32,8 +32,12 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
 
+		$ids = array();
+		foreach ($this->items as $row) {
+			$ids[] = $row->id;
+		}
 		// What Access Permissions does this user have? What can (s)he do?
-		$this->canDo = KampInfoHelper::getActions();
+		$this->canDo = KampInfoHelper::getActions($this->entityName, $ids);
 
 		// Check for errors
 		if (count($errors = $this->get('Errors'))) {
@@ -59,7 +63,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		if ($this->canDo->get($this->entityName.'.edit')) {
 			JToolBarHelper :: editListX($this->entityName . '.edit');
 		}
-			if ($this->canDo->get($this->entityName.'.delete')) {
+		if ($this->canDo->get($this->entityName.'.delete')) {
 			JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
 		}
 		if ($this->entityName == 'hitcamp') {
@@ -89,7 +93,9 @@ abstract class KampInfoViewItemDefault extends JView {
 		$item = $this->get('Item');
 
 		// What Access Permissions does this user have? What can (s)he do?
-		$this->canDo = KampInfoHelper::getActions($this->entityName, $this->item->id);
+		$ids = array();
+		$ids[] = $item->id;
+		$this->canDo = KampInfoHelper::getActions($this->entityName, $ids);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {

@@ -10,12 +10,11 @@ include_once dirname(__FILE__).'/kampinfomodelparent.php';
 class KampInfoModelActiviteit extends KampInfoModelParent {
 
 	public function getActiviteit() {
-		$jaar = JRequest :: getInt('jaar');
-		$deelnemersnummer = JRequest :: getInt('deelnemersnummer');
-		if (!empty($jaar) and !empty($deelnemersnummer)) {
-			$activiteit = $this->getHitKampById($jaar, $deelnemersnummer);
+		$hitcampId = JRequest :: getInt('hitcamp_id');
+		if (!empty($hitcampId)) {
+			$activiteit = $this->getHitKampById($hitcampId);
 		} else {
-			JError :: raiseWarning(404, "Kamp met deelnemersnummer $deelnemersnummer bestaat niet in $jaar.");
+			JError :: raiseWarning(404, "Kamp niet gevonden?!");
 		}
 	 	return $activiteit;
 	}
@@ -24,21 +23,19 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		
 	}
 
-	function getHitKampById($jaar, $deelnemersnummer) {
+	function getHitKampById($hitcampId) {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('c.*');
 		$query->from('#__kampinfo_hitcamp c');
+		$query->where('(c.id = ' . (int)($db->getEscaped($hitcampId)) . ')');
 
 		$query->select('s.naam as plaats, s.id as hitsite_id');
-		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite=s.code');
+		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
 
 		$query->select('p.jaar as jaar, p.id as hitproject_id');
-		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.jaar=p.jaar');
-
-		$query->where('(s.jaar = ' . (int)($db->getEscaped($jaar)) . ')');
-		$query->where('(c.deelnemersnummer = ' . (int)($db->getEscaped($deelnemersnummer)) . ')');
+		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
 
 		$db->setQuery($query);
 		$activiteiten = $db->loadObjectList();

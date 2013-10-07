@@ -8,13 +8,57 @@ jimport('joomla.application.component.modelitem');
  */
 abstract class KampInfoModelParent extends JModelItem {
 
-	function getHitKampen($plaats, $iconenLijst) {
+	function getHitProject($projectId) {
+		$db = JFactory :: getDBO();
+	
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__kampinfo_hitproject p');
+		$query->where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')');
+	
+		$db->setQuery($query);
+		$project = $db->loadObjectList();
+	
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		return $project[0];
+	}
+	
+	function getHitPlaatsen($projectId) {
+		$db = JFactory :: getDBO();
+	
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__kampinfo_hitsite s');
+		$query->where('(s.hitproject_id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->order('s.naam');
+	
+		$db->setQuery($query);
+		$plaatsenInJaar = $db->loadObjectList();
+		return $plaatsenInJaar;
+	}
+
+	function getHitPlaats($hitsiteId) {
+		$db = JFactory :: getDBO();
+	
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__kampinfo_hitsite s');
+		$query->where('(s.id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+	
+		$db->setQuery($query);
+		$plaats = $db->loadObjectList();
+		return $plaats[0];
+	}
+
+	function getHitKampen($hitsiteId, $iconenLijst) {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.hitsite = ' . $db->quote($db->getEscaped($plaats)) . ')');
+		$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
 		$query->order('c.naam');
 
 		$db->setQuery($query);

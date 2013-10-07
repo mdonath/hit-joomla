@@ -96,7 +96,7 @@
 		</field>
 		    	
 		<field
-				name="hitsite"
+				name="hitsite_id"
 				type="Site"
 				label="COM_KAMPINFO_HITCAMP_JAAR_LABEL"
 				description="COM_KAMPINFO_HITCAMP_JAAR_DESC"

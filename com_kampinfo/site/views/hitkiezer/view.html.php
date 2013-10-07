@@ -11,7 +11,6 @@ class KampInfoViewHitkiezer extends JView {
 	// Overwriting JView display method
 	function display($tpl = null) {
 		// Assign data to the view
-		$this->jaar = $this->get('Jaar');
 		$this->project = $this->get('Project');
 
 		// Check for errors.

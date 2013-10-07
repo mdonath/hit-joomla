@@ -33,7 +33,7 @@ class KampInfoModelHitProjects extends JModelList {
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
 		$query->select('id,jaar,inschrijvingStartdatum,inschrijvingEinddatum,inschrijvingWijzigenTotDatum,inschrijvingKosteloosAnnulerenDatum,inschrijvingGeenRestitutieDatum,inningsdatum');
-		$query->from('#__kampinfo_hitproject');
+		$query->from('#__kampinfo_hitproject AS p');
 
 		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
 		return $query;

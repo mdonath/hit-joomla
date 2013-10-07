@@ -23,8 +23,8 @@ abstract class KampInfoUrlHelper {
 	public static function activiteitURL($plaats, $kamp, $use = TRUE) {
 		if ($use) {
 			$jaar = $plaats->jaar;
-			$deelnemersnummer = $kamp->deelnemersnummer;
-			return "index.php?option=com_kampinfo&amp;view=activiteit&amp;jaar=$jaar&amp;deelnemersnummer=$deelnemersnummer";
+			$hitcampId = $kamp->id;
+			return "index.php?option=com_kampinfo&amp;view=activiteit&amp;hitcamp_id=$hitcampId";
 		} else {
 			return KampInfoUrlHelper::plaatsURL($plaats, $use) . "/" . KampInfoUrlHelper::aliassify($kamp);
 		}
@@ -32,8 +32,8 @@ abstract class KampInfoUrlHelper {
 
 	public static function plaatsURL($plaats, $use = TRUE) {
 		if ($use) {
-			$code = $plaats->code;
-			return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;plaats=$code";
+			$code = $plaats->id;
+			return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;hitsite_id=$code";
 		} else {
 			return "hits-in-" . strtolower($plaats->naam);
 		}

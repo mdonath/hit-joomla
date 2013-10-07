@@ -1,8 +1,4 @@
-<?php
-
-
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 // import default KampInfo view
 include_once dirname(__FILE__).'/../default/view.html.php';

@@ -26,7 +26,7 @@ class KampInfoModelImport extends JModelAdmin
 		$params = &JComponentHelper::getParams('com_kampinfo');
 
 		// Voor welk jaar staat in de configuratie
-		$jaar = $params->get('downloadJaar');
+		$jaar = $params->get('huidigeActieveJaar');
 		if ($jaar < 2000) {
 			$app->enqueueMessage('Geen jaartal opgegeven');
 			return false;
@@ -94,7 +94,7 @@ class KampInfoModelImport extends JModelAdmin
 		$params = &JComponentHelper::getParams('com_kampinfo');
 
 		// Voor welk jaar staat in de configuratie
-		$jaar = $params->get('downloadJaar');
+		$jaar = $params->get('huidigeActieveJaar');
 		if ($jaar < 2000) {
 			$app->enqueueMessage('Geen jaartal opgegeven');
 			return false;
@@ -178,7 +178,7 @@ class KampInfoModelImport extends JModelAdmin
 		$params = &JComponentHelper::getParams('com_kampinfo');
 	
 		// Voor welk jaar staat in de configuratie
-		$jaar = $params->get('downloadJaar');
+		$jaar = $params->get('huidigeActieveJaar');
 		if ($jaar < 2000) {
 			$app->enqueueMessage('Geen jaartal opgegeven');
 			return false;

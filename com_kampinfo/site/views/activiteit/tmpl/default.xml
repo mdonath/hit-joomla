@@ -11,18 +11,10 @@
 				name="request"
 		>
 			<field
-					name="jaar"
-					type="Project"
+					name="hitcamp_id"
+					type="Activiteit"
 					required="true"
-					label="Jaar"
-					default="2013"
-					description="COM_KAMPINFO_ACTIVITEIT_JAAR_DESC"
-			/>
-			<field
-					name="deelnemersnummer"
-					type="Deelnemersnummer"
-					required="true"
-					label="Deelnemersnummer"
+					label="Hit Kamp"
 					description="COM_KAMPINFO_ACTIVITEIT_ID_JAAR_DESC"
 			/>
 		</fieldset>

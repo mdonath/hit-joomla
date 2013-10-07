@@ -12,7 +12,7 @@
 		>
 			<field
 					name="jaar"
-					type="Project"
+					type="Jaar"
 					label="COM_KAMPINFO_DEELNEMERS_FIELD_JAAR_LABEL"
 					description="COM_KAMPINFO_DEELNEMERS_FIELD_JAAR_DESC"
 			/>

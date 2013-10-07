@@ -8,21 +8,40 @@ abstract class KampInfoHelper {
 	/**         
 	 * Get the actions         
 	 */
-	public static function getActions($entity = 'component', $entityId = 0) {
+	public static function getActions($entity = 'component', $entityIds = null) {
 		jimport('joomla.access.access');
-		$user = JFactory::getUser();
 		$result = new JObject;
-		if (empty($entity) or empty($entityId)) {
-			$assetName = 'com_kampinfo';
-		} else {
-			$assetName = 'com_kampinfo.'.$entity.'.'.(int) $entityId;
-		}
+
+		$user = JFactory::getUser();
 		$actions = JAccess::getActions('com_kampinfo', $entity);
-		echo '<h1>'.$assetName.'</h1>';
-		foreach ($actions as $action) {
-			$result->set($action->name, $user->authorise($action->name, $assetName));
-			echo '<p>'.$action->name.': "'. $result->get($action->name) .'"</p>';
+		
+		if (empty($entityIds)) {
+			foreach ($actions as $action) {
+				$result->set($action->name, $user->authorise($action->name, 'com_kampinfo'));
+			}
+		} else {
+			foreach ($actions as $action) {
+				$result->set($action->name, $user->authorise($action->name, 'com_kampinfo'));
+				if (self::startsWith($action->name, $entity) && !self::endsWith($action->name, 'create')) {
+					foreach ($entityIds as $entityId) {
+						$assetName = 'com_kampinfo.'.$entity.'.'. $entityId;
+						$isAuth = $user->authorise($action->name, $assetName);
+						$result->set($action->name.'.'.$entityId, $isAuth);
+						if (!empty($isAuth)) {
+							$result->set($action->name, $isAuth);
+						}
+					}
+				}
+			}
 		}
+
+		/*
+		echo '<h1>Entity: '.$entity.'</h1><ul>';
+		foreach ($result as $k=>$v) {
+			echo '<li>Action: '.$k.': "'. $v .'"</li>';
+		}
+		echo '</ul>';
+		*/
 		return $result;
 	}
 
@@ -52,22 +71,31 @@ abstract class KampInfoHelper {
 	}
 
 	public static function addSubmenu($submenu) {
+		// set some global property
+		$document = JFactory :: getDocument();
+		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
+
+		// Retrieve authorisation
 		$canDo = KampInfoHelper :: getActions();
 		
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
+		// Show submenu items
+		if ($canDo->get('hitproject.menu')) {
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
+		}
+		if ($canDo->get('hitsite.menu')) {
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
+		}
+		if ($canDo->get('hitcamp.menu')) {
+				JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
+		}
 		if ($canDo->get('core.admin')) {
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
 			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
 			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
 		}
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
 		
-		// set some global property
-		$document = JFactory :: getDocument();
-		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
-
+		// Set the title
 		if ($submenu == 'hitprojects') {
 			$document->setTitle(JText :: _('COM_KAMPINFO_HITPROJECTS_DOCTITLE'));
 		}
@@ -128,7 +156,7 @@ abstract class KampInfoHelper {
 		$query->from('#__kampinfo_hitcamp c');
 
 		$query->select('s.naam as plaats, s.id as hitsite_id');
-		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite=s.code');
+		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
 
 		$query->order('s.jaar, s.naam, c.naam');
 
@@ -151,9 +179,9 @@ abstract class KampInfoHelper {
 		$db = JFactory :: getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('jaar As value, jaar As text');
+		$query->select('id As value, jaar As text');
 		$query->from('#__kampinfo_hitproject');
-		$query->order('jaar');
+		$query->order('jaar desc');
 
 		// Get the options.
 		$db->setQuery($query);
@@ -167,16 +195,66 @@ abstract class KampInfoHelper {
 
 		return $options;
 	}
-
-	public static function getHitSiteOptions() {
+	
+	public static function getHitJaarOptions() {
+		$options = array ();
+	
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+	
+		$query->select('jaar As value, jaar As text');
+		$query->from('#__kampinfo_hitproject');
+		$query->order('jaar desc');
+	
+		// Get the options.
+		$db->setQuery($query);
+	
+		$options = $db->loadObjectList();
+	
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+	
+		return $options;
+	}
+	
+	public static function getHitPlaatsOptions() {
 		$options = array ();
 
 		$db = JFactory :: getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('code As value, concat(naam, " (", jaar,")") As text');
-		$query->from('#__kampinfo_hitsite');
-		$query->order('jaar, naam');
+		$query->select('s.code As value, concat(s.naam, " (", p.jaar,")") As text');
+		$query->from('#__kampinfo_hitsite s');
+		$query->join('LEFT', '#__kampinfo_hitproject AS p ON p.id=s.hitproject_id');
+		$query->order('p.jaar desc, s.naam');
+
+		// Get the options.
+		$db->setQuery($query);
+
+		$options = $db->loadObjectList();
+
+		// Check for a database error.
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+
+		return $options;
+	}
+	public static function getHitSiteOptions($hitproject_id = null) {
+		$options = array ();
+
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('s.id As value, concat(s.naam, " (", p.jaar,")") As text');
+		$query->from('#__kampinfo_hitsite s');
+		$query->join('LEFT', '#__kampinfo_hitproject AS p ON p.id=s.hitproject_id');
+		if ($hitproject_id != null) {
+			$query->where('s.hitproject_id = ' . (int)($db->getEscaped($hitproject_id)));
+		}
+		$query->order('p.jaar desc, s.naam');
 
 		// Get the options.
 		$db->setQuery($query);
@@ -317,4 +395,14 @@ abstract class KampInfoHelper {
 			"K" => "Koken"
 		);
 	}
+	
+	public static function startsWith($haystack, $needle)
+	{
+		return $needle === "" || strpos($haystack, $needle) === 0;
+	}
+	public static function endsWith($haystack, $needle)
+	{
+		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+	}
+	
 }

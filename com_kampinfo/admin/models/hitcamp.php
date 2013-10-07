@@ -43,7 +43,7 @@ class KampInfoModelHitCamp extends JModelAdmin {
 			$item->activiteitengebieden = explode(',', $item->activiteitengebieden);
 			$item->doelgroepen = explode(',', $item->doelgroepen);
 		}
-		   
+
 		return $item;
 	}
 	
