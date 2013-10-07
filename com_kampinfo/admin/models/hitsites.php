@@ -37,17 +37,17 @@ class KampInfoModelHitSites extends JModelList {
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('s.id,s.naam,s.code,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
+		$query->select('s.id,s.hitproject_id,s.naam,s.code,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
 		$query->from('#__kampinfo_hitsite s');
 
-		$query->select('p.jaar as jaar, p.id as hitproject_id');
-		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.jaar=p.jaar');
+		$query->select('p.jaar as jaar');
+		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
 
 		if (!empty ($filterSearch)) {
 			$query->where('(s.naam LIKE ' . $db->quote('%'.$db->getEscaped($filterSearch).'%') . ')');
 		}
-		if (!empty ($filterJaar)) {
-			$query->where('(p.jaar = ' . (int)($db->getEscaped($filterJaar)) . ')');
+		if (!empty ($filterJaar) and ($filterJaar != "-1")) {
+			$query->where('(p.id = ' . (int)($db->getEscaped($filterJaar)) . ')');
 		}
 
 		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
@@ -64,6 +64,13 @@ class KampInfoModelHitSites extends JModelList {
 		$this->setState('filter.search', $search);
 
 		$state = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
+		if ($state == "") {
+			$params = &JComponentHelper::getParams('com_kampinfo');
+			$state = $params->get('huidigeActieveJaar');
+		}
+		if ($state == '-1') {
+			$state = "";
+		}
 		$this->setState('filter.jaar', $state);
 	}
 }

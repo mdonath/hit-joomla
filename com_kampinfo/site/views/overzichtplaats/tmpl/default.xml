@@ -11,7 +11,7 @@
 				name="request"
 		>
 			<field
-					name="plaats"
+					name="hitsite_id"
 					type="Site"
 					label="COM_KAMPINFO_OVERZICHTPLAATS_FIELD_PLAATS_LABEL"
 					description="COM_KAMPINFO_OVERZICHTPLAATS_FIELD_PLAATS_DESC"

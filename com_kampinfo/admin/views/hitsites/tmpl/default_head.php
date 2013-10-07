@@ -14,10 +14,10 @@ $this->state->set('list.columnCount', '10');
 		<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" />
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITSITES_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITSITES_HEADING_NAAM', 'naam', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITSITES_HEADING_NAAM', 'naam', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITSITES_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
 	</th>
 	<th>
 		<?php echo JText::_('COM_KAMPINFO_HITSITES_HEADING_AKKOORD'); ?>

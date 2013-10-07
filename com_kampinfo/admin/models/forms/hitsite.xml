@@ -9,7 +9,7 @@
 				type="hidden"
 		/>
 		<field
-				name="jaar"
+				name="hitproject_id"
 				type="Project"
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"

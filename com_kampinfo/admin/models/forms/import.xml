@@ -6,11 +6,11 @@
 	>
 		<field
 				name="jaar"
-				type="Project"
+				type="Jaar"
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2013"
+				default="2014"
 				required="true"
 		/>
 		<field
@@ -29,11 +29,11 @@
 	>
 		<field
 				name="jaar"
-				type="Project"
+				type="Jaar"
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2013"
+				default="2014"
 				required="true"
 		/>
 		<field
@@ -52,11 +52,11 @@
 	>
 		<field
 				name="jaar"
-				type="Project"
+				type="Jaar"
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2013"
+				default="2014"
 				required="true"
 		/>
 		<field

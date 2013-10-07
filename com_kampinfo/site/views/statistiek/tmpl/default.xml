@@ -12,7 +12,7 @@
 		>
 			<field
 					name="jaar"
-					type="Project"
+					type="Jaar"
 					required="true"
 					label="Jaar"
 					default="2013"

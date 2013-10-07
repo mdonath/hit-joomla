@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 <!-- For Eclipse -->
-<project name="KampInfo" default="zip" basedir=".">
+<project name="KampInfo" default="deploy" basedir=".">
 	<description>Ant Build File for Joomla! extensions</description>
 
 	<!-- The name of your extension's main XML file -->
 	<property name="cfg.name" value="kampinfo" />
-	<property name="xml.version" value="0.1.2" />
 	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
 	<property name="cfg.prefix" value="com_" />
 	<!-- Relative path to your project -->
@@ -17,58 +16,60 @@
 	<property name="cfg.serverpath" value="/var/www/HIT" />
 
 	<target name="init">
+	    <!-- Leest 'extension'.xml als properties met prefix 'xml' -->
 		<xmlproperty file="${cfg.dir}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="TODAY" pattern="yyyyMMdd" />
 		</tstamp>
 
-		<property name="str.version" value="-${xml.version}-${build.number}" />
-		<property name="str.destfile" value="${cfg.packages}/${cfg.prefix}${cfg.name}${str.version}_${TODAY}" />
+		<property name="str.version" value="${xml.version}-${build.number}" />
+		<property name="str.destfilename" value="${cfg.prefix}${cfg.name}-${str.version}_${TODAY}.zip" />
+		<property name="str.destfile" value="${cfg.packages}/${str.destfilename}" />
 		<property name="str.sitetrunkpath" value="${cfg.dir}/site" />
 		<property name="str.admintrunkpath" value="${cfg.dir}/admin" />
-		<property name="str.xmlfile" value="${cfg.dir}/${cfg.name}test.xml" />
+		<property name="str.updatefile" value="${cfg.packages}/${cfg.prefix}${cfg.name}-extension.xml" />
 	</target>
 
 	<target name="info" depends="init" description="prints information">
-		<echo message="${cfg.name} - ${str.version} - ${ant.version}" />
-	</target>
-
-	<target name="update_local" depends="info, init" description="attemps to update files on localhost server">
-		<copy todir="${cfg.serverpath}/components/${cfg.prefix}${cfg.name}">
-			<fileset dir="${str.sitetrunkpath}" />
-		</copy>
-		<copy todir="${cfg.serverpath}/administrator/components/${cfg.prefix}${cfg.name}">
-			<fileset file="${cfg.dir}/${cfg.name}.xml" />
-			<fileset dir="${str.admintrunkpath}" />
-		</copy>
-		<copy todir="${cfg.serverpath}/media/${cfg.prefix}${cfg.name}/">
-			<fileset dir="${cfg.dir}/media/" />
-		</copy>
+		<echo message="${cfg.name} - ${str.version} / ${ant.version}" />
 	</target>
 
 	<target name="zip" depends="info" description="Makes an uploadable zip package">
 		<mkdir dir="${cfg.packages}" />
-		<zip destfile="${str.destfile}.zip" basedir="${cfg.dir}">
+		<zip destfile="${str.destfile}" basedir="${cfg.dir}">
 			<exclude name="build.xml" />
 			<exclude name="build.number" />
 		</zip>
 	</target>
+	
+	<target name="deploy" depends="zip" description="Deploys package to localhost">
+		<exec executable="/bin/bash">
+			<arg value="${cfg.packages}/redeploy.sh" />
+			<arg value="${str.destfile}" />
+		</exec>
+	</target>
 
-
-	<target name="build_xml" depends="info" description="builds an xml listing of all the files in trunk">
+	<target name="build_update_xml" depends="info" description="">
+	    <echo message="hallekideehalloooo"/>
 		<fileset id="site" dir="${str.sitetrunkpath}" />
-		<echo message="${line.separator}&lt;files folder=&quot;site&quot;&gt;${line.separator}&lt;filename&gt;" file="${str.xmlfile}" append="false" />
-		<echo-fileset filesetref="site" />
-		<echo message="&lt;/filename&gt;${line.separator}&lt;/files&gt;${line.separator}" file="${str.xmlfile}" append="true" />
-
-		<fileset id="admin" dir="${str.admintrunkpath}" />
-		<echo message="${line.separator}&lt;files folder=&quot;admin&quot;&gt;${line.separator}&lt;filename&gt;" file="${str.xmlfile}" append="true" />
-		<echo-fileset filesetref="admin" />
-		<echo message="&lt;/filename&gt;${line.separator}&lt;/files&gt;${line.separator}" file="${str.xmlfile}" append="true" />
-
+		<echo message="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>${line.separator}" file="${str.updatefile}" append="false" />
+		<echo message="&lt;updates&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;update&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;name&gt;${xml.name}&lt;/name&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;element&gt;${cfg.prefix}${cfg.name}&lt;/element&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;type&gt;component&lt;/type&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;version&gt;${xml.version}&lt;/version&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;downloads&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;downloadurl type=&quot;full&quot; format=&quot;zip&quot;&gt;file:///home/martijn/git/hit-joomla/packages/${str.destfilename}&lt;/downloadurl&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;/downloads&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;/targetplatform name=&quot;joomla&quot; version=&quot;2.5&quot; /&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;/update&gt;${line.separator}" file="${str.updatefile}" append="true" />
+		<echo message="&lt;/updates&gt;${line.separator}" file="${str.updatefile}" append="true" />
+<!-- 
 		<replace file="${str.xmlfile}" token="${str.sitetrunkpath}/" value="" />
 		<replace file="${str.xmlfile}" token="${str.admintrunkpath}/" value="" />
+ -->		
 	</target>
 
 

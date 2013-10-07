@@ -11,22 +11,16 @@ defined('_JEXEC') or die('Restricted Access');
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 		<td>
-			<?php if ($this->canDo->get('hitproject.edit')) { ?>
-				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitproject.edit&id='.(int)$item->hitproject_id); ?>">
-					<?php echo $item->jaar; ?>
-				</a>
-			<?php } else { ?>
-				<?php echo $item->jaar; ?>
-			<?php } ?>
-		</td>
-		<td>
-			<?php if ($this->canDo->get('hitsite.edit')) { ?>
+			<?php if ($this->canDo->get('hitsite.edit.'.(int)$item->id)) { ?>
 				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitsite.edit&id='.(int)$item->id); ?>">
 					<?php echo $item->naam; ?>
 				</a>
 			<?php } else { ?>
 				<?php echo $item->naam; ?>
 			<?php } ?>
+		</td>
+		<td>
+			<?php echo $item->jaar; ?>
 		</td>
 		<td>
 			<?php echo JText::_($item->akkoordHitPlaats == 0 ? 'JNO' : 'JYES'); ?>

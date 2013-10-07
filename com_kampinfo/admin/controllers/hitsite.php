@@ -8,8 +8,7 @@ jimport('joomla.application.component.controllerform');
 /**
  * HitSite Controller
  */
-class KampInfoControllerHitSite extends JControllerForm
-{
+class KampInfoControllerHitSite extends JControllerForm {
 	/**
 	 * Implement to allowAdd or not
 	 *
