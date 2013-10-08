@@ -22,8 +22,8 @@ defined('_JEXEC') or die('Restricted Access');
 		<td>
 			<?php echo $item->jaar; ?>
 		</td>
-		<td>
-			<?php echo JText::_($item->akkoordHitPlaats == 0 ? 'JNO' : 'JYES'); ?>
+		<td align="center">
+			<?php echo JHtml::_('jgrid.published', $item->akkoordHitPlaats, $i, 'hitcamps.', false, 'cb');?>
 		</td>
 		<td>
 			<?php echo $item->deelnemersnummer; ?>
