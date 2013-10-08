@@ -66,7 +66,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		if ($this->canDo->get($this->entityName.'.delete')) {
 			JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
 		}
-		if ($this->entityName == 'hitcamp') {
+		if ($this->entityName == 'hitcamp' || $this->entityName == 'hitsite') {
 			if ($this->canDo->get($this->entityName.'.edit.state')) {
 				JToolBarHelper :: divider();
 				JToolBarHelper :: publish($this->entityName . 's.publish', 'JTOOLBAR_PUBLISH', true);

@@ -24,7 +24,8 @@
 		<action name="hitsite.create"     title="Maak HIT Plaats"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitsite.delete"     title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitsite.edit"       title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
-
+		<action name="hitsite.edit.state" title="Publiceer HIT Plaats"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
+		
 		
 		<action name="hitcamp.menu"       title="Toon HIT Kamponderdeel menu"  description="Toont het submenu" />
 		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
@@ -56,6 +57,7 @@
 		<action name="hitsite.create"     title="Maak HIT Plaats"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitsite.delete"     title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitsite.edit"       title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="hitsite.edit.state" title="Publiceer HIT Plaats"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
 	</section>
 
 	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->

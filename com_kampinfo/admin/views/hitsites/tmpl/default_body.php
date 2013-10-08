@@ -10,9 +10,13 @@ defined('_JEXEC') or die('Restricted Access');
 		<td>
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
+		<td align="center">
+			<?php $canPublish = $this->canDo->get($this->entityName .'.edit.state'); ?>
+			<?php echo JHtml::_('jgrid.published', $item->published, $i, $this->entityName .'s.', $canPublish, 'cb');?>
+		</td>
 		<td>
-			<?php if ($this->canDo->get('hitsite.edit.'.(int)$item->id)) { ?>
-				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitsite.edit&id='.(int)$item->id); ?>">
+			<?php if ($this->canDo->get($this->entityName.'.edit.'.(int)$item->id)) { ?>
+				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task='.$this->entityName.'.edit&id='.(int)$item->id); ?>">
 					<?php echo $item->naam; ?>
 				</a>
 			<?php } else { ?>

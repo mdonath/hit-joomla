@@ -32,8 +32,13 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`contactPersoonEmail`					VARCHAR(50)
 ,	`contactPersoonTelefoon`				VARCHAR(50)
 ,	`akkoordHitPlaats`						BOOLEAN
+,	`published`								SMALLINT(3) NOT NULL	DEFAULT '0'
 ,	PRIMARY KEY (`id`)
 );
+
+alter table `#__kampinfo_hitsite`
+	add constraint `#__kampinfo_hitsite_project_fk` foreign key (hitproject_id) references `#__kampinfo_hitproject` (id);
+
 
 CREATE TABLE `#__kampinfo_hitcamp` (
 	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
@@ -87,6 +92,9 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`publish_down`							DATETIME NOT NULL default '0000-00-00 00:00:00'
 ,	PRIMARY KEY (`id`)
 );
+
+alter table `#__kampinfo_hitcamp`
+	add constraint `#__kampinfo_hitcamp_site_fk` foreign key (hitsite_id) references `#__kampinfo_hitsite` (id);
 
 CREATE TABLE `#__kampinfo_hiticon` (
 	`id`									INT(11)			NOT NULL	AUTO_INCREMENT

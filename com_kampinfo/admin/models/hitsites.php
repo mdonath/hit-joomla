@@ -19,7 +19,8 @@ class KampInfoModelHitSites extends JModelList {
 			$config['filter_fields'] = array (
 				'id',
 				'jaar',
-				'naam'
+				'naam',
+				'published'
 			);
 		}
 
@@ -33,11 +34,12 @@ class KampInfoModelHitSites extends JModelList {
 		
 		$filterSearch = $this->getState('filter.search');
 		$filterJaar = $this->getState('filter.jaar');
+		$filterPublished = $this->getState('filter.published');
 
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('s.id,s.hitproject_id,s.naam,s.code,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
+		$query->select('s.id,s.hitproject_id,s.naam,s.code,s.published,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
 		$query->from('#__kampinfo_hitsite s');
 
 		$query->select('p.jaar as jaar');
@@ -49,7 +51,12 @@ class KampInfoModelHitSites extends JModelList {
 		if (!empty ($filterJaar) and ($filterJaar != "-1")) {
 			$query->where('(p.id = ' . (int)($db->getEscaped($filterJaar)) . ')');
 		}
-
+		if (is_numeric($filterPublished)) {
+			$query->where('(s.published = '. (int)($db->getEscaped($filterPublished)) .')');
+		} elseif ($filterPublished === '') {
+			$query->where('(s.published IN (0,1))');
+		}
+		
 		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
 
 		return $query;
@@ -72,5 +79,8 @@ class KampInfoModelHitSites extends JModelList {
 			$state = "";
 		}
 		$this->setState('filter.jaar', $state);
+		
+		$state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
+		$this->setState('filter.published', $state);
 	}
 }
