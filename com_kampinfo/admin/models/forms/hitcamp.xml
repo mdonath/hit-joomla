@@ -25,6 +25,17 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		 <field
+				name="published"
+				type="radio"
+				label="Gepubliceerd"
+				description="Publiceren op site"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
     </fieldset>
     
 	<fieldset
@@ -226,6 +237,7 @@
 				description=""
 				size="3"
 				maxlength="2"
+				default="10"
 				class="inputbox"
 		/>
 		<field
@@ -235,6 +247,7 @@
 				description=""
 				size="3"
 				maxlength="3"
+				default="20"
 				class="inputbox"
 		/>
 		<field
