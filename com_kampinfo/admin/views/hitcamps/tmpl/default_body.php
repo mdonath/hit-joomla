@@ -10,12 +10,12 @@
 			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 		<td align="center">
-			<?php $canPublish = $this->canDo->get('hitcamp.edit.state'); ?>
-			<?php echo JHtml::_('jgrid.published', $item->published, $i, 'hitcamps.', $canPublish, 'cb');?>
+			<?php $canPublish = $this->canDo->get($this->entityName .'.edit.state'); ?>
+			<?php echo JHtml::_('jgrid.published', $item->published, $i, $this->entityName .'s.', $canPublish, 'cb');?>
 		</td>
 		<td>
-			<?php if ($this->canDo->get('hitcamp.edit')) { ?>
-				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task=hitcamp.edit&id='.(int)$item->id); ?>">
+			<?php if ($this->canDo->get($this->entityName.'.edit.'.(int)$item->id)) { ?>
+				<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&task='.$this->entityName.'.edit&id='.(int)$item->id); ?>">
 					<?php echo $item->naam; ?>
 				</a>
 			<?php } else { ?>
@@ -23,13 +23,13 @@
 			<?php } ?>
 		</td>
 		<td align="center">
-			<?php echo JHtml::_('jgrid.published', $item->akkoordHitKamp, $i, 'hitcamps.', false, 'cb');?>
+			<?php echo JHtml::_('jgrid.published', $item->akkoordHitKamp, $i, $this->entityName .'s.', false, 'cb');?>
 		</td>
 		<td>
 			<?php echo $item->plaats; ?>
 		</td>
 		<td align="center">
-			<?php echo JHtml::_('jgrid.published', $item->akkoordHitPlaats, $i, 'hitcamps.', false, 'cb');?>
+			<?php echo JHtml::_('jgrid.published', $item->akkoordHitPlaats, $i, $this->entityName .'s.', false, 'cb');?>
 		</td>
 		<td>
 			<?php echo $item->jaar; ?>

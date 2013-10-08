@@ -32,7 +32,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		$query->select('*');
 		$query->from('#__kampinfo_hitsite s');
 		$query->where('(s.hitproject_id = ' . (int) ($db->getEscaped($projectId)) . ')');
-		$query->where('(s.akkoordHitPlaats=1)');
+		$query->where('(s.published=1 and s.akkoordHitPlaats=1)');
 		$query->order('s.naam');
 	
 		$db->setQuery($query);
