@@ -59,7 +59,7 @@ class KampInfoModelHitCamps extends JModelList {
 			$query->where('(p.id = ' . (int)($db->getEscaped($filterJaar)) . ')');
 		}
 		// Alleen als filterPlaats en filterJaar kloppen met elkaar
-		if (!empty ($filterPlaats) and ($filterPlaats != "-1") and (empty($filterJaar) or $this->endsWith($filterPlaats, $filterJaar))) {
+		if (!empty ($filterPlaats) and ($filterPlaats != "-1")) {
 			$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($filterPlaats)) . ')');
 		}
 		if (is_numeric($filterPublished)) {
