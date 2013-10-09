@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted Access');
 
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
-$this->state->set('list.columnCount', '10');
+$this->state->set('list.columnCount', '9');
 ?>
 <tr>
 	<th width="5">
@@ -24,9 +24,6 @@ $this->state->set('list.columnCount', '10');
 	</th>
 	<th>
 		<?php echo JText::_('COM_KAMPINFO_HITSITES_HEADING_AKKOORD'); ?>
-	</th>
-	<th>
-		<?php echo JText::_('COM_KAMPINFO_HITSITES_HEADING_DEELNEMERSNUMMER'); ?>
 	</th>
 	<th>
 		<?php echo JText::_('COM_KAMPINFO_HITSITES_HEADING_CONTACTPERSOON_NAAM'); ?>

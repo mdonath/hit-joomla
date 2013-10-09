@@ -2,6 +2,8 @@
 <form>
     <fieldset
         		name="akkoorden"
+        		label="Akkoorden"
+        		type="right"
 	>
 		<field
 				name="akkoordHitKamp"
@@ -40,8 +42,21 @@
     
 	<fieldset
 				name="inschrijvingen"
+				label="Inschrijvingen"
+				type="right"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
+ 		<field
+				name="deelnemersnummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
+				maxlength="8"
+				size="10"
+				class="inputbox"
+				default=""
+		/>
+	    
 		<field
 				name="shantiFormuliernummer"
 				type="text"
@@ -85,9 +100,12 @@
 			
 	</fieldset>
 	
+	
 	<fieldset
 				name="hitcamp"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
+				label="Algemene info"
+				type="left"
 	>
 		<field
 				name="id"
@@ -115,16 +133,6 @@
 				required="true"
 		/>
 		<field
-				name="deelnemersnummer"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
-				maxlength="8"
-				size="10"
-				class="inputbox"
-				default=""
-		/>
-		<field
 				name="naam"
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_NAAM_LABEL"
@@ -136,17 +144,7 @@
 				default=""
 		/>
 		
-		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
-		<field type="spacer" name="myspacer" label="" />
-		<field
-				name="doelstelling"
-				type="editor"
-				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
-				width="300"
-				class="inputbox"
-				filter="safehtml"
-		/>
+		
 		<field
 				name="startDatumTijd"
 				type="calendar"
@@ -180,6 +178,17 @@
 				class="inputbox"
 				default=""
 		/>
+		
+		
+	</fieldset>
+	
+	
+	<fieldset
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+			name="leeftijd"
+			label="Leeftijden"
+			type="left"
+		>
 		<field
 				name="minimumLeeftijd"
 				type="text"
@@ -199,74 +208,6 @@
 				maxlength="3"
 				class="inputbox"
 				default="88"
-		/>
-
-		<field
-				name="subgroepsamenstellingMinimum"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MIN_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
-				size="3"
-				maxlength="2"
-				class="inputbox"
-		/>
-		<field
-				name="subgroepsamenstellingMaximum"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MAX_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
-				size="3"
-				maxlength="2"
-				class="inputbox"
-		/>
-		<field
-				name="subgroepsamenstellingExtra"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_DESC"
-				size="3"
-				maxlength="1"
-				class="inputbox"
-		/>
-		
-		<!-- AANTAL DEELNEMERS -->
-		<field
-				name="minimumAantalDeelnemers"
-				type="text"
-				label="Minimum aantal deelnemers"
-				description=""
-				size="3"
-				maxlength="2"
-				default="10"
-				class="inputbox"
-		/>
-		<field
-				name="maximumAantalDeelnemers"
-				type="text"
-				label="Maximum aantal deelnemers"
-				description=""
-				size="3"
-				maxlength="3"
-				default="20"
-				class="inputbox"
-		/>
-		<field
-				name="maximumAantalSubgroepjes"
-				type="text"
-				label="Maximum aantal subgroepjes"
-				description=""
-				size="3"
-				maxlength="2"
-				class="inputbox"
-		/>
-		<field
-				name="maximumAantalUitEenGroep"
-				type="text"
-				label="Maximum aantal uit één groep"
-				description=""
-				size="3"
-				maxlength="3"
-				class="inputbox"
 		/>
 		<field
 				name="margeAantalDagenTeJong"
@@ -297,14 +238,91 @@
 				maxlength="255"
 				class="inputbox"
 		/>
-		
 	</fieldset>
 	
+	
+	
+	<fieldset
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+			name="aantallen"
+			label="Aantallen en indeling deelnemers"
+			type="left"
+		>
+		<field
+				name="subgroepsamenstellingMinimum"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MIN_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="subgroepsamenstellingMaximum"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MAX_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="subgroepsamenstellingExtra"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_DESC"
+				size="3"
+				maxlength="1"
+				class="inputbox"
+		/>
+		<field
+				name="minimumAantalDeelnemers"
+				type="text"
+				label="Min. aantal deelnemers"
+				description=""
+				size="3"
+				maxlength="2"
+				default="10"
+				required="true"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalDeelnemers"
+				type="text"
+				label="Max. aantal deelnemers"
+				description=""
+				size="3"
+				maxlength="3"
+				default="20"
+				required="true"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalSubgroepjes"
+				type="text"
+				label="Max. aantal subgroepjes"
+				description=""
+				size="3"
+				maxlength="2"
+				class="inputbox"
+		/>
+		<field
+				name="maximumAantalUitEenGroep"
+				type="text"
+				label="Max. aantal uit één groep"
+				description=""
+				size="3"
+				maxlength="3"
+				class="inputbox"
+		/>
+	    </fieldset>
 <!-- WEBSITE -->
 	
 	<fieldset
 				name="siteEnCourant"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
+				label="Website"
+				type="left"
 	>
 		<field
 				name="titeltekst"
@@ -403,24 +421,38 @@
 				maxlength="255"
 				class="inputbox"
 		/>
+	</fieldset>
 
-		
-
-		<field type="spacer" name="myspacerIcoontjes" label="" />
-		<field
-				name="icoontjes"
-				type="Icon"
-				label="Icoontjes"
-				description="Dit zijn de icoontjes"
-				class="inputbox"
-		/>
-		
+	
+	<fieldset
+       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+        		name="activiteitengebieden"
+        		label="Activiteitengebieden"
+        		type="right"
+	>
 		<field
 				name="activiteitengebieden"
 				type="Activityarea"
 				label="Activiteitengebieden"
 				description="Dit zijn de activiteitengebieden"
 				class="inputbox"
+		/>
+	</fieldset>
+	
+	<fieldset
+       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+        		name="doelgroepen"
+        		label="Doelgroepen"
+        		type="right"
+	>
+		<field
+				name="doelstelling"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
 		/>
 		<field
 				name="doelgroepen"
@@ -429,11 +461,30 @@
 				description="Dit zijn de doelgroepen"
 				class="inputbox"
 		/>
-
 	</fieldset>
 	
+	
+	
+	<fieldset
+       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+        		name="iconen"
+        		label="Iconen"
+        		type="right"
+	>
+		<field
+				name="icoontjes"
+				type="Icon"
+				label="Icoontjes"
+				description="Dit zijn de icoontjes"
+				class="inputbox"
+		/>
+	</fieldset>
+	
+			
 	<fieldset
         		name="helpdesk"
+        		label="Helpdesk"
+        		type="left"
 	>
 		 <field type="spacer" name="myspacerHelpdeskOpmerkingen" label="" />
 				<field
