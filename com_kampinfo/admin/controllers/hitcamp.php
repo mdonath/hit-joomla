@@ -37,4 +37,25 @@ class KampInfoControllerHitCamp extends JControllerForm {
 			return $user->authorise("hitcamp.edit", "com_kampinfo.hitcamp." . $id );
 		}
 	}
+	
+	/**
+	 * Method to run batch operations.
+	 *
+	 * @param   object  $model  The model.
+	 *
+	 * @return  boolean  True on success, false on failure
+	 *
+	 * @since   2.5
+	 */
+	public function batch($model = null) {
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+	
+		// Set the model
+		$model = $this->getModel('HitCamp', 'KampInfoModel');
+	
+		// Preset the redirect
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=hitcamps' . $this->getRedirectToListAppend(), false));
+	
+		return parent::batch($model);
+	}
 }

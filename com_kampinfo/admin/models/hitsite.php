@@ -65,4 +65,38 @@ class KampInfoModelHitSite extends JModelAdmin {
 		}
 	}
 
+	public function	batch($commands, $pks, $contexts) {
+		$pks = array_unique($pks);
+		JArrayHelper::toInteger($pks);
+		
+		// Remove any values of zero.
+		if (array_search(0, $pks, true))
+		{
+			unset($pks[array_search(0, $pks, true)]);
+		}
+		
+		if (empty($pks))
+		{
+			$this->setError(JText::_('Niets geselecteerd!'));
+			return false;
+		}
+		
+		if ($commands['group_action'] == 'akkoordPlaats') {
+			$this->akkoordPlaats($pks, 1);
+		} else if ($commands['group_action'] == 'nietAkkoordPlaats') {
+			$this->akkoordPlaats($pks, 0);
+		}
+		
+		
+		return true;
+	} 
+	
+	public function akkoordPlaats($ids, $value) {
+		$cids = implode( ',', $ids);
+	
+		$db =& JFactory::getDBO();
+		$query = 'UPDATE #__kampinfo_hitsite SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
+		$db->setQuery($query);
+		$result = $db->query();
+	}
 }
