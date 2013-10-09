@@ -5,7 +5,7 @@ defined('_JEXEC') or die;
 $filter_jaar = $this->escape($this->state->get('filter.jaar'));
 ?>
 
-<select name="filter_jaar" class="inputbox" onchange="this.form.submit()">
+<select name="filter_jaar" class="inputbox" onchange="this.form.filter_plaats.value='-1'; this.form.submit()">
 	<option value="-1"><?php echo JText::_('COM_KAMPINFO_SELECT_HITPROJECT');?></option>
 	<?php echo JHtml::_('select.options', KampInfoHelper :: getHitProjectOptions(), 'value', 'text', $filter_jaar); ?>
 </select>
