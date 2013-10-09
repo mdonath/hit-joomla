@@ -56,4 +56,54 @@ class KampInfoModelHitCamp extends JModelAdmin {
 			return $user->authorise("hitcamp.delete", "com_kampinfo.hitcamp." . $record->id );
 		}
 	}
+	
+
+	public function	batch($commands, $pks, $contexts) {
+		$pks = array_unique($pks);
+		JArrayHelper::toInteger($pks);
+	
+		// Remove any values of zero.
+		if (array_search(0, $pks, true))
+		{
+			unset($pks[array_search(0, $pks, true)]);
+		}
+	
+		if (empty($pks))
+		{
+			$this->setError(JText::_('Niets geselecteerd!'));
+			return false;
+		}
+	
+		if ($commands['group_action'] == 'akkoordPlaats') {
+			$this->akkoordPlaats($pks, 1);
+		} else if ($commands['group_action'] == 'nietAkkoordPlaats') {
+			$this->akkoordPlaats($pks, 0);
+		} else if ($commands['group_action'] == 'akkoordKamp') {
+			$this->akkoordKamp($pks, 1);
+		} else if ($commands['group_action'] == 'nietAkkoordKamp') {
+			$this->akkoordKamp($pks, 0);
+		} else {
+			$this->setError(JText::_('Ik weet niet wat ik moet doen?! : '. $commands['group_action']));
+			return false;
+		}
+		return true;
+	}
+	
+	public function akkoordPlaats($ids, $value) {
+		$cids = implode( ',', $ids);
+	
+		$db =& JFactory::getDBO();
+		$query = 'UPDATE #__kampinfo_hitcamp SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
+		$db->setQuery($query);
+		$result = $db->query();
+	}
+	
+	public function akkoordKamp($ids, $value) {
+		$cids = implode( ',', $ids);
+	
+		$db =& JFactory::getDBO();
+		$query = 'UPDATE #__kampinfo_hitcamp SET akkoordHitKamp= '.(int) $value . ' WHERE id IN ( '.$cids.' )';
+		$db->setQuery($query);
+		$result = $db->query();
+	}
 }

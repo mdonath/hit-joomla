@@ -33,12 +33,14 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		$this->state		= $this->get('State');
 
 		$ids = array();
-		foreach ($this->items as $row) {
-			$ids[] = $row->id;
+		if ($this->items) {
+			foreach ($this->items as $row) {
+				$ids[] = $row->id;
+			}
 		}
 		// What Access Permissions does this user have? What can (s)he do?
 		$this->canDo = KampInfoHelper::getActions($this->entityName, $ids);
-
+		
 		// Check for errors
 		if (count($errors = $this->get('Errors'))) {
 			JError :: raiseError(500, implode('<br />', $errors));
@@ -74,7 +76,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 			}
 		}
 		JToolBarHelper :: divider();
-		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo'))     {
+		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo')) {
 			JToolBarHelper :: preferences('com_kampinfo');
 		}
 	}

@@ -8,5 +8,5 @@ JHtml::_('behavior.tooltip');
 	
 	<?php echo $this->loadTemplate('searchfilter'); ?>
 	<?php echo $this->loadTemplate('list'); ?>
-	
+
 </form>
