@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
+    
 	<fieldset
 			name="hitsite"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
@@ -36,15 +37,42 @@
 				required="true"
 				default=""
 		/>
+	</fieldset>
+	
+	<fieldset
+			name="aanlevering"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
 		<field
-				name="deelnemersnummer"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_LABEL"
-				description="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_DESC"
-				size="50"
+				name="akkoordHitPlaats"
+				type="radio"
+				label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
+				description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
 				class="inputbox"
-				default=""
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		
+		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
+		<field type="spacer" name="myspacer" label="" />
+	
+		<field
+				name="hitCourantTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
+				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
 		/>
+	</fieldset>
+	
+	 <fieldset
+			name="contact"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
 		<field
 				name="contactPersoonNaam"
 				type="text"
@@ -72,29 +100,20 @@
 				class="inputbox"
 				default=""
 		/>
-		<field
-				name="akkoordHitPlaats"
-				type="radio"
-				label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
-				description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
-				class="inputbox"
-				default="0"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		
-		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
-		<field type="spacer" name="myspacer" label="" />
+	</fieldset>
 	
+	<fieldset
+			name="technisch"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
 		<field
-				name="hitCourantTekst"
-				type="editor"
-				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
-				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
-				width="300"
+				name="deelnemersnummer"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_LABEL"
+				description="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_DESC"
+				size="50"
 				class="inputbox"
-				filter="safehtml"
+				default=""
 		/>
 	</fieldset>
 	

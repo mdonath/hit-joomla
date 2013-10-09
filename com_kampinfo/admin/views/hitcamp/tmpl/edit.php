@@ -2,53 +2,57 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
+
+$fieldsets = $this->form->getFieldsets();
+
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_kampinfo&layout=edit&id='.(int) $this->item->id); ?>"
       method="post"
       name="adminForm"
       id="hitcamp-form"
 >
-	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_INSCHRIJVINGEN_DETAILS' ); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset('inschrijvingen') as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-		</ul>
-	</fieldset>
-	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_AKKOORD_DETAILS' ); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset('akkoorden') as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-		</ul>
-	</fieldset>
-	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_DETAILS' ); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset('hitcamp') as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-		</ul>
-	</fieldset>
+	<div class="width-60 fltlft">
+<?php 
+	foreach ($fieldsets as $fieldset) {
+			if ($fieldset->type == 'left') {
+?>
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( $fieldset->label ); ?></legend>
+			<ul class="adminformlist">
+				<?php foreach($this->form->getFieldset($fieldset->name) as $field): ?>
+					<li><?php echo $field->label;echo $field->input;?></li>
+				<?php endforeach; ?>
+			</ul>
+		</fieldset>
+<?php
+			}
+	}
+?>
+	</div>
 	
-	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_HITCAMP_SITE_DETAILS' ); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset('siteEnCourant') as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-		</ul>
-	</fieldset>
-	<fieldset class="adminform">
-		<legend><?php echo JText::_( 'COM_KAMPINFO_HELPDESK_DETAILS' ); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset('helpdesk') as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-		</ul>
-	</fieldset>
+	<div class="width-40 fltrt">
+		<?php
+		echo JHtml::_('sliders.start');
+		foreach ($fieldsets as $fieldset) {
+			if ($fieldset->type == 'right') {
+				echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
+		?>
+		<fieldset class="panelform">
+			<ul class="adminformlist">
+				<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
+					<?php if ($field->hidden) { ?>
+						<?php echo $field->input; ?>
+					<?php } else { ?>
+						<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
+					<?php } ?>
+				<?php } ?>
+			</ul>
+		</fieldset>
+		<?php } ?>
+		<?php } ?>
+		<?php echo JHtml::_('sliders.end'); ?>
+		</div>
+
 
 	<!-- begin ACL definition-->
 	<div class="clr"></div>

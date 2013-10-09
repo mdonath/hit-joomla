@@ -32,9 +32,6 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo JHtml::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, $this->entityName .'s.', $canEdit);?>
 		</td>
 		<td>
-			<?php echo $item->deelnemersnummer; ?>
-		</td>
-		<td>
 			<?php echo $item->contactPersoonNaam; ?>
 		</td>
 		<td>
