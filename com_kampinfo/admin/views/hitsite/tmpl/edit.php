@@ -40,12 +40,17 @@ JHtml::_('behavior.formvalidation');
 	
 	<div class="width-40 fltrt">
 		<fieldset class="panelform" >
-	    <?php $name = "technisch"; ?>
 			<legend><?php echo JText::_( 'Technische dingen' ); ?></legend>
 			<ul class="adminformlist">
-				<?php foreach($this->form->getFieldset($name) as $field) { ?>
+				<?php foreach($this->form->getFieldset("technisch") as $field) { ?>
 					<li><?php echo $field->label;echo $field->input;?></li>
 				<?php } ?>
+			</ul>
+		</fieldset>
+		<fieldset class="panelform" >
+			<legend><?php echo JText::_( 'Kopieer van vorig jaar' ); ?></legend>
+			<ul class="adminformlist">
+				<li><label>Kopieer kampen van vorig jaar</label><input type="button" value="Kopieer" onclick="Joomla.submitbutton('hitsite.copyCamps');"/></li>
 			</ul>
 		</fieldset>
 	</div>
@@ -67,7 +72,7 @@ JHtml::_('behavior.formvalidation');
 	<!-- end ACL definition-->
 	
 	<div>
-		<input type="hidden" name="task" value="hitsite.edit" />
+		<input type="hidden" id="task" name="task" value="hitsite.edit" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 </form>

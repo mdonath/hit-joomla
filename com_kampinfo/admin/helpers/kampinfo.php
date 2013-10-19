@@ -58,14 +58,14 @@ abstract class KampInfoHelper {
 				2011 => DateTime::createFromFormat('d-m-Y', '22-04-2011'),
 				2012 => DateTime::createFromFormat('d-m-Y', '06-04-2012'),
 				2013 => DateTime::createFromFormat('d-m-Y', '29-03-2013'),
-				2013 => DateTime::createFromFormat('d-m-Y', '18-04-2014'),
-				2014 => DateTime::createFromFormat('d-m-Y', '03-04-2015'),
-				2015 => DateTime::createFromFormat('d-m-Y', '25-03-2016'),
-				2016 => DateTime::createFromFormat('d-m-Y', '14-04-2017'),
-				2017 => DateTime::createFromFormat('d-m-Y', '30-03-2018'),
-				2018 => DateTime::createFromFormat('d-m-Y', '19-04-2019'),
-				2019 => DateTime::createFromFormat('d-m-Y', '10-04-2020'),
-				2020 => DateTime::createFromFormat('d-m-Y', '02-04-2021'),
+				2014 => DateTime::createFromFormat('d-m-Y', '18-04-2014'),
+				2015 => DateTime::createFromFormat('d-m-Y', '03-04-2015'),
+				2016 => DateTime::createFromFormat('d-m-Y', '25-03-2016'),
+				2017 => DateTime::createFromFormat('d-m-Y', '14-04-2017'),
+				2018 => DateTime::createFromFormat('d-m-Y', '30-03-2018'),
+				2019 => DateTime::createFromFormat('d-m-Y', '19-04-2019'),
+				2020 => DateTime::createFromFormat('d-m-Y', '10-04-2020'),
+				2021 => DateTime::createFromFormat('d-m-Y', '02-04-2021'),
 		);
 		return $paasKalender[$jaar];
 	}
@@ -125,40 +125,14 @@ abstract class KampInfoHelper {
 		$db = JFactory :: getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('c.id As value, concat(c.naam, " (", s.naam, " - ", s.jaar, ")") As text');
-		$query->from('#__kampinfo_hitcamp c');
-
-		$query->select('s.naam as plaats, s.id as hitsite_id');
-		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite=s.code');
-
-		$query->order('s.jaar, s.naam, c.naam');
-
-		// Get the options.
-		$db->setQuery($query);
-
-		$options = $db->loadObjectList();
-
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
-		}
-
-		return $options;
-	}
-
-	public static function getDeelnemersnummerOptions() {
-		$options = array ();
-
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-
-		$query->select('c.deelnemersnummer As value, concat(s.jaar, " - ", s.naam, " - ", c.naam, " (", c.deelnemersnummer, ")") As text');
+		$query->select('c.id As value, concat(c.naam, " (", s.naam, " - ", p.jaar, ")") As text');
 		$query->from('#__kampinfo_hitcamp c');
 
 		$query->select('s.naam as plaats, s.id as hitsite_id');
 		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
-
-		$query->order('s.jaar, s.naam, c.naam');
+		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
+		
+		$query->order('p.jaar, s.naam, c.naam');
 
 		// Get the options.
 		$db->setQuery($query);
@@ -172,6 +146,7 @@ abstract class KampInfoHelper {
 
 		return $options;
 	}
+
 
 	public static function getHitProjectOptions() {
 		$options = array ();
@@ -219,29 +194,6 @@ abstract class KampInfoHelper {
 		return $options;
 	}
 	
-	public static function getHitPlaatsOptions() {
-		$options = array ();
-
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-
-		$query->select('s.code As value, concat(s.naam, " (", p.jaar,")") As text');
-		$query->from('#__kampinfo_hitsite s');
-		$query->join('LEFT', '#__kampinfo_hitproject AS p ON p.id=s.hitproject_id');
-		$query->order('p.jaar desc, s.naam');
-
-		// Get the options.
-		$db->setQuery($query);
-
-		$options = $db->loadObjectList();
-
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
-		}
-
-		return $options;
-	}
 	public static function getHitSiteOptions($hitproject_id = null) {
 		$options = array ();
 
@@ -403,6 +355,20 @@ abstract class KampInfoHelper {
 	public static function endsWith($haystack, $needle)
 	{
 		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+	}
+	
+
+	public static function reverseFields($store, $fields) {
+		foreach ($fields as $f) {
+			$store->$f = self::reverse($store->$f);
+		}
+	}
+
+	public static function reverse($date) {
+		if ($date == null) {
+			return null;
+		}
+		return implode('-', array_reverse(explode('-', $date)));
 	}
 	
 }

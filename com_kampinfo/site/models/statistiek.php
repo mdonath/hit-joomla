@@ -307,7 +307,7 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 			$query->select("sum(if(s.naam='$plaatsNaam',1,0)) as $plaatsNaam");
 		}
 		$query->from('#__kampinfo_deelnemers d');
-		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite = s.code)');
+		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite_id = s.id)');
 		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
 		$query->group("jaar, datumInschrijving");
 		
@@ -441,7 +441,8 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 			$query->select("sum(if(d.jaar=$jaar,1,0)) as \"y$jaar\"");
 		}
 		$query->from('#__kampinfo_deelnemers d');
-		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite = s.code)');
+		$query->leftJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
+		$query->leftJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
 		$query->where("s.naam = ". $db->quote($db->getEscaped($this->plaats)));
 		$query->group('inschrijfdag');
 		$db->setQuery($query);

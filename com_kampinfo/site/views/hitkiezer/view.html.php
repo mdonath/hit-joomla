@@ -48,11 +48,11 @@ class KampInfoViewHitkiezer extends JView {
 	 */
 	private static function integerifyFields($project) {
 		// Alle velden in een array zodat ze in een loopje omgezet kunnen worden
-		$kampFields = explode(',', 'deelnemersnummer,shantiFormuliernummer,minimumLeeftijd,maximumLeeftijd,deelnamekosten,minimumAantalDeelnemers,maximumAantalDeelnemers,aantalDeelnemers,gereserveerd,subgroepsamenstellingMinimum,margeAantalDagenTeJong,margeAantalDagenTeOud');
+		$kampFields = explode(',', 'shantiFormuliernummer,minimumLeeftijd,maximumLeeftijd,deelnamekosten,minimumAantalDeelnemers,maximumAantalDeelnemers,aantalDeelnemers,gereserveerd,subgroepsamenstellingMinimum,margeAantalDagenTeJong,margeAantalDagenTeOud');
 
 		$project->jaar = intval($project->jaar);
 		foreach ($project->hitPlaatsen as $plaats) {
-			$plaats->deelnemersnummer = intval($plaats->deelnemersnummer);
+			//$plaats->deelnemersnummer = intval($plaats->deelnemersnummer);
 			foreach ($plaats->kampen as $kamp) {
 				foreach ($kampFields as $field) {
 					$kamp->$field = intval($kamp->$field);

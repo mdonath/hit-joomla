@@ -14,8 +14,7 @@ jimport('joomla.filesystem.file');
 /**
  * Import Model.
 */
-class KampInfoModelImport extends JModelAdmin
-{
+class KampInfoModelImport extends JModelAdmin {
 
 	/**
 	 * Downloadt de kampgegevens uit SOL en overschrijft de huidige gegevens.
@@ -246,19 +245,19 @@ class KampInfoModelImport extends JModelAdmin
 	}
 
 	private function verwijderEnImporteerKampgegevens($app, $rows, $jaar) {
-		$count = count($rows);
+// 		$count = count($rows);
 
-		if ($count == 0) {
-			$app->enqueueMessage('geen rijen gevonden');
-			return false;
-		}
-		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
+// 		if ($count == 0) {
+// 			$app->enqueueMessage('geen rijen gevonden');
+// 			return false;
+// 		}
+// 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
 
-		self::verwijderJaar($jaar);
-		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
+// 		self::verwijderJaar($jaar);
+// 		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
 
-		self::updateKampen($rows,  $jaar);
-		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
+// 		self::updateKampen($rows,  $jaar);
+// 		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
 		return true;
 	}
 
@@ -276,8 +275,9 @@ class KampInfoModelImport extends JModelAdmin
 	private function verwijderJaar($jaar) {
 		$db = JFactory :: getDbo();
 		$query = "DELETE c FROM #__kampinfo_hitcamp c "
-				. "JOIN #__kampinfo_hitsite s ON c.hitsite=s.code "
-						. "AND s.jaar = ". ($db->getEscaped($jaar));
+				. "JOIN #__kampinfo_hitsite s ON (c.hitsite_id=s.id) "
+				. "JOIN #__kampinfo_hitproject p ON (s.hitproject_id=p.id) "
+						. "AND p.jaar = ". ($db->getEscaped($jaar));
 
 		$db->setQuery($query);
 		$db->query();
@@ -298,12 +298,12 @@ class KampInfoModelImport extends JModelAdmin
 			if (empty($gereserveerd)) {
 				$gereserveerd = 0;
 			}
-			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s SET"
+			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
 					. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
 					. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
 					. ", c.aantalSubgroepen = " .	(int)($db->getEscaped($aantalSubgroepen))
 					. " WHERE "
-					. " c.hitsite = s.code AND s.jaar = ". ($db->getEscaped($jaar))
+					. " c.hitsite_id = s.id AND s.hitproject_id = p.jaar AND p.jaar = ". ($db->getEscaped($jaar))
 					. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
 					;
 			$db->setQuery($query);

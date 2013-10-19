@@ -38,6 +38,19 @@ class KampInfoControllerHitSite extends JControllerForm {
 		}
 	}
 	
+	/**
+	 * Copieert alle kampen van vorig jaar.
+	 * @param string $model
+	 */
+	public function copyCamps($model = null) {
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$model = $this->getModel('HitSite', 'KampInfoModel');
+		$recordId = JRequest::getInt('id');
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=hitsite' . $this->getRedirectToItemAppend($recordId), false));
+		$model->copyKampen($recordId);
+		
+		return null;
+	}
 
 	/**
 	 * Method to run batch operations.

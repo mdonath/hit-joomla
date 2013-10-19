@@ -1,8 +1,4 @@
-<?php
-
-
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 // import the Joomla modellist library
 jimport('joomla.application.component.modellist');
 
@@ -39,7 +35,7 @@ class KampInfoModelHitSites extends JModelList {
 		// Create a new query object.           
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('s.id,s.hitproject_id,s.naam,s.code,s.published,s.akkoordHitPlaats,s.deelnemersnummer,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
+		$query->select('s.id,s.hitproject_id,s.naam,s.published,s.akkoordHitPlaats,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon');
 		$query->from('#__kampinfo_hitsite s');
 
 		$query->select('p.jaar as jaar');

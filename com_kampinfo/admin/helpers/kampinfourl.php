@@ -22,7 +22,6 @@ abstract class KampInfoUrlHelper {
 
 	public static function activiteitURL($plaats, $kamp, $use = TRUE) {
 		if ($use) {
-			$jaar = $plaats->jaar;
 			$hitcampId = $kamp->id;
 			return "index.php?option=com_kampinfo&amp;view=activiteit&amp;hitcamp_id=$hitcampId";
 		} else {

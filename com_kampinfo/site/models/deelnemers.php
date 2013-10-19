@@ -64,7 +64,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
-		$query->select('s.naam as plaats, c.deelnemersnummer, c.naam');
+		$query->select('s.naam as plaats, c.naam');
 		
 		$laatsteDatum = strtotime($inschrijvingEinddatum->format('Y-m-d'));
 		for($i = $inschrijvingStartdatum; 
@@ -77,9 +77,10 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 			$query->select("sum(if(d.datumInschrijving='$date', 1,0)) as $col");
 		}
 		$query->from('#__kampinfo_hitcamp c');
-		$query->leftJoin('#__kampinfo_hitsite s on (c.hitsite = s.code)');
-		$query->leftJoin('#__kampinfo_deelnemers d on (soundex(left(d.hitcamp, 21)) = soundex(left(c.naam,21)) and d.hitsite = c.hitsite)');
-		$query->where('(s.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
+		$query->leftJoin('#__kampinfo_hitsite s on (c.hitsite_id = s.id)');
+		$query->leftJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id)');
+		$query->leftJoin('#__kampinfo_deelnemers d on (soundex(left(d.hitcamp, 21)) = soundex(left(c.naam,21)) and d.jaar = p.jaar and lower(d.hitsite) = lower(s.naam))');
+		$query->where('(p.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
 		$query->group(" d.hitsite, d.hitcamp ");
 		$query->order('c.hitsite, c.naam');
 		$db->setQuery($query);
