@@ -20,22 +20,22 @@ defined('_JEXEC') or die('Restricted Access');
                     <?php } ?>
                 </td>
                 <td>
-                        <?php echo $item->inschrijvingStartdatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inschrijvingStartdatum); ?>
                 </td>
                 <td>
-                        <?php echo $item->inschrijvingEinddatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inschrijvingEinddatum); ?>
                 </td>
                 <td>
-                        <?php echo $item->inschrijvingWijzigenTotDatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inschrijvingWijzigenTotDatum); ?>
                 </td>
                 <td>
-                        <?php echo $item->inschrijvingKosteloosAnnulerenDatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inschrijvingKosteloosAnnulerenDatum); ?>
                 </td>
                 <td>
-                        <?php echo $item->inschrijvingGeenRestitutieDatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inschrijvingGeenRestitutieDatum); ?>
                 </td>
                 <td>
-                        <?php echo $item->inningsdatum; ?>
+                        <?php echo KampInfoHelper::reverse($item->inningsdatum); ?>
                 </td>
                 
                 

@@ -24,7 +24,7 @@ $plaats = $this->plaats;
 					<div class="rt-headline">
 						<div class="module-title">
 							<div class="module-title2">
-								<h1 class="title rt-pagetitle">De HIT's van HIT <?php echo $plaats->naam; ?></h1>
+								<h1 class="title rt-pagetitle">De HIT's van HIT <?php echo $plaats->naam; ?> in <?php echo $plaats->jaar; ?></h1>
 							</div>
 						</div>
 					</div>

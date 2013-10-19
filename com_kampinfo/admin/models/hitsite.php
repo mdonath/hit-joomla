@@ -31,7 +31,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 	 * @since       2.5
 	 */
 	public function getForm($data = array(), $loadData = true) {
-		// Get the form.
+		// Get the form: hitsite.xml
 		$form = $this->loadForm('com_kampinfo.hitsite', 'hitsite',
 				array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
@@ -61,7 +61,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 	protected function canDelete($record) {
 		if (!empty($record->id)) {
 			$user = JFactory::getUser();
-			return $user->authorise("hitsite.delete", "com_kampinfo.hitsite." . $record->id );
+			return $user->authorise("hitsite.delete", "com_kampinfo.hitsite." . $record->id);
 		}
 	}
 
@@ -70,21 +70,25 @@ class KampInfoModelHitSite extends JModelAdmin {
 		JArrayHelper::toInteger($pks);
 		
 		// Remove any values of zero.
-		if (array_search(0, $pks, true))
-		{
+		if (array_search(0, $pks, true)) {
 			unset($pks[array_search(0, $pks, true)]);
 		}
 		
-		if (empty($pks))
-		{
+		if (empty($pks)) {
 			$this->setError(JText::_('Niets geselecteerd!'));
 			return false;
 		}
 		
-		if ($commands['group_action'] == 'akkoordPlaats') {
+		$what = $commands['group_action'];
+		if ($what == 'akkoordPlaats') {
 			$this->akkoordPlaats($pks, 1);
-		} else if ($commands['group_action'] == 'nietAkkoordPlaats') {
+		} else if ($what == 'nietAkkoordPlaats') {
 			$this->akkoordPlaats($pks, 0);
+		} else if ($what == 'copyKampen') {
+			$this->batchCopyKampen($pks);
+		} else {
+			$this->setError(JText::_('Ik weet niet wat ik moet doen!'));
+			return false;
 		}
 		
 		
@@ -92,11 +96,107 @@ class KampInfoModelHitSite extends JModelAdmin {
 	} 
 	
 	public function akkoordPlaats($ids, $value) {
-		$cids = implode( ',', $ids);
+		$cids = implode(',', $ids);
 	
 		$db =& JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitsite SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();
 	}
+	
+	public function batchCopyKampen($ids) {
+		foreach ($ids as $id) {
+			$this->copyKampen($id);
+		}	
+	}
+
+	public function copyKampen($siteId) {
+		$app = JFactory::getApplication();
+		$db = JFactory :: getDBO();
+		$t = $this->getTable();
+		$t->load($siteId);
+		$plaatsNaam = $t->naam;
+		
+		// Heeft de plaats voor dit jaar al kamponderdelen -> stop
+		if ($this->getKampenVanPlaats($db, $siteId)) {
+			$app->enqueueMessage('HIT '.$plaatsNaam . ' heeft voor dit jaar al kamponderdelen in KampInfo! Er is niets gecopieerd.', 'error');
+			return;
+		}
+		
+		// Als de plaats er vorig jaar nog niet was -> stop
+		$plaatsIdVorigJaar = $this->getHitPlaatsVanVorigJaar($db, $siteId);
+		if (empty($plaatsIdVorigJaar)) {
+			$app->enqueueMessage('HIT '.$plaatsNaam . ' bestond vorig jaar nog niet!', 'error');
+			return;
+		}
+		
+		// Als er vorig jaar geen kamponderdelen waren (maar wel een plaats?) -> stop
+		$teCopierenKampen = $this->getKampenVanPlaats($db, $plaatsIdVorigJaar);
+		if (empty($teCopierenKampen)) {
+			$app->enqueueMessage('HIT '.$plaatsNaam . ' had vorig jaar geen kamponderdelen?! Niets gecopieerd!', 'error');
+			return;
+		}
+		
+		$namen = array();
+		foreach ($teCopierenKampen as $row) {
+			$kamp = $this->getTable('HitCamp');
+			if ($kamp->load($row->id)) {
+				$namen[] = $kamp->naam;
+				
+				$kamp->hitsite_id = $siteId;
+				$kamp->id = null;			
+				$kamp->shantiFormuliernummer = null;
+				$kamp->aantalSubgroepen = 0;
+				$kamp->aantalDeelnemers = 0;
+				$kamp->gereserveerd = 0;
+				$kamp->akkoordHitKamp = 0;
+				$kamp->akkoordHitPlaats = 0;
+				$kamp->published = 0;
+				// Zet startdag over naar dit jaar
+				$kamp->startDatumTijd = $this->herberekenDatum($kamp->startDatumTijd);
+				$kamp->eindDatumTijd = $this->herberekenDatum($kamp->eindDatumTijd);
+				
+				// obsolete
+				$kamp->deelnemersnummer = null;
+				$kamp->hitsite = null;
+	
+				$kamp->store();
+			}
+		}
+		
+		$app->enqueueMessage('Bij HIT '.$plaatsNaam . ' zijn '. count($namen) .' kampen overgezet!');
+		$app->enqueueMessage("'" . implode("', '", $namen) . "'");
+	}
+	
+ 	private function getKampenVanPlaats($db, $siteId) {
+		$query = $db->getQuery(true)
+			-> select('c.id')
+			-> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+			-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->getEscaped($siteId));
+		$db->setQuery($query);
+		return $db->loadObjectList();
+	}
+
+	private function getHitPlaatsVanVorigJaar($db, $siteId) {
+		$query = $db->getQuery(true)
+			-> select('s_vorig.id')
+			-> from($db->quoteName('#__kampinfo_hitsite', 's_now'))
+			-> join('LEFT', '#__kampinfo_hitproject AS p_now ON (s_now.hitproject_id = p_now.id)')
+			-> join('LEFT', '#__kampinfo_hitproject AS p_vorig ON (p_now.jaar - 1 = p_vorig.jaar)')
+			-> join('LEFT', '#__kampinfo_hitsite AS s_vorig ON (p_vorig.id = s_vorig.hitproject_id and s_now.naam = s_vorig.naam)')
+			-> where($db->quoteName('s_now.id') .'='. (int) $db->getEscaped($siteId));
+		$db->setQuery($query);
+		return $db->loadResult();
+	}
+	
+	private function herberekenDatum($datum) {
+		$DATABASE_DATETIMEFORMAT = 'Y-m-d G:i:s';
+		$origineel = DateTime::createFromFormat($DATABASE_DATETIMEFORMAT, $datum);
+		$vorigJaar = (int) $origineel->format('Y');
+		$diffStart = KampInfoHelper::eersteHitDag($vorigJaar)->diff($origineel);
+		$nieuweStart = KampInfoHelper::eersteHitDag($vorigJaar + 1)->add($diffStart);
+		return $nieuweStart->format($DATABASE_DATETIMEFORMAT);
+	}
+	
+	
 }

@@ -36,40 +36,27 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		}
 		return $data;
 	}
-	
-	public function getItem($pk = null) {
-		if ($item = parent::getItem($pk)) {
-			$item->icoontjes = explode(',', $item->icoontjes);
-			$item->activiteitengebieden = explode(',', $item->activiteitengebieden);
-			$item->doelgroepen = explode(',', $item->doelgroepen);
-		}
 
-		return $item;
-	}
-	
 	/**
 	 * Method to check if it's OK to delete a hitcamp. Overwrites JModelAdmin::canDelete
 	 */
 	protected function canDelete($record) {
-		if( !empty( $record->id ) ){
+		if(!empty($record->id)){
 			$user = JFactory::getUser();
-			return $user->authorise("hitcamp.delete", "com_kampinfo.hitcamp." . $record->id );
+			return $user->authorise("hitcamp.delete", "com_kampinfo.hitcamp." . $record->id);
 		}
 	}
-	
 
 	public function	batch($commands, $pks, $contexts) {
 		$pks = array_unique($pks);
 		JArrayHelper::toInteger($pks);
 	
 		// Remove any values of zero.
-		if (array_search(0, $pks, true))
-		{
+		if (array_search(0, $pks, true)) {
 			unset($pks[array_search(0, $pks, true)]);
 		}
 	
-		if (empty($pks))
-		{
+		if (empty($pks)) {
 			$this->setError(JText::_('Niets geselecteerd!'));
 			return false;
 		}

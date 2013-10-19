@@ -27,16 +27,6 @@
 				required="true"
 				default=""
 		/>
-		<field
-				name="code"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_CODE_LABEL"
-				description="COM_KAMPINFO_HITSITE_CODE_DESC"
-				size="20"
-				class="inputbox"
-				required="true"
-				default=""
-		/>
 	</fieldset>
 	
 	<fieldset
@@ -106,15 +96,6 @@
 			name="technisch"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
-		<field
-				name="deelnemersnummer"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_LABEL"
-				description="COM_KAMPINFO_HITSITE_DEELNEMERSNUMMER_DESC"
-				size="50"
-				class="inputbox"
-				default=""
-		/>
 	</fieldset>
 	
 	<fieldset name="accesscontrol">

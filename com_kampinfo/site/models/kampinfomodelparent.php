@@ -43,10 +43,11 @@ abstract class KampInfoModelParent extends JModelItem {
 	function getHitPlaats($hitsiteId) {
 		$db = JFactory :: getDBO();
 	
-		$query = $db->getQuery(true);
-		$query->select('*');
-		$query->from('#__kampinfo_hitsite s');
-		$query->where('(s.id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+		$query = $db->getQuery(true)
+			-> select('s.*, p.jaar')
+			-> from('#__kampinfo_hitsite s')
+			-> join('LEFT', '#__kampinfo_hitproject p ON (s.hitproject_id = p.id)')
+			-> where('(s.id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
 	
 		$db->setQuery($query);
 		$plaats = $db->loadObjectList();

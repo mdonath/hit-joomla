@@ -4,8 +4,8 @@
 jimport('joomla.database.table');
 
 /**
- * HIT Camp Table class
-*/
+ * HIT Camp Table class.
+ */
 class KampInfoTableHitCamp extends JTable {
 
 	/**
@@ -15,23 +15,6 @@ class KampInfoTableHitCamp extends JTable {
 	 */
 	function __construct(&$db) {
 		parent::__construct('#__kampinfo_hitcamp', 'id', $db);
-	}
-
-	/**
-	 * Overridden bind function
-	 *
-	 * @param       array           named array
-	 * @return      null|string     null if operation was satisfactory, otherwise returns an error
-	 * @see JTable:bind
-	 * @since 1.5
-	 */
-	public function bind($array, $ignore = '') {
-		// Bind the rules.
-		if (isset($array['rules']) && is_array($array['rules'])) {
-			$rules = new JAccessRules($array['rules']);
-			$this->setRules($rules);
-		}
-		return parent::bind($array, $ignore);
 	}
 
 	/**
@@ -53,6 +36,7 @@ class KampInfoTableHitCamp extends JTable {
 	protected function _getAssetTitle() {
 		return $this->naam;
 	}
+
 
 	/**
 	 * Method to get the asset-parent-id of the item
@@ -78,13 +62,22 @@ class KampInfoTableHitCamp extends JTable {
 		return $assetParentId;
 	}
 
+
+	public function load($keys = NULL, $reset = true) {
+		$result = parent::load($keys, $reset);
+		$this->icoontjes = explode(',', $this->icoontjes);
+		$this->activiteitengebieden = explode(',', $this->activiteitengebieden);
+		$this->doelgroepen = explode(',', $this->doelgroepen);
+		return $result;
+	}
+	
 	public function store($updateNulls = false) {
 		if (is_array($this->icoontjes)) {
 			$this->icoontjes = implode(',', $this->icoontjes);
 		} else {
 			$this->icoontjes = '';
 		}
-
+		
 		if (is_array($this->activiteitengebieden)) {
 			$this->activiteitengebieden = implode(',', $this->activiteitengebieden);
 		} else {
@@ -99,5 +92,32 @@ class KampInfoTableHitCamp extends JTable {
 			
 		// Attempt to store the data.
 		return parent::store($updateNulls);
+	}
+	
+	/**
+	 * Overridden bind function, wordt aangeroepen na de #load() en voorafgaand aan de #store
+	 *
+	 * @param       array           named array
+	 * @return      null|string     null if operation was satisfactory, otherwise returns an error
+	 * @see JTable:bind
+	 * @since 1.5
+	 */
+	public function bind($array, $ignore = '') {
+		// Bind the rules.
+		if (isset($array['rules']) && is_array($array['rules'])) {
+			$this->setRules(new JAccessRules($array['rules']));
+		}
+		
+		$result = parent::bind($array, $ignore);
+		if (empty($array['icoontjes'])) {
+			$this->icoontjes = '';
+		}
+		if (empty($array['activiteitengebieden'])) {
+			$this->activiteitengebieden = '';
+		}
+		if (empty($array['doelgroepen'])) {
+			$this->doelgroepen = '';
+		}
+		return $result;
 	}
 }

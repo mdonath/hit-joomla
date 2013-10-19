@@ -60,13 +60,13 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 	protected function addToolBar() {
 		JToolBarHelper :: title(JText :: _($this->toolbarTitle), 'kampinfo');
 		if ($this->canDo->get($this->entityName.'.create')) {
-			JToolBarHelper :: addNewX($this->entityName . '.add');
+			JToolBarHelper :: addNew($this->entityName . '.add');
 		}
 		if ($this->canDo->get($this->entityName.'.edit')) {
-			JToolBarHelper :: editListX($this->entityName . '.edit');
+			JToolBarHelper :: editList($this->entityName . '.edit');
 		}
 		if ($this->canDo->get($this->entityName.'.delete')) {
-			JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
+			JToolBarHelper :: deleteList('', $this->entityName . 's.delete');
 		}
 		if ($this->entityName == 'hitcamp' || $this->entityName == 'hitsite') {
 			if ($this->canDo->get($this->entityName.'.edit.state')) {
