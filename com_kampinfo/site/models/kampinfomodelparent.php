@@ -143,8 +143,10 @@ abstract class KampInfoModelParent extends JModelItem {
 		$result = '';
 		$sep = '';
 		foreach (explode(',', $doelgroepen) as $doelgroep) {
-			$result .= $sep . $doelgroepenLookup[$doelgroep];
-			$sep = ', ';
+			if (!empty($doelgroep)) {
+				$result .= $sep . $doelgroepenLookup[$doelgroep];
+				$sep = ', ';
+			}
 		}
 		return $result;
 	}

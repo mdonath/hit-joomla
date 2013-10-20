@@ -9,8 +9,8 @@ class SolMapping {
 	 */
 	public static function getKampgegevensMapping($jaar) {
 		$mapping = array(
-				'deelnemersnummer'												=> new GewoonVeld('deelnemersnummer')
-				, 'HIT-Kamp in HIT-Plaats'											=> new GewoonVeld('plaatsNaam') // icm jaar -> hitsite
+				// 'd eelnemersnummer'												=> new GewoonVeld('d eelnemersnummer')
+				'HIT-Kamp in HIT-Plaats'											=> new GewoonVeld('plaatsNaam') // icm jaar -> hitsite
 				, 'HIT-Kamp naam'													=> new GewoonVeld('naam')
 				//, 'HIT-Kamp Contactpersoon voor helpdesk'							=> new IgnoredVeld()
 				//, 'HIT-Kamp Contactpersoon Emailadres voor Helpdesk'				=> new IgnoredVeld()

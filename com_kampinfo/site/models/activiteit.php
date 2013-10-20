@@ -46,7 +46,7 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		}
 		
 		if (count($activiteiten) != 1) {
-			JError :: raiseWarning(500, "0 of meer dan 1 gevonden met deelnemersnummer $deelnemersnummer in jaar $jaar.");
+			JError :: raiseWarning(500, "0 of meer dan 1 gevonden met id $hitcampId in jaar $jaar.");
 		}
 		$activiteit = $activiteiten[0];
 

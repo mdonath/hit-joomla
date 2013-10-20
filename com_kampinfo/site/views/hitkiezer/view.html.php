@@ -52,7 +52,6 @@ class KampInfoViewHitkiezer extends JView {
 
 		$project->jaar = intval($project->jaar);
 		foreach ($project->hitPlaatsen as $plaats) {
-			//$plaats->deelnemersnummer = intval($plaats->deelnemersnummer);
 			foreach ($plaats->kampen as $kamp) {
 				foreach ($kampFields as $field) {
 					$kamp->$field = intval($kamp->$field);

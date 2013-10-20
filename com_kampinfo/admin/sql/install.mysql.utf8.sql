@@ -85,6 +85,9 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`helpdeskOverschrijdingLeeftijd` 		BOOLEAN
 ,	`helpdeskTeJongMagAantal`				SMALLINT(3)
 ,	`helpdeskTeOudMagAantal`				SMALLINT(3)
+,	`helpdeskContactpersoon`				VARCHAR(50)
+,	`helpdeskContactEmailadres`				VARCHAR(50)
+,	`helpdeskContactTelefoonnummer`				VARCHAR(50)
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
 ,	`published`								SMALLINT(3) NOT NULL default '0'
@@ -92,6 +95,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`publish_down`							DATETIME NOT NULL default '0000-00-00 00:00:00'
 ,	PRIMARY KEY (`id`)
 );
+
 
 alter table `#__kampinfo_hitcamp`
 	add constraint `#__kampinfo_hitcamp_site_fk` foreign key (hitsite_id) references `#__kampinfo_hitsite` (id);

@@ -156,10 +156,6 @@ class KampInfoModelHitSite extends JModelAdmin {
 				$kamp->startDatumTijd = $this->herberekenDatum($kamp->startDatumTijd);
 				$kamp->eindDatumTijd = $this->herberekenDatum($kamp->eindDatumTijd);
 				
-				// obsolete
-				$kamp->deelnemersnummer = null;
-				$kamp->hitsite = null;
-	
 				$kamp->store();
 			}
 		}

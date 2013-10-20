@@ -1,106 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-    <fieldset
-        		name="akkoorden"
-        		label="Akkoorden"
-        		type="right"
-	>
-		<field
-				name="akkoordHitKamp"
-				type="radio"
-				label="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_LABEL"
-				description="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_DESC"
-				class="inputbox"
-				default="0"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-        <field
-				name="akkoordHitPlaats"
-				type="radio"
-				label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
-				description="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_DESC"
-				class="inputbox"
-				default="0"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		 <field
-				name="published"
-				type="radio"
-				label="Gepubliceerd"
-				description="Publiceren op site"
-				class="inputbox"
-				default="0"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-    </fieldset>
-    
-	<fieldset
-				name="inschrijvingen"
-				label="Inschrijvingen"
-				type="right"
-				addfieldpath="/administrator/components/com_kampinfo/models/fields"
-	>
- 		<field
-				name="deelnemersnummer"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DEELNEMERSNUMMER_DESC"
-				maxlength="8"
-				size="10"
-				class="inputbox"
-				default=""
-		/>
-	    
-		<field
-				name="shantiFormuliernummer"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
-				maxlength="6"
-				size="6"
-				class="inputbox"
-				default=""
-		/>
-		<field
-				name="aantalDeelnemers"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_LABEL"
-				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
-				maxlength="3"
-				size="3"
-				class="inputbox"
-				default=""
-		/>
-		<field
-				name="gereserveerd"
-				type="text"
-				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
-				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
-				maxlength="3"
-				size="3"
-				class="inputbox"
-				default=""
-		/>
-		<field
-				name="aantalSubgroepen"
-				type="text"
-				label="Aantal subgroepen"
-				description="Het huidige aantal ingeschreven subgroepen"
-				maxlength="3"
-				size="3"
-				class="inputbox"
-				default=""
-		/>
-			
-	</fieldset>
-	
-	
+
+	<!-- ================================================================== -->
+
 	<fieldset
 				name="hitcamp"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
@@ -111,19 +13,7 @@
 				name="id"
 				type="hidden"
 		/>
-		<field
-				name="published"
-				type="list"
-				label="JSTATUS"
-				description="JFIELD_PUBLISHED_DESC"
-				class="inputbox"
-				size="1"
-				default="1"
-		>
-			<option value="1">JPUBLISHED</option>
-			<option value="0">JUNPUBLISHED</option>
-		</field>
-		    	
+		
 		<field
 				name="hitsite_id"
 				type="Site"
@@ -143,8 +33,6 @@
 				required="true"
 				default=""
 		/>
-		
-		
 		<field
 				name="startDatumTijd"
 				type="calendar"
@@ -170,19 +58,17 @@
 		/>
 		<field
 				name="deelnamekosten"
-				type="text"
+				type="prijzen"
 				label="COM_KAMPINFO_HITCAMP_PRIJS_LABEL"
 				description="COM_KAMPINFO_HITCAMP_PRIJS_DESC"
-				size="3"
-				maxlength="3"
+				required="true"
 				class="inputbox"
 				default=""
 		/>
-		
-		
 	</fieldset>
 	
-	
+   	<!-- ================================================================== -->
+   	
 	<fieldset
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 			name="leeftijd"
@@ -197,6 +83,7 @@
 				size="3"
 				maxlength="3"
 				class="inputbox"
+				required="true"
 				default="8"
 		/>
 		<field
@@ -207,6 +94,7 @@
 				size="3"
 				maxlength="3"
 				class="inputbox"
+				required="true"
 				default="88"
 		/>
 		<field
@@ -239,8 +127,30 @@
 				class="inputbox"
 		/>
 	</fieldset>
+
+	<!-- ================================================================== -->
+
+	<fieldset
+			name="hitcourant"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+			label="HIT Courant"
+			type="left"
+	>
+		<field
+				name="hitCourantTekst"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_LABEL"
+				description="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_DESC"
+				width="300"
+				class="inputbox"
+				required="true"
+				filter="safehtml"
+		/>
+	</fieldset>
+
 	
-	
+	<!-- ================================================================== -->
+		
 	
 	<fieldset
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
@@ -256,6 +166,7 @@
 				size="3"
 				maxlength="2"
 				class="inputbox"
+				required="true"
 		/>
 		<field
 				name="subgroepsamenstellingMaximum"
@@ -265,6 +176,7 @@
 				size="3"
 				maxlength="2"
 				class="inputbox"
+				required="true"
 		/>
 		<field
 				name="subgroepsamenstellingExtra"
@@ -274,6 +186,7 @@
 				size="3"
 				maxlength="1"
 				class="inputbox"
+				required="true"
 		/>
 		<field
 				name="minimumAantalDeelnemers"
@@ -301,27 +214,31 @@
 				name="maximumAantalSubgroepjes"
 				type="text"
 				label="Max. aantal subgroepjes"
-				description=""
+				description="Met dit aantal kan je aangeven hoeveel subgroepjes je maximaal in je HIT-Kamp wilt hebben. De HIT-HelpDesk zal niet uit zichzelf hiervan afwijken. Geef 0 is als het niet uitmaakt."
 				size="3"
 				maxlength="2"
+				default="0"
 				class="inputbox"
+				required="true"
 		/>
 		<field
 				name="maximumAantalUitEenGroep"
 				type="text"
 				label="Max. aantal uit één groep"
-				description=""
+				description="Met dit aantal kan je het aantal deelnemers die zich aanmelden uit 1 Scoutinggroep beperken. Geef 0 op als het niet uitmaakt. LET OP: Landelijke Plusscouts worden ook als 1 groep gezien."
 				size="3"
 				maxlength="3"
 				class="inputbox"
+				required="true"
 		/>
-	    </fieldset>
-<!-- WEBSITE -->
+    </fieldset>
+	    
+	<!-- ================================================================== -->
 	
 	<fieldset
-				name="siteEnCourant"
+				name="hitwebsite"
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
-				label="Website"
+				label="Website - Pagina"
 				type="left"
 	>
 		<field
@@ -336,26 +253,16 @@
 				default=""
 		/>
 		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
-		<field type="spacer" name="myspacer" label="" />
-		<field
-				name="hitCourantTekst"
-				type="editor"
-				label="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_LABEL"
-				description="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_DESC"
-				width="300"
-				class="inputbox"
-				filter="safehtml"
-		/>
-		<!-- Nodig omdat de editor teveel ruimte naar boven inneemt en bovenstaande velden overschaduwt -->
 		<field type="spacer" name="myspacerWebsiteTekst1" label="" />
 		<field type="spacer" name="myspacerWebsiteTekst2" label="" />
-				<field
+		<field
 				name="websiteTekst"
 				type="editor"
 				label="COM_KAMPINFO_HITCAMP_WEBSITETEKST_LABEL"
 				description="COM_KAMPINFO_HITCAMP_WEBSITETEKST_DESC"
 				width="300"
 				class="inputbox"
+				required="true"
 				filter="safehtml"
 		/>
 		<field
@@ -395,6 +302,15 @@
 				class="inputbox"
 		/>
 		<field
+				name="websiteContactPersoon"
+				type="text"
+				label="Website contactpersoon"
+				description=""
+				size="30"
+				maxlength="255"
+				class="inputbox"
+		/>
+		<field
 				name="websiteContactTelefoonnummer"
 				type="text"
 				label="Website contact Tel."
@@ -405,71 +321,24 @@
 		/>
 		<field
 				name="websiteContactEmailadres"
-				type="text"
+				type="email"
 				label="Website contact Email"
 				description=""
 				size="30"
 				maxlength="255"
 				class="inputbox"
+				validate="email"
 		/>
-		<field
-				name="websiteContactPersoon"
-				type="text"
-				label="Website contactpersoon"
-				description=""
-				size="30"
-				maxlength="255"
-				class="inputbox"
-		/>
+		
 	</fieldset>
 
-	
-	<fieldset
-       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
-        		name="activiteitengebieden"
-        		label="Activiteitengebieden"
-        		type="right"
-	>
-		<field
-				name="activiteitengebieden"
-				type="Activityarea"
-				label="Activiteitengebieden"
-				description="Dit zijn de activiteitengebieden"
-				class="inputbox"
-		/>
-	</fieldset>
-	
-	<fieldset
-       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
-        		name="doelgroepen"
-        		label="Doelgroepen"
-        		type="right"
-	>
-		<field
-				name="doelstelling"
-				type="editor"
-				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
-				width="300"
-				class="inputbox"
-				filter="safehtml"
-		/>
-		<field
-				name="doelgroepen"
-				type="Targetgroup"
-				label="Doelgroepen"
-				description="Dit zijn de doelgroepen"
-				class="inputbox"
-		/>
-	</fieldset>
-	
-	
+	<!-- ================================================================== -->
 	
 	<fieldset
        			addfieldpath="/administrator/components/com_kampinfo/models/fields"
         		name="iconen"
-        		label="Iconen"
-        		type="right"
+        		label="Website - Iconen"
+        		type="left"
 	>
 		<field
 				name="icoontjes"
@@ -480,21 +349,46 @@
 		/>
 	</fieldset>
 	
-			
+	<!-- ================================================================== -->
+	
 	<fieldset
         		name="helpdesk"
         		label="Helpdesk"
         		type="left"
 	>
-		 <field type="spacer" name="myspacerHelpdeskOpmerkingen" label="" />
 				<field
-				name="helpdeskOpmerkingen"
-				type="editor"
-				label="Opmerkingen"
-				description="Hier kun je opmerkingen voor de helpdesk kwijt"
-				width="300"
+				name="helpdeskContactpersoon"
+				type="text"
+				label="Helpdesk contactpersoon"
+				description="De persoon die als contactpersoon optreedt naar o.a. de HIT-Helpdesk"
+				maxlength="50"
+				size="30"
 				class="inputbox"
-				filter="safehtml"
+				required="true"
+				default=""
+		/>
+		<field
+				name="helpdeskContactEmailadres"
+				type="email"
+				label="Helpdesk contact e-mail"
+				description="Hier het e-mailadres van de contactpersoon"
+				maxlength="50"
+				size="30"
+				class="inputbox"
+				validate="email"
+				required="true"
+				default=""
+		/>
+		<field
+				name="helpdeskContactTelefoonnummer"
+				type="text"
+				label="Helpdesk contact tel."
+				description="Hier het telefoonnummer"
+				maxlength="50"
+				size="30"
+				class="inputbox"
+				required="true"
+				default=""
 		/>
 		<field
 				name="helpdeskOverschrijdingAantal"
@@ -538,9 +432,159 @@
 				class="inputbox"
 				default="0"
 		/>
+		<field type="spacer" name="myspacerHelpdeskOpmerkingen" label="" />
+		<field
+				name="helpdeskOpmerkingen"
+				type="editor"
+				label="Opmerkingen"
+				description="Hier kun je opmerkingen voor de helpdesk kwijt"
+				width="300"
+				class="inputbox"
+				filter="safehtml"
+		/>
 	</fieldset>
 
-	<fieldset name="accesscontrol">
+	<!-- ================================================================== -->
+
+    <fieldset
+        		name="akkoorden"
+        		label="Akkoorden"
+        		type="right"
+	>
+		<field
+				name="akkoordHitKamp"
+				type="radio"
+				label="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_LABEL"
+				description="COM_KAMPINFO_HITCAMP_AKKOORDKAMP_DESC"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+        <field
+				name="akkoordHitPlaats"
+				type="radio"
+				label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
+				description="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_DESC"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field
+				name="published@core.admin"
+				type="radio"
+				label="Gepubliceerd"
+				description="Publiceren op site"
+				class="inputbox"
+				default="0"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+    </fieldset>
+    
+    <!-- ================================================================== -->
+
+	<fieldset
+       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+        		name="activiteitengebieden"
+        		label="Activiteitengebieden"
+        		type="right"
+	>
+		<field
+				name="activiteitengebieden"
+				type="Activityarea"
+				label="Activiteitengebieden"
+				description="Dit zijn de activiteitengebieden"
+				class="inputbox"
+		/>
+	</fieldset>
+	
+	<!-- ================================================================== -->
+	
+	<fieldset
+       			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+        		name="doelgroepen"
+        		label="Doelstelling en -groepen"
+        		type="right"
+	>
+		<field
+				name="doelstelling"
+				type="editor"
+				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
+				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
+				width="300"
+				required="true"
+				class="inputbox"
+				filter="safehtml"
+		/>
+		<field
+				name="doelgroepen"
+				type="Targetgroup"
+				label="Doelgroepen"
+				description="Dit zijn de doelgroepen"
+				class="inputbox"
+		/>
+	</fieldset>
+	
+	<!-- ================================================================== -->
+	
+	<fieldset
+				name="inschrijvingen@core.admin"
+				label="Inschrijvingen"
+				type="right"
+				addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="shantiFormuliernummer@core.admin"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
+				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
+				maxlength="6"
+				size="6"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="aantalDeelnemers@core.admin"
+				type="text"
+				label="Ingeschreven deelnemers"
+				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
+				maxlength="3"
+				size="3"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="gereserveerd@core.admin"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
+				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
+				maxlength="3"
+				size="3"
+				class="inputbox"
+				default=""
+		/>
+		<field
+				name="aantalSubgroepen@core.admin"
+				type="text"
+				label="Ingeschreven subgroepen"
+				description="Het huidige aantal ingeschreven subgroepen"
+				maxlength="3"
+				size="3"
+				class="inputbox"
+				default=""
+		/>
+	</fieldset>
+			
+	<!-- ================================================================== -->
+	<!-- ================================================================== -->
+	<!-- ================================================================== -->
+
+	<fieldset name="accesscontrol" type="">
 		<field name="asset_id" type="hidden" filter="unset" />
 		<field name="rules"
 				type="rules"
