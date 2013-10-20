@@ -41,6 +41,14 @@
 			<option value="1">JYES</option>
 		</field>
 		
+		<field
+			name="mogelijkeDeelnamekosten"
+			type="text"
+			size=""
+			default="25,30,35,40,45,50,55,60,65,70"
+			label="Aangeboden prijzen"
+			description="Welke prijzen gekozen mogen worden door kamponderdelen"
+		/>
 	</fieldset>
 
 	

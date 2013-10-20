@@ -40,9 +40,9 @@ JHtml::_('behavior.formvalidation');
 	
 	<div class="width-40 fltrt">
 		<fieldset class="panelform" >
-			<legend><?php echo JText::_( 'Technische dingen' ); ?></legend>
+			<legend><?php echo JText::_( 'Akkoorden' ); ?></legend>
 			<ul class="adminformlist">
-				<?php foreach($this->form->getFieldset("technisch") as $field) { ?>
+				<?php foreach($this->form->getFieldset("akkoorden") as $field) { ?>
 					<li><?php echo $field->label;echo $field->input;?></li>
 				<?php } ?>
 			</ul>

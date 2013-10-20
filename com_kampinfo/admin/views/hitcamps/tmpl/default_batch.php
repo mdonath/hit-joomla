@@ -2,6 +2,7 @@
 
 // Create the copy/move options.
 $options = array(
+	JHtml::_('select.option', '', JText::_('- Kies een actie -')),
 	JHtml::_('select.option', 'akkoordPlaats', JText::_('Akkoord Plaats')),
 	JHtml::_('select.option', 'nietAkkoordPlaats', JText::_('Geen akkoord Plaats')),
 	JHtml::_('select.option', 'akkoordKamp', JText::_('Akkoord Kamp')),
@@ -13,7 +14,9 @@ if (JFactory::getUser()->authorise('hitproject.edit', 'com_kampinfo')) {
 <fieldset class="batch">
 	<legend><?php echo JText::_('Bulk actie');?></legend>
 	<fieldset id="batch-choose-action" class="combo">
-		<?php echo JHtml::_('select.radiolist', $options, 'batch[group_action]', '', 'value', 'text', 'akkoordPlaats') ?>
+		<select name="batch[group_action]" class="inputbox">
+			<?php echo JHtml::_('select.options', $options, 'value', 'text', '', true) ?>
+		</select>
 	</fieldset>
 
 	<button type="submit" onclick="Joomla.submitbutton('hitcamp.batch');">

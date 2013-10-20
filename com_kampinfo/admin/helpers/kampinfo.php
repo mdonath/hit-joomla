@@ -221,29 +221,6 @@ abstract class KampInfoHelper {
 		return $options;
 	}
 
-	public static function getSelectedHitIcons($deelnemersnummer) {
-		$options = array ();
-
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-
-		$query->select('bestandsnaam');
-		$query->from('#__kampinfo_camp_icon');
-		$query->where('deelnemersnummer = ' . $db->quote($db->getEscaped($deelnemersnummer)));
-		$query->order('volgorde');
-
-		// Get the options.
-		$db->setQuery($query);
-
-		$options = $db->loadObjectList();
-
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
-		}
-
-		return $options;
-	}
 	public static function getHitIconOptions() {
 		$options = array ();
 
@@ -339,14 +316,34 @@ abstract class KampInfoHelper {
 
 	public static function getHitIconSoortOptions() {
 		return array (
-			"?" => "Gewoon",
-			"B" => "Beweging",
-			"I" => "Inschrijven",
-			"O" => "Overnachten",
-			"A" => "Afstand",
-			"K" => "Koken"
+				"?" => "Gewoon",
+				"B" => "Beweging",
+				"I" => "Inschrijven",
+				"O" => "Overnachten",
+				"A" => "Afstand",
+				"K" => "Koken"
 		);
 	}
+
+	public static function getHitPrijzenOptions() {
+		$params = &JComponentHelper::getParams('com_kampinfo');
+		$prijzenConfig = $params->get('mogelijkeDeelnamekosten');
+		if (empty($prijzenConfig)) {
+			$prijzenConfig = '35,40,45,50,55,60,65,70';
+		}
+		
+		$prijzen = explode(',', $prijzenConfig);
+		$result = array();
+		foreach ($prijzen as $prijs) {
+			$result[] = (object) array (
+				"value" => $prijs,
+				"text" => '€ '. $prijs
+			);
+		}
+		return $result;
+	}
+	
+	
 	
 	public static function startsWith($haystack, $needle)
 	{

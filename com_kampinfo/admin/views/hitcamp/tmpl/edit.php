@@ -1,9 +1,8 @@
-<?php
-// No direct access
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 
 $fieldsets = $this->form->getFieldsets();
+$user = JFactory::getUser();
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_kampinfo&layout=edit&id='.(int) $this->item->id); ?>"
@@ -13,20 +12,26 @@ $fieldsets = $this->form->getFieldsets();
 >
 	<div class="width-60 fltlft">
 <?php 
-	foreach ($fieldsets as $fieldset) {
+		echo JHtml::_('sliders.start', 'hitcamp-left', array('useCookie'=>1));
+		foreach ($fieldsets as $fieldset) {
 			if ($fieldset->type == 'left') {
+				echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
 ?>
 		<fieldset class="adminform">
-			<legend><?php echo JText::_( $fieldset->label ); ?></legend>
 			<ul class="adminformlist">
 				<?php foreach($this->form->getFieldset($fieldset->name) as $field): ?>
-					<li><?php echo $field->label;echo $field->input;?></li>
+					<?php if ($field->hidden) { ?>
+						<?php echo $field->input; ?>
+					<?php } else { ?>
+						<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
+					<?php } ?>
 				<?php endforeach; ?>
 			</ul>
 		</fieldset>
 <?php
 			}
-	}
+		}
+		echo JHtml::_('sliders.end');
 ?>
 	</div>
 	
@@ -34,23 +39,31 @@ $fieldsets = $this->form->getFieldsets();
 		<?php
 		echo JHtml::_('sliders.start');
 		foreach ($fieldsets as $fieldset) {
-			if ($fieldset->type == 'right') {
-				echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
-		?>
-		<fieldset class="panelform">
-			<ul class="adminformlist">
-				<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
-					<?php if ($field->hidden) { ?>
-						<?php echo $field->input; ?>
-					<?php } else { ?>
-						<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
-					<?php } ?>
-				<?php } ?>
-			</ul>
-		</fieldset>
+			$pos = strpos($fieldset->name, '@');
+			if (!$pos || $this->canDo->get(substr($fieldset->name, $pos+1))) {
+				if ($fieldset->type == 'right') {
+					echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
+				?>
+					<fieldset class="panelform">
+						<ul class="adminformlist">
+							<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
+								<?php
+									$pos = strpos($field->name, '@');
+									if (!$pos || $this->canDo->get(substr($field->name, $pos+1, -1))) { ?>
+									<?php if ($field->hidden) { ?>
+										<?php echo $field->input; ?>
+									<?php } else { ?>
+										<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
+									<?php } ?>
+								<?php }?>
+							<?php } ?>
+						</ul>
+					</fieldset>
+			<?php } ?>
 		<?php } ?>
-		<?php } ?>
-		<?php echo JHtml::_('sliders.end'); ?>
+	<?php } ?>
+		
+	<?php echo JHtml::_('sliders.end'); ?>
 		</div>
 
 
