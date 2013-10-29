@@ -47,7 +47,7 @@ $project = $this->project;
 	<?php foreach ($project->plaatsen as $plaats) { ?>
 	<thead>
 		<tr>
-			<th class="kolom1"><a href="<?php echo(KampInfoUrlHelper::plaatsURL($plaats, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
+			<th class="kolom1"><a href="<?php echo(KampInfoUrlHelper::plaatsURL($plaats, $project->jaar, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
 			<th class="kolom2">Leeftijd</th>
 			<th class="kolom3">Groep</th>
 			<th class="kolom4">&nbsp;</th>
@@ -61,7 +61,7 @@ $project = $this->project;
 		?>
 		<tr>
 			<td class="kolom1">
-				<a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $useComponentUrls)); ?>"
+				<a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $project->jaar, $useComponentUrls)); ?>"
 					title="<?php echo(KampInfoUrlHelper::fuzzyIndicatieVol($kamp)); ?>"
 				>
 					<?php echo($kamp->naam); ?>
