@@ -1,4 +1,5 @@
 // Copyright (c) 2012, HIT Scouting Nederland
+var $j = jQuery.noConflict();
 
 var kampinfoConfig = {
 		"iconFolderLarge" : null,
@@ -157,7 +158,7 @@ function createDateTime(year, month, day, hour, min, sec) {
  * http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
  */
 function extend() {
-	$.extend({
+	$j.extend({
 		getUrlVars: function() {
 			var vars = [], hash;
 			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
@@ -169,7 +170,7 @@ function extend() {
 			return vars;
 		},
 		getUrlVar: function(name) {
-			return $.getUrlVars()[name];
+			return $j.getUrlVars()[name];
 		}
 	});
 }
@@ -179,9 +180,9 @@ function extend() {
  */
 function fixStupidBrowsers() {
 	// div-jes aan en uit zetten
-	$(".ifNoJavascriptAvailable").css("display", "none");
-	$(".ifJavascriptAvailable").css("display", "block");
-	$("SPAN.ifJavascriptAvailable").css("display", "inline");
+	$j(".ifNoJavascriptAvailable").css("display", "none");
+	$j(".ifJavascriptAvailable").css("display", "block");
+	$j("SPAN.ifJavascriptAvailable").css("display", "inline");
 	
 	// Array.indexOf
 	if (!Array.indexOf) {

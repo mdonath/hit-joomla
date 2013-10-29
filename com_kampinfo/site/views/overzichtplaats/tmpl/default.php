@@ -56,7 +56,7 @@ $plaats = $this->plaats;
 		?>
 		<tr>
 			<td class="kolom1">
-				<a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $useComponentUrls)); ?>"
+				<a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $plaats->jaar, $useComponentUrls)); ?>"
 					title="<?php echo(KampInfoUrlHelper::fuzzyIndicatieVol($kamp)); ?>"
 				>
 					<?php echo($kamp->naam); ?>

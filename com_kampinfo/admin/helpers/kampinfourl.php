@@ -20,21 +20,25 @@ abstract class KampInfoUrlHelper {
 		return empty ($url) or $url == 'http://';
 	}
 
-	public static function activiteitURL($plaats, $kamp, $use = TRUE) {
+	public static function activiteitURL($plaats, $kamp, $jaar, $use = TRUE) {
 		if ($use) {
 			$hitcampId = $kamp->id;
 			return "index.php?option=com_kampinfo&amp;view=activiteit&amp;hitcamp_id=$hitcampId";
 		} else {
-			return KampInfoUrlHelper::plaatsURL($plaats, $use) . "/" . KampInfoUrlHelper::aliassify($kamp);
+			return KampInfoUrlHelper::plaatsURL($plaats, $jaar, $use) . "/" . KampInfoUrlHelper::aliassify($kamp);
 		}
 	}
 
-	public static function plaatsURL($plaats, $use = TRUE) {
+	public static function plaatsURL($plaats, $jaar, $use = TRUE) {
 		if ($use) {
 			$code = $plaats->id;
 			return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;hitsite_id=$code";
 		} else {
-			return "hits-in-" . strtolower($plaats->naam);
+			if ($jaar == NULL) {
+				return "hits-in-" . strtolower($plaats->naam);
+			} else {
+				return "hits-in-" . strtolower($plaats->naam) . '-' . $jaar;
+			}
 		}
 	}
 
