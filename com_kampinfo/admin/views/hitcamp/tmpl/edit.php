@@ -1,6 +1,9 @@
 <?php defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 
+$params = &JComponentHelper::getParams('com_kampinfo');
+$template = $params->get('template');
+
 $fieldsets = $this->form->getFieldsets();
 $user = JFactory::getUser();
 
@@ -40,7 +43,7 @@ $user = JFactory::getUser();
 		echo JHtml::_('sliders.start');
 		foreach ($fieldsets as $fieldset) {
 			$pos = strpos($fieldset->name, '@');
-			if (!$pos || $this->canDo->get(substr($fieldset->name, $pos+1))) {
+			if ($pos === false|| $this->canDo->get(substr($fieldset->name, $pos+1))) {
 				if ($fieldset->type == 'right') {
 					echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
 				?>
@@ -49,7 +52,7 @@ $user = JFactory::getUser();
 							<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
 								<?php
 									$pos = strpos($field->name, '@');
-									if (!$pos || $this->canDo->get(substr($field->name, $pos+1, -1))) { ?>
+									if ($pos === false || $this->canDo->get(substr($field->name, $pos+1, -1))) { ?>
 									<?php if ($field->hidden) { ?>
 										<?php echo $field->input; ?>
 									<?php } else { ?>
@@ -64,7 +67,13 @@ $user = JFactory::getUser();
 	<?php } ?>
 		
 	<?php echo JHtml::_('sliders.end'); ?>
-		</div>
+		<fieldset class="panelform" >
+			<legend><?php echo JText::_( 'Preview' ); ?></legend>
+			<ul class="adminformlist">
+				<li><label><a target="_blank" href="../index.php?option=com_kampinfo&view=activiteit&hitcamp_id=<?php echo ($this->item->id); ?>&template=<?php echo ($template); ?>">Toon preview van kamp</a></label></li>
+			</ul>
+		</fieldset>
+	</div>
 
 
 	<!-- begin ACL definition-->

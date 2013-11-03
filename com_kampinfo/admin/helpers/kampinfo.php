@@ -360,6 +360,11 @@ abstract class KampInfoHelper {
 			$store->$f = self::reverse($store->$f);
 		}
 	}
+	public static function reverseDateTimeFields($store, $fields) {
+		foreach ($fields as $f) {
+			$store->$f = self::reverseDateOnly($store->$f);
+		}
+	}
 
 	public static function reverse($date) {
 		if ($date == null) {
@@ -367,5 +372,11 @@ abstract class KampInfoHelper {
 		}
 		return implode('-', array_reverse(explode('-', $date)));
 	}
-	
+
+	public static function reverseDateOnly($datetime) {
+		if ($datetime == null) {
+			return null;
+		}
+		return KampInfoHelper::reverse(substr($datetime, 0, 10)) . substr($datetime, 10);
+	}
 }
