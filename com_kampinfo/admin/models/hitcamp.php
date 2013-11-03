@@ -12,6 +12,13 @@ jimport('joomla.application.component.modeladmin');
  */
 class KampInfoModelHitCamp extends JModelAdmin {
 
+	private static function getDateTimeFields() {
+		return [
+		'startDatumTijd',
+		'eindDatumTijd'
+		];
+	}
+	
 	public function getTable($type = 'HitCamp', $prefix = 'KampInfoTable', $config = array ()) {
 		return JTable :: getInstance($type, $prefix, $config);
 	}
@@ -34,9 +41,14 @@ class KampInfoModelHitCamp extends JModelAdmin {
 		if (empty ($data)) {
 			$data = $this->getItem();
 		}
+		KampInfoHelper :: reverseDateTimeFields($data, self::getDateTimeFields());
 		return $data;
 	}
 
+	protected function prepareTable($form) {
+		KampInfoHelper :: reverseDateTimeFields($form, self::getDateTimeFields());
+	}
+	
 	/**
 	 * Method to check if it's OK to delete a hitcamp. Overwrites JModelAdmin::canDelete
 	 */

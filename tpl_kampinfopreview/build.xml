@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<!-- For Eclipse -->
+<project name="KampInfo" default="zip" basedir=".">
+	<description>Ant Build File for Joomla! extensions</description>
+
+	<!-- The name of your extension's main XML file -->
+	<property name="cfg.name" value="kampinfopreview" />
+	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
+	<property name="cfg.prefix" value="tpl_" />
+	<!-- Relative path to your project -->
+	<property name="cfg.dir" value="." />
+	<!-- Relative path to store the packages -->
+	<property name="cfg.packages" value="../packages" />
+	<!-- Absolute path to local server -->
+	<property name="cfg.serverpath" value="/var/www/HIT" />
+
+	<target name="init">
+	    <!-- Leest 'extension'.xml als properties met prefix 'xml' -->
+		<xmlproperty file="${cfg.dir}/templateDetails.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<buildnumber />
+		<tstamp>
+			<format property="TODAY" pattern="yyyyMMdd" />
+		</tstamp>
+
+		<property name="str.version" value="${xml.version}-${build.number}" />
+		<property name="str.destfilename" value="${cfg.prefix}${cfg.name}-${str.version}_${TODAY}.zip" />
+		<property name="str.destfile" value="${cfg.packages}/${str.destfilename}" />
+		<property name="str.sitetrunkpath" value="${cfg.dir}/site" />
+		<property name="str.admintrunkpath" value="${cfg.dir}/admin" />
+	</target>
+
+	<target name="info" depends="init" description="prints information">
+		<echo message="${cfg.name} - ${str.version} / ${ant.version}" />
+	</target>
+
+	<target name="zip" depends="info" description="Makes an uploadable zip package">
+		<mkdir dir="${cfg.packages}" />
+		<zip destfile="${str.destfile}" basedir="${cfg.dir}">
+			<exclude name="build.xml" />
+			<exclude name="build.number" />
+			<exclude name="cookie.tmp" />
+		</zip>
+	</target>
+	
+	<target name="deploy" depends="zip" description="Deploys package to localhost">
+		<exec executable="/bin/bash">
+			<arg value="${cfg.packages}/redeploy.sh" />
+			<arg value="${str.destfile}" />
+		</exec>
+	</target>
+</project>

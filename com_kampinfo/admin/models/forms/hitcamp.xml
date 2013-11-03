@@ -17,16 +17,18 @@
 		<field
 				name="hitsite_id"
 				type="Site"
-				label="COM_KAMPINFO_HITCAMP_JAAR_LABEL"
-				description="COM_KAMPINFO_HITCAMP_JAAR_DESC"
+				label="HIT Plaats"
+				description="De HIT Plaats en jaar waarin het kamp actief is."
 				class="inputbox"
 				required="true"
-		/>
+		>
+			<option value="">- HIT-Plaats -</option>
+		</field>
 		<field
 				name="naam"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_NAAM_LABEL"
-				description="COM_KAMPINFO_HITCAMP_NAAM_DESC"
+				label="Naam"
+				description="Naam van het HIT Kamp"
 				maxlength="255"
 				size="30"
 				class="inputbox"
@@ -36,35 +38,35 @@
 		<field
 				name="startDatumTijd"
 				type="calendar"
-				label="COM_KAMPINFO_HITCAMP_STARTDATETIME_LABEL"
-				description="COM_KAMPINFO_HITCAMP_STARTDATETIME_DESC"
+				label="Start datum/tijd"
+				description="De dag en tijdstip dat het kamp begint (dd-mm-jjjj hh:mm)."
 				size="20"
 				maxlength="19"
 				class="inputbox"
 				required="true"
-				format="%Y-%m-%d %H:%M:%S"
-				filter="user_utc"
+				format="%d-%m-%Y %H:%M:%S"
 		/>
 		<field
 				name="eindDatumTijd"
 				type="calendar"
-				label="COM_KAMPINFO_HITCAMP_EINDDATETIME_LABEL"
-				description="COM_KAMPINFO_HITCAMP_EINDDATETIME_DESC"
+				label="Eind datum/tijd"
+				description="De dag en tijdstip dat het kamp eindigt (dd-mm-jjjj hh:mm)."
 				size="20"
 				class="inputbox"
 				required="true"
-				format="%Y-%m-%d %H:%M:%S"
-				filter="user_utc"
+				format="%d-%m-%Y %H:%M:%S"
 		/>
 		<field
 				name="deelnamekosten"
 				type="prijzen"
-				label="COM_KAMPINFO_HITCAMP_PRIJS_LABEL"
-				description="COM_KAMPINFO_HITCAMP_PRIJS_DESC"
+				label="Deelnamekosten"
+				description="De prijs die een deelnemer moet betalen."
 				required="true"
 				class="inputbox"
 				default=""
-		/>
+		>
+			<option value="">- Prijs -</option>
+		</field>
 	</fieldset>
 	
    	<!-- ================================================================== -->
@@ -78,8 +80,8 @@
 		<field
 				name="minimumLeeftijd"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_LEEFTIJD_MIN_LABEL"
-				description="COM_KAMPINFO_HITCAMP_LEEFTIJD_MIN_DESC"
+				label="Minimum leeftijd"
+				description="De minimale leeftijd van een deelnemer om mee te mogen doen."
 				size="3"
 				maxlength="3"
 				class="inputbox"
@@ -89,8 +91,8 @@
 		<field
 				name="maximumLeeftijd"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_LEEFTIJD_MAX_LABEL"
-				description="COM_KAMPINFO_HITCAMP_LEEFTIJD_MAX_DESC"
+				label="Maximum leeftijd"
+				description="De maximale leeftijd van een deelnemer om mee te mogen doen."
 				size="3"
 				maxlength="3"
 				class="inputbox"
@@ -101,7 +103,7 @@
 				name="margeAantalDagenTeJong"
 				type="text"
 				label="Marge te jong"
-				description=""
+				description="Hoeveel dagen mag een deelnemer te jong zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -111,7 +113,7 @@
 				name="margeAantalDagenTeOud"
 				type="text"
 				label="Marge te oud"
-				description=""
+				description="Hoeveel dagen mag een deelnemer te oud zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -121,7 +123,7 @@
 				name="redenAfwijkingMarge"
 				type="text"
 				label="Reden afwijking marge"
-				description=""
+				description="Wat is de reden om af te wijken van de standaard 90 dagen (bijvoorbeeld alcohol leeftijd, etc.)."
 				size="30"
 				maxlength="255"
 				class="inputbox"
@@ -138,13 +140,13 @@
 	>
 		<field
 				name="hitCourantTekst"
-				type="editor"
-				label="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_LABEL"
-				description="COM_KAMPINFO_HITCAMP_HITCOURANTTEKST_DESC"
-				width="300"
+				type="textarea"
+				label="HIT Couranttekst"
+				description="De tekst die in de HIT Courant wordt gepubliceerd. Maak in enkele zinnen op een wervende manier je toekomstige deelnemers enthousiast."
+				rows="6"
+				cols="40"
 				class="inputbox"
 				required="true"
-				filter="safehtml"
 		/>
 	</fieldset>
 
@@ -161,8 +163,8 @@
 		<field
 				name="subgroepsamenstellingMinimum"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MIN_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
+				label="Subgroep min."
+				description="Minimale groepsgrootte waarmee ingeschreven kan worden (individueel: 1, koppel: 2, troppel: 3, etc)."
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -171,8 +173,8 @@
 		<field
 				name="subgroepsamenstellingMaximum"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_MAX_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_DESC"
+				label="Subgroep max."
+				description="Maximale groepsgrootte waarmee ingeschreven kan worden."
 				size="3"
 				maxlength="2"
 				class="inputbox"
@@ -181,10 +183,11 @@
 		<field
 				name="subgroepsamenstellingExtra"
 				type="text"
-				label="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_LABEL"
-				description="COM_KAMPINFO_HITCAMP_SUBGROEP_EXTRA_DESC"
+				label="Subgroep delen door"
+				description="Getal waardoor de groepsgrootte te delen moet zijn (bijv '2' betekent alleen koppels, dus geen 1, 3, 5, etc.)."
 				size="3"
 				maxlength="1"
+				default="1"
 				class="inputbox"
 				required="true"
 		/>
@@ -192,7 +195,7 @@
 				name="minimumAantalDeelnemers"
 				type="text"
 				label="Min. aantal deelnemers"
-				description=""
+				description="Het minimale aantal deelnemers om het HIT Kamp door te kunnen laten gaan."
 				size="3"
 				maxlength="2"
 				default="10"
@@ -203,7 +206,7 @@
 				name="maximumAantalDeelnemers"
 				type="text"
 				label="Max. aantal deelnemers"
-				description=""
+				description="De maximale hoeveelheid deelnemers die zich kunnen inschrijven."
 				size="3"
 				maxlength="3"
 				default="20"
@@ -228,6 +231,7 @@
 				description="Met dit aantal kan je het aantal deelnemers die zich aanmelden uit 1 Scoutinggroep beperken. Geef 0 op als het niet uitmaakt. LET OP: Landelijke Plusscouts worden ook als 1 groep gezien."
 				size="3"
 				maxlength="3"
+				default="0"
 				class="inputbox"
 				required="true"
 		/>
@@ -245,7 +249,7 @@
 				name="titeltekst"
 				type="text"
 				label="Titeltekst"
-				description="Titeltekst"
+				description="Deze tekst wordt als kopje boven de tekst afgedrukt."
 				maxlength="255"
 				size="30"
 				class="inputbox"
@@ -258,8 +262,8 @@
 		<field
 				name="websiteTekst"
 				type="editor"
-				label="COM_KAMPINFO_HITCAMP_WEBSITETEKST_LABEL"
-				description="COM_KAMPINFO_HITCAMP_WEBSITETEKST_DESC"
+				label="Websitetekst"
+				description="Dit is de tekst die op de site verschijnt. PROBEER ZO ZUINIG MOGELIJK OM TE GAAN MET OPMAAK. Ga dus NIET helemaal los met kleurtjes en lettertypes."
 				width="300"
 				class="inputbox"
 				required="true"
@@ -269,7 +273,7 @@
 				name="websiteAdres"
 				type="text"
 				label="Website adres"
-				description=""
+				description="Een link naar je eigen website."
 				size="50"
 				maxlength="255"
 				class="inputbox"
@@ -295,8 +299,8 @@
 		<field
 				name="webadresFoto3"
 				type="text"
-				label="Foto 3"
-				description="Foto 3"
+				label="Foto 3 / Youtube"
+				description="Een derde foto, OF een link naar een Youtube filmpje, deze laatste wordt zo breed mogelijk onderaan de tekst getoond."
 				size="50"
 				maxlength="255"
 				class="inputbox"
@@ -305,7 +309,7 @@
 				name="websiteContactPersoon"
 				type="text"
 				label="Website contactpersoon"
-				description=""
+				description="De naam van de contactpersoon waar deelnemers contact mee op kunnen nemen."
 				size="30"
 				maxlength="255"
 				class="inputbox"
@@ -314,7 +318,7 @@
 				name="websiteContactTelefoonnummer"
 				type="text"
 				label="Website contact Tel."
-				description=""
+				description="Een telefoonnummer waar deelnemers naar toe kunnen bellen. LET OP: dit wordt dus op internet gepubliceerd!"
 				size="30"
 				maxlength="255"
 				class="inputbox"
@@ -323,7 +327,7 @@
 				name="websiteContactEmailadres"
 				type="email"
 				label="Website contact Email"
-				description=""
+				description="Een (geldig!) e-mailadres waar deelnemers naar toe kunnen mailen. LET OP: dit wordt dus op internet gepubliceerd!"
 				size="30"
 				maxlength="255"
 				class="inputbox"
@@ -344,7 +348,7 @@
 				name="icoontjes"
 				type="Icon"
 				label="Icoontjes"
-				description="Dit zijn de icoontjes"
+				description="Kies hier enkele icoontjes uit die je kamp karakteriseren. Deelnemers kunnen bij de HIT Kiezer op basis van deze icoontjes een HIT Kamp kiezen."
 				class="inputbox"
 		/>
 	</fieldset>
@@ -360,7 +364,7 @@
 				name="helpdeskContactpersoon"
 				type="text"
 				label="Helpdesk contactpersoon"
-				description="De persoon die als contactpersoon optreedt naar o.a. de HIT-Helpdesk"
+				description="De persoon die als contactpersoon optreedt naar o.a. de HIT-Helpdesk. Wordt alleen intern gebruikt."
 				maxlength="50"
 				size="30"
 				class="inputbox"
@@ -371,7 +375,7 @@
 				name="helpdeskContactEmailadres"
 				type="email"
 				label="Helpdesk contact e-mail"
-				description="Hier het e-mailadres van de contactpersoon"
+				description="Hier het e-mailadres van de contactpersoon. Wordt alleen intern gebruikt."
 				maxlength="50"
 				size="30"
 				class="inputbox"
@@ -383,7 +387,7 @@
 				name="helpdeskContactTelefoonnummer"
 				type="text"
 				label="Helpdesk contact tel."
-				description="Hier het telefoonnummer"
+				description="Hier het telefoonnummer van de contactpersoon. Wordt alleen intern gebruikt."
 				maxlength="50"
 				size="30"
 				class="inputbox"
@@ -405,7 +409,7 @@
 				name="helpdeskOverschrijdingLeeftijd"
 				type="radio"
 				label="Mogen er oudere of jongere deelnemers ingeschreven worden"
-				description="COM_KAMPINFO_HITCAMP_HELPDESKOVERSCHRIJDINGLFT_DESC"
+				description="Als deelnemers met een groepje mee willen, maar te jonger/ouder dan de marge zijn, mag de helpdesk deze dan toch inschrijven?"
 				class="inputbox"
 				default="0"
 		>
@@ -437,7 +441,7 @@
 				name="helpdeskOpmerkingen"
 				type="editor"
 				label="Opmerkingen"
-				description="Hier kun je opmerkingen voor de helpdesk kwijt"
+				description="Hier kun je extra aanvullingen en opmerkingen voor de helpdesk kwijt."
 				width="300"
 				class="inputbox"
 				filter="safehtml"
@@ -463,7 +467,7 @@
 			<option value="1">JYES</option>
 		</field>
         <field
-				name="akkoordHitPlaats"
+				name="akkoordHitPlaats@hitcamp.delete"
 				type="radio"
 				label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
 				description="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_DESC"
@@ -498,7 +502,7 @@
 				name="activiteitengebieden"
 				type="Activityarea"
 				label="Activiteitengebieden"
-				description="Dit zijn de activiteitengebieden"
+				description="Dit zijn de activiteitengebieden van het nieuwe spelaanbod van Scouting Nederland."
 				class="inputbox"
 		/>
 	</fieldset>
@@ -514,8 +518,8 @@
 		<field
 				name="doelstelling"
 				type="editor"
-				label="COM_KAMPINFO_HITCAMP_DOELSTELLING_LABEL"
-				description="COM_KAMPINFO_HITCAMP_DOELSTELLING_DESC"
+				label="Doelstelling"
+				description="Globale beschrijving en doelstellingen van het kamp om in de opstartfase kampen met elkaar te kunnen vergelijken."
 				width="300"
 				required="true"
 				class="inputbox"
@@ -525,7 +529,7 @@
 				name="doelgroepen"
 				type="Targetgroup"
 				label="Doelgroepen"
-				description="Dit zijn de doelgroepen"
+				description="Dit zijn de doelgroepen, dit werd vorig jaar met veel problemen gebruikt om gericht aan te kunnen bieden, maar beperkte teveel. Je kan het invullen, maar we doen er op zich niets mee."
 				class="inputbox"
 		/>
 	</fieldset>

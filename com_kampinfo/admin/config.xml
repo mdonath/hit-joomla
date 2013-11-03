@@ -49,6 +49,14 @@
 			label="Aangeboden prijzen"
 			description="Welke prijzen gekozen mogen worden door kamponderdelen"
 		/>
+		<field
+			name="template"
+			type="text"
+			size=""
+			default="tpl_kampinfopreview"
+			label="Preview template"
+			description="Joomla Template voor het tonen van een preview van een HIT Kamp"
+		/>
 	</fieldset>
 
 	

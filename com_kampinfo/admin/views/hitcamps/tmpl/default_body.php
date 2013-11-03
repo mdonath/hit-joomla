@@ -31,7 +31,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo $item->plaats; ?>
 		</td>
 		<td align="center">
-			<?php $canEdit = ($this->canDo->get($this->entityName.'.edit.'.(int)$item->id)); ?>
+			<?php $canEdit = ($this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id)); ?>
 			<?php echo JHtml::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, $this->entityName .'s.', $canEdit);?>
 		</td>
 		<td>
