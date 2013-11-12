@@ -100,7 +100,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
-		$query->select('i.bestandsnaam as naam, i.tekst');
+		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde');
 		$query->from('#__kampinfo_hiticon i');
 
 		$values=array();
@@ -171,7 +171,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		$db = JFactory :: getDBO();
 
 		$query = $db->getQuery(true);
-		$query->select('i.bestandsnaam as naam, i.tekst');
+		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort');
 		$query->from('#__kampinfo_hiticon i');
 
 		$db->setQuery($query);
@@ -187,6 +187,8 @@ abstract class KampInfoModelParent extends JModelItem {
 			$i = new stdClass();
 			$i->naam = $icon->naam;
 			$i->tekst = $icon->tekst;
+			$i->volgorde = $icon->volgorde;
+			$i->soort = $icon->soort;
 			$result[$icon->naam] = $i;
 		}
 		return $result;
