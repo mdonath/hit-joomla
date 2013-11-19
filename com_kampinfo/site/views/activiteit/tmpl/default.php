@@ -148,7 +148,9 @@ $eind = new JDate($activiteit->eindDatumTijd);
 									<?php } ?>
 								</tbody>
 							</table>
-							<br />
+
+							<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres) or !empty($activiteit->websiteAdres)) { ?>
+							<h2>Meer weten over het kamp?</h2>
 							<table border="0">
 								<tbody>
 									<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres)) { ?>
@@ -178,8 +180,9 @@ $eind = new JDate($activiteit->eindDatumTijd);
 									<?php } ?>
 								</tbody>
 							</table>
-							
-							
+							<p>Neem voor vragen over de inschrijving contact op met de <a href="contact/">helpdesk</a>.</p>
+							<?php } ?>
+
 							<h2>Aanvullende info:</h2>
 							<p>
 								<?php 
