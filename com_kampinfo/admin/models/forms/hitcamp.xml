@@ -306,7 +306,7 @@
 				class="inputbox"
 		/>
 		<field
-				name="websiteContactPersoon"
+				name="websiteContactpersoon"
 				type="text"
 				label="Website contactpersoon"
 				description="De naam van de contactpersoon waar deelnemers contact mee op kunnen nemen."
