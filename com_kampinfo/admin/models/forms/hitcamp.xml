@@ -451,8 +451,8 @@
 	<!-- ================================================================== -->
 
     <fieldset
-        		name="akkoorden"
-        		label="Akkoorden"
+        		name="akkoordkamp"
+        		label="Akkoord Kamp"
         		type="right"
 	>
 		<field
@@ -466,8 +466,15 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+	</fieldset>
+	<fieldset
+        		name="akkoordplaats@hitcamp.delete"
+        		label="Akkoord Plaats"
+        		type="right"
+	>
         <field
-				name="akkoordHitPlaats@hitcamp.delete"
+				name="akkoordHitPlaats"
+				fieldName="akkoordHitPlaats"
 				type="radio"
 				label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
 				description="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_DESC"
@@ -477,8 +484,14 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		<field
-				name="published@core.admin"
+	</fieldset>
+	<fieldset
+        		name="publish@core.admin"
+        		label="Publiceren"
+        		type="right"
+	>
+        		<field
+				name="published"
 				type="radio"
 				label="Gepubliceerd"
 				description="Publiceren op site"
@@ -543,7 +556,8 @@
 				addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
 		<field
-				name="shantiFormuliernummer@core.admin"
+				name="shantiFormuliernummer"
+				fieldName="shantiFormuliernummer"
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
 				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
@@ -553,7 +567,7 @@
 				default=""
 		/>
 		<field
-				name="aantalDeelnemers@core.admin"
+				name="aantalDeelnemers"
 				type="text"
 				label="Ingeschreven deelnemers"
 				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
@@ -563,7 +577,7 @@
 				default=""
 		/>
 		<field
-				name="gereserveerd@core.admin"
+				name="gereserveerd"
 				type="text"
 				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
 				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
@@ -573,7 +587,7 @@
 				default=""
 		/>
 		<field
-				name="aantalSubgroepen@core.admin"
+				name="aantalSubgroepen"
 				type="text"
 				label="Ingeschreven subgroepen"
 				description="Het huidige aantal ingeschreven subgroepen"

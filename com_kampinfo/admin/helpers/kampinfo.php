@@ -26,6 +26,7 @@ abstract class KampInfoHelper {
 					foreach ($entityIds as $entityId) {
 						$assetName = 'com_kampinfo.'.$entity.'.'. $entityId;
 						$isAuth = $user->authorise($action->name, $assetName);
+// 						echo ("assetname $assetName isAuth: $isAuth<br>");
 						$result->set($action->name.'.'.$entityId, $isAuth);
 						if (!empty($isAuth)) {
 							$result->set($action->name, $isAuth);
