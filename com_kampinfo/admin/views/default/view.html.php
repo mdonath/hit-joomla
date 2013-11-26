@@ -32,14 +32,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		$this->pagination	= $this->get('Pagination');
 		$this->state		= $this->get('State');
 
-		$ids = array();
-		if ($this->items) {
-			foreach ($this->items as $row) {
-				$ids[] = $row->id;
-			}
-		}
-		// What Access Permissions does this user have? What can (s)he do?
-		$this->canDo = KampInfoHelper::getActions($this->entityName, $ids);
+		$this->authoriseItems($this->items);
 		
 		// Check for errors
 		if (count($errors = $this->get('Errors'))) {
@@ -52,6 +45,17 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 
 		// Display the template
 		parent :: display($tpl);
+	}
+
+	protected function authoriseItems($items) {
+		$ids = array();
+		if ($items) {
+			foreach ($items as $row) {
+				$ids[] = $row->id;
+			}
+		}
+		// What Access Permissions does this user have? What can (s)he do?
+		$this->canDo = KampInfoHelper::getActions($this->entityName, $ids);
 	}
 
 	/**

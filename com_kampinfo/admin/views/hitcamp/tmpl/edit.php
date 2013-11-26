@@ -50,14 +50,10 @@ $user = JFactory::getUser();
 					<fieldset class="panelform">
 						<ul class="adminformlist">
 							<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
-								<?php
-									$pos = strpos($field->name, '@');
-									if ($pos === false || $this->canDo->get(substr($field->name, $pos+1, -1))) { ?>
-									<?php if ($field->hidden) { ?>
-										<?php echo $field->input; ?>
-									<?php } else { ?>
-										<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
-									<?php } ?>
+								<?php if ($field->hidden) { ?>
+									<?php echo $field->input; ?>
+								<?php } else { ?>
+									<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
 								<?php }?>
 							<?php } ?>
 						</ul>
