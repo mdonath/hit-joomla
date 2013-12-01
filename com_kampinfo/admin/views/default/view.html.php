@@ -66,10 +66,10 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		if ($this->canDo->get($this->entityName.'.create')) {
 			JToolBarHelper :: addNew($this->entityName . '.add');
 		}
-		if ($this->canDo->get($this->entityName.'.edit')) {
+		if ($this->isUserAuthorisedFor($this->entityName.'.edit')) {
 			JToolBarHelper :: editList($this->entityName . '.edit');
 		}
-		if ($this->canDo->get($this->entityName.'.delete')) {
+		if ($this->isUserAuthorisedFor($this->entityName.'.delete')) {
 			JToolBarHelper :: deleteList('', $this->entityName . 's.delete');
 		}
 		if ($this->entityName == 'hitcamp' || $this->entityName == 'hitsite') {
@@ -83,6 +83,21 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo')) {
 			JToolBarHelper :: preferences('com_kampinfo');
 		}
+	}
+	
+	private function isUserAuthorisedFor($func) {
+		if ($this->canDo->get($func)) {
+			return true;
+		}
+		foreach ($this->items as $item) {
+			$key = $func .'.'. (int)$item->id;
+			echo($key);
+			if ($this->canDo->get($key)) {
+				echo('ok!');
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
