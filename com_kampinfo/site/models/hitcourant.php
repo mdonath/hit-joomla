@@ -282,11 +282,19 @@ EOT;
 	} else {
 		echo($this->format($kamp->startDatumTijd, "j"));
 	}
-	
+	if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
+		$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
+	} else {
+		if ((int)$kamp->subgroepsamenstellingMinimum == 0) {
+			$subgroep = 'pers nvt';
+		} else {
+			$subgroep = $kamp->subgroepsamenstellingMinimum . ' pers';
+		}
+	}
 echo <<< EOT
 	- {$this->format($kamp->eindDatumTijd, "j F")}	
 	| {$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar
-	| {$kamp->subgroepsamenstellingMinimum} - {$kamp->subgroepsamenstellingMaximum} pers.
+	| {$subgroep}
 	| € {$kamp->deelnamekosten}
 	</p>
 	<p style="align: justify; font-family: Helvetica;">{$kamp->hitCourantTekst}</p>
@@ -347,11 +355,11 @@ EOT;
 	}
 	
 	private function icoonGroot($icoon) {
-		return "<img src=\"media/com_kampinfo/images/iconen40pix/{$icoon->naam}.gif\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"25px\" height=\"25px\" />";
+		return "<img src=\"media/com_kampinfo/images/iconencourant/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"25px\" height=\"25px\" />";
 	}
 	
 	private function icoonHeelGroot($icoon) {
-		return "<img src=\"media/com_kampinfo/images/iconen40pix/{$icoon->naam}.gif\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"40px\" height=\"40px\" />";
+		return "<img src=\"media/com_kampinfo/images/iconencourant/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"40px\" height=\"40px\" />";
 	}
 
 	
