@@ -160,18 +160,18 @@ EOT;
 	private function hitcourant_intro($hit) {
 		$count='count';
 		echo <<< EOT
-	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal;">(hier thema $hit->jaar)</h1>
-	<h2 style="font-family: Helvetica">HIT $hit->jaar Jouw paasweekend vol Scoutinguitdaging!</h2>
-	<p style="font-family: Helvetica"><strong>Wat ga jij doen met Pasen $hit->jaar? Naar de HIT natuurlijk! Want
+	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">(hier thema $hit->jaar)</h1>
+	<h2 style="font-family: Helvetica; font-size:18pt;">HIT $hit->jaar Jouw paasweekend vol Scoutinguitdaging!</h2>
+	<p style="font-family: Helvetica; font-size:8pt;"><strong>Wat ga jij doen met Pasen $hit->jaar? Naar de HIT natuurlijk! Want
 	in $hit->jaar kun je bij de HIT kiezen uit meer dan 60 totaal verschillende, spannende en
 	uitdagende activiteiten op {$count($hit->hitPlaatsen)} plaatsen in Nederland, of zelfs in het
 	buitenland!</strong></p>
 	
-	<p style="font-family: Helvetica">De HIT staat voor Hikes, Interessekampen en Trappersexpedities en wordt elk jaar gehouden
+	<p style="font-family: Helvetica; font-size:8pt;">De HIT staat voor Hikes, Interessekampen en Trappersexpedities en wordt elk jaar gehouden
 	tijdens de paasdagen. Een paar duizend scouts tussen de 7 en de 88 jaar beleven een ultieme
-	Scoutingactiviteit waarin je alles kunt tegenkomen wat Scouting te bieden heeft.
+	Scoutingactiviteit waarin je alles kunt tegenkomen wat Scouting te bieden heeft.</p>
 	
-	<p style="font-family: Helvetica">In $hit->jaar vindt de HIT plaats tussen 
+	<p style="font-family: Helvetica; font-size:8pt;">In $hit->jaar vindt de HIT plaats tussen 
 EOT;
 	
 	if ($hit->heeftBeginEnEindInVerschillendeMaanden) {
@@ -185,8 +185,8 @@ echo <<< EOT
 	Vanaf {$this->format($hit->inschrijvingStartdatum, "j F")} kun je je inschrijven. Lees snel verder in deze HIT-courant of kijk op de website welke te gekke HIT voor jou en je
 	Scoutingvrienden er dit jaar weer bij zit! Schrijf je snel in want elke HIT heeft maar een beperkt aantal plaatsen.</p>
 	
-	<div style="font-family: Helvetica; border: .2em solid black; padding: 1em;">
-	<h1  style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; text-align: center; margin-top: 0em;">Hoe kan ik me inschrijven?</h1>
+	<div style="font-family: Helvetica; border: .2em solid black; padding: 1em; font-size:8pt;">
+	<h1  style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; text-align: center; margin-top: 0em; font-size:18pt;">Hoe kan ik me inschrijven?</h1>
 	<p>Heb je je keuze gemaakt, of wil je eerst nog meer weten?
 	Ga dan naar de HIT website op <u>hit.scouting.nl</u> voor meer informatie over de door jou gekozen HIT.
 	Vanaf daar vind je onderaan ook meteen een link naar het inschrijfformulier.
@@ -204,13 +204,13 @@ EOT;
 	
 	private function hitcourant_iconenoverzicht($hit) {
 echo <<< EOT
-	<h2 style="text-align: center; color: green; font-style: italic; font-family: Helvetica">Verklaring van de symbolen in deze HIT-courant</h2>
+	<h2 style="text-align: center; color: green; font-style: italic; font-family: Helvetica; font-size:18pt;">Verklaring van de symbolen in deze HIT-courant</h2>
 	
-	<table style="border-collapse: collapse; font-family: Helvetica;">
+	<table style="border-collapse: collapse; font-family: Helvetica; font-size:8pt;">
 	{$this->print_iconen($hit->gebruikteIconenVoorCourant)}
 	</table>
 	
-	<p style="text-align: center; font-family: Helvetica">Wijzigingen voorbehouden, kijk op de website bij de activiteit voor de laatste informatie</p>
+	<p style="text-align: center; font-family: Helvetica; font-size:8pt;">Wijzigingen voorbehouden, kijk op de website bij de activiteit voor de laatste informatie</p>
 EOT;
 
 	}
@@ -249,11 +249,9 @@ EOT;
 	private function hitcourant_plaats($plaats) {
 		$strtolower = 'strtolower';
 echo <<< EOT
-	<p style="font-family: Helvetica">
+	<p style="font-family: Helvetica; font-size:8pt;">
 	<img src="images/stories/hitlogo/hit_logo_h_web_{$strtolower($plaats->naam)}.png"><br/>
-	Kijk op https://hit.scouting.nl/{$strtolower($plaats->naam)} voor meer info.<br/>
-	{$plaats->hitCourantTekst}
-	</p>
+	Kijk op https://hit.scouting.nl/{$strtolower($plaats->naam)} voor meer info.<br/>{$plaats->hitCourantTekst}</p>
 EOT;
 		foreach ($plaats->hitKampen as $kamp) {
 			$this->hitcourant_kamp($kamp);
@@ -266,47 +264,39 @@ EOT;
 	 * @param unknown $kamp
 	 */
 	private function hitcourant_kamp($kamp) {
-echo <<< EOT
-	<h1 style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal;">$kamp->naam</h1>
-	<p style="text-align: right; margin-left: .1em">
+		if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
+			$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
+		} else {
+			if ((int)$kamp->subgroepsamenstellingMinimum == 0) {
+				$subgroep = 'pers nvt';
+			} else {
+				$subgroep = $kamp->subgroepsamenstellingMinimum . ' pers';
+			}
+		}
+		if($kamp->heeftBeginEnEindInVerschillendeMaanden) {
+			$startDatumTijd = ($this->format($kamp->startDatumTijd, "j F"));
+		} else {
+			$startDatumTijd = ($this->format($kamp->startDatumTijd, "j"));
+		}
+		
+		echo <<< EOT
+	<h1 style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">$kamp->naam</h1>
+<p style="text-align: right; margin-left: .1em;">
 EOT;
 		foreach ($kamp->icoontjes as $icoon) {
 			echo($this->icoonGroot($icoon));
 		}
-echo <<< EOT
-	</p>
-	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold;">
-EOT;
-	if($kamp->heeftBeginEnEindInVerschillendeMaanden) {
-		echo($this->format($kamp->startDatumTijd, "j F"));
-	} else {
-		echo($this->format($kamp->startDatumTijd, "j"));
-	}
-	if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
-		$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
-	} else {
-		if ((int)$kamp->subgroepsamenstellingMinimum == 0) {
-			$subgroep = 'pers nvt';
-		} else {
-			$subgroep = $kamp->subgroepsamenstellingMinimum . ' pers';
-		}
-	}
-echo <<< EOT
-	- {$this->format($kamp->eindDatumTijd, "j F")}	
-	| {$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar
-	| {$subgroep}
-	| € {$kamp->deelnamekosten}
-	</p>
-	<p style="align: justify; font-family: Helvetica;">{$kamp->hitCourantTekst}</p>
+		echo <<< EOT
+</p>
+	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold; font-size:8pt;">$startDatumTijd - {$this->format($kamp->eindDatumTijd, "j F")} | {$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar | {$subgroep} | €&nbsp;{$kamp->deelnamekosten}</p>
+	<p style="align: justify; font-family: Helvetica; font-size:8pt;">{$kamp->hitCourantTekst}</p>
 EOT;
 	}
-	
-	
-	
+
 	private function hitcourant_colofon($hit) {
 		echo <<< EOT
-	<div style="padding: 1em; font-family: Helvetica">
-	<h1 style="font-family: Helvetica; margin-top: 0em;">Colofon HIT-courant $hit->jaar</h1>
+	<div style="padding: 1em; font-family: Helvetica; font-size:8pt;">
+	<h1 style="font-family: Helvetica; margin-top: 0em; font-size:18pt;">Colofon HIT-courant $hit->jaar</h1>
 	<p>De HIT-courant verschijnt een keer per jaar en is bestemd voor alle leden van Scouting Nederland.</p>
 	
 	<p>
@@ -347,7 +337,7 @@ EOT;
 	private function icoonMiddelKolom($icoon) {
 		return 
 		"<td style=\"border: .2em solid black;\">{$this->icoonHeelGroot($icoon)}</td>" .
-		"<td style=\"border: .2em solid black;\"><font style=\"font-family: Helvetica;\">$icoon->tekst</font></td>";
+		"<td style=\"border: .2em solid black;\"><font style=\"font-family: Helvetica; font-size:8pt;\">$icoon->tekst</font></td>";
 	}
 	
 	private function icoonRechterKolom($icoon) {
