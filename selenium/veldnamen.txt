@@ -1,0 +1,75 @@
+Globale gegevens
+================
+kampinfo_jaar					:: kampinfo_hitproject.jaar
+kampinfo_id						:: kampinfo_hitcamp.id
+kampinfo_project_evenement_id	:: kampinfo_hitproject.evenement_id **NIEUW**
+
+NIEUW
+=====
+frm_nm					:: kampinfo_hitcamp.naam
+frm_from_dt_day			:: kampinfo_hitcamp.startDatumTijd
+frm_from_dt_month		:: kampinfo_hitcamp.startDatumTijd
+frm_from_dt_year		:: kampinfo_hitcamp.startDatumTijd
+frm_from_time			:: kampinfo_hitcamp.startDatumTijd
+frm_till_dt_day			:: kampinfo_hitcamp.eindDatumTijd
+frm_till_dt_month		:: kampinfo_hitcamp.eindDatumTijd
+frm_till_dt_year		:: kampinfo_hitcamp.eindDatumTijd
+frm_till_time			:: kampinfo_hitcamp.eindDatumTijd
+frm_book_from_dt_day	:: kampinfo_hitproject.inschrijvingStartdatum
+frm_book_from_dt_month	:: kampinfo_hitproject.inschrijvingStartdatum
+frm_book_from_dt_year	:: kampinfo_hitproject.inschrijvingStartdatum
+frm_book_till_dt_day	:: kampinfo_hitproject.inschrijvingEinddatum
+frm_book_till_dt_month	:: kampinfo_hitproject.inschrijvingEinddatum
+frm_book_till_dt_year	:: kampinfo_hitproject.inschrijvingEinddatum
+
+
+
+01 BASIS
+========
+frm_location_nm			:: kampinfo_hitsite.naam
+
+
+02 DEELNAMECONDITIES
+====================
+frm_min_age				:: kampinfo_hitcamp.minimumLeeftijd
+frm_max_age				:: kampinfo_hitcamp.maximumLeeftijd
+frm_min_age_margin_days	:: kampinfo_hitcamp.margeAantalDagenTeJong
+frm_max_age_margin_days	:: kampinfo_hitcamp.margeAantalDagenTeOud
+frm_part_min_ct			:: kampinfo_hitcamp.minimumAantalDeelnemers
+frm_part_max_ct			:: kampinfo_hitcamp.maximumAantalDeelnemers
+frm_max_outof_group		:: kampinfo_hitcamp.maximumAantalUitEenGroep
+
+03 FINANCIEN
+============
+frm_cancel_dt1_day		:: kampinfo_hitproject.inschrijvingKosteloosAnnulerenDatum
+frm_cancel_dt1_month	:: kampinfo_hitproject.inschrijvingKosteloosAnnulerenDatum
+frm_cancel_dt1_year		:: kampinfo_hitproject.inschrijvingKosteloosAnnulerenDatum
+frm_cancel_dt2_day		:: kampinfo_hitproject.inschrijvingGeenRestitutieDatum
+frm_cancel_dt2_month	:: kampinfo_hitproject.inschrijvingGeenRestitutieDatum
+frm_cancel_dt2_year		:: kampinfo_hitproject.inschrijvingGeenRestitutieDatum
+
+
+04 SAMENSTELLEN
+===============
+fld_led_id 				:: grootboek dinges (alleen het nummer) **NIEUW**
+	- "83 - HIT Alphen"
+	- "84 - HIT Dwingeloo"
+	- "85 - HIT Harderwijk"
+	- "86 - HIT Baarn"
+	- "87 - HIT Zeeland"
+	- "88 - HIT Mook"
+frm_price				:: kampinfo_hitcamp.deelnamekosten
+kampinfo_project_inningsdatum_day	:: kampinfo_hitproject.inningsdatum
+kampinfo_project_inningsdatum_month	:: kampinfo_hitproject.inningsdatum
+kampinfo_project_inningsdatum_year	:: kampinfo_hitproject.inningsdatum
+
+
+08 SUBGROEPEN
+=============
+fte_teams_min_ct		:: kampinfo_hitcamp. ???
+fte_teams_max_ct		:: kampinfo_hitcamp.maximumAantalSubgroepjes
+fte_parts_min_ct		:: kampinfo_hitcamp.subgroepsamenstellingMinimum
+fte_parts_max_ct		:: kampinfo_hitcamp.subgroepsamenstellingMaximum
+fte_modulo				:: kampinfo_hitcamp.subgroepsamenstellingExtra
+
+
