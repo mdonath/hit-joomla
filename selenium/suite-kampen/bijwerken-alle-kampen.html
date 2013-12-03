@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://sol.scouting.nl/" />
+<title>New Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
+</thead><tbody>
+<!--Werkt alle kampen bij-->
+<tr>
+	<td>forJson</td>
+	<td>file:///home/martijn/git/hit-joomla/selenium/data.js</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=${kampinfo_project_evenement_id}</td>
+	<td></td>
+</tr>
+<!--Zoek het kamp op in de lijst-->
+<tr>
+	<td>clickAt</td>
+	<td>//a[substring(text(), string-length(text()) - (1+string-length(&quot;${kampinfo_camp_id}&quot;))) = &quot;(${kampinfo_camp_id})&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<!--Wijzig 01-Basis-->
+<tr>
+	<td>type</td>
+	<td>name=frm_location_nm</td>
+	<td>${frm_location_nm}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_url</td>
+	<td>https://hit.scouting.nl</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_part_condition_url</td>
+	<td>https://hit.scouting.nl/inschrijven/deelnemersvoorwaarden</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Formulier gewijzigd</td>
+</tr>
+<!--Wijzig 02-deelnamecondities-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=deelnamecondities</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=frm_subscribe_once</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=frm_participant_must_have_email_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_min_age</td>
+	<td>${frm_min_age}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_max_age</td>
+	<td>${frm_max_age}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_min_age_margin_days</td>
+	<td>${frm_min_age_margin_days}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_max_age_margin_days</td>
+	<td>${frm_max_age_margin_days}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_part_min_ct</td>
+	<td>${frm_part_min_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_part_max_ct</td>
+	<td>${frm_part_max_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_max_outof_group</td>
+	<td>${frm_max_outof_group}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Formulier gewijzigd</td>
+</tr>
+<!--Wijzig 03-Financiën-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=financiën</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt1_day</td>
+	<td>label=${frm_cancel_dt1_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt1_month</td>
+	<td>label=${frm_cancel_dt1_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt1_year</td>
+	<td>label=${frm_cancel_dt1_year}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt2_day</td>
+	<td>label=${frm_cancel_dt2_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt2_month</td>
+	<td>label=${frm_cancel_dt2_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_cancel_dt2_year</td>
+	<td>label=${frm_cancel_dt2_year}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=frm_on_part_cancel_note_required_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>check</td>
+	<td>name=fcty_cty_id[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Formulier gewijzigd</td>
+</tr>
+<!--Wijzig 04-Samenstellen-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=samenstellen</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=HIT ${kampinfo_project_jaar} Basisformulier (niet wijzigen)</td>
+	<td>isGekoppeld</td>
+</tr>
+<tr>
+	<td>if</td>
+	<td>!${isGekoppeld}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=linked_frm_id</td>
+	<td>label=HIT ${kampinfo_project_jaar} Basisformulier (niet wijzigen)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//input[@name='submitBtn'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endIf</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=deelnamekosten</td>
+	<td>hasKosten</td>
+</tr>
+<tr>
+	<td>if</td>
+	<td>${hasKosten}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=deelnamekosten</td>
+	<td></td>
+</tr>
+<tr>
+	<td>else</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=deelnamekosten</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endIf</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Deelnamekosten HIT ${kampinfo_project_jaar}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Voor de betaling van de deelnamekosten wordt via een eenmalige incasso-opdracht het deelnamegeld geïncasseerd. Het bedrag zal van de hier opgegeven bankrekening gehaald worden. Zorg dat je omstreeks de inningsdatum voldoende geld op deze bankrekening hebt staan.</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_led_id</td>
+	<td>label=${fld_led_id} - HIT ${frm_location_nm}</td>
+</tr>
+<tr>
+	<td>storeTable</td>
+	<td>css=table.1.0</td>
+	<td>hasTermijn</td>
+</tr>
+<tr>
+	<td>if</td>
+	<td>&quot;${hasTermijn}&quot; == &quot;Totaal&quot;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>Deelname HIT ${kampinfo_project_jaar}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endIf</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//table//tr[2]//td[4]/input</td>
+	<td>${frm_price}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//table//tr[2]//td[6]//select[1]</td>
+	<td>label=${kampinfo_project_inningsdatum_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//table//tr[2]//td[6]//select[2]</td>
+	<td>label=${kampinfo_project_inningsdatum_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>xpath=//table//tr[2]//td[6]//select[3]</td>
+	<td>label=${kampinfo_project_inningsdatum_year}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<!--Wijzig 08-Subgroepen-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=subgroepen</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=Koppelgroepje</td>
+	<td>hasKoppelgroepje</td>
+</tr>
+<tr>
+	<td>if</td>
+	<td>${hasKoppelgroepje}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Koppelgroepje</td>
+	<td></td>
+</tr>
+<tr>
+	<td>else</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Voeg subgroepcategorie toe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endIf</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_nm</td>
+	<td>Koppelgroepje</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_txt</td>
+	<td>Bij de inschrijving voor de HIT moet je eerst een koppelgroepje aanmaken of een bestaand koppelgroepje selecteren. Kies in het lijstje jouw koppelgroepje, of maak een nieuw koppelgroepje aan als jij de eerste van jouw groepje bent. Wil je alleen inschrijven dan maak je een groepje van 1 persoon aan. Als je met meer personen inschrijft, wacht dan even tot de eerste zich heeft ingeschreven met het nieuwe koppelgroepje.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_teams_min_ct</td>
+	<td>${fte_teams_min_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_teams_max_ct</td>
+	<td>${fte_teams_max_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_parts_min_ct</td>
+	<td>${fte_parts_min_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_parts_max_ct</td>
+	<td>${fte_parts_max_ct}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_modulo</td>
+	<td>${fte_modulo}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fte_days_incomplete_ct</td>
+	<td>10</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fte_incomplete_mail_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fte_incomplete_mail_cc_admin_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>if</td>
+	<td>${hasKoppelgroepje}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Wijzigen subgroepcategorie gelukt</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Terug naar subgroepoverzicht</td>
+	<td></td>
+</tr>
+<tr>
+	<td>else</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Subgroepcategorie is opgeslagen.</td>
+</tr>
+<tr>
+	<td>endIf</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--Wijzig 10-Aanpassen mails-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=aanpassen mails</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=switch_mail_type</td>
+	<td>label=Bevestiging van annulering door organisatie aan deelnemer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//input[@name='submitBtn'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=default_yn_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=custom_txt</td>
+	<td>Beste %per_fullname%,<br /><br />De evenementbeheerder heeft je annulering van het evenement %evt_nm%<br />(%frm_nm%) bevestigd.<br /> <br />Je bent nu afgemeld voor dit evenement.<br /><br />Hou er wel rekening mee dat de annuleringskosten van je rekening automatisch<br />geïncasseerd zullen worden.<br /><br />Met vriendelijke groet,<br /><br />Het HIT-team</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Mail aangepast</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=switch_mail_type</td>
+	<td>label=Bevestiging van inschrijving aan deelnemer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//input[@name='submitBtn'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=default_yn_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=custom_txt</td>
+	<td>Betreft: Bevestiging inschrijving HIT ${kampinfo_jaar}<br />(bewaar dit mailtje goed)<br /><br />Beste %per_fullname%,<br /><br />Jij hebt je opgegeven voor een spectaculair weekend tijdens de HIT ${kampinfo_jaar} voor het onderdeel %frm_nm%. Deze activiteit start op %frm_from_dt% %frm_from_time% uur en duurt tot %frm_till_dt% %frm_till_time% uur<br />De deelnamekosten voor deze activiteit zijn %frm_price% euro.<br />Omstreeks ${kampinfo_project_inningsdatum_day} ${kampinfo_project_inningsdatum_month} ${kampinfo_project_inningsdatum_year} zal dit bedrag van bankrekeningnummer %prt_bankaccount% worden geïncasseerd.<br /><br />Na je inschrijving heb je 10 dagen bedenktijd en je kunt binnen deze tijd kosteloos annuleren. Dit is ook de termijn waarbinnen jouw groepje compleet moet zijn.<br />Na ${frm_cancel_dt2_day} ${frm_cancel_dt2_month} ${frm_cancel_dt2_year} kun je niet meer annuleren en krijg je geen geld meer terug.<br /><br />Op http://sol.scouting.nl kun je de inschrijving van jouw groepje bekijken. Ga hiervoor op http://sol.scouting.nl in het My Scout menu bij&nbsp;&nbsp;&quot;Mijn gegevens&quot; naar het tabblad &quot;inschrijvingen&quot;. Kies daar je inschrijving van de HIT.<br />Hier kun je bij &quot;subgroep(en)&quot; zien wie zich al in jouw groepje heeft aangemeld.<br /><br />Zorg er dus voor dat je groepsgenoten zo snel mogelijk binnen 10 dagen inschrijven.<br /><br />Ook willen we je erop attent maken dat het soms voorkomt dat een onderdeel niet doorgaat.<br />In dat geval zullen we je indelen in het onderdeel dat je als alternatief hebt aangegeven. We geven dit dan natuurlijk zo snel mogelijk aan je door.<br /><br />Zijn er problemen met inschrijven of heb je een andere vraag, kijk dan op http://hit.scouting.nl bij het onderdeel &quot;inschrijven&quot;.<br /><br />Tot ziens op de HIT.<br /><br />De HIT organisatie<br /><br />PS Je lidnummer is: %per_id%<br />En je inschrijfnummer is: %prt_id%</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Mail aangepast</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=switch_mail_type</td>
+	<td>label=Bevestiging van inschrijving aan ouders/verzorgers</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//input[@name='submitBtn'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=default_yn_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=custom_txt</td>
+	<td>Beste ouder/verzorger van %per_fullname%,<br /><br />%per_fullname% heeft zich opgegeven als deelnemer voor %frm_nm%&nbsp;&nbsp;tijdens de HIT ${kampinfo_jaar}.<br /><br />Deze mail dient uitsluitend om u te informeren over deze inschrijving. Alle verdere correspondentie zal via het opgegeven e-mail adres %per_email% van %per_fullname% lopen.<br /><br />Deze activiteit start op %frm_from_dt% %frm_from_time% uur en duurt tot %frm_till_dt% %frm_till_time% uur.<br />De deelnamekosten voor deze activiteit zijn %frm_price%.<br />Omstreeks ${kampinfo_project_inningsdatum_day} ${kampinfo_project_inningsdatum_month} ${kampinfo_project_inningsdatum_year} zal dit bedrag van bankrekeningnummer %prt_bankaccount% worden geïncasseerd.<br /><br />De deelnemer heeft na inschrijving tot uiterlijk %frm_book_till_dt% 10 dagen bedenktijd en kan binnen deze 10 dagen kosteloos annuleren. Na %frm_book_till_dt% is het hele bedrag verschuldigd.<br /><br />Zijn er problemen met inschrijven of heeft u een andere vraag, kijk dan op http://hit.scouting.nl bij het onderdeel `inschrijven`<br /><br />Met vriendelijke groet,<br /><br />De HIT-organisatie</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Mail aangepast</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=switch_mail_type</td>
+	<td>label=Mail bij status wijziging naar 'kosteloos geannuleerd'</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>xpath=(//input[@name='submitBtn'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=default_yn_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=custom_txt</td>
+	<td>Beste %per_fullname%,<br /><br />Je inschrijving voor het evenement %evt_nm% (%frm_nm%) is kosteloos geannuleerd.<br />Je bent niet meer ingeschreven voor dit evenement.<br /><br />Het HIT-Team Scouting Nederland</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Mail aangepast</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=${kampinfo_project_evenement_id}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endForJson</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

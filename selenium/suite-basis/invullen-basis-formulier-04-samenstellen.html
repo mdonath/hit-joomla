@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://sol.scouting.nl/" />
+<title>invullen-basis-formulier-04-samenstellen</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">invullen-basis-formulier-04-samenstellen</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=4217</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[text()='HIT 2014 Basisformulier (niet wijzigen)']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=samenstellen</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=koptekst nr 1; vetgedrukt, groot formaat</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Welkom bij de inschrijving voor de HIT 2014</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=toelichtende tekst</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Leuk dat jij dit jaar mee wilt doen aan de HIT. Lees dit formulier hieronder goed door en vul het zorgvuldig in. Ben je minderjarig? Vul het dan samen met je ouders in! Bij vragen met een sterretje* is een antwoord verplicht. Heb je uitleg nodig, klik dan op het vraagteken. Veel succes!</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=keuzevelden (radio-button)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Kloppen de gegevens bovenaan (adres, huisnummer, telefoonnummer en vooral ook het email adres)?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Controleer of jouw gegevens hierboven kloppen. Kloppen jouw gegevens, zoals je adres of emailadres niet, dan kun je deze op www.scouting.nl wijzigen. Ga nadat je bent ingelogd, ga dan in het My Scout menu naar &quot;Mijn persoonsgegevens&quot; Hier kun je je eigen persoonsgegevens bekijken en wijzigen. De nieuwe gegevens worden automatisch verwerkt in de inschrijfgegevens van de HIT. Ben je ook met je eigen account ingelogd en niet met die van een familielid?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>JA, mijn gegevens kloppen en ik ben onder mijn eigen naam ingelogd.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=keuzevelden (radio-button)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Heb je een zwemdiploma (let op kan verplicht zijn)</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Heb je een zwemdiploma (let op kan verplicht zijn)?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier in of je wel of geen zwemdimploma hebt, voor sommige HIT-onderdelen kan dit verplicht zijn!</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>JA, ik heb een zwemdiploma</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>NEE, ik heb geen zwemdiploma</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://sol.scouting.nl/" />
+<title>toevoegen-alle-kampen</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">toevoegen-alle-kampen</td></tr>
+</thead><tbody>
+<!--Voegt alle kampen toe als initiële vulling-->
+<tr>
+	<td>forJson</td>
+	<td>file:///home/martijn/git/hit-joomla/selenium/data.js</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/index.php?task=as_form&amp;action=add_form&amp;button=&amp;evt_id=${kampinfo_project_evenement_id}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fty_id</td>
+	<td>label=Individuele inschrijving</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>20000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_nm</td>
+	<td>HIT ${frm_location_nm} ${frm_nm} (${kampinfo_camp_id})</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_participant_type</td>
+	<td>label=Personen</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_org_mail</td>
+	<td>info@hit.scouting.nl</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_subscribe_mail</td>
+	<td>vragen@hit.scouting.nl</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_day</td>
+	<td>label=${frm_from_dt_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_month</td>
+	<td>label=${frm_from_dt_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_year</td>
+	<td>label=${frm_from_dt_year}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_from_time</td>
+	<td>${frm_from_time}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_day</td>
+	<td>label=${frm_till_dt_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_month</td>
+	<td>label=${frm_till_dt_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_year</td>
+	<td>label=${frm_till_dt_year}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_till_time</td>
+	<td>${frm_till_time}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_day</td>
+	<td>label=${frm_book_from_dt_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_month</td>
+	<td>label=${frm_book_from_dt_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_year</td>
+	<td>label=${frm_book_from_dt_year}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_day</td>
+	<td>label=${frm_book_till_dt_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_month</td>
+	<td>label=${frm_book_till_dt_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_year</td>
+	<td>label=${frm_book_till_dt_year}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Formulier toegevoegd</td>
+</tr>
+<tr>
+	<td>endForJson</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://sol.scouting.nl/" />
+<title>invullen-basis-formulier</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">invullen-basis-formulier</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/index.php?task=as_form&amp;action=add_form&amp;button=&amp;evt_id=4217</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fty_id</td>
+	<td>label=Individuele inschrijving</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_nm</td>
+	<td>HIT 2014 Basisformulier (niet wijzigen)</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_participant_type</td>
+	<td>label=Personen</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_org_mail</td>
+	<td>info@hit.scouting.nl</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_subscribe_mail</td>
+	<td>vragen@hit.scouting.nl</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_day</td>
+	<td>label=18</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_month</td>
+	<td>label=april</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_from_dt_year</td>
+	<td>label=2014</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_from_time</td>
+	<td>12:00</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_day</td>
+	<td>label=21</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_month</td>
+	<td>label=april</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_till_dt_year</td>
+	<td>label=2014</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=frm_till_time</td>
+	<td>16:00</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_day</td>
+	<td>label=2</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_month</td>
+	<td>label=januari</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_year</td>
+	<td>label=2014</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_day</td>
+	<td>label=23</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_month</td>
+	<td>label=maart</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_till_dt_year</td>
+	<td>label=2014</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Formulier toegevoegd</td>
+</tr>
+</tbody></table>
+</body>
+</html>
