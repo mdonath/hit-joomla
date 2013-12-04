@@ -12,6 +12,14 @@
 				class="inputbox"
 				default=""
 		/>
+		<field	name="shantiEvenementId"
+		    	type="text"
+		    	label="Shanti EventId"
+		    	description="Evenement Id in Shanti"
+		    	size="5"
+		    	class="inputbox"
+		    	default=""
+		/>
 		<field	name="inschrijvingStartdatum"
 				type="calendar"
 				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_LABEL"
