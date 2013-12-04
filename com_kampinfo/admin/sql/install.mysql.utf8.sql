@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS `#__kampinfo_deelnemers`;
 CREATE TABLE `#__kampinfo_hitproject` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
 ,	`jaar`									YEAR(4)		NOT NULL
+,	`shantiEvenementId`						INT(5)
 ,	`inschrijvingStartdatum`				DATE
 ,	`inschrijvingEinddatum`					DATE
 ,	`inschrijvingWijzigenTotDatum`			DATE
@@ -68,6 +69,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`gereserveerd`							SMALLINT(3)
 ,	`maximumAantalDeelnemers`				SMALLINT(3)
 ,	`aantalSubgroepen`						SMALLINT(2)
+,	`minimumAantalSubgroepjes`				SMALLINT(3)
 ,	`maximumAantalSubgroepjes`				SMALLINT(3)
 ,	`maximumAantalUitEenGroep`				SMALLINT(3)
 ,	`margeAantalDagenTeJong`				SMALLINT(3)
