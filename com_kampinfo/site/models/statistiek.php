@@ -98,8 +98,9 @@ abstract class AbstractStatistiek {
 		$query = $db->getQuery(true);
 		$query->select('naam');
 		$query->from('#__kampinfo_hitsite s');
-		$query->where('jaar = ' . (int) ($db->getEscaped($jaar)));
-		$query->order('naam');
+		$query->join('#__kampinfo_project p on (p.id = s.hitproject_id)');
+		$query->where('p.jaar = ' . (int) ($db->getEscaped($jaar)));
+		$query->order('s.naam');
 	
 		$db->setQuery($query);
 		$data = $db->loadObjectList();
@@ -127,6 +128,7 @@ class StandaardStatistiek extends TotaalInschrijvingenPerJaarStatistiek {
  * Toont "Totaal aantal inschrijvingen per jaar".
  */
 class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
+
 	public function __construct($jaar = null) {
 		parent::__construct("corechart", "Totaal aantal inschrijvingen per jaar", 600, 400);
 	}
@@ -153,16 +155,19 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 		}";
 		return $result;
 	}
-
+	
 	private function getData() {
 		$db = JFactory :: getDBO();
-		$query = $db->getQuery(true);
-
-		$query->select('jaar, count(jaar) as aantal');
-		$query->from('#__kampinfo_deelnemers d');
-		$query->group('jaar');
+	
+		$query = $db
+		-> getQuery(true)
+		-> select('jaar			AS jaar')
+		-> select('count(jaar)	AS aantal')
+		-> from('#__kampinfo_deelnemers d')
+		-> group('jaar');
+	
 		$db->setQuery($query);
-
+	
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
 			JError :: raiseWarning(500, $db->getErrorMsg());
@@ -307,7 +312,7 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 			$query->select("sum(if(s.naam='$plaatsNaam',1,0)) as $plaatsNaam");
 		}
 		$query->from('#__kampinfo_deelnemers d');
-		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite_id = s.id)');
+		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite = s.naam)');
 		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
 		$query->group("jaar, datumInschrijving");
 		

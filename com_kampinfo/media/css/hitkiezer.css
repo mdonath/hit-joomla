@@ -37,4 +37,13 @@ fieldset {
 
 legend {
 	font-weight: bold;
+	width: auto !important;
+	border: none !important;
+	margin: none !important;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+select.kiezerinput {
+	width: auto !important;
 }

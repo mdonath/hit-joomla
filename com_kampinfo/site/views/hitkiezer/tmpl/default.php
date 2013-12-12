@@ -33,13 +33,13 @@
 	<form id="filter" name="filter">
 		<p><strong>Stap 1:</strong> Vul eerst je geboortedatum in. Je ziet nu alle HITs voor jouw leeftijd.</p>
 		<p>
-			<select name="geboortedag" id="geboortedag" onchange="updateGeboorteDatumEvent();" class="cookiestore">
+			<select name="geboortedag" id="geboortedag" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
 				<option value=""></option>
 			</select>
-				<select name="geboortemaand" id="geboortemaand" onchange="updateGeboorteDatumEvent();" class="cookiestore">
+				<select name="geboortemaand" id="geboortemaand" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
 				<option value=""></option>
 			</select>
-				<select name="geboortejaar" id="geboortejaar" onchange="updateGeboorteDatumEvent();" class="cookiestore">
+				<select name="geboortejaar" id="geboortejaar" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
 				<option value=""></option>
 			</select>
 			<span id="leeftijd"></span>
@@ -47,7 +47,7 @@
 	
 		<p><strong>Stap 2:</strong> Geef het bedrag aan dat je maximaal voor de HIT wilt betalen.</p>
 		<p>Maximaal €&nbsp;
-		<select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore">
+		<select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore kiezerinput">
 			<option value="-1"></option>
 		</select></p>
 			
@@ -60,6 +60,13 @@
 
 		<!-- Placeholder voor de pictogrammen / icoontjes -->
 		<div id="pictos"></div>
+
+		<br/>
+		<p><strong>Stap 4:</strong> Kies eventueel een plaats uit:
+			<select name="plaats" id="plaats" onchange="updatePlaatsEvent();" class="cookiestore kiezerinput">
+				<option value="-1"></option>
+			</select>
+		</p>
 		
 		<br />
 		<fieldset>

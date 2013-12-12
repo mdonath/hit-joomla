@@ -41,10 +41,16 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo JText::_($item->shantiFormuliernummer); ?>
 		</td>
 		<td>
+			<?php echo JText::_($item->minimumAantalDeelnemers); ?>
+		</td>
+		<td>
 			<?php echo JText::_($item->gereserveerd); ?>
 		</td>
-				<td>
+		<td>
 			<?php echo JText::_($item->aantalDeelnemers); ?>
+		</td>
+		<td>
+			<?php echo JText::_($item->maximumAantalDeelnemers); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

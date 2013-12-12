@@ -40,7 +40,7 @@ class KampInfoViewShanti extends JView {
 		$output .= "{";
 		$sep = " ";
 		foreach ($row as $field => $value) {
-			$output .= "$sep$field: ";
+			$output .= $sep . $this->quote($field) . ': ';
 			if ($this->endswith($field, '_month')) {
 				$output .= $this->quote($this->maandnaam($value));
 			} else {

@@ -25,6 +25,7 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`asset_id`								INT(10)		NOT NULL	DEFAULT '0'
 ,	`hitproject_id`							INT(11)		NOT NULL
 ,	`naam`									VARCHAR(50)	NOT NULL
+,	`projectcode`							VARCHAR(50)
 ,	`hitCourantTekst`						TEXT
 ,	`contactPersoonNaam`					VARCHAR(50)
 ,	`contactPersoonEmail`					VARCHAR(50)

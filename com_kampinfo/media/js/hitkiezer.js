@@ -57,6 +57,7 @@ var filter = {
 		"groen": new IconFilter('groen'),
 		// Icoontjes die negatief meetellen
 		"rood": new IconFilter('rood'),
+		// HIT plaats
 		"plaats": null,
 
 		loadFilters: function() {
@@ -216,7 +217,16 @@ function initVelden() {
 			.text(prijs)
 			.appendTo("#budget");
 	});
+ 	// plaatsen
+ 	var plaatsen = new Array();
+ 	$j.each(hit.hitPlaatsen, function(i, plaats) {
+ 		$j("<option>")
+ 			.attr("value", plaats.naam)
+ 			.text("HIT " + plaats.naam)
+ 			.appendTo("#plaats");
+ 	});
 
+ 	
  	$j('.cookiestore').cookieBind();
 	filter.peildatum = parseDate(hit.vrijdag);
 	filter.plaats = $j.getUrlVar('plaats');
@@ -363,6 +373,22 @@ function updateBudgetEvent() {
 
 function updateBudget() {
 	filter.budget = $j('#budget').val();
+}
+
+/**
+ * Als de plaats aangepast wordt.
+ */
+function updatePlaatsEvent() {
+	updatePlaats();
+	filter.clearFilters();
+	repaint();
+}
+
+function updatePlaats() {
+	filter.plaats = $j('#plaats').val();
+	if (filter.plaats == -1) {
+		filter.plaats = null;
+	}
 }
 
 /**

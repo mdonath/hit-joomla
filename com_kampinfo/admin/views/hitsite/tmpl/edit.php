@@ -48,6 +48,14 @@ JHtml::_('behavior.formvalidation');
 			</ul>
 		</fieldset>
 		<fieldset class="panelform" >
+			<legend><?php echo JText::_( 'Financiën' ); ?></legend>
+			<ul class="adminformlist">
+				<?php foreach($this->form->getFieldset("financien") as $field) { ?>
+					<li><?php echo $field->label;echo $field->input;?></li>
+				<?php } ?>
+			</ul>
+		</fieldset>
+		<fieldset class="panelform" >
 			<legend><?php echo JText::_( 'Kopieer van vorig jaar' ); ?></legend>
 			<ul class="adminformlist">
 				<li><label>Kopieer kampen van vorig jaar</label><input type="button" value="Kopieer" onclick="Joomla.submitbutton('hitsite.copyCamps');"/></li>

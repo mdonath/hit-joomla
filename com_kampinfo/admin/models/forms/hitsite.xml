@@ -28,7 +28,25 @@
 				default=""
 		/>
 	</fieldset>
+
+	<!--  -->
+	<fieldset
+			name="financien"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field
+				name="projectcode"
+				type="text"
+				label="Projectcode"
+				description="De projectcode voor de financiële administratie van Scouting Nederland (in te vullen door PT)"
+				size="50"
+				maxlength="50"				
+				class="inputbox"
+		/>
+	</fieldset>
 	
+	<!--  -->
+		
 	<fieldset
 			name="aanlevering"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"

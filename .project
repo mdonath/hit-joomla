@@ -16,9 +16,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>com_kampinfo/site/models/hitcourant-live.php</name>
+			<name>com_kampinfo/site/models/shanti-live.php</name>
 			<type>1</type>
-			<location>/var/www/HIT/components/com_kampinfo/models/hitcourant.php</location>
+			<location>/var/www/HIT/components/com_kampinfo/models/shanti.php</location>
+		</link>
+		<link>
+			<name>com_kampinfo/site/views/shanti/view-live.raw.php</name>
+			<type>1</type>
+			<location>/var/www/HIT/components/com_kampinfo/views/shanti/view.raw.php</location>
 		</link>
 	</linkedResources>
 </projectDescription>
