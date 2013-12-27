@@ -35,6 +35,7 @@ class KampInfoModelShanti extends KampInfoModelParent {
 			-> select("s.naam									AS frm_location_nm")
 			-> select("s.projectcode							AS projectcode")
 			-> select("c.naam									AS frm_nm")
+			-> select("COALESCE(c.isouderkind,0)				AS kampinfo_camp_isouder")
 			-> select("c.deelnamekosten							AS frm_price")
 			-> select("dayofmonth(c.startDatumTijd)	 			AS frm_from_dt_day")
 			-> select("month(c.startDatumTijd)					AS frm_from_dt_month")

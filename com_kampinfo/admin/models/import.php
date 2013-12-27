@@ -17,72 +17,6 @@ jimport('joomla.filesystem.file');
 class KampInfoModelImport extends JModelAdmin {
 
 	/**
-	 * Downloadt de kampgegevens uit SOL en overschrijft de huidige gegevens.
-	 */
-	public function downloadKampgegevens() {
-		$app = JFactory::getApplication();
-
-		$params = &JComponentHelper::getParams('com_kampinfo');
-
-		// Voor welk jaar staat in de configuratie
-		$jaar = $params->get('huidigeActieveJaar');
-		if ($jaar < 2000) {
-			$app->enqueueMessage('Geen jaartal opgegeven');
-			return false;
-		}
-
-		// Via Soap Downloaden
-		$user = $params->get('soapUser');
-		$password = $params->get('soapPassword');
-		$role = $params->get('soapRolemask');
-		$sui = $params->get('soapSui');
-		$keypriv = $params->get('soapPrivateKey');
-		$wsdl = $params->get('soapWsdl');
-		$frm_id = $params->get('downloadFormIdKampRegistratie');
-		$parts = explode(',', $params->get('downloadKampRegistratiePartsIds'));
-			
-		$sol = new SolDownload();
-		$result = $sol->downloadForm($user, $password, $role, $sui, $keypriv, $wsdl, $frm_id, $parts);
-
-		// Importeer gegevens
-		$mapper = new XmlMapper(SolMapping::getKampgegevensMapping($jaar));
-		$rows = $mapper->readString($result);
-
-		$result = self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
-		$this->updateLaatstBijgewerkt($jaar, 'KAMP', 'Aantal rijen vervangen: ' . count($rows));
-		return $result;
-	}
-
-	/**
-	 * Importeert de kampgegevens via een upload van een CSV en overschrijft de oude gegevens.
-	 */
-	public function importKampgegevens() {
-		$app = JFactory::getApplication();
-		$jinput = $app->input;
-		$formdata = $jinput->get('jform', array(), 'array');
-		$jaar = $formdata["jaar"];
-
-		if ($jaar < 2000) {
-			$app->enqueueMessage('Geen jaartal opgegeven');
-			return false;
-		}
-		$app->enqueueMessage('Voor het jaartal ' . $jaar);
-
-		$file = self::getUploadedFile('import_kampgegevens');
-
-		if (!$file) {
-			$app->enqueueMessage('Geen file geupload?!');
-			return false;
-		}
-		$app->enqueueMessage('File: ' . $file);
-
-		$mapper = new CsvMapper(SolMapping::getKampgegevensMapping($jaar));
-		$rows = $mapper->read($file);
-
-		return self::verwijderEnImporteerKampgegevens($app, $rows, $jaar);
-	}
-
-	/**
 	 * Downloadt de inschrijfaantallen via SOAP en importeert deze om zo de huidige records weer bij te werken.
 	 * 
 	 * @return boolean
@@ -244,23 +178,6 @@ class KampInfoModelImport extends JModelAdmin {
 		return true;
 	}
 
-	private function verwijderEnImporteerKampgegevens($app, $rows, $jaar) {
-// 		$count = count($rows);
-
-// 		if ($count == 0) {
-// 			$app->enqueueMessage('geen rijen gevonden');
-// 			return false;
-// 		}
-// 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-
-// 		self::verwijderJaar($jaar);
-// 		$app->enqueueMessage("Vorige kampen van het jaar '$jaar' zijn verwijderd.");
-
-// 		self::updateKampen($rows,  $jaar);
-// 		$app->enqueueMessage("Er zijn nu $count nieuwe kampen ingelezen");
-		return true;
-	}
-
 	private function updateKampen($rows, $jaar) {
 		foreach ($rows as $kamp) {
 			$table = self::getTable();
@@ -269,22 +186,6 @@ class KampInfoModelImport extends JModelAdmin {
 			$kamp->eindDatumTijd = $kamp->eindDatumTijd->format('Y-m-d H:i:s');
 			$table->bind($kamp);
 			$table->store($kamp);
-		}
-	}
-
-	private function verwijderJaar($jaar) {
-		$db = JFactory :: getDbo();
-		$query = "DELETE c FROM #__kampinfo_hitcamp c "
-				. "JOIN #__kampinfo_hitsite s ON (c.hitsite_id=s.id) "
-				. "JOIN #__kampinfo_hitproject p ON (s.hitproject_id=p.id) "
-						. "AND p.jaar = ". ($db->getEscaped($jaar));
-
-		$db->setQuery($query);
-		$db->query();
-
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
 		}
 	}
 
@@ -331,6 +232,7 @@ class KampInfoModelImport extends JModelAdmin {
 			JError :: raiseWarning(500, $db->getErrorMsg());
 		}
 	}
+
 	private function updateDeelnemergegevens($rows, $jaar) {
 		$db = JFactory :: getDbo();
 		

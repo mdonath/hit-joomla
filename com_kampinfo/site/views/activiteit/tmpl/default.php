@@ -19,6 +19,7 @@ $activiteit = $this->activiteit;
 $start = new JDate($activiteit->startDatumTijd);
 $eind = new JDate($activiteit->eindDatumTijd);
 
+
 ?>
 <div class="rt-article">
 	<div class="item-page">
@@ -201,6 +202,9 @@ $eind = new JDate($activiteit->eindDatumTijd);
 									$startDTF = $start->format('l j F \o\m H:i \u\u\r');
 									$eindDTF = $eind->format('l j F H:i \u\u\r');
 									$begintOpGoedeVrijdag = $start->format('N') == '5'; // vrijdag
+
+									$startInsch = (new JDate($activiteit->startInschrijving))->getTimestamp();
+									$isInschrijvingGestart = $startInsch <= (new JDate())->getTimestamp(); 
 								?>
 								Dit HIT-Kamp start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
 
@@ -209,10 +213,15 @@ $eind = new JDate($activiteit->eindDatumTijd);
 								Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
 								<?php } ?>
 							</p>
+							<?php /* ?>
 							<?php if (!empty($activiteit->doelgroepen)) { ?>
 								<p>Let op: Inschrijven is alleen mogelijk voor de volgende doelgroepen: <?php echo $activiteit->doelgroepen; ?>. Het is daarom belangrijk dat je met de juiste rol bent ingelogd in ScoutsOnline.</p>
 							<?php } ?>
-							<?php if ($activiteit->shantiFormuliernummer > 0) { ?>
+							<?php */ ?>
+							<?php if ($activiteit->isouderkind == 1) { ?>
+							<p>Bij de ouder-kind activiteiten moet het kind jeugdlid zijn van Scouting Nederland. De ouder hoeft geen lid te zijn en wordt tijdelijk relatielid van de HIT. Let op: ook de ouder moet zich altijd inschrijven.</p>
+							<?php }?>
+							<?php if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) { ?>
 								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
 							<?php } ?>
 							<br />

@@ -46,6 +46,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`hitsite_id`							INT(11)			NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
+,	`isouderkind`							BOOLEAN
 ,	`activiteitengebieden`					TEXT
 ,	`titeltekst`							VARCHAR(255)
 ,	`startDatumTijd`						DATETIME

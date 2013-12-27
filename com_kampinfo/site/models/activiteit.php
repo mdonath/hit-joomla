@@ -34,7 +34,7 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		$query->select('s.naam as plaats, s.id as hitsite_id');
 		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
 
-		$query->select('p.jaar as jaar, p.id as hitproject_id');
+		$query->select('p.jaar as jaar, p.id as hitproject_id, p.inschrijvingStartdatum as startInschrijving ');
 		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
 
 		$db->setQuery($query);
