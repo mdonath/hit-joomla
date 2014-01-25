@@ -91,9 +91,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		}
 		foreach ($this->items as $item) {
 			$key = $func .'.'. (int)$item->id;
-			echo($key);
 			if ($this->canDo->get($key)) {
-				echo('ok!');
 				return true;
 			}
 		}

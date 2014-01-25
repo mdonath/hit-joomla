@@ -1,3 +1,13 @@
+h1.title {
+	max-width: 480px !important;
+	line-height:30px !important;
+	padding-bottom: 0px !important;
+}
+.rt-article h2 {
+	font-size: 18px !important;
+	color: rgb(26, 54, 141) !important;
+}
+
 .iconlist {
 	float: right;
 }

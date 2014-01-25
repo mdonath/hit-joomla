@@ -34,10 +34,10 @@ class KampInfoModelDownloads extends JModelList {
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
 		$query->select('d.*');
-		$query->from('#__kampinfo_downloads d');
-
+		$query->from('#__kampinfo_downloads d, #__kampinfo_hitproject p');
+		$query->where('d.jaar = p.jaar');
 		if (!empty ($filterJaar)) {
-			$query->where('(d.jaar = ' . (int)($db->getEscaped($filterJaar)) . ')');
+			$query->where('(p.id= ' . (int)($db->getEscaped($filterJaar)) . ')');
 		}
 
 		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));

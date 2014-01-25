@@ -91,8 +91,8 @@ abstract class KampInfoHelper {
 		}
 		if ($canDo->get('core.admin')) {
 			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
-			//JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
-			//JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
+			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
 			JSubMenuHelper :: addEntry('Overzichten', 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
 		}
 		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');

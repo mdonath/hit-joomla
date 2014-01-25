@@ -181,14 +181,6 @@
 			description="De secret handshake voor het extern aanschoppen van de download van inschrijvingen"
 		/>
 		<field
-			name="downloadFormIdKampRegistratie"
-			type="text"
-			default="5687"
-			size="8"
-			label="Kampregistratie Formulier ID"
-			description="Het id van het formulier met Kampregistraties."
-		/>
-		<field
 			name="downloadKampRegistratiePartsIds"
 			type="text"
 			default="1000"
@@ -196,6 +188,7 @@
 			label="Kampregistratie subselectie"
 			description="Hiermee kun je de te downloaden onderdelen aangeven (vaak op basis van status). De id's moeten gescheiden worden door komma's en mag geen spaties bevatten!"
 		/>
+		<!-- 
 		<field
 			name="downloadEventIdInschrijvingen"
 			type="text"
@@ -204,6 +197,7 @@
 			label="Event ID Inschrijvingen"
 			description="Het event id met alle inschrijfformulieren."
 		/>
+		 -->
 	</fieldset>
 
 	

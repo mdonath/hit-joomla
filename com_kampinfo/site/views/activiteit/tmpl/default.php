@@ -221,7 +221,7 @@ $eind = new JDate($activiteit->eindDatumTijd);
 							<?php if ($activiteit->isouderkind == 1) { ?>
 							<p>Bij de ouder-kind activiteiten moet het kind jeugdlid zijn van Scouting Nederland. De ouder hoeft geen lid te zijn en wordt tijdelijk relatielid van de HIT. Let op: ook de ouder moet zich altijd inschrijven.</p>
 							<?php }?>
-							<?php if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) { ?>
+							<?php if ($activiteit->shantiFormuliernummer > 0 /*&& $isInschrijvingGestart*/) { ?>
 								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
 							<?php } ?>
 							<br />
