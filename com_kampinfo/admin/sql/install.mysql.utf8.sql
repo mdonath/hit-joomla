@@ -129,6 +129,7 @@ CREATE TABLE `#__kampinfo_deelnemers` (
 ,	`datumInschrijving`						DATE			NOT NULL
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`hitcamp`								VARCHAR(255)	NOT NULL
+,	`hitcampId`								INT(11)			NULL
 ,	PRIMARY KEY (`id`)
 );
 

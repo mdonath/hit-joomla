@@ -4,6 +4,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.ph
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/mapper.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolDownload.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolMapping.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolConfiguration.php';
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -11,6 +12,10 @@ jimport('joomla.application.component.modeladmin');
 jimport('joomla.filesystem.file');
 
 
+class SolConfig {
+	
+	
+}
 /**
  * Import Model.
 */
@@ -33,22 +38,17 @@ class KampInfoModelImport extends JModelAdmin {
 			return false;
 		}
 
-		// Via Soap Downloaden
-		$user = $params->get('soapUser');
-		$password = $params->get('soapPassword');
-		$role = $params->get('soapRolemask');
-		$sui = $params->get('soapSui');
-		$keypriv = $params->get('soapPrivateKey');
-		$wsdl = $params->get('soapWsdl');
-
-		// TODO: combineren tot 1 call
-		$eventId = self::getShantiEvenementId($projectId);
+		$project = self::getHitProject($projectId);
+		$eventId = $project->shantiEvenementId;
 		$app->enqueueMessage("Shanti evenement: " . $eventId);
-		$jaar = self::getJaarVanProject($projectId);
+
+		$jaar = $project->jaar;
 		$app->enqueueMessage("Jaar: " . $jaar);
 		
+		// Via Soap Downloaden
+		$solConfig = new SolConfiguration($params);
 		$sol = new SolDownload();
-		$result = $sol->downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $eventId, 'forms');
+		$result = $sol->downloadEvent($solConfig->user, $solConfig->password, $solConfig->role, $solConfig->sui, $solConfig->keypriv, $solConfig->wsdl, $eventId, 'forms');
 		
 		// Importeer gegevens
 		$mapper = new XmlMapper(SolMapping::getInschrijvingenMapping($jaar));
@@ -58,37 +58,14 @@ class KampInfoModelImport extends JModelAdmin {
 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
 
 		$count = self::updateInschrijvingen($rows,  $jaar);
+
 		$msg = "Er zijn nu $count kampen bijgewerkt met hun inschrijvingen";
 		$app->enqueueMessage($msg);
 		$this->updateLaatstBijgewerkt($jaar, 'INSC', $msg);
+		
 		return true;
 	}
 
-	private function getJaarVanProject($projectId) {
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-		
-		$query->select('p.jaar');
-		$query->from('#__kampinfo_hitproject p');
-		$query->where('p.id = ' . ($db->getEscaped($projectId)));
-
-		$db->setQuery($query);
-		$result = $db->loadResult();
-		return $result;
-	}
-	
-	private function getShantiEvenementId($projectId) {
-		$db = JFactory :: getDbo();
-		$query = $db->getQuery(true);
-		
-		$query->select('p.shantiEvenementId');
-		$query->from('#__kampinfo_hitproject p');
-		$query->where('p.id = ' . ($db->getEscaped($projectId)));
-
-		$db->setQuery($query);
-		$result = $db->loadResult();
-		return $result;
-	}
 
 	/**
 	 * Importeert de inschrijfaantallen via CSV en werkt zo de bestaande gegevens bij.
@@ -141,30 +118,27 @@ class KampInfoModelImport extends JModelAdmin {
 	 */
 	public function downloadDeelnemergegevens() {
 		$app = JFactory::getApplication();
-		$app->enqueueMessage("Tijdelijks uitgeschakeld");
-		return true;
-			
+
 		$params = &JComponentHelper::getParams('com_kampinfo');
 	
 		// Voor welk jaar staat in de configuratie
-		$jaar = $params->get('huidigeActieveJaar');
-		if ($jaar < 2000) {
+		$projectId = $params->get('huidigeActieveJaar');
+		if ($projectId < 0) {
 			$app->enqueueMessage('Geen jaartal opgegeven');
 			return false;
 		}
+
+		$project = self::getHitProject($projectId);
+		$eventId = $project->shantiEvenementId;
+		$app->enqueueMessage("Shanti evenement: " . $eventId);
+
+		$jaar = $project->jaar;
+		$app->enqueueMessage("Jaar: " . $jaar);
 	
 		// Via Soap Downloaden
-		$user = $params->get('soapUser');
-		$password = $params->get('soapPassword');
-		$role = $params->get('soapRolemask');
-		$sui = $params->get('soapSui');
-		$keypriv = $params->get('soapPrivateKey');
-		$wsdl = $params->get('soapWsdl');
-	
-		$eventId = $params->get('downloadEventIdInschrijvingen');
-	
+		$solConfig = new SolConfiguration($params);
 		$sol = new SolDownload();
-		$result = $sol->downloadEvent($user, $password, $role, $sui, $keypriv, $wsdl, $eventId, 'participants');
+		$result = $sol->downloadEvent($solConfig->user, $solConfig->password, $solConfig->role, $solConfig->sui, $solConfig->keypriv, $solConfig->wsdl, $eventId, 'participants');
 
 		// Importeer gegevens
 		$mapper = new XmlMapper(SolMapping::getDeelnemergegevensMapping($jaar));
@@ -172,7 +146,7 @@ class KampInfoModelImport extends JModelAdmin {
 
 		$count = count($rows);
 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-		
+
 		// Gegevens van het ingelezen jaar moeten eerst verwijderd worden, anders blijven geannuleerde deelnemers in de database staan.
 		$count = self::updateDeelnemergegevens($rows,  $jaar);
 		$msg = "Er zijn nu $count deelnemers toegevoegd.";
@@ -264,6 +238,7 @@ class KampInfoModelImport extends JModelAdmin {
 	private function updateDeelnemergegevens($rows, $jaar) {
 		$db = JFactory :: getDbo();
 		
+		// Ouwe meuk weggooien
 		self::verwijderDeelnemergegevens($jaar);
 		$deelnemerNummers = array();
 		$count = 0;
@@ -272,24 +247,27 @@ class KampInfoModelImport extends JModelAdmin {
 				$deelnemerNummers[] = $deelnemer->dlnnr;
 				
 				$formulier = array();
-				preg_match("/HIT (\w+) (.*)/", $deelnemer->formulier, $formulier);
-				
-				$db = JFactory :: getDbo();
-				$query = $db->getQuery(true);
-				$query->insert('#__kampinfo_deelnemers');
-				$query->set(
-						'  jaar = '. (int)($db->getEscaped($jaar)) .
-						', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
-						', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
-						', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
-						', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
-						', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
-						', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]).'-'.$jaar)) .
-						', hitcamp = ' . $db->quote($db->getEscaped($formulier[2]))
-				);
-				$db->setQuery($query);
-				$db->query();
-				$count++;
+				preg_match("/HIT (\w+) (.*) \((\d+)\)/", $deelnemer->formulier, $formulier);
+
+				if (count($formulier) != 0) {
+					$db = JFactory :: getDbo();
+					$query = $db->getQuery(true);
+					$query->insert('#__kampinfo_deelnemers');
+					$query->set(
+							'  jaar = '. (int)($db->getEscaped($jaar)) .
+							', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
+							', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
+							', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
+							', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
+							', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
+							', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]))) .
+							', hitcamp = ' . $db->quote($db->getEscaped($formulier[2])) .
+							', hitcampId = ' . (int)($db->getEscaped($formulier[3]))
+					);
+					$db->setQuery($query);
+					$db->query();
+					$count++;
+				}
 			}
 		}
 		return $count;
@@ -357,5 +335,48 @@ class KampInfoModelImport extends JModelAdmin {
 
 	public function getTable($type = 'HitCamp', $prefix = 'KampInfoTable', $config = array ()) {
 		return JTable :: getInstance($type, $prefix, $config);
+	}
+
+	private function getHitProject($projectId) {
+		$db = JFactory :: getDBO();
+	
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__kampinfo_hitproject p');
+		$query->where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')');
+	
+		$db->setQuery($query);
+		$project = $db->loadObjectList();
+	
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		return $project[0];
+	}
+	
+	private function getJaarVanProject($projectId) {
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+	
+		$query->select('p.jaar');
+		$query->from('#__kampinfo_hitproject p');
+		$query->where('p.id = ' . ($db->getEscaped($projectId)));
+	
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		return $result;
+	}
+	
+	private function getShantiEvenementId($projectId) {
+		$db = JFactory :: getDbo();
+		$query = $db->getQuery(true);
+	
+		$query->select('p.shantiEvenementId');
+		$query->from('#__kampinfo_hitproject p');
+		$query->where('p.id = ' . ($db->getEscaped($projectId)));
+	
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		return $result;
 	}
 }

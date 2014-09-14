@@ -86,7 +86,6 @@ JHtml::_('behavior.tooltip');
 
 </form>
 
-<!-- 
 <form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
 	enctype="multipart/form-data" 
 	method="post"
@@ -110,4 +109,3 @@ JHtml::_('behavior.tooltip');
 	</div>
 
 </form>
- -->

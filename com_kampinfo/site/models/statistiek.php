@@ -98,7 +98,7 @@ abstract class AbstractStatistiek {
 		$query = $db->getQuery(true);
 		$query->select('naam');
 		$query->from('#__kampinfo_hitsite s');
-		$query->join('#__kampinfo_project p on (p.id = s.hitproject_id)');
+		$query->join('LEFT', '#__kampinfo_hitproject p on (p.id = s.hitproject_id)');
 		$query->where('p.jaar = ' . (int) ($db->getEscaped($jaar)));
 		$query->order('s.naam');
 	
@@ -309,10 +309,11 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 		$query->select("d.jaar");
 		$query->select("d.datumInschrijving");
 		foreach ($plaatsNamen as $plaatsNaam) {
-			$query->select("sum(if(s.naam='$plaatsNaam',1,0)) as $plaatsNaam");
+			$query->select("sum(if(s.naam='$plaatsNaam' and d.jaar=p.jaar,1,0)) as $plaatsNaam");
 		}
 		$query->from('#__kampinfo_deelnemers d');
-		$query->leftJoin('#__kampinfo_hitsite s on (d.hitsite = s.naam)');
+		$query->innerJoin('#__kampinfo_hitsite s on (d.hitsite = s.naam)');
+		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and p.jaar = d.jaar)');
 		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
 		$query->group("jaar, datumInschrijving");
 		
@@ -443,11 +444,11 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 
 		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from kuw4c_kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
 		foreach ($jaren as $jaar) {
-			$query->select("sum(if(d.jaar=$jaar,1,0)) as \"y$jaar\"");
+			$query->select("sum(if(d.jaar=$jaar and lower(d.hitsite) = lower(s.naam),1,0)) as \"y$jaar\"");
 		}
 		$query->from('#__kampinfo_deelnemers d');
-		$query->leftJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
-		$query->leftJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
+		$query->innerJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
+		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
 		$query->where("s.naam = ". $db->quote($db->getEscaped($this->plaats)));
 		$query->group('inschrijfdag');
 		$db->setQuery($query);
@@ -495,7 +496,7 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 
 		$result .= "
 			]);
-			var slider = new google.visualization.ControlWrapper({
+			var lftSlider = new google.visualization.ControlWrapper({
 	          'controlType': 'NumberRangeFilter',
 	          'containerId': 'control',
 	          'options': {
@@ -516,8 +517,9 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 				curveType: \"function\",
 	          }
 	        });
-			var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard')).
-		    bind(slider, chart).draw(data);
+			var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'))
+						.bind(lftSlider, chart)
+						.draw(data);
 		}";
 
 		return $result;
@@ -543,4 +545,68 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 	}
 }
 
+class AantalKampenVoorLeeftijdInJaarStatistiek extends AbstractStatistiek {
+	private $jaar;
 
+	public function __construct($jaar = null) {
+		parent::__construct("corechart", "Aantal kampen per leeftijdsjaar in ".$jaar, 600, 400);
+		$this->jaar = $jaar;
+	}
+
+	public function getDrawVisualization() {
+		// Bepaal minimumLeeftijd en maximumLeeftijd
+		// select min(c.minimumLeeftijd), max(c.maximumLeeftijd) from kuw4c_kampinfo_hitcamp c join kuw4c_kampinfo_hitsite s on (c.hitsite_id = s.id) join kuw4c_kampinfo_hitproject p on (p.id = s.hitproject_id and p.jaar = 2014) order by c.minimumLeeftijd
+		$min = 7;
+		$max = 88;
+
+		$leeftijdenKolommen = '';
+		for ($age = $min; $age <= $max; $age++) {
+			$leeftijdenKolommen .= "'$age',";
+		}
+		$result = "
+				function drawVisualization() {
+				var data = google.visualization.arrayToDataTable([
+				[ $leeftijdenKolommen ],
+				";
+		$data = $this->getData($min, $max)[0];
+		
+		$result .= "[";
+		for ($age = $min; $age <= $max; $age++) {
+			$field = 'l'.$age;
+			$result .=  $data->$field. ",";
+		}
+		$result .= "],\n";
+		
+		$result .=
+		"	]);
+			new google.visualization.ColumnChart(document.getElementById('visualization')).
+			draw(data, {
+				title: '". $this->getTitle()  ."',
+				width : ". $this->getWidth()  .",
+				height: ". $this->getHeight() .",
+				hAxis: {title: \"Leeftijd\"}
+			});
+		}";
+		return $result;
+	}
+	
+	private function getData($min, $max) {
+		$db = JFactory :: getDBO();
+		
+		// Query
+		// select sum(if(7 between data.mini and data.maxi,1,0)) as l7, sum(if(8 between data.mini and data.maxi,1,0)) as l8 from ;
+		$query = $db-> getQuery(true);
+		for ($age = $min; $age <= $max; $age++) {
+			$query->select("sum(if($age between data.mini and data.maxi,1,0)) as l$age");
+		}
+		$query->from("(select c.minimumLeeftijd  as mini, c.maximumLeeftijd as maxi from #__kampinfo_hitcamp c join #__kampinfo_hitsite s on (c.hitsite_id = s.id) join #__kampinfo_hitproject p on (p.id = s.hitproject_id and p.jaar = $this->jaar) order by c.minimumLeeftijd) data");
+	
+		$db->setQuery($query);
+	
+		$data = $db->loadObjectList();
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		return $data;
+	}
+}
