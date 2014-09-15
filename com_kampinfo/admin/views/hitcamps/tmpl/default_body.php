@@ -38,7 +38,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo $item->jaar; ?>
 		</td>
 		<td>
-			<?php echo JText::_($item->shantiFormuliernummer); ?>
+			<?php echo $item->jaar; ?>
 		</td>
 		<td>
 			<?php echo JText::_($item->minimumAantalDeelnemers); ?>

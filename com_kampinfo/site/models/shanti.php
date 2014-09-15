@@ -74,5 +74,4 @@ class KampInfoModelShanti extends KampInfoModelParent {
 		
 		return $rows;
 	}
-
 }

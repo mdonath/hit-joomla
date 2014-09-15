@@ -32,7 +32,7 @@ $this->state->set('list.columnCount', '13');
 		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITCAMPS_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITCAMPS_HEADING_SHANTIFORM', 'shantiFormuliernummer', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITCAMPS_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
 	</th>
 	<th>
 		Min

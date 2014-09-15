@@ -167,7 +167,6 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 		-> group('jaar');
 	
 		$db->setQuery($query);
-	
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
 			JError :: raiseWarning(500, $db->getErrorMsg());
