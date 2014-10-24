@@ -39,6 +39,14 @@ class KampInfoModelHitSite extends JModelAdmin {
 		}
 		return $form;
 	}
+	
+	public function getKampen() {
+		$app = JFactory::getApplication();
+		$db = JFactory :: getDBO();
+		$item = $this->getItem();
+		$siteId = $item->id;
+		return $this->getVolledigeKampenVanPlaats($db, $siteId);
+	}
 
 	/**
 	 * Method to get the data that should be injected in the form.
@@ -172,6 +180,40 @@ class KampInfoModelHitSite extends JModelAdmin {
 		$db->setQuery($query);
 		return $db->loadObjectList();
 	}
+	
+	private function getVolledigeKampenVanPlaats($db, $siteId) {
+		$query = $db->getQuery(true)
+		-> select('c.*, p.jaar')
+		-> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+		-> join('LEFT', '#__kampinfo_hitsite AS s ON (c.hitsite_id = s.id)')
+		-> join('LEFT', '#__kampinfo_hitproject AS p ON (s.hitproject_id = p.id)')
+		-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->getEscaped($siteId))
+		-> order('c.naam');
+		$db->setQuery($query);
+		
+		$result = $db->loadObjectList();
+		
+		// expand icons
+		foreach ($result as $kamp) {
+			$query = $db->getQuery(true);
+			$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde');
+			$query->from('#__kampinfo_hiticon i');
+			
+			$values=array();
+			foreach(explode(',', $kamp->icoontjes) as $naam) {
+				$values[] = $db->quote($db->getEscaped($naam));
+			}
+			$query->where('i.bestandsnaam in (' . implode(',', $values) . ')');
+			$query->order('i.volgorde');
+			
+			$db->setQuery($query);
+			$icons = $db->loadObjectList();
+			$kamp->icoontjes = $icons;
+		}		
+		
+		return $result;
+	}
+	
 
 	private function getHitPlaatsVanVorigJaar($db, $siteId) {
 		$query = $db->getQuery(true)

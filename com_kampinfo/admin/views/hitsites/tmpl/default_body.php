@@ -40,5 +40,10 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 		<td>
 			<?php echo $item->contactPersoonTelefoon; ?>
 		</td>
+		<td>
+			<a href="<?php echo JRoute :: _('index.php?option=com_kampinfo&view=hitsite&format=pdf&id='.(int)$item->id); ?>">
+					download
+			</a>
+		</td>
 	</tr>
 <?php endforeach; ?>
