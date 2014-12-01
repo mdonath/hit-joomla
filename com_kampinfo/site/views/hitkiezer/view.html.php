@@ -36,7 +36,7 @@ class KampInfoViewHitkiezer extends JView {
 		$document->addScript("media/com_kampinfo/js/common.js");
 		$document->addScript("media/com_kampinfo/js/hitkiezer.js");
 
-		$document->addScriptDeclaration('kampinfoConfig.iconFolderLarge = "'.JURI::root().$iconFolderLarge . '"; kampinfoConfig.iconExtension="'. $iconExtension .'"');
+		$document->addScriptDeclaration('kampinfoConfig.iconFolderLarge = "'.JURI::root().$iconFolderLarge . '"; kampinfoConfig.iconExtension="'. $iconExtension .'";');
 
 		// Display the view
 		parent :: display($tpl);

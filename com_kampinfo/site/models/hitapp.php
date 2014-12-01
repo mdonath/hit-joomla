@@ -40,6 +40,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
 		$query->order('c.naam');
 	
 		$db->setQuery($query);
@@ -72,6 +73,8 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		foreach ($hit->hitPlaatsen as $plaats) {
 			foreach($plaats->hitKampen as $kamp) {
 				foreach ($kamp->icoontjes as $icon) {
+					$result[$icon->volgorde] = $icon;
+					/*
 					if ($icon->soort != 'A') { 
 						$result[$icon->volgorde] = $icon;
 					} else {
@@ -80,6 +83,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 							$result[$icon->volgorde] = $icon;
 						}
 					}
+					*/
 				}
 			}
 		}
