@@ -206,10 +206,10 @@ $eind = new JDate($activiteit->eindDatumTijd);
 									$startInsch = (new JDate($activiteit->startInschrijving))->getTimestamp();
 									$isInschrijvingGestart = $startInsch <= (new JDate())->getTimestamp(); 
 								?>
-								Dit HIT-Kamp start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
+								Dit HIT-onderdeel start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
 
 								<?php if($begintOpGoedeVrijdag) {?>
-								Dit HIT-Kamp begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
+								Dit HIT-onderdeel begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
 								Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
 								<?php } ?>
 							</p>
@@ -219,7 +219,10 @@ $eind = new JDate($activiteit->eindDatumTijd);
 							<?php } ?>
 							<?php */ ?>
 							<?php if ($activiteit->isouderkind == 1) { ?>
-							<p>Bij de ouder-kind activiteiten moet het kind jeugdlid zijn van Scouting Nederland. De ouder hoeft geen lid te zijn en wordt tijdelijk relatielid van de HIT. Let op: ook de ouder moet zich altijd inschrijven.</p>
+							<?php /*
+								<p>Bij de ouder-kind activiteiten moet het kind jeugdlid zijn van Scouting Nederland. De ouder hoeft geen lid te zijn en wordt tijdelijk relatielid van de HIT. Let op: ook de ouder moet zich altijd inschrijven.</p>
+							*/ ?>
+								<p><b>BELANGRIJKE INFORMATIE VOOR OUDERS:</b><br/>Inschrijven voor dit HIT-onderdeel gebeurt met een groep van twee personen: één kind met één ouder als begeleider. De genoemde kampprijs geldt per persoon, en beide personen schrijven zich afzonderlijk in. Bij uitzondering kunnen ook ouders die geen lid zijn, zich voor dit onderdeel inschrijven, op voorwaarde dat het kind wél lid is van Scouting Nederland. Ouders die geen lid zijn, kiezen bij het inschrijven voor "inschrijven als niet-lid". De niet-leden vullen eerst hun persoonlijke gegevens in voordat ze in het inschrijfformulier terecht komen. Na het betalen via iDEAL volgt een standaardmelding dat er een automatische bevestigingsemail verstuurd zal worden. Voor niet-leden gaat dit niet automatisch; deze email wordt binnen enkele dagen handmatig verstuurd. Ouders die zich op deze manier inschrijven worden geregistreerd als "relatie van de landelijke HIT". Het aanvragen van een inlogaccount is voor een relatie niet mogelijk. Eventuele wijzigingen en annuleringen moeten daarom persoonlijk worden doorgegeven aan de HIT Helpdesk.</p>
 							<?php }?>
 							<?php if ($activiteit->shantiFormuliernummer > 0 /*&& $isInschrijvingGestart*/) { ?>
 								<input style="float: right" value="Direct inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />

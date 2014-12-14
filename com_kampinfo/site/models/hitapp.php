@@ -1,6 +1,7 @@
 <?php defined('_JEXEC') or die('Restricted access');
 
 include_once dirname(__FILE__) . '/kampinfomodelparent.php';
+require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 /**
  * KampInfo HitApp Model.
@@ -234,17 +235,28 @@ EOT;
 				$subgroep = $kamp->subgroepsamenstellingMinimum . ' pers';
 			}
 		}
+
+		$vol = KampInfoUrlHelper::isVol($kamp) ? "true" : "false";
+		$volTekst = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
+		
 		echo <<< EOT
 		$sep {
 			  "id" : $kamp->id
 			, "naam": "{$this->sanitizeText($kamp->naam)}"
 			, "startDatumTijd": "{$this->format($kamp->startDatumTijd, "Y-m-d H:i")}"
 			, "eindDatumTijd": "{$this->format($kamp->eindDatumTijd, "Y-m-d H:i")}"
+			, "margeTeJong": {$kamp->margeAantalDagenTeJong}
 			, "minimumLeeftijd": {$kamp->minimumLeeftijd}
 			, "maximumLeeftijd": {$kamp->maximumLeeftijd}
+			, "margeTeOud": {$kamp->margeAantalDagenTeOud}
 			, "subgroep": "{$subgroep}"
 			, "deelnamekosten": "{$kamp->deelnamekosten}"
 			, "hitCourantTekst": "{$this->sanitizeText($kamp->hitCourantTekst)}"
+			, "minAantalDeelnemers": {$kamp->minimumAantalDeelnemers}
+			, "maxAantalDeelnemers": {$kamp->maximumAantalDeelnemers}
+			, "vol": {$vol}
+			, "volTekst": "{$this->sanitizeText($volTekst)}"
+			, "minSubgroep": {$kamp->subgroepsamenstellingMinimum}
 			, "icoontjes": [
 
 EOT;

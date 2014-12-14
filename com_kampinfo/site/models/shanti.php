@@ -67,6 +67,7 @@ class KampInfoModelShanti extends KampInfoModelParent {
 			-> join('LEFT', '#__kampinfo_hitsite AS s ON s.hitproject_id=p.id')
 			-> join('LEFT', '#__kampinfo_hitcamp AS c ON c.hitsite_id=s.id')
 			-> where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')')
+			-> where('c.published = 1')
 			-> order('p.jaar, s.naam, c.naam');
 		
 		$db->setQuery($query);
