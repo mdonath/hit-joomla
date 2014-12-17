@@ -10,7 +10,8 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 
 	public function generate() {
 		$params = &JComponentHelper::getParams('com_kampinfo');
-
+		//$useComponentUrls = $params->get('useComponentUrls') == 1;
+		
 		if ($this->magHet($params)) {
 			$projectId = $params->get('huidigeActieveJaar');
 			$this->hitcourant($this->getHitData($projectId));
@@ -140,6 +141,9 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	 * @param unknown $hit
 	 */
 	private function hitcourant($hit) {
+		$params = &JComponentHelper::getParams('com_kampinfo');
+		$shantiUrl = $params->get('shantiUrl');
+		
 		echo <<< EOT
 {	"project": {
 		  "id" : {$hit->id}
@@ -148,6 +152,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		, "maandag": "{$this->format($hit->maandag, "Y-m-d")}"
 		, "inschrijvingStartdatum": "{$this->format($hit->inschrijvingStartdatum, "Y-m-d")}"
 		, "inschrijvingEinddatum": "{$this->format($hit->inschrijvingEinddatum, "Y-m-d")}"
+		, "shantiUrl": "{$shantiUrl}"
 		, "gebruikteIconen" : [
 			{$this->print_iconen($hit->gebruikteIconenVoorCourant)}
 		]
@@ -187,7 +192,7 @@ EOT;
 EOT;
 		$sep = '  ';
 		foreach ($hit->hitPlaatsen as $plaats) {
-			$this->hitcourant_plaats($plaats, $sep);
+			$this->hitcourant_plaats($hit, $plaats, $sep);
 			$sep = ', ';
 		}
 		echo <<< EOT
@@ -200,7 +205,7 @@ EOT;
 	 * 
 	 * @param unknown $plaats
 	 */
-	private function hitcourant_plaats($plaats, $sep) {
+	private function hitcourant_plaats($hit, $plaats, $sep) {
 echo <<< EOT
 	$sep {
 		  "id" : $plaats->id 
@@ -211,7 +216,7 @@ echo <<< EOT
 EOT;
 		$sep = '  ';
 		foreach ($plaats->hitKampen as $kamp) {
-			$this->hitcourant_kamp($kamp, $sep);
+			$this->hitcourant_kamp($hit, $plaats, $kamp, $sep);
 			$sep = ', ';
 		}
 echo <<< EOT
@@ -225,7 +230,7 @@ EOT;
 	 * 
 	 * @param unknown $kamp
 	 */
-	private function hitcourant_kamp($kamp, $sep) {
+	private function hitcourant_kamp($hit, $plaats, $kamp, $sep) {
 		if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
 			$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
 		} else {
@@ -238,10 +243,12 @@ EOT;
 
 		$vol = KampInfoUrlHelper::isVol($kamp) ? "true" : "false";
 		$volTekst = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
-		
+		$hitnlUrl = JURI::base() . KampInfoUrlHelper::activiteitURL($plaats, $kamp, $hit->jaar, false);
 		echo <<< EOT
 		$sep {
 			  "id" : $kamp->id
+			, "shantiId": {$kamp->shantiFormuliernummer}
+			, "hitnlUrl": "{$hitnlUrl}"
 			, "naam": "{$this->sanitizeText($kamp->naam)}"
 			, "startDatumTijd": "{$this->format($kamp->startDatumTijd, "Y-m-d H:i")}"
 			, "eindDatumTijd": "{$this->format($kamp->eindDatumTijd, "Y-m-d H:i")}"
