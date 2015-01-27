@@ -53,6 +53,10 @@ abstract class KampInfoHelper {
 	 */
 	public static function eersteHitDag($jaar) { // VRIJDAG DUS
 		$paasKalender = array(
+				2004 => DateTime::createFromFormat('d-m-Y', '09-04-2004'),
+				2005 => DateTime::createFromFormat('d-m-Y', '25-03-2005'),
+				2006 => DateTime::createFromFormat('d-m-Y', '14-04-2006'),
+				2007 => DateTime::createFromFormat('d-m-Y', '06-04-2007'),
 				2008 => DateTime::createFromFormat('d-m-Y', '21-03-2008'),
 				2009 => DateTime::createFromFormat('d-m-Y', '10-04-2009'),
 				2010 => DateTime::createFromFormat('d-m-Y', '02-04-2010'),

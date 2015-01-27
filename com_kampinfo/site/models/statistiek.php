@@ -9,20 +9,20 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
  */
 class KampInfoModelStatistiek extends KampInfoModelParent {
 
-	public function getJaar() {
-		$jaar = JRequest :: getInt('jaar');
-		if (empty($jaar)) {
-			$jaar = date("Y");
-		}
-		return $jaar;
-	}
-
 	public function getSoort() {
 		$soort =  JRequest :: getString('soort');
 		if (empty($soort)) {
 			$soort = 'Standaard';
 		}
 		return $soort;
+	}
+
+	public function getJaar() {
+		$jaar = JRequest :: getInt('jaar');
+		if (empty($jaar)) {
+			$jaar = date("Y");
+		}
+		return $jaar;
 	}
 
 	public function getPlaats() {
@@ -209,7 +209,7 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 				$result .= ','.$cumulatief[$jaar];
 			}
 			$result .= '],';
-			if ($row->inschrijfdag > 80) { // na dag 80 is het niet meer interessant
+			if ($row->inschrijfdag > 100) { // na dag 100 is het niet meer interessant
 				break;
 			}
 		}
@@ -234,11 +234,12 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 		$db = JFactory :: getDBO();
 		$query = $db->getQuery(true);
 
-		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from kuw4c_kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
+		$query->select('1 + datediff(datumInschrijving, ed.eersteDag) as inschrijfdag');
 		foreach ($jaren as $jaar) {
-			$query->select("sum(if(d.jaar=$jaar,1,0)) as \"y$jaar\"");
+			$query->select("sum(d.jaar=$jaar) as \"y$jaar\"");
 		}
 		$query->from('#__kampinfo_deelnemers d');
+		$query->innerJoin('(select jaar, min(datumInschrijving) as eersteDag from #__kampinfo_deelnemers group by jaar) ed on (ed.jaar=d.jaar)');
 		$query->group('inschrijfdag');
 		$db->setQuery($query);
 
@@ -380,6 +381,67 @@ class HerkomstDeelnemersInJaarStatistiek extends AbstractStatistiek {
 		return $data;
 	}
 }
+
+class HerkomstDeelnemersInPlaatsInJaarStatistiek extends AbstractStatistiek {
+	private $jaar;
+	private $plaats;
+
+	public function __construct($jaar = null, $plaats=null) {
+		parent::__construct("geochart", "Herkomst deelnemers $jaar in $plaats", 600, 400);
+		$this->jaar = $jaar;
+		$this->plaats = $plaats;
+	}
+
+	public function getDrawVisualization() {
+		$result = "function drawVisualization() {
+				var data = google.visualization.arrayToDataTable([";
+		$result .= "['Plaats', 'Aantal'],";
+
+		$data = $this->getData();
+
+		foreach ($data as $row) {
+			$result .= "['". $row->plaats . "', " . $row->aantal ."],\n";
+		}
+
+		$result .= "
+			]);
+			new google.visualization.GeoChart(document.getElementById('visualization')).
+			draw(data, {
+				title: '". $this->getTitle()  ."',
+				width : ". $this->getWidth()  .",
+				height: ". $this->getHeight() .",
+				region: 'NL',
+				displayMode: 'markers',
+				resolution: 'provinces'
+			});
+		}";
+		return $result;
+	}
+
+	private function getData() {
+		$db = JFactory :: getDBO();
+		$query = $db->getQuery(true);
+
+		$query->select("d.herkomst as plaats");
+		$query->select("count(*) as aantal");
+		$query->from('#__kampinfo_deelnemers d');
+		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
+		$query->innerJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
+		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
+		$query->where("s.naam = ". $db->quote($db->getEscaped($this->plaats)));
+		$query->group("herkomst");
+		$query->order("aantal desc");
+
+		$db->setQuery($query);
+
+		$data = $db->loadObjectList();
+		if ($db->getErrorNum()) {
+			JError :: raiseWarning(500, $db->getErrorMsg());
+		}
+		return $data;
+	}
+}
+
 
 
 class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
@@ -530,7 +592,7 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 
 		$query->select('leeftijd');
 		foreach ($jaren as $jaar) {
-			$query->select("sum(if(d.jaar=$jaar,1,0)) as \"y$jaar\"");
+			$query->select("sum(d.jaar=$jaar) as \"y$jaar\"");
 		}
 		$query->from('#__kampinfo_deelnemers d');
 		$query->group('leeftijd');

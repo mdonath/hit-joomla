@@ -11,7 +11,12 @@ class SolMapping {
 		$mapping = array(
 				'Locatie' => new IgnoredVeld()
 				, 'Formuliernummer' => new GewoonVeld('shantiFormuliernummer')
+				, 'Formulier' => new GewoonVeld('formulierNaam')
 				, 'Aantal dln\'s' => new GewoonVeld('aantalDeelnemers')
+				, 'Minimum leeftijd' => new GewoonVeld('minimumLeeftijd')
+				, 'Maximum leeftijd' => new GewoonVeld('maximumLeeftijd')
+				, 'Minimum aantal deelnemers' => new GewoonVeld('minimumAantalDeelnemers')
+				, 'Maximum aantal deelnemers' => new GewoonVeld('maximumAantalDeelnemers')
 				, 'Gereserveerd' => new GewoonVeld('gereserveerd')
 				, 'Subgroepen' => new GewoonVeld('aantalSubgroepen')
 		);
@@ -33,6 +38,7 @@ class SolMapping {
 	 		, 'Lid geslacht' => new GeslachtVeld('geslacht')
 	 		, 'Datum inschrijving' => new DatumVeld('datumInschrijving')
 	 		, 'Formulier' => new GewoonVeld('formulier')
+			, 'Deelnemer status' => new GewoonVeld('status')
 		);
 		return $mapping;
 	}

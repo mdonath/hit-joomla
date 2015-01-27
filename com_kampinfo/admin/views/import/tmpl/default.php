@@ -32,35 +32,6 @@ JHtml::_('behavior.tooltip');
 
 </form>
 
-<!-- 
-<form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
-	enctype="multipart/form-data" 
-	method="post"
-	name="adminForm"
-	id="adminFormDeelnemers"
->
-
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('Importeer Deelnemers'); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset("importDeelnemers") as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-			<li>
-				<label></label><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" />
-			</li>
-		</ul>
-	</fieldset>
-
-	
-	<div>
-		<input type="hidden" name="task" value="import.importDeelnemers" />
-		<?php echo JHtml::_('form.token'); ?>
-	</div>
-
-</form>
- -->
-
 
 <form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
 	enctype="multipart/form-data" 
@@ -109,3 +80,32 @@ JHtml::_('behavior.tooltip');
 	</div>
 
 </form>
+
+
+<form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
+	enctype="multipart/form-data" 
+	method="post"
+	name="adminForm"
+	id="adminFormDeelnemers"
+>
+
+	<fieldset class="adminform">
+		<legend><?php echo JText::_('Importeer Deelnemers'); ?></legend>
+		<ul class="adminformlist">
+			<?php foreach($this->form->getFieldset("importDeelnemers") as $field): ?>
+				<li><?php echo $field->label;echo $field->input;?></li>
+			<?php endforeach; ?>
+			<li>
+				<label></label><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" />
+			</li>
+		</ul>
+	</fieldset>
+
+	
+	<div>
+		<input type="hidden" name="task" value="import.importDeelnemers" />
+		<?php echo JHtml::_('form.token'); ?>
+	</div>
+
+</form>
+ 

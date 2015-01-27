@@ -444,66 +444,6 @@ class KampInfoViewHitSite extends JView {
 		$pdf = new PDF($plaats, $kampen);
 		$pdf->printPlaats();
 
-		// http://localhost/HIT/administrator/index.php?option=com_kampinfo&view=hitsite&format=pdf&id=37
-		/*
-		* ["naam"]=> string(9) "Stookkamp"
-		* ["isouderkind"]=> string(1) "1"
-		* ["activiteitengebieden"]=> string(48) "buitenleven,sportenspel,uitdagend,veiligengezond"
-		* ["titeltekst"]=> string(29) "Stookkamp, too HIT to handle!"
-		* ["startDatumTijd"]=> string(19) "2014-04-18 18:00:00"
-		* ["eindDatumTijd"]=> string(19) "2014-04-21 21:00:00"
-		* ["deelnamekosten"]=> string(2) "35"
-		* ["minimumLeeftijd"]=> string(2) "10"
-		* ["maximumLeeftijd"]=> string(2) "14"
-		* ["subgroepsamenstellingMinimum"]=> string(1) "1"
-		* ["subgroepsamenstellingMaximum"]=> string(1) "3"
-		* ["subgroepsamenstellingExtra"]=> string(1) "0"
-		* ["websiteAdres"]=> string(23) "http://www.stookkamp.nl"
-		* ["webadresFoto1"]=> string(41) "http://www.stookkamp.nl/img/88303-106.jpg"
-		* ["webadresFoto2"]=> string(41) "http://www.stookkamp.nl/img/88303-107.jpg"
-		* ["webadresFoto3"]=> string(41) "http://www.stookkamp.nl/img/88303-108.jpg"
-		* ["websiteContactTelefoonnummer"]=> string(11) "06-51200626"
-		* ["websiteContactEmailadres"]=> string(17) "info@stookkamp.nl"
-		* ["websiteContactpersoon"]=> string(8) "Vincent2"
-		* ["minimumAantalDeelnemers"]=> string(2) "30"
-		* ["aantalDeelnemers"]=> string(2) "40"
-		* ["gereserveerd"]=> string(2) "40"
-		* ["maximumAantalDeelnemers"]=> string(2) "41"
-		* ["maximumAantalSubgroepjes"]=> string(1) "0"
-		* ["maximumAantalUitEenGroep"]=> string(2) "10"
-		* ["margeAantalDagenTeJong"]=> string(2) "90"
-		* ["margeAantalDagenTeOud"]=> string(2) "90"
-		* ["redenAfwijkingMarge"]=> string(0) ""
-		* ["aantalSubgroepen"]=> string(2) "22"
-		* ["minimumAantalSubgroepjes"]=> string(1) "0"
-		* ["hitCourantTekst"]=> string(66) "MOOOI! Uitroken die hap!2222 Geweldig, tags werken dus niet! dik"
-		* ["helpdeskOverschrijdingAantal"]=> string(1) "0"
-		* ["helpdeskOverschrijdingLeeftijd"]=> string(1) "0"
-		* ["helpdeskTeJongMagAantal"]=> string(1) "0"
-		* ["helpdeskTeOudMagAantal"]=> string(1) "0"
-		* ["helpdeskContactpersoon"]=> string(7) "martijn"
-		* ["helpdeskContactEmailadres"]=> string(23) "martijn@donath-thuis.nl"
-		* ["helpdeskContactTelefoonnummer"]=> string(7) "martijn"
-		*
-		* ["icoontjes"]=> string(46) "staand,0pers,groepje,tent,opvuur,geenmobieltje"
-		* ["websiteTekst"]=> string(1862) "
-		*
-		* ["id"]=> string(3) "505"
-		* ["asset_id"]=> string(3) "173"
-		* ["hitsite_id"]=> string(2) "37"
-		* ["deelnemersnummer"]=> string(1) "0"
-		* ["hitsite"]=> string(0) ""
-		* ["doelgroepen"]=> string(0) ""
-		* ["shantiFormuliernummer"]=> string(5) "11153"
-		* ["akkoordHitKamp"]=> string(1) "1"
-		* ["akkoordHitPlaats"]=> string(1) "1"
-		* ["doelstelling"]=> string(23) "Alles in de fik!"
-		* ["helpdeskOpmerkingen"]=> string(0) ""
-		* ["published"]=> string(1) "1"
-		* ["publish_up"]=> string(19) "0000-00-00 00:00:00"
-		* ["publish_down"]=> string(19) "0000-00-00 00:00:00" }
-		*/
-
 		// export PDF
 		$pdf->Output($pdf->getPdfOutputName(), 'D');
 	}

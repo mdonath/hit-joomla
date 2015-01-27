@@ -15,6 +15,6 @@ if (false) {
 	$result = $mapper->read("3331_deelnemergegevens.csv");
 } else {
 	$mapper = new XmlMapper($dlnMapping);
-	$result = $mapper->read("3331_participants_export-trimmed.xml");
+	$result = $mapper->read("5022_participants_export.xml");
 }
 print_r($result);

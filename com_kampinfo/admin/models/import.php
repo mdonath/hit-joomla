@@ -158,12 +158,10 @@ class KampInfoModelImport extends JModelAdmin {
 	}
 
 	/**
-	 * Importeert de deelnemerinschrijfgegevens via een upload van een CSV.
+	 * Importeert de deelnemerinschrijfgegevens via een upload van een XML (let op: XML!).
 	 */
 	public function importDeelnemergegevens() {
 		$app = JFactory::getApplication();
-		$app->enqueueMessage("Tijdelijks uitgeschakeld");
-		return true;
 		
 		$jinput = $app->input;
 		$formdata = $jinput->get('jform', array(), 'array');
@@ -183,32 +181,92 @@ class KampInfoModelImport extends JModelAdmin {
 		}
 		$app->enqueueMessage('File: ' . $file);
 
-		$mapper = new CsvMapper(SolMapping::getDeelnemergegevensMapping($jaar));
+		$mapper = new XmlMapper(SolMapping::getDeelnemergegevensMapping($jaar));
 		$rows = $mapper->read($file);
 
+		$count = count($rows);
+		
+		if ($count == 0) {
+			$app->enqueueMessage('geen rijen gevonden');
+			return false;
+		}
+		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
+		
 		$count = self::updateDeelnemergegevens($rows,  $jaar);
 		$app->enqueueMessage("Er zijn nu $count deelnemers toegevoegd.");
+
 		return true;
 	}
 
 	private function updateInschrijvingen($rows, $jaar) {
 		$db = JFactory :: getDbo();
 		$count = 0;
+		
+		$postActionRows = array();
+		
 		foreach ($rows as $inschrijving) {
 			$aantalDeelnemers = $inschrijving->aantalDeelnemers;
 			$gereserveerd = $inschrijving->gereserveerd;
 			$aantalSubgroepen = $inschrijving->aantalSubgroepen;
+			$minimumAantalDeelnemers = $inschrijving->minimumAantalDeelnemers;
+			$maximumAantalDeelnemers = $inschrijving->maximumAantalDeelnemers;
+			$minimumLeeftijd = $inschrijving->minimumLeeftijd;
+			$maximumLeeftijd = $inschrijving->maximumLeeftijd;
+				
 			if (empty($gereserveerd)) {
 				$gereserveerd = 0;
 			}
+			
+			$formulierNaamParts = array();
+			// Als formulier naam een nummer tussen '{' en '}' heeft, dan is het een speciaal geval.
+			// Het nummer is het shantiFormuliernummer waar de betreffende gegevens bij opgeteld moeten worden.
+			preg_match("/HIT .* \{(\d+)\}/", $inschrijving->formulierNaam, $formulierNaamParts);
+			if (count($formulierNaamParts) > 0) {
+				// Het extra optellen stellen we uit tot nadat we alle gewone formulieren hebben gehad.
+				$postActionRows[] = $inschrijving;
+			} else {
+				$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
+						. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
+						. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
+						. ", c.aantalSubgroepen = " .	(int)($db->getEscaped($aantalSubgroepen))
+						. ", c.minimumAantalDeelnemers = " . (int)($db->getEscaped($minimumAantalDeelnemers))
+						. ", c.maximumAantalDeelnemers = " . (int)($db->getEscaped($maximumAantalDeelnemers))
+						. ", c.minimumLeeftijd = " . (int)($db->getEscaped($minimumLeeftijd))
+						. ", c.maximumLeeftijd = " . (int)($db->getEscaped($maximumLeeftijd))
+						. " WHERE "
+						. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->getEscaped($jaar))
+						. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
+						;
+				$db->setQuery($query);
+				$db->execute();
+				// Check for a database error.
+				if ($db->getErrorNum()) {
+					JError :: raiseWarning(500, $db->getErrorMsg());
+				}
+				// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
+				$count += $db->getAffectedRows();
+			}
+		}
+		
+		// We gaan nu de speciale formulieren verwerken.
+		foreach ($postActionRows as $inschrijving) {
+			$gereserveerd = $inschrijving->gereserveerd;
+				
+			$formulierNaamParts = array();
+			preg_match("/HIT .* \{(\d+)\}/", $inschrijving->formulierNaam, $formulierNaamParts);
+			
+			if (empty($gereserveerd)) {
+				$gereserveerd = 0;
+			}
+				
 			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
-					. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
-					. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
-					. ", c.aantalSubgroepen = " .	(int)($db->getEscaped($aantalSubgroepen))
+					. "	 c.aantalDeelnemers = c.aantalDeelnemers + " .	(int)($db->getEscaped($inschrijving->aantalDeelnemers))
+					. ", c.gereserveerd = c.gereserveerd + " .			(int)($db->getEscaped($gereserveerd))
+					. ", c.aantalSubgroepen = c.aantalSubgroepen + " .	(int)($db->getEscaped($inschrijving->aantalSubgroepen))
 					. " WHERE "
 					. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->getEscaped($jaar))
-					. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
-					;
+					. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($formulierNaamParts[1]))
+			;
 			$db->setQuery($query);
 			$db->execute();
 			// Check for a database error.
@@ -240,10 +298,10 @@ class KampInfoModelImport extends JModelAdmin {
 		
 		// Ouwe meuk weggooien
 		self::verwijderDeelnemergegevens($jaar);
-		$deelnemerNummers = array();
+		$deelnemerNummers = array(); // FIXME uitzoeken of deelnemerNummers inderdaad vaker kunnen voorkomen
 		$count = 0;
 		foreach ($rows as $deelnemer) {
-			if (!in_array($deelnemer->dlnnr, $deelnemerNummers)) {
+			if (!in_array($deelnemer->dlnnr, $deelnemerNummers) && isset($deelnemer->formulier)) {
 				$deelnemerNummers[] = $deelnemer->dlnnr;
 				
 				$formulier = array();
@@ -263,6 +321,27 @@ class KampInfoModelImport extends JModelAdmin {
 							', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]))) .
 							', hitcamp = ' . $db->quote($db->getEscaped($formulier[2])) .
 							', hitcampId = ' . (int)($db->getEscaped($formulier[3]))
+					);
+					$db->setQuery($query);
+					$db->query();
+					$count++;
+				} else {
+					// oude formulieren hebben het hitcampId niet tussen haakjes
+					$formulier = array();
+					preg_match("/HIT (\w+) (.*)/", $deelnemer->formulier, $formulier);
+					$db = JFactory :: getDbo();
+					$query = $db->getQuery(true);
+					$query->insert('#__kampinfo_deelnemers');
+					$query->set(
+							'  jaar = '. (int)($db->getEscaped($jaar)) .
+							', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
+							', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
+							', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
+							', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
+							', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
+							', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]))) .
+							', hitcamp = ' . $db->quote($db->getEscaped($formulier[2])) .
+							', hitcampId = null'
 					);
 					$db->setQuery($query);
 					$db->query();

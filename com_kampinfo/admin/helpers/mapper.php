@@ -55,7 +55,7 @@ class XmlMapper extends AbstractMapper {
 	
 	private function leesHeader($document) {
 		$domxpath = new DOMXPath($document);
-		$elements = $domxpath->query('//listheader/row/*');
+		$elements = $domxpath->query('(//listheader)[1]/row/*');
 
 		$rows = array();
 		if (!is_null($elements)) {
@@ -73,7 +73,8 @@ class XmlMapper extends AbstractMapper {
 		$rows = array();
 
 		$domxpath = new DOMXPath($document);
-		$elements = $domxpath->query('//listbody/row');
+		// Er is ook een tweede listbody met REST / pager -achtige dingen. We moeten alleen de eerst hebben.
+		$elements = $domxpath->query('(//listbody)[1]/row');
 
 		if (!is_null($elements)) {
 			foreach ($elements as $element) {
@@ -87,7 +88,13 @@ class XmlMapper extends AbstractMapper {
 						$veld->set($object, $data->item($i)->nodeValue);
 					}
 				}
-				$rows[] = $object;
+				if (isset($object->status)) {
+					if ($object->status == 'Deelname afgerond' || $object->status == 'Deelnemer staat ingeschreven') {
+						$rows[] = $object;
+					}
+				} else {
+					$rows[] = $object;
+				}
 			}
 		}
 		return $rows;
