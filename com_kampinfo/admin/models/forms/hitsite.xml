@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-    
 	<fieldset
 			name="hitsite"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
 		<field
-				name="id"
-				type="hidden"
-		/>
-		<field
 				name="hitproject_id"
 				type="Project"
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
-				class="inputbox"
 				required="true"
 		/>
 		<field
@@ -22,10 +16,41 @@
 				type="text"
 				label="COM_KAMPINFO_HITSITE_NAAM_LABEL"
 				description="COM_KAMPINFO_HITSITE_NAAM_DESC"
-				size="50"
-				class="inputbox"
+				maxlength="50"
 				required="true"
 				default=""
+		/>
+		
+		<field type="spacer" name="myspacerContact" label="(Onderstaande gegevens zijn alleen voor de helpdesk)" />
+		
+		<field
+				name="contactPersoonNaam"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
+				maxlength="50"
+				required="true"
+		/>
+		<field
+				name="contactPersoonEmail"
+				type="email"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
+				maxlength="50"
+				required="true"
+				validate="email"
+		/>
+		<field
+				name="contactPersoonTelefoon"
+				type="text"
+				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
+				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
+				maxlength="50"
+				required="true"
+		/>
+		<field
+				name="id"
+				type="hidden"
 		/>
 	</fieldset>
 
@@ -39,9 +64,7 @@
 				type="text"
 				label="Projectcode"
 				description="De projectcode voor de financiële administratie van Scouting Nederland (in te vullen door PT)"
-				size="50"
-				maxlength="50"				
-				class="inputbox"
+				maxlength="50"
 		/>
 	</fieldset>
 	
@@ -57,42 +80,7 @@
 				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
 				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
 				rows="6"
-				cols="40"
-				class="inputbox"
-				required="true"
-		/>
-	</fieldset>
-	
-	 <fieldset
-			name="contact"
-			addfieldpath="/administrator/components/com_kampinfo/models/fields"
-	>
-		<field
-				name="contactPersoonNaam"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
-				size="50"
-				class="inputbox"
-				required="true"
-		/>
-		<field
-				name="contactPersoonEmail"
-				type="email"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
-				size="50"
-				class="inputbox"
-				required="true"
-				validate="email"
-		/>
-		<field
-				name="contactPersoonTelefoon"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
-				size="50"
-				class="inputbox"
+				class="input-xxlarge"
 				required="true"
 		/>
 	</fieldset>
@@ -106,7 +94,7 @@
 				type="radio"
 				label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
 				description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
-				class="inputbox"
+				class="btn-group btn-group-yesno"
 				default="0"
 		>
 			<option value="0">JNO</option>
@@ -122,7 +110,6 @@
 				translate_label="false"
 				filter="rules"
 				validate="rules"
-				class="inputbox"
 				component="com_kampinfo"
 				section="hitsite"
 		/>

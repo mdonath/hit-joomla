@@ -216,7 +216,7 @@ class PDF extends PDF_HTML {
 		$this->kampen = $kampen;
 		$this->jaar = $kampen[0]->jaar;
 
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$this->iconFolder = $params->get('iconFolderLarge');
 		$this->iconExtension = $params->get('iconExtension');
 	}
@@ -429,7 +429,7 @@ class PDF extends PDF_HTML {
 /**
  * HitSite PDF View.
  */
-class KampInfoViewHitSite extends JView {
+class KampInfoViewHitSite extends JViewLegacy {
 
 	public function display($tpl = null) {
 		$plaats = $this->get('Item');
@@ -437,7 +437,7 @@ class KampInfoViewHitSite extends JView {
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 

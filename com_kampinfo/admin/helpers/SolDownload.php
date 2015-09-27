@@ -25,7 +25,7 @@ class SolDownload {
 		try {
 			self::signOnWithRole($client, $user, $password, $role);
 			$form_data = $client->doTAB($task, $action, $button, $params);
-			$result = self :: toXml($form_data);
+			$result = self::toXml($form_data);
 			$soap = $client->logout();
 	
 			return $result;
@@ -46,7 +46,8 @@ class SolDownload {
 	private static function switchToRole($client, $role) {
 		$switched_role = $client->doTAB("ma_function", "edit", "changeRole", array('role_id'=>$role));
 
-		$document = DomDocument::loadXML($switched_role);
+		$document = new DomDocument();
+		$document->loadXML($switched_role);
 		$XPath = new DomXPath($document);
 		$nodes = $XPath->query("//result/var[@name='sess_id']");
 		foreach ($nodes as $node) {
@@ -55,7 +56,8 @@ class SolDownload {
 	}
 
 	private static function toXml($form_data) {
-		$document = DomDocument::loadXML($form_data);
+		$document = new DomDocument();
+		$document->loadXML($form_data);
 		$document->formatOutput = true;
 		return $document->saveXML();
 	}

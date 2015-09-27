@@ -8,7 +8,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelHitCourant extends KampInfoModelParent {
 
 	public function generate() {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 
 		if ($this->magHet($params)) {
 			$projectId = $params->get('huidigeActieveJaar');
@@ -20,12 +20,12 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 
 	//////////////////////////////////////
 	function getHitPlaatsen($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitsite s');
-		$query->where('(s.hitproject_id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->where('(s.hitproject_id = ' . (int) ($db->escape($projectId)) . ')');
 		$query->order('s.naam');
 	
 		$db->setQuery($query);
@@ -33,12 +33,12 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 		return $plaatsenInJaar;
 	}
 	function getHitKampen($hitsiteId, $iconenLijst) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
 		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
 		$query->order('c.naam');
 	
@@ -89,7 +89,7 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 	
 	private function prepareProject($project) {
 		$this->convertDate($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
-		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m') != $project->maandag->format('m');
+		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m',true) != $project->maandag->format('m',true);
 	}
 
 	private function convertDate($object, $datumVelden) {
@@ -355,7 +355,7 @@ EOT;
 
 	
 	private function format($date, $format) {
-		$result = $date->format($format);
+		$result = $date->format($format, true);
 		$vertaling = array(
 				'Monday' => 'maandag',
 				'Tuesday' => 'dinsdag',

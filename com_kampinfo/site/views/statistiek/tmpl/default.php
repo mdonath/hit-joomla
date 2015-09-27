@@ -4,7 +4,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfo.p
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 // config
-$params = &JComponentHelper::getParams('com_kampinfo');
+$params =JComponentHelper::getParams('com_kampinfo');
 
 // model
 $statistiek = $this->statistiek;

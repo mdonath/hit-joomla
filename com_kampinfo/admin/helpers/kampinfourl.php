@@ -7,7 +7,7 @@ defined('_JEXEC') or die;
 abstract class KampInfoUrlHelper {
 
 	public static function imgUrl($folder, $naam, $ext = '.gif', $title, $alt = '') {
-		return '<img src="' . JURI :: root() . $folder . '/' . $naam . $ext . '" title="' . $title . '" alt="' . $alt . '"/>';
+		return '<img src="' . JURI::root() . $folder . '/' . $naam . $ext . '" title="' . $title . '" alt="' . $alt . '"/>';
 	}
 
 	public static function isYoutubeFilmpje($url) {

@@ -9,29 +9,29 @@ jimport('joomla.application.component.modelitem');
 abstract class KampInfoModelParent extends JModelItem {
 
 	function getHitProject($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitproject p');
-		$query->where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->where('(p.id = ' . (int) ($db->escape($projectId)) . ')');
 	
 		$db->setQuery($query);
 		$project = $db->loadObjectList();
 	
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $project[0];
 	}
 	
 	function getHitPlaatsen($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitsite s');
-		$query->where('(s.hitproject_id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->where('(s.hitproject_id = ' . (int) ($db->escape($projectId)) . ')');
 		$query->where('(s.published=1 and s.akkoordHitPlaats=1)');
 		$query->order('s.naam');
 	
@@ -41,13 +41,13 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	function getHitPlaats($hitsiteId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true)
 			-> select('s.*, p.jaar')
 			-> from('#__kampinfo_hitsite s')
 			-> join('LEFT', '#__kampinfo_hitproject p ON (s.hitproject_id = p.id)')
-			-> where('(s.id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+			-> where('(s.id = ' . (int)($db->escape($hitsiteId)) . ')');
 	
 		$db->setQuery($query);
 		$plaats = $db->loadObjectList();
@@ -55,12 +55,12 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	function getHitKampen($hitsiteId, $iconenLijst) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
 		$query->where('(c.published = 1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
 		$query->order('c.naam');
 
@@ -74,20 +74,20 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	protected function getLaatstBijgewerktOp($jaar) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		
 		$query = $db->getQuery(true);
 		$query->select('max(bijgewerktOp) as bijgewerktOp');
 		$query->from('#__kampinfo_downloads');
-		$query->where('(jaar = ' . (int)($db->getEscaped($jaar)) .')');
-		$query->where('(soort = '. $db->quote($db->getEscaped('INSC')) .')');
+		$query->where('(jaar = ' . (int)($db->escape($jaar)) .')');
+		$query->where('(soort = '. $db->quote($db->escape('INSC')) .')');
 		
 		$db->setQuery($query);
 		$bijgewerktOp = $db->loadResult();
 		
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		
 		return $bijgewerktOp;
@@ -97,7 +97,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	 * @param $namen - comma separated string
 	 */
 	public function createIcons($namen) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde');
@@ -105,7 +105,7 @@ abstract class KampInfoModelParent extends JModelItem {
 
 		$values=array();
 		foreach(explode(',', $namen) as $naam) {
-			$values[] = $db->quote($db->getEscaped($naam));
+			$values[] = $db->quote($db->escape($naam));
 		}
 		$query->where('i.bestandsnaam in (' . implode(',', $values) . ')');
 		$query->order('i.volgorde');
@@ -115,7 +115,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		
 		return $icons;
@@ -123,7 +123,7 @@ abstract class KampInfoModelParent extends JModelItem {
 
 	function createActiviteitengebieden($activiteitengebieden) {
 		$activiteitengebieden = explode(',', $activiteitengebieden);
-		$options = KampInfoHelper :: getActivityAreaOptions();
+		$options = KampInfoHelper::getActivityAreaOptions();
 		$result = array();
 		foreach ($activiteitengebieden as $gebied) {
 			foreach($options as $option) {
@@ -137,7 +137,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	
 	function createDoelgroepen($doelgroepen) {
 		$doelgroepenLookup = array();
-		foreach (KampInfoHelper :: getTargetgroupOptions() as $v) {
+		foreach (KampInfoHelper::getTargetgroupOptions() as $v) {
 			$doelgroepenLookup[$v->value] = $v->text;
 		}
 		$result = '';
@@ -168,7 +168,7 @@ abstract class KampInfoModelParent extends JModelItem {
 
 
 	public function getIconenLijst() {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort');
@@ -179,7 +179,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		
 		$result = array();

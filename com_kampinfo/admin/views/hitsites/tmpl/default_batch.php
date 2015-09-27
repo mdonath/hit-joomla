@@ -5,7 +5,7 @@ $options = array(
 	JHtml::_('select.option', '', JText::_('- Kies een actie -')),
 	JHtml::_('select.option', 'akkoordPlaats', JText::_('Akkoord Plaats')),
 	JHtml::_('select.option', 'nietAkkoordPlaats', JText::_('Geen akkoord Plaats')),
-	JHtml::_('select.option', 'copyKampen', JText::_('Copieer kampen vorig jaar')),
+	JHtml::_('select.option', 'copyKampen', JText::_('Kopieer kampen vorig jaar')),
 );
 
 if (JFactory::getUser()->authorise('hitproject.edit', 'com_kampinfo')) {

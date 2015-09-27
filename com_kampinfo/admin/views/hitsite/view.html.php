@@ -15,6 +15,6 @@ class KampInfoViewHitSite extends KampInfoViewItemDefault {
 	function __construct($config = null) {
 		$this->prefix = 'COM_KAMPINFO_HITSITE';
 		$this->entityName = 'hitsite';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 }

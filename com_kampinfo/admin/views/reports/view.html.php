@@ -17,7 +17,7 @@ class KampInfoViewReports extends KampInfoViewListDefault {
 
 	function __construct($config = null) {
 		$this->toolbarTitle = 'COM_KAMPINFO_REPORTS_MANAGER';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 
 }

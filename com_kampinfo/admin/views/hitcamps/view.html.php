@@ -15,7 +15,7 @@ class KampInfoViewHitCamps extends KampInfoViewListDefault {
 	function __construct($config = null) {
 		$this->toolbarTitle = 'COM_KAMPINFO_HITCAMPS_MANAGER';
 		$this->entityName = 'hitcamp';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 
 	protected function authoriseItems($items) {

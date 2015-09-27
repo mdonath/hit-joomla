@@ -3,7 +3,7 @@
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 // config
-$params = &JComponentHelper::getParams('com_kampinfo');
+$params =JComponentHelper::getParams('com_kampinfo');
 $useComponentUrls = $params->get('useComponentUrls') == 1;
 $iconFolderSmall = $params->get('iconFolderSmall');
 $iconFolderLarge = $params->get('iconFolderLarge');

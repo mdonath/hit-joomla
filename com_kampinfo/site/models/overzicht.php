@@ -10,7 +10,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelOverzicht extends KampInfoModelParent {
 
 	public function getProject() {
-		$projectId = JRequest :: getInt('hitproject_id');
+		$projectId = JRequest::getInt('hitproject_id');
 
 		$project = $this->getHitProject($projectId);
 		$project->plaatsen = $this->getHitPlaatsen($projectId);

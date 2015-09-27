@@ -1,6 +1,4 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
+<?php defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelform library
 jimport('joomla.application.component.modeladmin');
@@ -9,18 +7,6 @@ jimport('joomla.application.component.modeladmin');
  * HitProject Model.
 */
 class KampInfoModelHitProject extends JModelAdmin {
-	
-	private static function getDateFields() {
-		return [
-		'inschrijvingStartdatum',
-		'inschrijvingEinddatum',
-		'inschrijvingWijzigenTotDatum',
-		'inschrijvingKosteloosAnnulerenDatum',
-		'inschrijvingGeenRestitutieDatum',
-		'inningsdatum',
-		'vrijdag', 'maandag'
-		];
-	}
 	
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -64,12 +50,7 @@ class KampInfoModelHitProject extends JModelAdmin {
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
-		KampInfoHelper :: reverseFields($data, self::getDateFields());
 		return $data;
-	}
-
-	protected function prepareTable($form) {
-		KampInfoHelper :: reverseFields($form, self::getDateFields());
 	}
 
 }

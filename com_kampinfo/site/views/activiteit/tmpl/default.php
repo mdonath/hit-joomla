@@ -4,7 +4,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfo.p
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 // config
-$params = &JComponentHelper::getParams('com_kampinfo');
+$params =JComponentHelper::getParams('com_kampinfo');
 $vrijVraagBriefUrl = $params->get('vrijVraagBriefUrl');
 $activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
 $activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
@@ -14,10 +14,14 @@ $iconExtension = $params->get('iconExtension');
 $shantiUrl = $params->get('shantiUrl');
 
 // model
+$timezone = KampInfoHelper::getTimezone();
 $activiteit = $this->activiteit;
 
 $start = new JDate($activiteit->startDatumTijd);
+$start->setTimezone($timezone);
+
 $eind = new JDate($activiteit->eindDatumTijd);
+$eind->setTimezone($timezone);
 
 
 ?>
@@ -53,8 +57,8 @@ $eind = new JDate($activiteit->eindDatumTijd);
 											<td valign="top">:</td>
 											<td valign="top">
 											<?php
-												$startF = $start->format('j F');
-												$eindF = $eind->format('j F');
+												$startF = $start->format('j F', true);
+												$eindF = $eind->format('j F', true);
 												echo("$startF t/m $eindF");
 											?>
 											</td>
@@ -199,29 +203,16 @@ $eind = new JDate($activiteit->eindDatumTijd);
 								Er kunnen maximaal <?php echo($activiteit->maximumAantalDeelnemers); ?> deelnemers meedoen aan deze activiteit.
 								<!-- Totale afstand die tijdens deze HIT afgelegd wordt is maximaal 50 kilometer. -->
 								<?php
-									$startDTF = $start->format('l j F \o\m H:i \u\u\r');
-									$eindDTF = $eind->format('l j F H:i \u\u\r');
-									$begintOpGoedeVrijdag = $start->format('N') == '5'; // vrijdag
+									$startDTF = $start->format('l j F \o\m H:i \u\u\r', true);
+									$eindDTF = $eind->format('l j F H:i \u\u\r', true);
+									$begintOpGoedeVrijdag = $start->format('N', true) == '5'; // vrijdag
 
 									$startInsch = (new JDate($activiteit->startInschrijving))->getTimestamp();
 									$isInschrijvingGestart = $startInsch <= (new JDate())->getTimestamp(); 
 								?>
 								Dit HIT-onderdeel start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
-
-								<?php if($begintOpGoedeVrijdag) {?>
-								Dit HIT-onderdeel begint op Goede Vrijdag. Sommige scholen zijn <b>NIET</b> vrij op Goede Vrijdag. 
-								Mogelijk biedt <a href="<?php echo($vrijVraagBriefUrl); ?>" target="brief">deze standaardbrief</a> uitkomst om vrij aan te vragen. 
-								<?php } ?>
 							</p>
-							<?php /* ?>
-							<?php if (!empty($activiteit->doelgroepen)) { ?>
-								<p>Let op: Inschrijven is alleen mogelijk voor de volgende doelgroepen: <?php echo $activiteit->doelgroepen; ?>. Het is daarom belangrijk dat je met de juiste rol bent ingelogd in ScoutsOnline.</p>
-							<?php } ?>
-							<?php */ ?>
 							<?php if ($activiteit->isouderkind == 1) { ?>
-							<?php /*
-								<p>Bij de ouder-kind activiteiten moet het kind jeugdlid zijn van Scouting Nederland. De ouder hoeft geen lid te zijn en wordt tijdelijk relatielid van de HIT. Let op: ook de ouder moet zich altijd inschrijven.</p>
-							*/ ?>
 								<p><b>BELANGRIJKE INFORMATIE VOOR OUDERS:</b><br/>Inschrijven voor dit HIT-onderdeel gebeurt met een groep van twee personen: één kind met één ouder als begeleider. De genoemde kampprijs geldt per persoon, en beide personen schrijven zich afzonderlijk in. Bij uitzondering kunnen ook ouders die geen lid zijn, zich voor dit onderdeel inschrijven, op voorwaarde dat het kind wél lid is van Scouting Nederland. Ouders die geen lid zijn, kiezen bij het inschrijven voor "inschrijven als niet-lid". De niet-leden vullen eerst hun persoonlijke gegevens in voordat ze in het inschrijfformulier terecht komen. Na het betalen via iDEAL volgt een standaardmelding dat er een automatische bevestigingsemail verstuurd zal worden. Voor niet-leden gaat dit niet automatisch; deze email wordt binnen enkele dagen handmatig verstuurd. Ouders die zich op deze manier inschrijven worden geregistreerd als "relatie van de landelijke HIT". Het aanvragen van een inlogaccount is voor een relatie niet mogelijk. Eventuele wijzigingen en annuleringen moeten daarom persoonlijk worden doorgegeven aan de HIT Helpdesk.</p>
 							<?php }?>
 							<?php if ($activiteit->shantiFormuliernummer > 0 /*&& $isInschrijvingGestart*/) { ?>

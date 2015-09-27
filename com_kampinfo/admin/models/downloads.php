@@ -22,32 +22,32 @@ class KampInfoModelDownloads extends JModelList {
 		}
 
 		//call the parent constructor
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 	protected function getListQuery() {
-		$listOrder = $this->state->get('list.ordering', 'bijgewerktOp');
-		$listDirn = $this->state->get('list.direction', 'desc');
+		$listOrder = $this->getState('list.ordering', 'bijgewerktOp');
+		$listDirn = $this->getState('list.direction', 'desc');
 		$filterSearch = $this->getState('filter.search');
 		$filterJaar = $this->getState('filter.jaar');
 
 		// Create a new query object.           
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('d.*');
 		$query->from('#__kampinfo_downloads d, #__kampinfo_hitproject p');
 		$query->where('d.jaar = p.jaar');
 		if (!empty ($filterJaar)) {
-			$query->where('(p.id= ' . (int)($db->getEscaped($filterJaar)) . ')');
+			$query->where('(p.id= ' . (int)($db->escape($filterJaar)) . ')');
 		}
 
-		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
+		$query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
 
 		return $query;
 	}
 
 	protected function populateState($ordering = null, $direction = null) {
 		// for sorting
-		parent :: populateState('bijgewerktOp', 'desc');
+		parent::populateState('bijgewerktOp', 'desc');
 
 		// for filtering
 		$state = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');

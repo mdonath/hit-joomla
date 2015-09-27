@@ -12,11 +12,15 @@ $id    = $table->find(array('type' => 'component', 'element' => 'com_kampinfo'))
 if (!empty($id)) {
 	$table->load($id);
 	$registry = new JRegistry();
-	$registry->loadJSON($table->manifest_cache);
+	$registry->loadString($table->manifest_cache);
 	$manifest_cache = $registry->toArray();
 }
 ?>
 
+<div id="j-sidebar-container" class="span2">
+	<?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
 <p>Dit is KampInfo, een Joomla component speciaal voor de HIT.</p>
 <table>
 	<tr><td><strong>Versie:</strong></td><td><?php echo($manifest_cache['version']);?></td></tr>
@@ -26,3 +30,5 @@ if (!empty($id)) {
 	<tr><td><strong>Auteur:</strong></td><td><?php echo($manifest_cache['author']);?> (<?php echo($manifest_cache['authorEmail']);?>)</td></tr>
 	<tr><td><strong>Start ontwikkeling:</strong></td><td><?php echo($manifest_cache['creationDate']);?></td></tr>
 </table>
+</div>
+

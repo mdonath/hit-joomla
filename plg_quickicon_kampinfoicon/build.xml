@@ -6,7 +6,7 @@
 
 	<!-- The name of your extension's main XML file -->
 	<property name="cfg.name" value="kampinfoicon" />
-	<property name="xml.version" value="0.0.3" />
+	<property name="xml.version" value="0.0.4" />
 	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
 	<property name="cfg.prefix" value="plg_" />
 	<!-- Relative path to your project -->

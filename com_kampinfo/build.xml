@@ -52,7 +52,6 @@
 	</target>
 
 	<target name="build_update_xml" depends="info" description="">
-	    <echo message="hallekideehalloooo"/>
 		<fileset id="site" dir="${str.sitetrunkpath}" />
 		<echo message="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>${line.separator}" file="${str.updatefile}" append="false" />
 		<echo message="&lt;updates&gt;${line.separator}" file="${str.updatefile}" append="true" />

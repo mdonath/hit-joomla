@@ -77,61 +77,62 @@ abstract class KampInfoHelper {
 
 	public static function addSubmenu($submenu) {
 		// set some global property
-		$document = JFactory :: getDocument();
+		$document = JFactory::getDocument();
 		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
 
 		// Retrieve authorisation
-		$canDo = KampInfoHelper :: getActions();
+		$canDo = KampInfoHelper::getActions();
 		
 		// Show submenu items
+		JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
+		
 		if ($canDo->get('hitproject.menu')) {
-			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
 		}
 		if ($canDo->get('hitsite.menu')) {
-			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
 		}
 		if ($canDo->get('hitcamp.menu')) {
-				JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
+				JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
 		}
 		if ($canDo->get('core.admin')) {
-			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
-			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
-			JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
-			JSubMenuHelper :: addEntry('Overzichten', 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
+			JHtmlSidebar::addEntry('Overzichten', 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
 		}
-		JSubMenuHelper :: addEntry(JText :: _('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
 				
 		// Set the title
 		if ($submenu == 'hitprojects') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_HITPROJECTS_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'));
 		}
 		elseif ($submenu == 'hitsites') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_HITSITES_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_HITSITES_DOCTITLE'));
 		}
 		elseif ($submenu == 'hitcamps') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_HITCAMPS_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_HITCAMPS_DOCTITLE'));
 		}
 		elseif ($submenu == 'hiticons') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_HITICONS_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_HITICONS_DOCTITLE'));
 		}
 		elseif ($submenu == 'import') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_IMPORT_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_IMPORT_DOCTITLE'));
 		}
 		elseif ($submenu == 'downloads') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_DOWNLOADS_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_DOWNLOADS_DOCTITLE'));
 		}
 		elseif ($submenu == 'reports') {
 			$document->setTitle("Overzichten");
 		}
 		elseif ($submenu == 'info') {
-			$document->setTitle(JText :: _('COM_KAMPINFO_INFO_DOCTITLE'));
+			$document->setTitle(JText::_('COM_KAMPINFO_INFO_DOCTITLE'));
 		}
 	}
 
 	public static function getHitActiviteitOptions() {
 		$options = array ();
 
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('c.id As value, concat(c.naam, " (", s.naam, " - ", p.jaar, ")") As text');
@@ -150,7 +151,7 @@ abstract class KampInfoHelper {
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		return $options;
@@ -160,7 +161,7 @@ abstract class KampInfoHelper {
 	public static function getHitProjectOptions() {
 		$options = array ();
 
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('id As value, jaar As text');
@@ -174,7 +175,7 @@ abstract class KampInfoHelper {
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		return $options;
@@ -183,7 +184,7 @@ abstract class KampInfoHelper {
 	public static function getHitJaarOptions() {
 		$options = array ();
 	
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 	
 		$query->select('jaar As value, jaar As text');
@@ -197,7 +198,7 @@ abstract class KampInfoHelper {
 	
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 	
 		return $options;
@@ -206,14 +207,14 @@ abstract class KampInfoHelper {
 	public static function getHitSiteOptions($hitproject_id = null) {
 		$options = array ();
 
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('s.id As value, concat(s.naam, " (", p.jaar,")") As text');
 		$query->from('#__kampinfo_hitsite s');
 		$query->join('LEFT', '#__kampinfo_hitproject AS p ON p.id=s.hitproject_id');
 		if ($hitproject_id != null) {
-			$query->where('s.hitproject_id = ' . (int)($db->getEscaped($hitproject_id)));
+			$query->where('s.hitproject_id = ' . (int)($db->escape($hitproject_id)));
 		}
 		$query->order('p.jaar desc, s.naam');
 
@@ -224,7 +225,7 @@ abstract class KampInfoHelper {
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		return $options;
@@ -233,7 +234,7 @@ abstract class KampInfoHelper {
 	public static function getHitIconOptions() {
 		$options = array ();
 
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('bestandsnaam As value, tekst As text');
@@ -247,7 +248,7 @@ abstract class KampInfoHelper {
 
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		return $options;
@@ -335,7 +336,7 @@ abstract class KampInfoHelper {
 	}
 
 	public static function getHitPrijzenOptions() {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$prijzenConfig = $params->get('mogelijkeDeelnamekosten');
 		if (empty($prijzenConfig)) {
 			$prijzenConfig = '35,40,45,50,55,60,65,70';
@@ -353,7 +354,30 @@ abstract class KampInfoHelper {
 	}
 	
 	
+	public static function reverse($date) {
+		if ($date != '0000-00-00') {
+			$date = new JDate($date);
+			$date->setTimezone(self::getTimeZone());
+			return $date->format('d-m-Y', true);
+		}
+		return $date;
+	}
 	
+	/**
+	 * Returns the userTime zone if the user has set one, or the global config one
+	 * @return mixed
+	 */
+	public static function getTimeZone() {
+		$timeZone = '';
+		$userTz = JFactory::getUser()->getParam('timezone');
+		if ($userTz) {
+			$timeZone = $userTz;
+		} else {
+			$timeZone = JFactory::getConfig()->get('offset');
+		}
+		return new DateTimeZone($timeZone);
+	}
+
 	public static function startsWith($haystack, $needle)
 	{
 		return $needle === "" || strpos($haystack, $needle) === 0;
@@ -363,29 +387,4 @@ abstract class KampInfoHelper {
 		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 	}
 	
-
-	public static function reverseFields($store, $fields) {
-		foreach ($fields as $f) {
-			$store->$f = self::reverse($store->$f);
-		}
-	}
-	public static function reverseDateTimeFields($store, $fields) {
-		foreach ($fields as $f) {
-			$store->$f = self::reverseDateOnly($store->$f);
-		}
-	}
-
-	public static function reverse($date) {
-		if ($date == null) {
-			return null;
-		}
-		return implode('-', array_reverse(explode('-', $date)));
-	}
-
-	public static function reverseDateOnly($datetime) {
-		if ($datetime == null) {
-			return null;
-		}
-		return KampInfoHelper::reverse(substr($datetime, 0, 10)) . substr($datetime, 10);
-	}
 }

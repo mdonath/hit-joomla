@@ -23,7 +23,7 @@ class KampInfoController extends JControllerLegacy {
 		require_once JPATH_COMPONENT.'/helpers/kampinfo.php';
 		
 		// Set the submenu
-		KampInfoHelper :: addSubmenu(JRequest::getCmd('view', $this->default_view));
+		KampInfoHelper::addSubmenu(JRequest::getCmd('view', $this->default_view));
 
 		// Check for edit form.
 		$layout = JRequest::getCmd('layout', 'default');
@@ -55,7 +55,9 @@ class KampInfoController extends JControllerLegacy {
 				return false;
 			}
 		}
-		parent::display();
+
+		// call parent behavior
+		parent::display($cachable);
 
 		return $this;
 	}

@@ -1,20 +1,14 @@
-<?php
-// No direct access to this file
-defined('_JEXEC') or die('Restricted Access');
+<?php defined('_JEXEC') or die('Restricted Access');
 
-$listOrder   = $this->escape($this->state->get('list.ordering'));
+$listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
-$this->state->set('list.columnCount', '9');
 ?>
 <tr>
-	<th width="5">
-		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_ID'); ?>
-	</th>
 	<th width="20">
-		<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" />
+		<?php echo JHtml::_('grid.checkall'); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'jaar', $listDirn, $listOrder); ?>
 	</th>
 	<th>
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_START'); ?>
@@ -22,16 +16,19 @@ $this->state->set('list.columnCount', '9');
 	<th>
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_EIND'); ?>
 	</th>
-	<th>
+	<th class="hidden-phone">
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_WIJZIGEN_TOT'); ?>
 	</th>
-	<th>
+	<th class="hidden-phone">
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_KOSTELOOS_ANNULEREN'); ?>
 	</th>
-	<th>
+	<th class="hidden-phone">
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_GEEN_RESTITIE'); ?>
 	</th>
-	<th>
+	<th class="hidden-phone">
 		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_INNINGSDATUM'); ?>
+	</th>
+	<th width="5" class="hidden-phone">
+		<?php echo JText::_('COM_KAMPINFO_HITPROJECTS_HEADING_ID'); ?>
 	</th>
 </tr>

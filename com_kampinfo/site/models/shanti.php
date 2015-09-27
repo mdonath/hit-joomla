@@ -8,7 +8,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelShanti extends KampInfoModelParent {
 
 	public function getShantiData() {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$projectId = $params->get('huidigeActieveJaar');
 		return $this->getData($projectId);
 	}
@@ -16,7 +16,7 @@ class KampInfoModelShanti extends KampInfoModelParent {
 	//////////////////////////////////////
 	
 	private function getData($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		
 		$query = $db
 			-> getQuery(true)
@@ -66,7 +66,7 @@ class KampInfoModelShanti extends KampInfoModelParent {
 			-> from('#__kampinfo_hitproject p')
 			-> join('LEFT', '#__kampinfo_hitsite AS s ON s.hitproject_id=p.id')
 			-> join('LEFT', '#__kampinfo_hitcamp AS c ON c.hitsite_id=s.id')
-			-> where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')')
+			-> where('(p.id = ' . (int) ($db->escape($projectId)) . ')')
 			-> where('c.published = 1')
 			-> order('p.jaar, s.naam, c.naam');
 		

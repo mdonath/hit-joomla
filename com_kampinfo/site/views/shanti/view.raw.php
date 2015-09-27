@@ -8,16 +8,16 @@ jimport('joomla.application.component.view');
 /**
  * RAW View class voor Shanti.
  */
-class KampInfoViewShanti extends JView {
+class KampInfoViewShanti extends JViewLegacy {
 	
 	function display($tpl = null) {
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 		$document->setMimeEncoding('text/plain');
 
 		$data = $this->get('ShantiData');
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 		echo ($this->shanti($data));

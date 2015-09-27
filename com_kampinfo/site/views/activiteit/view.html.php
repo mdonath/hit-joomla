@@ -9,7 +9,7 @@ jimport('joomla.application.component.view');
 /**
  * HTML View class voor een HIT Kamponderdeel.
  */
-class KampInfoViewActiviteit extends JView {
+class KampInfoViewActiviteit extends JViewLegacy {
 	
 	function display($tpl = null) {
 		// Assign data to the view
@@ -17,16 +17,15 @@ class KampInfoViewActiviteit extends JView {
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 
-		JHTML::stylesheet("activiteit.css", "media/com_kampinfo/css/");
-
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
+		$document->addStyleSheet("media/com_kampinfo/css/activiteit.css");
 		$document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 
 		// Display the view
-		parent :: display($tpl);
+		parent::display($tpl);
 	}
 }

@@ -10,7 +10,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelStatistiek extends KampInfoModelParent {
 
 	public function getSoort() {
-		$soort =  JRequest :: getString('soort');
+		$soort =  JRequest::getString('soort');
 		if (empty($soort)) {
 			$soort = 'Standaard';
 		}
@@ -18,7 +18,7 @@ class KampInfoModelStatistiek extends KampInfoModelParent {
 	}
 
 	public function getJaar() {
-		$jaar = JRequest :: getInt('jaar');
+		$jaar = JRequest::getInt('jaar');
 		if (empty($jaar)) {
 			$jaar = date("Y");
 		}
@@ -26,7 +26,7 @@ class KampInfoModelStatistiek extends KampInfoModelParent {
 	}
 
 	public function getPlaats() {
-		$plaats = JRequest :: getString('plaats');
+		$plaats = JRequest::getString('plaats');
 		return $plaats;
 	}
 	
@@ -71,7 +71,7 @@ abstract class AbstractStatistiek {
 	public abstract function getDrawVisualization();
 
 	protected function getBeschikbareJaren() {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('jaar');
@@ -82,7 +82,7 @@ abstract class AbstractStatistiek {
 		$data = $db->loadObjectList();
 
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 
 		$jaren = array();
@@ -93,20 +93,20 @@ abstract class AbstractStatistiek {
 	}
 	
 	protected function getPlaatsenInJaar($jaar) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('naam');
 		$query->from('#__kampinfo_hitsite s');
 		$query->join('LEFT', '#__kampinfo_hitproject p on (p.id = s.hitproject_id)');
-		$query->where('p.jaar = ' . (int) ($db->getEscaped($jaar)));
+		$query->where('p.jaar = ' . (int) ($db->escape($jaar)));
 		$query->order('s.naam');
 	
 		$db->setQuery($query);
 		$data = $db->loadObjectList();
 	
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 	
 		$plaatsNamen = array();
@@ -157,7 +157,7 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData() {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db
 		-> getQuery(true)
@@ -169,7 +169,7 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 		$db->setQuery($query);
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -231,7 +231,7 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('1 + datediff(datumInschrijving, ed.eersteDag) as inschrijfdag');
@@ -245,7 +245,7 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -303,7 +303,7 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 	}
 	
 	private function getData($plaatsNamen) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		
 		$query->select("d.jaar");
@@ -314,14 +314,14 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 		$query->from('#__kampinfo_deelnemers d');
 		$query->innerJoin('#__kampinfo_hitsite s on (d.hitsite = s.naam)');
 		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and p.jaar = d.jaar)');
-		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
+		$query->where('(d.jaar = ' . (int) ($db->escape($this->jaar)) . ')');
 		$query->group("jaar, datumInschrijving");
 		
 		$db->setQuery($query);
 		
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -362,13 +362,13 @@ class HerkomstDeelnemersInJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData() {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 	
 		$query->select("d.herkomst as plaats");
 		$query->select("count(*) as aantal");
 		$query->from('#__kampinfo_deelnemers d');
-		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
+		$query->where('(d.jaar = ' . (int) ($db->escape($this->jaar)) . ')');
 		$query->group("herkomst");
 		$query->order("aantal desc");
 	
@@ -376,7 +376,7 @@ class HerkomstDeelnemersInJaarStatistiek extends AbstractStatistiek {
 	
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -419,16 +419,16 @@ class HerkomstDeelnemersInPlaatsInJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData() {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select("d.herkomst as plaats");
 		$query->select("count(*) as aantal");
 		$query->from('#__kampinfo_deelnemers d');
-		$query->where('(d.jaar = ' . (int) ($db->getEscaped($this->jaar)) . ')');
+		$query->where('(d.jaar = ' . (int) ($db->escape($this->jaar)) . ')');
 		$query->innerJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
 		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
-		$query->where("s.naam = ". $db->quote($db->getEscaped($this->plaats)));
+		$query->where("s.naam = ". $db->quote($db->escape($this->plaats)));
 		$query->group("herkomst");
 		$query->order("aantal desc");
 
@@ -436,7 +436,7 @@ class HerkomstDeelnemersInPlaatsInJaarStatistiek extends AbstractStatistiek {
 
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -500,7 +500,7 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from kuw4c_kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
@@ -510,13 +510,13 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 		$query->from('#__kampinfo_deelnemers d');
 		$query->innerJoin('#__kampinfo_hitsite s on (lower(d.hitsite) = lower(s.naam))');
 		$query->innerJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id and d.jaar = p.jaar)');
-		$query->where("s.naam = ". $db->quote($db->getEscaped($this->plaats)));
+		$query->where("s.naam = ". $db->quote($db->escape($this->plaats)));
 		$query->group('inschrijfdag');
 		$db->setQuery($query);
 
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -587,7 +587,7 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('leeftijd');
@@ -600,7 +600,7 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}
@@ -652,7 +652,7 @@ class AantalKampenVoorLeeftijdInJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData($min, $max) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		
 		// Query
 		// select sum(if(7 between data.mini and data.maxi,1,0)) as l7, sum(if(8 between data.mini and data.maxi,1,0)) as l8 from ;
@@ -666,7 +666,7 @@ class AantalKampenVoorLeeftijdInJaarStatistiek extends AbstractStatistiek {
 	
 		$data = $db->loadObjectList();
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $data;
 	}

@@ -29,7 +29,7 @@ class KampInfoModelImport extends JModelAdmin {
 	public function downloadInschrijvingen() {
 		$app = JFactory::getApplication();
 
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 
 		// Voor welk jaar staat in de configuratie
 		$projectId = $params->get('huidigeActieveJaar');
@@ -119,7 +119,7 @@ class KampInfoModelImport extends JModelAdmin {
 	public function downloadDeelnemergegevens() {
 		$app = JFactory::getApplication();
 
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 	
 		// Voor welk jaar staat in de configuratie
 		$projectId = $params->get('huidigeActieveJaar');
@@ -199,7 +199,7 @@ class KampInfoModelImport extends JModelAdmin {
 	}
 
 	private function updateInschrijvingen($rows, $jaar) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$count = 0;
 		
 		$postActionRows = array();
@@ -226,22 +226,22 @@ class KampInfoModelImport extends JModelAdmin {
 				$postActionRows[] = $inschrijving;
 			} else {
 				$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
-						. "	 c.aantalDeelnemers = " .	(int)($db->getEscaped($aantalDeelnemers))
-						. ", c.gereserveerd = " .		(int)($db->getEscaped($gereserveerd))
-						. ", c.aantalSubgroepen = " .	(int)($db->getEscaped($aantalSubgroepen))
-						. ", c.minimumAantalDeelnemers = " . (int)($db->getEscaped($minimumAantalDeelnemers))
-						. ", c.maximumAantalDeelnemers = " . (int)($db->getEscaped($maximumAantalDeelnemers))
-						. ", c.minimumLeeftijd = " . (int)($db->getEscaped($minimumLeeftijd))
-						. ", c.maximumLeeftijd = " . (int)($db->getEscaped($maximumLeeftijd))
+						. "	 c.aantalDeelnemers = " .	(int)($db->escape($aantalDeelnemers))
+						. ", c.gereserveerd = " .		(int)($db->escape($gereserveerd))
+						. ", c.aantalSubgroepen = " .	(int)($db->escape($aantalSubgroepen))
+						. ", c.minimumAantalDeelnemers = " . (int)($db->escape($minimumAantalDeelnemers))
+						. ", c.maximumAantalDeelnemers = " . (int)($db->escape($maximumAantalDeelnemers))
+						. ", c.minimumLeeftijd = " . (int)($db->escape($minimumLeeftijd))
+						. ", c.maximumLeeftijd = " . (int)($db->escape($maximumLeeftijd))
 						. " WHERE "
-						. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->getEscaped($jaar))
-						. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($inschrijving->shantiFormuliernummer))
+						. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->escape($jaar))
+						. " AND c.shantiFormuliernummer = " . (int)($db->escape($inschrijving->shantiFormuliernummer))
 						;
 				$db->setQuery($query);
 				$db->execute();
 				// Check for a database error.
 				if ($db->getErrorNum()) {
-					JError :: raiseWarning(500, $db->getErrorMsg());
+					JError::raiseWarning(500, $db->getErrorMsg());
 				}
 				// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
 				$count += $db->getAffectedRows();
@@ -260,18 +260,18 @@ class KampInfoModelImport extends JModelAdmin {
 			}
 				
 			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
-					. "	 c.aantalDeelnemers = c.aantalDeelnemers + " .	(int)($db->getEscaped($inschrijving->aantalDeelnemers))
-					. ", c.gereserveerd = c.gereserveerd + " .			(int)($db->getEscaped($gereserveerd))
-					. ", c.aantalSubgroepen = c.aantalSubgroepen + " .	(int)($db->getEscaped($inschrijving->aantalSubgroepen))
+					. "	 c.aantalDeelnemers = c.aantalDeelnemers + " .	(int)($db->escape($inschrijving->aantalDeelnemers))
+					. ", c.gereserveerd = c.gereserveerd + " .			(int)($db->escape($gereserveerd))
+					. ", c.aantalSubgroepen = c.aantalSubgroepen + " .	(int)($db->escape($inschrijving->aantalSubgroepen))
 					. " WHERE "
-					. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->getEscaped($jaar))
-					. " AND c.shantiFormuliernummer = " . (int)($db->getEscaped($formulierNaamParts[1]))
+					. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->escape($jaar))
+					. " AND c.shantiFormuliernummer = " . (int)($db->escape($formulierNaamParts[1]))
 			;
 			$db->setQuery($query);
 			$db->execute();
 			// Check for a database error.
 			if ($db->getErrorNum()) {
-				JError :: raiseWarning(500, $db->getErrorMsg());
+				JError::raiseWarning(500, $db->getErrorMsg());
 			}
 			// LET OP: alleen als het record ook daadwerkelijk gewijzigd is!
 			$count += $db->getAffectedRows();
@@ -280,21 +280,21 @@ class KampInfoModelImport extends JModelAdmin {
 	}
 	
 	private function verwijderDeelnemergegevens($jaar) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = "DELETE FROM #__kampinfo_deelnemers "
-				. "WHERE jaar = ". ($db->getEscaped($jaar));
+				. "WHERE jaar = ". ($db->escape($jaar));
 		
 		$db->setQuery($query);
 		$db->query();
 		
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 	}
 
 	private function updateDeelnemergegevens($rows, $jaar) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		
 		// Ouwe meuk weggooien
 		self::verwijderDeelnemergegevens($jaar);
@@ -308,19 +308,20 @@ class KampInfoModelImport extends JModelAdmin {
 				preg_match("/HIT (\w+) (.*) \((\d+)\)/", $deelnemer->formulier, $formulier);
 
 				if (count($formulier) != 0) {
-					$db = JFactory :: getDbo();
+					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
 					$query->insert('#__kampinfo_deelnemers');
+					// FIXME uitzoeken of hier nog conversie naar UTC nodig is.
 					$query->set(
-							'  jaar = '. (int)($db->getEscaped($jaar)) .
-							', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
-							', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
-							', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
-							', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
+							'  jaar = '. (int)($db->escape($jaar)) .
+							', dlnnr = '. (int)($db->escape($deelnemer->dlnnr)) .
+							', herkomst = '. $db->quote($db->escape($deelnemer->plaats .', '. $deelnemer->land)) .
+							', leeftijd = '. (int)($db->escape($deelnemer->leeftijd)) .
+							', geslacht = '. $db->quote($db->escape($deelnemer->geslacht)) .
 							', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
-							', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]))) .
-							', hitcamp = ' . $db->quote($db->getEscaped($formulier[2])) .
-							', hitcampId = ' . (int)($db->getEscaped($formulier[3]))
+							', hitsite = ' . $db->quote($db->escape(strtolower($formulier[1]))) .
+							', hitcamp = ' . $db->quote($db->escape($formulier[2])) .
+							', hitcampId = ' . (int)($db->escape($formulier[3]))
 					);
 					$db->setQuery($query);
 					$db->query();
@@ -329,18 +330,18 @@ class KampInfoModelImport extends JModelAdmin {
 					// oude formulieren hebben het hitcampId niet tussen haakjes
 					$formulier = array();
 					preg_match("/HIT (\w+) (.*)/", $deelnemer->formulier, $formulier);
-					$db = JFactory :: getDbo();
+					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
 					$query->insert('#__kampinfo_deelnemers');
 					$query->set(
-							'  jaar = '. (int)($db->getEscaped($jaar)) .
-							', dlnnr = '. (int)($db->getEscaped($deelnemer->dlnnr)) .
-							', herkomst = '. $db->quote($db->getEscaped($deelnemer->plaats .', '. $deelnemer->land)) .
-							', leeftijd = '. (int)($db->getEscaped($deelnemer->leeftijd)) .
-							', geslacht = '. $db->quote($db->getEscaped($deelnemer->geslacht)) .
+							'  jaar = '. (int)($db->escape($jaar)) .
+							', dlnnr = '. (int)($db->escape($deelnemer->dlnnr)) .
+							', herkomst = '. $db->quote($db->escape($deelnemer->plaats .', '. $deelnemer->land)) .
+							', leeftijd = '. (int)($db->escape($deelnemer->leeftijd)) .
+							', geslacht = '. $db->quote($db->escape($deelnemer->geslacht)) .
 							', datumInschrijving = '. $db->quote($deelnemer->datumInschrijving->format('Y-m-d')) .
-							', hitsite = ' . $db->quote($db->getEscaped(strtolower($formulier[1]))) .
-							', hitcamp = ' . $db->quote($db->getEscaped($formulier[2])) .
+							', hitsite = ' . $db->quote($db->escape(strtolower($formulier[1]))) .
+							', hitcamp = ' . $db->quote($db->escape($formulier[2])) .
 							', hitcampId = null'
 					);
 					$db->setQuery($query);
@@ -388,10 +389,10 @@ class KampInfoModelImport extends JModelAdmin {
 	 * @param unknown $melding
 	 */
 	private function updateLaatstBijgewerkt($jaar, $soort, $melding) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->insert('#__kampinfo_downloads');
-		$query->set("jaar=". (int)($db->getEscaped($jaar)) .', soort = '. $db->quote($db->getEscaped($soort)).', melding = '. $db->quote($db->getEscaped($melding)));
+		$query->set("jaar=". (int)($db->escape($jaar)) .', soort = '. $db->quote($db->escape($soort)).', melding = '. $db->quote($db->escape($melding)));
 		$db->setQuery($query);
 		$db->query();
 	}
@@ -413,33 +414,33 @@ class KampInfoModelImport extends JModelAdmin {
 	}
 
 	public function getTable($type = 'HitCamp', $prefix = 'KampInfoTable', $config = array ()) {
-		return JTable :: getInstance($type, $prefix, $config);
+		return JTable::getInstance($type, $prefix, $config);
 	}
 
 	private function getHitProject($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitproject p');
-		$query->where('(p.id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->where('(p.id = ' . (int) ($db->escape($projectId)) . ')');
 	
 		$db->setQuery($query);
 		$project = $db->loadObjectList();
 	
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $project[0];
 	}
 	
 	private function getJaarVanProject($projectId) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 	
 		$query->select('p.jaar');
 		$query->from('#__kampinfo_hitproject p');
-		$query->where('p.id = ' . ($db->getEscaped($projectId)));
+		$query->where('p.id = ' . ($db->escape($projectId)));
 	
 		$db->setQuery($query);
 		$result = $db->loadResult();
@@ -447,12 +448,12 @@ class KampInfoModelImport extends JModelAdmin {
 	}
 	
 	private function getShantiEvenementId($projectId) {
-		$db = JFactory :: getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 	
 		$query->select('p.shantiEvenementId');
 		$query->from('#__kampinfo_hitproject p');
-		$query->where('p.id = ' . ($db->getEscaped($projectId)));
+		$query->where('p.id = ' . ($db->escape($projectId)));
 	
 		$db->setQuery($query);
 		$result = $db->loadResult();

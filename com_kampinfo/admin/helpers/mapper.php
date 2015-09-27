@@ -19,7 +19,7 @@ abstract class AbstractMapper {
 class XmlMapper extends AbstractMapper {
 
 	public function __construct($mapping) {
-		parent :: __construct($mapping);
+		parent::__construct($mapping);
 	}
 
 	public function read($filename) {
@@ -104,7 +104,7 @@ class XmlMapper extends AbstractMapper {
 class CsvMapper extends AbstractMapper {
 
 	public function __construct($mapping) {
-		parent :: __construct($mapping);
+		parent::__construct($mapping);
 	}
 
 	public function read($file) {

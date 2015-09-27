@@ -42,7 +42,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 	
 	public function getKampen() {
 		$app = JFactory::getApplication();
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$item = $this->getItem();
 		$siteId = $item->id;
 		return $this->getVolledigeKampenVanPlaats($db, $siteId);
@@ -106,7 +106,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 	public function akkoordPlaats($ids, $value) {
 		$cids = implode(',', $ids);
 	
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitsite SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();
@@ -120,7 +120,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 
 	public function copyKampen($siteId) {
 		$app = JFactory::getApplication();
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$t = $this->getTable();
 		$t->load($siteId);
 		$plaatsNaam = $t->naam;
@@ -176,7 +176,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 		$query = $db->getQuery(true)
 			-> select('c.id')
 			-> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
-			-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->getEscaped($siteId));
+			-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->escape($siteId));
 		$db->setQuery($query);
 		return $db->loadObjectList();
 	}
@@ -187,7 +187,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 		-> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
 		-> join('LEFT', '#__kampinfo_hitsite AS s ON (c.hitsite_id = s.id)')
 		-> join('LEFT', '#__kampinfo_hitproject AS p ON (s.hitproject_id = p.id)')
-		-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->getEscaped($siteId))
+		-> where($db->quoteName('c.hitsite_id') .'='. (int) $db->escape($siteId))
 		-> order('c.naam');
 		$db->setQuery($query);
 		
@@ -201,7 +201,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 			
 			$values=array();
 			foreach(explode(',', $kamp->icoontjes) as $naam) {
-				$values[] = $db->quote($db->getEscaped($naam));
+				$values[] = $db->quote($db->escape($naam));
 			}
 			$query->where('i.bestandsnaam in (' . implode(',', $values) . ')');
 			$query->order('i.volgorde');
@@ -222,7 +222,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 			-> join('LEFT', '#__kampinfo_hitproject AS p_now ON (s_now.hitproject_id = p_now.id)')
 			-> join('LEFT', '#__kampinfo_hitproject AS p_vorig ON (p_now.jaar - 1 = p_vorig.jaar)')
 			-> join('LEFT', '#__kampinfo_hitsite AS s_vorig ON (p_vorig.id = s_vorig.hitproject_id and s_now.naam = s_vorig.naam)')
-			-> where($db->quoteName('s_now.id') .'='. (int) $db->getEscaped($siteId));
+			-> where($db->quoteName('s_now.id') .'='. (int) $db->escape($siteId));
 		$db->setQuery($query);
 		return $db->loadResult();
 	}

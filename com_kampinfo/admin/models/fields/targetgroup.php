@@ -2,7 +2,7 @@
 
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
-JFormHelper :: loadFieldClass('list');
+JFormHelper::loadFieldClass('list');
 
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
@@ -56,10 +56,10 @@ class JFormFieldTargetgroup extends JFormField {
 	}
 
 	public function getOptions() {
-		$options = KampInfoHelper :: getTargetgroupOptions();
+		$options = KampInfoHelper::getTargetgroupOptions();
 		
 		// Merge any additional options in the XML definition.
-		$options = array_merge(self :: getOptionsFromFormDefinition(), $options);
+		$options = array_merge(self::getOptionsFromFormDefinition(), $options);
 		
 		return $options;
 	}

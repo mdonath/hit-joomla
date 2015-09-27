@@ -11,7 +11,7 @@ class KampInfoControllerImport extends JControllerForm {
 
 		$model->importKampgegevens();
 
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 
@@ -20,7 +20,7 @@ class KampInfoControllerImport extends JControllerForm {
 		
 		$model->downloadKampgegevens();
 		
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 
@@ -29,7 +29,7 @@ class KampInfoControllerImport extends JControllerForm {
 	
 		$model->importInschrijvingen();
 	
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 	
@@ -39,7 +39,7 @@ class KampInfoControllerImport extends JControllerForm {
 	
 		$model->downloadInschrijvingen();
 	
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 
@@ -48,7 +48,7 @@ class KampInfoControllerImport extends JControllerForm {
 	
 		$model->importDeelnemergegevens();
 	
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 
@@ -57,7 +57,7 @@ class KampInfoControllerImport extends JControllerForm {
 	
 		$model->downloadDeelnemergegevens();
 	
-		$this->setRedirect(JRoute :: _('index.php?option=com_kampinfo&view=import', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=import', false));
 		return true;
 	}
 	

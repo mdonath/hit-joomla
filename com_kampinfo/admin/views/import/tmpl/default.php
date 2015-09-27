@@ -5,25 +5,37 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
-	enctype="multipart/form-data" 
-	method="post"
-	name="adminForm"
-	id="adminFormInschrijving"
+<div id="j-sidebar-container" class="span2">
+	<?php echo $this->sidebar; ?>
+</div>
+<div id="j-main-container" class="span10">
+
+<form	action="<?php echo JRoute::_('index.php?option=com_kampinfo&view=import'); ?>"
+		enctype="multipart/form-data" 
+		method="post"
+		name="adminForm"
+		id="adminForm"
 >
+	<div class="form-horizontal">
+		<fieldset class="adminform">
+			<legend><?php echo JText::_('Importeer Inschrijvingen'); ?></legend>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php foreach($this->form->getFieldset("importInschrijvingen") as $field): ?>
+						<div class="control-group">
+							<div class="control-label"><?php echo $field->label; ?></div>
+							<div class="controls"><?php echo $field->input; ?></div>
+						</div>
+					<?php endforeach; ?>
 
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('Importeer Inschrijvingen'); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset("importInschrijvingen") as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-			<li>
-				<label></label><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" />
-			</li>
-		</ul>
-	</fieldset>
-
+					<div class="control-group">
+						<div class="control-label"> </div>
+						<div class="controls"><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" /></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
 	
 	<div>
 		<input type="hidden" name="task" value="import.importInschrijvingen" />
@@ -37,18 +49,21 @@ JHtml::_('behavior.tooltip');
 	enctype="multipart/form-data" 
 	method="post"
 	name="adminForm"
-	id="adminFormInschrijvingDownload"
+	id="adminForm"
 >
-
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('Download en importeer uit SOL Inschrijfgegevens'); ?></legend>
-		<ul class="adminformlist">
-			<li>
-				<label></label><input class="button" type="submit" value="<?php echo JText::_('Download en importeer Inschrijvingen'); ?>" />
-			</li>
-		</ul>
-	</fieldset>
-
+	<div class="form-horizontal">
+		<fieldset class="adminform">
+			<legend><?php echo JText::_('Download en importeer uit SOL Inschrijfgegevens'); ?></legend>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="control-group">
+						<div class="control-label"> </div>
+						<div class="controls"><input class="button" type="submit" value="<?php echo JText::_('Download en importeer Inschrijvingen'); ?>" /></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
 	
 	<div>
 		<input type="hidden" name="task" value="import.downloadInschrijvingen" />
@@ -63,16 +78,19 @@ JHtml::_('behavior.tooltip');
 	name="adminForm"
 	id="adminFormDeelnemersDownload"
 >
-
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('Download en importeer uit SOL Deelnemersgegevens'); ?></legend>
-		<ul class="adminformlist">
-			<li>
-				<label></label><input class="button" type="submit" value="<?php echo JText::_('Download en importeer Deelnemers'); ?>" />
-			</li>
-		</ul>
-	</fieldset>
-
+	<div class="form-horizontal">
+		<fieldset class="adminform">
+			<legend><?php echo JText::_('Download en importeer uit SOL Deelnemersgegevens'); ?></legend>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="control-group">
+						<div class="control-label"> </div>
+						<div class="controls"><input class="button" type="submit" value="<?php echo JText::_('Download en importeer Deelnemers'); ?>" /></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
 	
 	<div>
 		<input type="hidden" name="task" value="import.downloadDeelnemers" />
@@ -86,21 +104,27 @@ JHtml::_('behavior.tooltip');
 	enctype="multipart/form-data" 
 	method="post"
 	name="adminForm"
-	id="adminFormDeelnemers"
+	id="adminForm"
 >
-
-	<fieldset class="adminform">
-		<legend><?php echo JText::_('Importeer Deelnemers'); ?></legend>
-		<ul class="adminformlist">
-			<?php foreach($this->form->getFieldset("importDeelnemers") as $field): ?>
-				<li><?php echo $field->label;echo $field->input;?></li>
-			<?php endforeach; ?>
-			<li>
-				<label></label><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" />
-			</li>
-		</ul>
-	</fieldset>
-
+	<div class="form-horizontal">
+		<fieldset class="adminform">
+			<legend><?php echo JText::_('Importeer Deelnemers'); ?></legend>
+			<div class="row-fluid">
+				<div class="span6">
+					<?php foreach($this->form->getFieldset("importDeelnemers") as $field): ?>
+						<div class="control-group">
+							<div class="control-label"><?php echo $field->label; ?></div>
+							<div class="controls"><?php echo $field->input; ?></div>
+						</div>
+					<?php endforeach; ?>
+					<div class="control-group">
+						<div class="control-label"> </div>
+						<div class="controls"><input class="button" type="submit" value="<?php echo JText::_('Upload'); ?>" /></div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
 	
 	<div>
 		<input type="hidden" name="task" value="import.importDeelnemers" />
@@ -108,4 +132,6 @@ JHtml::_('behavior.tooltip');
 	</div>
 
 </form>
+</div>
+
  

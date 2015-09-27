@@ -12,15 +12,8 @@ jimport('joomla.application.component.modeladmin');
  */
 class KampInfoModelHitCamp extends JModelAdmin {
 
-	private static function getDateTimeFields() {
-		return [
-		'startDatumTijd',
-		'eindDatumTijd'
-		];
-	}
-	
 	public function getTable($type = 'HitCamp', $prefix = 'KampInfoTable', $config = array ()) {
-		return JTable :: getInstance($type, $prefix, $config);
+		return JTable::getInstance($type, $prefix, $config);
 	}
 
 	public function getForm($data = array (), $loadData = true) {
@@ -37,17 +30,13 @@ class KampInfoModelHitCamp extends JModelAdmin {
 
 	protected function loadFormData() {
 		// Check the session for previously entered form data.
-		$data = JFactory :: getApplication()->getUserState('com_kampinfo.edit.hitcamp.data', array ());
+		$data = JFactory::getApplication()->getUserState('com_kampinfo.edit.hitcamp.data', array ());
 		if (empty ($data)) {
 			$data = $this->getItem();
 		}
-		KampInfoHelper :: reverseDateTimeFields($data, self::getDateTimeFields());
 		return $data;
 	}
 
-	protected function prepareTable($form) {
-		KampInfoHelper :: reverseDateTimeFields($form, self::getDateTimeFields());
-	}
 	
 	/**
 	 * Method to check if it's OK to delete a hitcamp. Overwrites JModelAdmin::canDelete
@@ -91,7 +80,7 @@ class KampInfoModelHitCamp extends JModelAdmin {
 	public function akkoordPlaats($ids, $value) {
 		$cids = implode( ',', $ids);
 	
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitcamp SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();
@@ -100,7 +89,7 @@ class KampInfoModelHitCamp extends JModelAdmin {
 	public function akkoordKamp($ids, $value) {
 		$cids = implode( ',', $ids);
 	
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitcamp SET akkoordHitKamp= '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();

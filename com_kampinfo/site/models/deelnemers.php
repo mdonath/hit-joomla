@@ -10,7 +10,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelDeelnemers extends KampInfoModelParent {
 
 	public function getJaar() {
-		return JRequest :: getInt('jaar');
+		return JRequest::getInt('jaar');
 	}
 
 	public function getProject() {
@@ -62,7 +62,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		$inschrijvingStartdatum = new DateTime($inschrijvingStartdatum);
 		$inschrijvingEinddatum= new DateTime($inschrijvingEinddatum);
 		
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('s.naam as plaats, c.naam');
 		
@@ -80,7 +80,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		$query->leftJoin('#__kampinfo_hitsite s on (c.hitsite_id = s.id)');
 		$query->leftJoin('#__kampinfo_hitproject p on (s.hitproject_id = p.id)');
 		$query->leftJoin('#__kampinfo_deelnemers d on (soundex(left(d.hitcamp, 21)) = soundex(left(c.naam,21)) and d.jaar = p.jaar and lower(d.hitsite) = lower(s.naam))');
-		$query->where('(p.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
+		$query->where('(p.jaar = ' . (int) ($db->escape($jaar)) . ')');
 		$query->group(" d.hitsite, d.hitcamp ");
 		$query->order('c.hitsite, c.naam');
 		$db->setQuery($query);
@@ -90,35 +90,35 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 	}
 	
 	function getLaatsteInschrijvingOp($jaar) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('max(d.datumInschrijving) as laatsteInschrijving');
 		$query->from('#__kampinfo_deelnemers d');
-		$query->where('(d.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
+		$query->where('(d.jaar = ' . (int) ($db->escape($jaar)) . ')');
 		
 		$db->setQuery($query);
 		$result = $db->loadObjectList();
 		
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $result[0]->laatsteInschrijving;
 	}
 
 	function getHitProjectRow($jaar) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitproject p');
-		$query->where('(p.jaar = ' . (int) ($db->getEscaped($jaar)) . ')');
+		$query->where('(p.jaar = ' . (int) ($db->escape($jaar)) . ')');
 	
 		$db->setQuery($query);
 		$project = $db->loadObjectList();
 	
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		return $project[0];
 	}

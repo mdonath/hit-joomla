@@ -8,16 +8,16 @@ jimport('joomla.application.component.view');
 /**
  * RAW View class voor Financien.
  */
-class KampInfoViewFinancien extends JView {
+class KampInfoViewFinancien extends JViewLegacy {
 	
 	function display($tpl = null) {
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 		$document->setMimeEncoding('text/plain');
 
 		$data = $this->get('FinancienData');
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 		echo ($this->header($data));

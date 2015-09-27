@@ -3,7 +3,7 @@
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
 // config
-$params = &JComponentHelper::getParams('com_kampinfo');
+$params =JComponentHelper::getParams('com_kampinfo');
 $useComponentUrls = $params->get('useComponentUrls') == 1;
 $iconFolderSmall = $params->get('iconFolderSmall');
 $iconExtension = $params->get('iconExtension');
@@ -99,7 +99,7 @@ $project = $this->project;
 		<tr>
 			<th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.
 			<?php if (!empty($project->laatstBijgewerktOp)) { ?>
-			 Laatst bijgewerkt op: <?php echo($project->laatstBijgewerktOp  /*->format('d-m-Y H:i')*/); ?></th>
+			 Laatst bijgewerkt op: <?php echo($project->laatstBijgewerktOp); ?></th>
 			<?php } ?>
 		</tr>
 	</tfoot>

@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
-JFormHelper :: loadFieldClass('list');
+JFormHelper::loadFieldClass('list');
 
 class JFormFieldIconsoort extends JFormFieldList {
 
@@ -15,10 +15,10 @@ class JFormFieldIconsoort extends JFormFieldList {
 	public function getOptions() {
 		require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
-		$options = KampInfoHelper :: getHitIconSoortOptions();
+		$options = KampInfoHelper::getHitIconSoortOptions();
 		
 		// Merge any additional options in the XML definition.
-		$options = array_merge(parent :: getOptions(), $options);
+		$options = array_merge(parent::getOptions(), $options);
 		
 		return $options;
 	}

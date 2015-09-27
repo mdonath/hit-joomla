@@ -16,7 +16,7 @@ class KampInfoViewHitIcon extends KampInfoViewItemDefault {
 	function __construct($config = null) {
 		$this->prefix = 'COM_KAMPINFO_HITICON';
 		$this->entityName = 'hiticon';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 
 }

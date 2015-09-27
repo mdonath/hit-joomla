@@ -12,39 +12,47 @@ jimport('joomla.application.component.view');
  */
 abstract class KampInfoViewListDefault extends JViewLegacy {
 
+	protected $state;
 	protected $items;
 	protected $pagination;
-	protected $state;
-
+	public $filterForm;
+	public $activeFilters;
+	
 	protected $toolbarTitle;
 	protected $entityName;
 	protected $canDo;
 
 	function __construct($config = null) {
-		parent :: __construct($config);
+		parent::__construct($config);
 		$this->_addPath('template', $this->_basePath . '/views/default/tmpl');
 	}
 
 	function display($tpl = null) {
 
 		// Get data from the model
-		$this->items		= $this->get('Items');
-		$this->pagination	= $this->get('Pagination');
-		$this->state		= $this->get('State');
+		$this->state			= $this->get('State');
+		$this->items			= $this->get('Items');
+		$this->pagination		= $this->get('Pagination');
+
+		$this->filterForm		= $this->get('FilterForm');
+		$this->activeFilters	= $this->get('ActiveFilters');
 
 		$this->authoriseItems($this->items);
-		
+
 		// Check for errors
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
 
+		
 		// Set the toolbar
 		$this->addToolBar();
-
+		
+		$this->sidebar = JHtmlSidebar::render();
+		
 		// Display the template
-		parent :: display($tpl);
+		parent::display($tpl);
 	}
 
 	protected function authoriseItems($items) {
@@ -62,26 +70,28 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 	 * Setting the toolbar
 	 */
 	protected function addToolBar() {
-		JToolBarHelper :: title(JText :: _($this->toolbarTitle), 'kampinfo');
+		JToolBarHelper::title(JText::_($this->toolbarTitle), 'kampinfo'); // hier kun je de class zetten voor het icoontje dat voor de titel staat
+
 		if ($this->canDo->get($this->entityName.'.create')) {
-			JToolBarHelper :: addNew($this->entityName . '.add');
+			JToolBarHelper::addNew($this->entityName . '.add');
 		}
 		if ($this->isUserAuthorisedFor($this->entityName.'.edit')) {
-			JToolBarHelper :: editList($this->entityName . '.edit');
+			JToolBarHelper::editList($this->entityName . '.edit');
 		}
 		if ($this->isUserAuthorisedFor($this->entityName.'.delete')) {
-			JToolBarHelper :: deleteList('', $this->entityName . 's.delete');
+			JToolBarHelper::deleteList('', $this->entityName . 's.delete');
 		}
 		if ($this->entityName == 'hitcamp' || $this->entityName == 'hitsite') {
 			if ($this->canDo->get($this->entityName.'.edit.state')) {
-				JToolBarHelper :: divider();
-				JToolBarHelper :: publish($this->entityName . 's.publish', 'JTOOLBAR_PUBLISH', true);
-				JToolBarHelper :: unpublish($this->entityName . 's.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+				JToolBarHelper::divider();
+				JToolBarHelper::publish($this->entityName . 's.publish', 'JTOOLBAR_PUBLISH', true);
+				JToolBarHelper::unpublish($this->entityName . 's.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+				
 			}
 		}
-		JToolBarHelper :: divider();
+		JToolBarHelper::divider();
 		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo')) {
-			JToolBarHelper :: preferences('com_kampinfo');
+			JToolBarHelper::preferences('com_kampinfo');
 		}
 	}
 	
@@ -89,10 +99,12 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		if ($this->canDo->get($func)) {
 			return true;
 		}
-		foreach ($this->items as $item) {
-			$key = $func .'.'. (int)$item->id;
-			if ($this->canDo->get($key)) {
-				return true;
+		if ($this->items) {
+			foreach ($this->items as $item) {
+				$key = $func .'.'. (int)$item->id;
+				if ($this->canDo->get($key)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -100,7 +112,7 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 	
 }
 
-abstract class KampInfoViewItemDefault extends JView {
+abstract class KampInfoViewItemDefault extends JViewLegacy {
 
 	protected $entityName;
 	protected $prefix;
@@ -118,7 +130,7 @@ abstract class KampInfoViewItemDefault extends JView {
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError :: raiseError(500, implode('<br />', $errors));
+			JError::raiseError(500, implode('<br />', $errors));
 			return false;
 		}
 		// Assign the Data
@@ -129,7 +141,7 @@ abstract class KampInfoViewItemDefault extends JView {
 		$this->addToolBar();
 
 		// Display the template
-		parent :: display($tpl);
+		parent::display($tpl);
 
 		// Set the document
 		$this->setDocument();
@@ -139,23 +151,30 @@ abstract class KampInfoViewItemDefault extends JView {
 	 * Setting the toolbar
 	 */
 	protected function addToolBar() {
-		$input = JFactory :: getApplication()->input;
+		$input = JFactory::getApplication()->input;
 		$input->set('hidemainmenu', true);
-		JToolBarHelper :: title(JText :: _($this->prefix . ($this->isNieuwItem() ? '_MANAGER_NEW' : '_MANAGER_EDIT')), 'kampinfo');
+		JToolBarHelper::title(JText::_($this->prefix . ($this->isNieuwItem() ? '_MANAGER_NEW' : '_MANAGER_EDIT')), 'kampinfo');
 		if ($this->canDo->get($this->entityName . '.create') or $this->canDo->get($this->entityName . '.edit')) {
-			JToolBarHelper :: apply($this->entityName . '.apply');
-			JToolBarHelper :: save($this->entityName . '.save');
+			JToolBarHelper::apply($this->entityName . '.apply');
+			JToolBarHelper::save($this->entityName . '.save');
+			if ($this->entityName == 'hitcamp' || $this->entityName == 'hitsite') {
+				JToolBarHelper::save2new($this->entityName . '.save2new');
+			}
+			if ($this->entityName == 'hitcamp') {
+				$template = JComponentHelper::getParams('com_kampinfo')->get('template');
+				JToolBarHelper::preview("../index.php?option=com_kampinfo&view=activiteit&hitcamp_id={$this->item->id}&template={$template}");
+			}
 		}
 		
-		JToolBarHelper :: cancel($this->entityName .'.cancel', $this->isNieuwItem() ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
+		JToolBarHelper::cancel($this->entityName .'.cancel', $this->isNieuwItem() ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
 	}
 
 	/**
      * Method to set up the document properties.
      */
 	protected function setDocument() {
-		$document = JFactory :: getDocument();
-		$document->setTitle(JText :: _($this->prefix . ($this->isNieuwItem() ? '_CREATING' : '_EDITING')));
+		$document = JFactory::getDocument();
+		$document->setTitle(JText::_($this->prefix . ($this->isNieuwItem() ? '_CREATING' : '_EDITING')));
 	}
 
 	protected function isNieuwItem() {

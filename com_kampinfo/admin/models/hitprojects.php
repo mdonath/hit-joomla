@@ -17,29 +17,44 @@ class KampInfoModelHitProjects extends JModelList {
 			//set the filter fields
 			//this filter fields is associated with the grid.sort on the default.php view template
 			$config['filter_fields'] = array (
-				'jaar'
+				'jaar', 'p.jaar'
 			);
 		}
 
 		//call the parent constructor
-		parent :: __construct($config);
-	}
-
-	protected function getListQuery() {
-		$listOrder = $this->state->get('list.ordering', 'jaar');
-		$listDirn = $this->state->get('list.direction', 'asc');
-
-		// Create a new query object.           
-		$db = JFactory :: getDBO();
-		$query = $db->getQuery(true);
-		$query->select('id,jaar,inschrijvingStartdatum,inschrijvingEinddatum,inschrijvingWijzigenTotDatum,inschrijvingKosteloosAnnulerenDatum,inschrijvingGeenRestitutieDatum,inningsdatum');
-		$query->from('#__kampinfo_hitproject AS p');
-
-		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
-		return $query;
+		parent::__construct($config);
 	}
 
 	protected function populateState($ordering = null, $direction = null) {
-		parent :: populateState('jaar', 'asc');
+		// Initialise variables.
+		$app = JFactory::getApplication('administrator');
+		
+		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
+		
+		$jaar = $app->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
+		$this->setState('filter.jaar', $jaar);
+		
+		parent::populateState('jaar', 'desc');
+	}
+
+	protected function getListQuery() {
+		// Create a new query object.           
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('p.*');
+		$query->from('#__kampinfo_hitproject p');
+
+		$jaar = $this->getState('filter.search');
+		if (is_numeric($jaar)) {
+			$query->where('p.jaar = '. (int) $jaar);
+		}
+		
+		// ordering clause
+		$listOrder = $this->getState('list.ordering', 'jaar');
+		$listDirn = $this->getState('list.direction', 'desc');
+		$query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
+
+		return $query;
 	}
 }

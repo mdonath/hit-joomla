@@ -10,11 +10,11 @@ include_once dirname(__FILE__).'/kampinfomodelparent.php';
 class KampInfoModelActiviteit extends KampInfoModelParent {
 
 	public function getActiviteit() {
-		$hitcampId = JRequest :: getInt('hitcamp_id');
+		$hitcampId = JRequest::getInt('hitcamp_id');
 		if (!empty($hitcampId)) {
 			$activiteit = $this->getHitKampById($hitcampId);
 		} else {
-			JError :: raiseWarning(404, "Kamp niet gevonden?!");
+			JError::raiseWarning(404, "Kamp niet gevonden?!");
 		}
 	 	return $activiteit;
 	}
@@ -24,12 +24,12 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 	}
 
 	function getHitKampById($hitcampId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('c.*');
 		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.id = ' . (int)($db->getEscaped($hitcampId)) . ')');
+		$query->where('(c.id = ' . (int)($db->escape($hitcampId)) . ')');
 
 		$query->select('s.naam as plaats, s.id as hitsite_id');
 		$query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
@@ -42,11 +42,11 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		
 		// Check for a database error.
 		if ($db->getErrorNum()) {
-			JError :: raiseWarning(500, $db->getErrorMsg());
+			JError::raiseWarning(500, $db->getErrorMsg());
 		}
 		
 		if (count($activiteiten) != 1) {
-			JError :: raiseWarning(500, "0 of meer dan 1 gevonden met id $hitcampId in jaar $jaar.");
+			JError::raiseWarning(500, "0 of meer dan 1 gevonden met id $hitcampId in jaar $jaar.");
 		}
 		$activiteit = $activiteiten[0];
 

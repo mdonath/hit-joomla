@@ -1,91 +1,123 @@
 <?php defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 
-$params = &JComponentHelper::getParams('com_kampinfo');
-$template = $params->get('template');
+function pr_field($field, $horizontal = true) {
+	return <<<EOD
+<div class="control-group">
+	<div class="control-label">{$field->label}</div>
+	<div class="controls">{$field->input}</div>
+</div>
+EOD;
+}
 
-$fieldsets = $this->form->getFieldsets();
-$user = JFactory::getUser();
+function pr_fieldset($form, $fieldsetName, $horizontal = true) {
+	$orientation = $horizontal ? 'horizontal' : 'vertical';
+	echo "<fieldset class=\"form-{$orientation}\">";
+	$label = $form->getFieldsets()[$fieldsetName]->label;
+	if ($label != '') {
+		echo "<legend>{$label}</legend>";
+	}
 
-?>
-<form action="<?php echo JRoute::_('index.php?option=com_kampinfo&layout=edit&id='.(int) $this->item->id); ?>"
-      method="post"
-      name="adminForm"
-      id="hitcamp-form"
->
-	<div class="width-60 fltlft">
-<?php 
-		echo JHtml::_('sliders.start', 'hitcamp-left', array('useCookie'=>1));
-		foreach ($fieldsets as $fieldset) {
-			if ($fieldset->type == 'left') {
-				echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
-?>
-		<fieldset class="adminform">
-			<ul class="adminformlist">
-				<?php foreach($this->form->getFieldset($fieldset->name) as $field): ?>
-					<?php if ($field->hidden) { ?>
-						<?php echo $field->input; ?>
-					<?php } else { ?>
-						<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
-					<?php } ?>
-				<?php endforeach; ?>
-			</ul>
-		</fieldset>
-<?php
-			}
+	foreach($form->getFieldset($fieldsetName) as $field):
+		if ($field->hidden) {
+			echo $field->input;
+		} else {
+			echo pr_field($field, $horizontal);
 		}
-		echo JHtml::_('sliders.end');
+	endforeach;
+	echo '</fieldset>';
+}
 ?>
-	</div>
-	
-	<div class="width-40 fltrt">
-		<?php
-		echo JHtml::_('sliders.start');
-		foreach ($fieldsets as $fieldset) {
-			$pos = strpos($fieldset->name, '@');
-			if ($pos === false|| $this->canDo->get(substr($fieldset->name, $pos+1))) {
-				if ($fieldset->type == 'right') {
-					echo JHtml::_('sliders.panel', JText::_($fieldset->label), $fieldset->name);
-				?>
-					<fieldset class="panelform">
-						<ul class="adminformlist">
-							<?php foreach($this->form->getFieldset($fieldset->name) as $field) { ?>
-								<?php if ($field->hidden) { ?>
-									<?php echo $field->input; ?>
-								<?php } else { ?>
-									<li><?php echo $field->label; ?> <?php echo $field->input; ?></li>
-								<?php }?>
-							<?php } ?>
-						</ul>
-					</fieldset>
+
+<form	action="<?php echo JRoute::_('index.php?option=com_kampinfo&layout=edit&id='.(int) $this->item->id); ?>"
+		method="post"
+		name="adminForm"
+		id="adminForm"
+>
+	<div class="form-horizontal">
+		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'hitsite')); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'hitsite', JText::_('COM_KAMPINFO_HITCAMP_DETAILS', true)); ?>
+				<div class="row-fluid">
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('hitcamp')); ?>
+						<?php pr_fieldset($this->form, ('akkoordkamp')); ?>
+						<?php if ($this->canDo->get('hitcamp.delete')) { ?>
+							<?php pr_fieldset($this->form, ('akkoordplaats')); ?>
+						<?php } ?>
+					</div>
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('helpdesk')); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			
+			
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'courant', JText::_('HIT Courant')); ?>
+				<div class="row-fluid">
+					<div class="span12">
+						<?php pr_fieldset($this->form, ('hitcourant')); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'website', JText::_('Website')); ?>
+				<div class="row-fluid">
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('hitwebsite')); ?>
+					</div>
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('hitwebsiteextra')); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'icons', JText::_('Iconen')); ?>
+				<div class="row-fluid">
+					<div class="span3">
+						<?php pr_fieldset($this->form, ('iconen'), false); ?>
+					</div>
+					<div class="span3">
+						<?php pr_fieldset($this->form, ('activiteitengebieden'), false); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'deelnemer', JText::_('Deelnemer')); ?>
+				<div class="row-fluid">
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('leeftijd')); ?>
+					</div>
+					<div class="span6">
+						<?php pr_fieldset($this->form, ('aantallen')); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'doelstelling', JText::_('Doelstelling')); ?>
+				<fieldset class="form-vertical">
+					<?php pr_fieldset($this->form, ('doelstelling')); ?>
+				</fieldset>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			
+			<?php if ($this->canDo->get('core.admin')) { ?>
+				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'admin', JText::_('Admin')); ?>
+					<div class="row-fluid">
+						<div class="span6">
+							<?php pr_fieldset($this->form, ('publish')); ?>
+							<?php pr_fieldset($this->form, ('inschrijvingen')); ?>
+						</div>
+					</div>
+				<?php echo JHtml::_('bootstrap.endTab'); ?>
 			<?php } ?>
-		<?php } ?>
-	<?php } ?>
-		
-	<?php echo JHtml::_('sliders.end'); ?>
-		<fieldset class="panelform" >
-			<legend><?php echo JText::_( 'Preview' ); ?></legend>
-			<ul class="adminformlist">
-				<li><label><a target="_blank" href="../index.php?option=com_kampinfo&view=activiteit&hitcamp_id=<?php echo ($this->item->id); ?>&template=<?php echo ($template); ?>">Toon preview van kamp</a></label></li>
-			</ul>
-		</fieldset>
-	</div>
 
-
-	<!-- begin ACL definition-->
-	<div class="clr"></div>
-	<?php if ($this->canDo->get('core.admin')): ?>
-	<div class="width-100 fltlft">
-		<?php echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>
-		<?php echo JHtml::_('sliders.panel', JText::_('COM_KAMPINFO_FIELDSET_RULES'), 'access-rules'); ?>
-		<fieldset class="panelform">
-			<?php echo $this->form->getLabel('rules'); ?>
-			<?php echo $this->form->getInput('rules'); ?>
-		</fieldset>
-		<?php echo JHtml::_('sliders.end'); ?>
+			<?php if ($this->canDo->get('core.admin')) { ?>
+				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'rules', JText::_('COM_KAMPINFO_FIELDSET_RULES')); ?>
+					<?php echo $this->form->getInput('rules'); ?>
+				<?php echo JHtml::_('bootstrap.endTab'); ?>	 	 
+			<?php } ?>
+			
+		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	</div>
-	<?php endif; ?>
-	<!-- end ACL definition-->
 
 	<div>
 		<input type="hidden" name="task" value="hitcamp.edit" />

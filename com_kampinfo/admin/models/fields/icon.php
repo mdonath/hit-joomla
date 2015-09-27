@@ -22,7 +22,7 @@ class JFormFieldIcon extends JFormField {
 	 */
 	protected function getInput()
 	{
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$iconFolderSmall = $params->get('iconFolderSmall');
 		$iconFolderLarge = $params->get('iconFolderLarge');
 		$iconExtension = $params->get('iconExtension');
@@ -57,8 +57,8 @@ class JFormFieldIcon extends JFormField {
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = KampInfoUrlHelper :: imgUrl($iconFolderSmall, $option->value, $iconExtension, '', JText::_($option->text));
-			$html[] = KampInfoUrlHelper :: imgUrl($iconFolderLarge, $option->value, $iconExtension, '', JText::_($option->text));
+			//$html[] = KampInfoUrlHelper::imgUrl($iconFolderSmall, $option->value, $iconExtension, '', JText::_($option->text));
+			$html[] = KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', JText::_($option->text));
 			$html[] =  JText::_($option->text) . '</label>';
 			$html[] = '</li>';
 		}
@@ -72,7 +72,7 @@ class JFormFieldIcon extends JFormField {
 	
 
 	public function getOptions() {
-		$options = KampInfoHelper :: getHitIconOptions();
+		$options = KampInfoHelper::getHitIconOptions();
 		
 		// Merge any additional options in the XML definition.
 		$options = array_merge($this->getOptionsFromFormDefinition(), $options);

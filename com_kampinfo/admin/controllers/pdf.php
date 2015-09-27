@@ -24,9 +24,9 @@ if(is_dir($base_folder.DS.'libraries'.DS.'joomla'))
 	require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
 	$userid='';
 	$usertype='';
-	$mainframe =& JFactory::getApplication('site');
+	$mainframe = JFactory::getApplication('site');
 	$mainframe->initialise();
-	$user =& JFactory::getUser();
+	$user = JFactory::getUser();
 	$userid = $user->get('id');
 	$usertype = $user->get('usertype');
 }

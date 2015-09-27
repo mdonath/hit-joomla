@@ -11,18 +11,18 @@ class KampInfoViewDownloads extends KampInfoViewListDefault {
 	function __construct($config = null) {
 		$this->toolbarTitle = 'COM_KAMPINFO_DOWNLOADS_MANAGER';
 		$this->entityName = 'download';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 	
 	/**
 	 * Setting the toolbar
 	 */
 	protected function addToolBar() {
-		JToolBarHelper :: title(JText :: _($this->toolbarTitle), 'kampinfo');
+		JToolBarHelper::title(JText::_($this->toolbarTitle), 'kampinfo');
 	
-		// JToolBarHelper :: deleteListX('', $this->entityName . 's.delete');
+		// JToolBarHelper::deleteListX('', $this->entityName . 's.delete');
 		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo'))     {
-			JToolBarHelper :: preferences('com_kampinfo');
+			JToolBarHelper::preferences('com_kampinfo');
 		}
 	}
 

@@ -32,7 +32,7 @@ class KampInfoControllerHitCamps extends JControllerAdmin {
 		$task = $this->getTask();
 		$value = JArrayHelper::getValue($values, $task, 0, 'int');
 	
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitcamp' . ' SET akkoordHitPlaats = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();
@@ -49,7 +49,7 @@ class KampInfoControllerHitCamps extends JControllerAdmin {
 		$task = $this->getTask();
 		$value = JArrayHelper::getValue($values, $task, 0, 'int');
 	
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = 'UPDATE #__kampinfo_hitcamp' . ' SET akkoordHitKamp = '.(int) $value . ' WHERE id IN ( '.$cids.' )';
 		$db->setQuery($query);
 		$result = $db->query();

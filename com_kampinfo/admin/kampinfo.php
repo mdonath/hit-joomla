@@ -5,12 +5,12 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_kampinfo')) {
 }
 
 // require helper file
-JLoader::register('KampInfoHelper', dirname(__FILE__) . DS . 'helpers' . DS . 'kampinfo.php');
+JLoader::register('KampInfoHelper', dirname(__FILE__) .'/helpers/kampinfo.php');
 
 // Set some global property
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('.icon-48-kampinfo {background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
 
 $controller	= JControllerLegacy::getInstance('KampInfo');
-$controller->execute(JRequest::getCmd('task'));
+$controller->execute(JFactory::getApplication()->input->getCmd('task'));
 $controller->redirect();

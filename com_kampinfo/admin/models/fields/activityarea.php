@@ -17,7 +17,7 @@ class JFormFieldActivityarea extends JFormField {
 	 */
 	protected function getInput()
 	{
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
 		$activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
 	
@@ -50,7 +50,7 @@ class JFormFieldActivityarea extends JFormField {
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = KampInfoUrlHelper :: imgUrl($activiteitengebiedenFolder, $option->value, $activiteitengebiedenExtension, JText::_($option->text));
+			$html[] = KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $option->value, $activiteitengebiedenExtension, JText::_($option->text));
 			$html[] =  JText::_($option->text) . '</label>';
 			$html[] = '</li>';
 		}
@@ -64,7 +64,7 @@ class JFormFieldActivityarea extends JFormField {
 	
 
 	public function getOptions() {
-		$options = KampInfoHelper :: getActivityAreaOptions();
+		$options = KampInfoHelper::getActivityAreaOptions();
 		
 		// Merge any additional options in the XML definition.
 		$options = array_merge($this->getOptionsFromFormDefinition(), $options);

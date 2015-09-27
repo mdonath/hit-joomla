@@ -14,7 +14,7 @@ class KampInfoViewHitProjects extends KampInfoViewListDefault {
 	function __construct($config = null) {
 		$this->toolbarTitle = 'COM_KAMPINFO_HITPROJECTS_MANAGER';
 		$this->entityName = 'hitproject';
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
 
 }

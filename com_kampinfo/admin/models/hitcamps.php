@@ -29,18 +29,39 @@ class KampInfoModelHitCamps extends JModelList {
 		}
 
 		//call the parent constructor
-		parent :: __construct($config);
+		parent::__construct($config);
 	}
+
+	protected function populateState($ordering = null, $direction = null) {
+		$app = JFactory::getApplication('administrator');
+	
+		// for filtering
+		$search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
+	
+		$jaar = $app->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
+		if ($jaar == "") {
+			$jaar = JComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
+			$app->setUserState($this->context.'.filter.jaar', $jaar);
+		}
+		$this->setState('filter.jaar', $jaar);
+	
+		$plaats = $app->getUserStateFromRequest($this->context . '.filter.plaats', 'filter_plaats', '', 'string');
+		if ($plaats == '-1') {
+			$plaats == "";
+		}
+		$this->setState('filter.plaats', $plaats);
+
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
+		$this->setState('filter.published', $published);
+
+		parent::populateState('jaar', 'asc');
+	}
+
 	protected function getListQuery() {
-		$listOrder = $this->state->get('list.ordering', 'jaar');
-		$listDirn = $this->state->get('list.direction', 'asc');
-		$filterSearch = $this->getState('filter.search');
-		$filterJaar = $this->getState('filter.jaar');
-		$filterPlaats = $this->getState('filter.plaats');
-		$filterPublished = $this->getState('filter.published');
 		
 		// Create a new query object.           
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('c.*');
 		$query->from('#__kampinfo_hitcamp c');
@@ -51,26 +72,34 @@ class KampInfoModelHitCamps extends JModelList {
 		$query->select('p.jaar as jaar');
 		$query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
 
+		$filterSearch = $this->getState('filter.search');
 		if (!empty ($filterSearch)) {
-			$query->where('(c.naam LIKE ' . $db->quote('%'.$db->getEscaped($filterSearch).'%') . ')');
+			$query->where('(c.naam LIKE ' . $db->quote('%'.$db->escape($filterSearch).'%') . ')');
 		}
+		$filterJaar = $this->getState('filter.jaar');
 		if (!empty ($filterJaar) and $filterJaar != "-1") {
-			$query->where('(p.id = ' . (int)($db->getEscaped($filterJaar)) . ')');
+			$query->where('(p.id = ' . (int)($db->escape($filterJaar)) . ')');
 		}
+
 		// Alleen als filterPlaats en filterJaar kloppen met elkaar
+		$filterPlaats = $this->getState('filter.plaats');
 		if (!empty ($filterPlaats) and ($filterPlaats != "-1")) {
-			$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($filterPlaats)) . ')');
+			$query->where('(c.hitsite_id = ' . (int)($db->escape($filterPlaats)) . ')');
 		}
+
+		$filterPublished = $this->getState('filter.published');
 		if (is_numeric($filterPublished)) {
-			$query->where('(c.published = '. (int)($db->getEscaped($filterPublished)) .')');
+			$query->where('(c.published = '. (int)($db->escape($filterPublished)) .')');
 		} elseif ($filterPublished === '') {
 			$query->where('(c.published IN (0,1))');
 		}
-		
+
+		$listOrder = $this->getState('list.ordering', 'jaar');
+		$listDirn = $this->getState('list.direction', 'asc');
 		if ($listOrder === 'plaats') {
 			$listOrder = 's.naam';
 		}
-		$query->order($db->getEscaped($listOrder) . ' ' . $db->getEscaped($listDirn));
+		$query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
 
 		return $query;
 	}
@@ -79,30 +108,4 @@ class KampInfoModelHitCamps extends JModelList {
 		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 	}
 	
-	protected function populateState($ordering = null, $direction = null) {
-		// for sorting
-		parent :: populateState('jaar', 'asc');
-
-		// for filtering
-		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
-
-		$state = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
-		if ($state == "") {
-			$params = &JComponentHelper::getParams('com_kampinfo');
-			$state = $params->get('huidigeActieveJaar');
-		}
-		if ($state == '-1') {
-			$state = "";
-		}
-		$this->setState('filter.jaar', $state);
-		
-		$state = $this->getUserStateFromRequest($this->context . '.filter.plaats', 'filter_plaats', '', 'string');
-		if ($state == '-1') {
-			$state == "";
-		}
-		$this->setState('filter.plaats', $state);
-		$state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
-		$this->setState('filter.published', $state);
-	}
 }

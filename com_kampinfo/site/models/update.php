@@ -8,7 +8,7 @@ include_once JPATH_COMPONENT_ADMINISTRATOR.'/models/import.php';
 class KampInfoModelUpdate extends KampInfoModelImport {
 	
 	public function download() {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		
 		// Voor welk jaar staat in de configuratie
 		$configuredSecret = $params->get('downloadSecret');

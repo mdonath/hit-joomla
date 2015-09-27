@@ -9,7 +9,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfour
 class KampInfoModelHitApp extends KampInfoModelParent {
 
 	public function generate() {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		//$useComponentUrls = $params->get('useComponentUrls') == 1;
 		
 		if ($this->magHet($params)) {
@@ -22,12 +22,12 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 
 	//////////////////////////////////////
 	function getHitPlaatsen($projectId) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitsite s');
-		$query->where('(s.hitproject_id = ' . (int) ($db->getEscaped($projectId)) . ')');
+		$query->where('(s.hitproject_id = ' . (int) ($db->escape($projectId)) . ')');
 		$query->order('s.naam');
 	
 		$db->setQuery($query);
@@ -36,12 +36,12 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	}
 
 	function getHitKampen($hitsiteId, $iconenLijst) {
-		$db = JFactory :: getDBO();
+		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
-		$query->where('(c.hitsite_id = ' . (int)($db->getEscaped($hitsiteId)) . ')');
+		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
 		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
 		$query->order('c.naam');
 	
@@ -95,7 +95,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	
 	private function prepareProject($project) {
 		$this->convertDate($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
-		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m') != $project->maandag->format('m');
+		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m',true) != $project->maandag->format('m',true);
 	}
 
 	private function convertDate($object, $datumVelden) {
@@ -124,7 +124,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 
 	private function prepareKamp($kamp) {
 		$this->convertDateTime($kamp, array('startDatumTijd', 'eindDatumTijd'));
-		$kamp->heeftBeginEnEindInVerschillendeMaanden = $kamp->startDatumTijd->format('m') != $kamp->eindDatumTijd->format('m');
+		$kamp->heeftBeginEnEindInVerschillendeMaanden = $kamp->startDatumTijd->format('m',true) != $kamp->eindDatumTijd->format('m',true);
 	}
 
 	private function magHet($params) {
@@ -141,7 +141,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	 * @param unknown $hit
 	 */
 	private function hitcourant($hit) {
-		$params = &JComponentHelper::getParams('com_kampinfo');
+		$params =JComponentHelper::getParams('com_kampinfo');
 		$shantiUrl = $params->get('shantiUrl');
 		
 		echo <<< EOT
@@ -288,7 +288,7 @@ EOT;
 	}
 	
 	private function format($date, $format) {
-		$result = $date->format($format);
+		$result = $date->format($format, true);
 		$vertaling = array(
 				'Monday' => 'maandag',
 				'Tuesday' => 'dinsdag',

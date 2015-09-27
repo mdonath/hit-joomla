@@ -11,7 +11,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelOverzichtplaats extends KampInfoModelParent {
 
 	public function getPlaats() {
-		$hitsiteId = JRequest :: getString('hitsite_id');
+		$hitsiteId = JRequest::getString('hitsite_id');
 
 		$plaats = $this->getHitPlaats($hitsiteId);
 
