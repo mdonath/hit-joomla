@@ -42,12 +42,13 @@ alter table `#__kampinfo_hitsite`
 CREATE TABLE `#__kampinfo_hitcamp` (
 	`id`									INT(11)			NOT NULL	AUTO_INCREMENT
 ,	`asset_id`								INT(10)			NOT NULL	DEFAULT '0'
-,	`deelnemersnummer`						INT(10)			NOT NULL
-,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`hitsite_id`							INT(11)			NOT NULL
+,	`deelnemersnummer`						INT(10)			NOT NULL
+,	`shantiFormuliernummer`					INT(10)
+,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
-,	`start_elders`							BOOLEAN
 ,	`isouderkind`							BOOLEAN
+,	`start_elders`							BOOLEAN
 ,	`activiteitengebieden`					TEXT
 ,	`titeltekst`							VARCHAR(255)
 ,	`startDatumTijd`						DATETIME
@@ -71,15 +72,14 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`aantalDeelnemers`						SMALLINT(3)
 ,	`gereserveerd`							SMALLINT(3)
 ,	`maximumAantalDeelnemers`				SMALLINT(3)
-,	`aantalSubgroepen`						SMALLINT(2)
 ,	`minimumAantalSubgroepjes`				SMALLINT(3)
+,	`aantalSubgroepen`						SMALLINT(2)
 ,	`maximumAantalSubgroepjes`				SMALLINT(3)
 ,	`maximumAantalUitEenGroep`				SMALLINT(3)
 ,	`margeAantalDagenTeJong`				SMALLINT(3)
 ,	`margeAantalDagenTeOud`					SMALLINT(3)
 ,	`redenAfwijkingMarge`					VARCHAR(255)
 ,	`doelgroepen`							TEXT
-,	`shantiFormuliernummer`					INT(10)
 ,	`doelstelling`							TEXT
 ,	`hitCourantTekst`						TEXT
 ,	`helpdeskOpmerkingen`					TEXT
@@ -87,9 +87,9 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`helpdeskOverschrijdingLeeftijd` 		BOOLEAN
 ,	`helpdeskTeJongMagAantal`				SMALLINT(3)
 ,	`helpdeskTeOudMagAantal`				SMALLINT(3)
-,	`helpdeskContactpersoon`				VARCHAR(50)
 ,	`helpdeskContactEmailadres`				VARCHAR(50)
-,	`helpdeskContactTelefoonnummer`				VARCHAR(50)
+,	`helpdeskContactTelefoonnummer`			VARCHAR(50)
+,	`helpdeskContactpersoon`				VARCHAR(50)
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
 ,	`published`								SMALLINT(3) NOT NULL default '0'
@@ -181,21 +181,23 @@ INSERT INTO `#__kampinfo_hiticon` (
 ,	(35, '100km', 'Totale afstand is 100 km', 'A')
 ,	(36, '120km', 'Totale afstand is 120 km', 'A')
 ,	(37, '150km', 'Totale afstand is 150 km', 'A')
+,	(38, 'kano10', 'Afstand per kano is 10 km', 'A')
+,	(39, 'fiets60', 'Afstand per fiets is 60 km', 'A')
 
-,	(38, 'vuur', 'Koken op houtvuur zonder pannen', 'K')
-,	(39, 'opvuur', 'Koken op houtvuur met pannen', 'K')
-,	(40, 'gas', 'Koken op gas met pannen', 'K')
-,	(41, 'stafkookt', 'Gekookt door de staf', 'K')
+,	(40, 'vuur', 'Koken op houtvuur zonder pannen', 'K')
+,	(41, 'opvuur', 'Koken op houtvuur met pannen', 'K')
+,	(42, 'gas', 'Koken op gas met pannen', 'K')
+,	(43, 'stafkookt', 'Gekookt door de staf', 'K')
 
-,	(42, 'k_ks', 'Kennis van kaart en kompas op eenvoudig niveau', '?')
-,	(43, 'k_kv', 'Kennis van kaart en kompas op gevorderd niveau', '?')
-,	(44, 'k_kgv', 'Kennis van kaart en kompas op specialistisch niveau', '?')
-,	(45, 'insigne', 'Activiteit waarmee een insigne kan worden behaald', '?')
+,	(45, 'k_ks', 'Kennis van kaart en kompas op eenvoudig niveau', '?')
+,	(46, 'k_kv', 'Kennis van kaart en kompas op gevorderd niveau', '?')
+,	(47, 'k_kgv', 'Kennis van kaart en kompas op specialistisch niveau', '?')
+,	(49, 'insigne', 'Activiteit waarmee een insigne kan worden behaald', '?')
 
-,	(46, 'zwem', 'Zwemdiploma verplicht', '?')
-,	(47, 'mobieltje', 'Mobieltje meenemen', '?')
-,	(48, 'geenmobieltje', 'Mobieltjes zijn verboden', '?')
-,	(49, 'rolstoel', 'Geschikt voor minder validen (rolstoel)', '?')
-,	(50, 'vraagt', 'Vraagteken Mysterie elementen', '?')
-,	(51, 'buitenland', 'Buitenland - ID kaart of paspoort verplicht', '?')
+,	(50, 'zwem', 'Zwemdiploma verplicht', '?')
+,	(51, 'mobieltje', 'Mobieltje meenemen', '?')
+,	(52, 'geenmobieltje', 'Mobieltjes zijn verboden', '?')
+,	(53, 'rolstoel', 'Geschikt voor minder validen (rolstoel)', '?')
+,	(54, 'vraagt', 'Vraagteken Mysterie elementen', '?')
+,	(55, 'buitenland', 'Buitenland - ID kaart of paspoort verplicht', '?')
 ;
