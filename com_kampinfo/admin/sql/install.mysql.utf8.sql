@@ -17,6 +17,12 @@ CREATE TABLE `#__kampinfo_hitproject` (
 ,	`inningsdatum`							DATE
 ,	`vrijdag`								DATE
 ,	`maandag`								DATE
+
+,	`bijdrageProjectteam`					DECIMAL(10,2)			DEFAULT 2.00
+,	`bijdrageCalamiteitenfonds				DECIMAL(10,2)			DEFAULT 1.50
+,	`bijdrageLSC`							DECIMAL(10,2)			DEFAULT 1.00
+,	`percentageReservering`					SMALLINT(2)				DEFAULT 10
+
 ,	PRIMARY KEY (`id`)
 );
 
@@ -31,6 +37,12 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`contactPersoonEmail`					VARCHAR(50)
 ,	`contactPersoonTelefoon`				VARCHAR(50)
 ,	`akkoordHitPlaats`						BOOLEAN
+
+,	`aantalMedewerkers`						SMALLINT(3)
+,	`medewerkersBijdrage					DECIMAL(10,2)
+,	`bijdragePlaats`						DECIMAL(10,2)
+
+
 ,	`published`								SMALLINT(3) NOT NULL	DEFAULT '0'
 ,	PRIMARY KEY (`id`)
 );
@@ -92,11 +104,15 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`helpdeskContactEmailadres`				VARCHAR(50)
 ,	`helpdeskContactTelefoonnummer`			VARCHAR(50)
 ,	`helpdeskContactpersoon`				VARCHAR(50)
+
+,	`aantalMedewerkers`						SMALLINT(3)
+,	`aantalDagenVoorAfdracht`				SMALLINT(1)					DEFAULT 2
+
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN
-,	`published`								SMALLINT(3) NOT NULL default '0'
-,	`publish_up`							DATETIME NOT NULL default '0000-00-00 00:00:00'
-,	`publish_down`							DATETIME NOT NULL default '0000-00-00 00:00:00'
+,	`published`								SMALLINT(3)		NOT NULL	DEFAULT '0'
+,	`publish_up`							DATETIME		NOT NULL	DEFAULT '0000-00-00 00:00:00'
+,	`publish_down`							DATETIME		NOT NULL	DEFAULT '0000-00-00 00:00:00'
 ,	PRIMARY KEY (`id`)
 );
 

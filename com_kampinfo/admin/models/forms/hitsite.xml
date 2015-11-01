@@ -56,7 +56,7 @@
 
 	<!--  -->
 	<fieldset
-			name="financien"
+			name="financienProject"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
 		<field
@@ -67,9 +67,37 @@
 				maxlength="50"
 		/>
 	</fieldset>
+
+	<fieldset
+	    	name="financien"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field	name="aantalMedewerkers"
+		    	type="number"
+		    	label="Aantal medewerkers (overhead)"
+		    	description="Het aantal medewerkers dat meewerkt die niet meegeteld worden bij de kamponderdelen"
+		    	size="4"
+		    	class="input-mini"
+		/>
+		<field	name="medewerkersBijdrage"
+		    	type="number"
+		    	label="Medewerkersbijdrage (€)"
+		    	description="Bijdrage die elke medewerker betaalt voor eten, overnachting, etc."
+		    	size="4"
+		    	step="0.01"
+		    	class="input-mini"
+		/>
+		<field	name="bijdragePlaats"
+		    	type="number"
+		    	label="Plaatselijke afdracht (€)"
+		    	description="Bijdrage die voor elke deelnemer wordt betaald aan het C-team."
+		    	size="4"
+		    	step="0.01"
+		    	class="input-mini"
+		/>
+	</fieldset>
 	
 	<!--  -->
-		
 	<fieldset
 			name="aanlevering"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"

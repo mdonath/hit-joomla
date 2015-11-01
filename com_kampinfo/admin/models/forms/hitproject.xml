@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset>
+	<fieldset
+	    	name="hitproject"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+			label="Algemene info"
+	>
 		<field	name="id"
 				type="hidden"
 		/>
@@ -93,5 +97,48 @@
 				default=""
 				filter="SERVER_UTC"
 		/>
+	</fieldset>
+	
+	<fieldset
+	    	name="financien"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field	name="bijdrageProjectteam"
+		    	type="number"
+		    	label="Bijdrage aan Projectteam (€)"
+		    	description="Afdracht van elk kamp ten behoeve van het Projectteam"
+		    	size="4"
+		    	default="2.00 (€)"
+		    	step="0.01"
+		    	class="input-mini"
+		/>
+		<field	name="bijdrageCalamiteitenfonds"
+		    	type="number"
+		    	label="Bijdrage Calamiteitenfonds (€)"
+		    	description="Afdracht door elk kamp ten behoeve van het Calamiteitenfonds"
+		    	size="4"
+		    	default="1.50"
+		    	step="0.01"
+		    	class="input-mini"
+		/>
+		<field	name="bijdrageLSC"
+		    	type="number"
+		    	label="Bijdrage LSC (€)"
+		    	description="Afdracht door elk kamp ten behoeve van inzet van Landelijk Service Centrum"
+		    	size="4"
+		    	default="1.00"
+		    	step="0.01"
+		    	class="input-mini"
+		/>
+		<field	name="percentageReservering"
+		    	type="number"
+		    	label="Percentage Reservering (%)"
+		    	description="Afdracht door elk kamp ten behoeve van het opbouwen van een reserve (de vroegere 10% onvoorzien)"
+		    	size="2"
+		    	default="10"
+		    	max="50"
+		    	class="input-mini"
+		/>
+				
 	</fieldset>
 </form>

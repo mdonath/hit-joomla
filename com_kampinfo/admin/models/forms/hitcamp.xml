@@ -576,7 +576,6 @@
 				label="Globale omschrijving en doelstelling"
 				description="Globale beschrijving en doelstellingen van het kamp om in de opstartfase kampen met elkaar te kunnen vergelijken."
 				width="300"
-				required="true"
 				filter="safehtml"
 		/>
 	</fieldset>
@@ -632,6 +631,29 @@
 	</fieldset>
 			
 	<!-- ================================================================== -->
+	
+	<fieldset
+	    	name="financien"
+			addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field	name="aantalMedewerkers"
+		    	type="number"
+		    	label="Aantal medewerkers"
+		    	description="Het aantal medewerkers in je stafteam die medewerkersbijdrage betalen."
+		    	size="4"
+		    	class="input-mini"
+		/>
+		<field	name="aantalDagenVoorAfdracht"
+		    	type="number"
+		    	label="Aantal dagen afdracht"
+		    	description="Het aantal dagen waarmee gerekend wordt voor afdrachten aan het LSC."
+		    	min="1"
+		    	max="2"
+		    	size="4"
+		    	class="input-mini"
+		/>
+	</fieldset>
+	
 	<!-- ================================================================== -->
 	<!-- ================================================================== -->
 

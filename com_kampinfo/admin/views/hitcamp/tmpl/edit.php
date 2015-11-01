@@ -98,6 +98,12 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 					<?php pr_fieldset($this->form, ('doelstelling')); ?>
 				</fieldset>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'financien', JText::_('HIT Financiën')); ?>
+				<fieldset class="form-vertical">
+					<?php pr_fieldset($this->form, ('financien')); ?>
+				</fieldset>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			
 			<?php if ($this->canDo->get('core.admin')) { ?>
 				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'admin', JText::_('Admin')); ?>
@@ -115,7 +121,7 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 					<?php echo $this->form->getInput('rules'); ?>
 				<?php echo JHtml::_('bootstrap.endTab'); ?>	 	 
 			<?php } ?>
-			
+						
 		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	</div>
 
