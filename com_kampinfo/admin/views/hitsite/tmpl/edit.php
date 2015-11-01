@@ -34,11 +34,13 @@ JHtml::_('behavior.formvalidation');
 							<div class="control-label">Kopieer kampen van vorig jaar</div>
 							<div class="controls"><input type="button" value="Kopieer" onclick="Joomla.submitbutton('hitsite.copyCamps');"/></div>
 						</div>
-						<?php foreach($this->form->getFieldset("financien") as $field) { ?>
-							<div class="control-group">
-								<div class="control-label"><?php echo $field->label; ?></div>
-								<div class="controls"><?php echo $field->input; ?></div>
-							</div>
+						<?php if ($this->canDo->get('core.admin')) { ?>
+							<?php foreach($this->form->getFieldset("financien") as $field) { ?>
+								<div class="control-group">
+									<div class="control-label"><?php echo $field->label; ?></div>
+									<div class="controls"><?php echo $field->input; ?></div>
+								</div>
+							<?php } ?>
 						<?php } ?>
 					</div>
 				</div>

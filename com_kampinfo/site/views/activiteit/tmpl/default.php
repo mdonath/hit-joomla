@@ -23,7 +23,7 @@ $start->setTimezone($timezone);
 $eind = new JDate($activiteit->eindDatumTijd);
 $eind->setTimezone($timezone);
 
-$heeftEenYoutubeFilmpje = KampInfoUrlHelper::isYoutubeFilmpje($activiteit->webadresFoto3);
+$heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 ?>
 
 <article class="itempage" itemtype="http://schema.org/Article" itemscope="">
@@ -96,15 +96,13 @@ $heeftEenYoutubeFilmpje = KampInfoUrlHelper::isYoutubeFilmpje($activiteit->webad
 		
 			<!-- De complete artikeltekst -->
 			<?php echo($activiteit->websiteTekst); ?>
-	
 			
 			<!-- Een eventueel Youtube filmpje -->
 			<?php if ($heeftEenYoutubeFilmpje) { ?>
-				<iframe width="670" height="400" src="<?php echo($activiteit->webadresFoto3); ?>" frameborder="0" allowfullscreen></iframe>
+				<iframe width="100%" height="435" src="https://www.youtube.com/embed/<?php echo($activiteit->youtube); ?>" frameborder="0" allowfullscreen></iframe>
 			<?php } ?>
-	
 			
-			
+			<!-- Meer weten-blok met contactinformatie -->
 			<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres) or !empty($activiteit->websiteAdres)) { ?>
 				<h3>Meer weten over het kamp?</h3>
 				<table border="0">
@@ -154,18 +152,25 @@ $heeftEenYoutubeFilmpje = KampInfoUrlHelper::isYoutubeFilmpje($activiteit->webad
 					$eindDTF = $eind->format('l j F H:i \u\u\r', true);
 					$begintOpGoedeVrijdag = $start->format('N', true) == '5'; // vrijdag
 			
-					$startInsch = (new JDate($activiteit->startInschrijving))->getTimestamp();
-					$isInschrijvingGestart = $startInsch <= (new JDate())->getTimestamp(); 
+					$nu = (new JDate())->getTimestamp();
+					$isInschrijvingGestart = $nu >= (new JDate($activiteit->startInschrijving))->getTimestamp();
+					$isInschrijvingNogNietGestopt = $nu <= (new JDate($activiteit->startInschrijving))->getTimestamp();
 				?>
 				Dit HIT-onderdeel start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
+				<?php if ($activiteit->startElders == 1) { ?>
+					Dit kamp start niet op de hoofdlocatie. 
+				<?php }?>
+				<?php if (!empty($activiteit->sublocatie)) { ?>
+					Dit kamp vindt niet plaats op de hoofdlocatie, maar <?php echo($activiteit->sublocatie); ?>. 
+				<?php }?>
 			</p>
 			<?php if ($activiteit->isouderkind == 1) { ?>
 				<p><b>BELANGRIJKE INFORMATIE VOOR OUDERS:</b><br/>Inschrijven voor dit HIT-onderdeel gebeurt met een groep van twee personen: één kind met één ouder als begeleider. De genoemde kampprijs geldt per persoon, en beide personen schrijven zich afzonderlijk in. Bij uitzondering kunnen ook ouders die geen lid zijn, zich voor dit onderdeel inschrijven, op voorwaarde dat het kind wél lid is van Scouting Nederland. Ouders die geen lid zijn, kiezen bij het inschrijven voor "inschrijven als niet-lid". De niet-leden vullen eerst hun persoonlijke gegevens in voordat ze in het inschrijfformulier terecht komen. Na het betalen via iDEAL volgt een standaardmelding dat er een automatische bevestigingsemail verstuurd zal worden. Voor niet-leden gaat dit niet automatisch; deze email wordt binnen enkele dagen handmatig verstuurd. Ouders die zich op deze manier inschrijven worden geregistreerd als "relatie van de landelijke HIT". Het aanvragen van een inlogaccount is voor een relatie niet mogelijk. Eventuele wijzigingen en annuleringen moeten daarom persoonlijk worden doorgegeven aan de HIT Helpdesk.</p>
 			<?php }?>
-			<?php if ($activiteit->shantiFormuliernummer > 0 /*&& $isInschrijvingGestart*/) { ?>
+			
+			<?php if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) { ?>
 				<input style="float: right" value="Inschrijven!" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
 			<?php } ?>
-		
 		</div>
 		
 		<div class="item column-4 span4">
@@ -175,7 +180,7 @@ $heeftEenYoutubeFilmpje = KampInfoUrlHelper::isYoutubeFilmpje($activiteit->webad
 			<?php if (!KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto2)) { ?>
 				<img src="<?php echo($activiteit->webadresFoto2); ?>" alt="" border="0" width="100%" /><br /><br />
 			<?php } ?>
-			<?php if (!($heeftEenYoutubeFilmpje or KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto3))) { ?>
+			<?php if (!KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto3)) { ?>
 				<img src="<?php echo($activiteit->webadresFoto3); ?>" alt="" border="0" width="100%" /><br /><br />
 			<?php } ?>
 		</div>

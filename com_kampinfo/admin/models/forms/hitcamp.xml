@@ -86,6 +86,16 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field
+				name="sublocatie"
+				type="text"
+				label="Sublocatie"
+				description="Vul hier hier in waar het kamp draait als het niet op de hoofdlocatie van de HIT plaats plaatsvindt. Het Stookkamp draait niet in Mook, maar op St Walrick in Overasselt. Vul zelf nog 'in' of 'op' in."
+				maxlength="255"
+				size="30"
+				required="false"
+				default=""
+		/>
 			</fieldset>
 	
    	<!-- ================================================================== -->
@@ -158,7 +168,12 @@
 			name="hitcourant"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
-		<field type="spacer" name="myspacerCourantTekst" label="LET OP: Niet meer dan enkele regels, te lange tekst wordt ingekort door de redactie" />
+		<field
+		    	name="noteCourantTekst"
+		    	type="note" 
+		    	label="LET OP: Niet meer dan enkele regels, te lange tekst wordt ingekort door de redactie"
+		    	class="alert alert-warning"
+		 />
 		<field
 				name="hitCourantTekst"
 				type="textarea"
@@ -297,14 +312,22 @@
 		<field
 				name="websiteAdres"
 				type="URL"
-				label="Website adres"
+				label="Eigen website adres"
 				description="Een link naar je eigen website."
 				size="50"
 				maxlength="255"
 		/>
 		<field
+		    	name="fotoNote"
+		    	type="note"
+		    	label="Graag foto's uploaden in de juist map"
+		    	description="Afbeeldingen moeten in de map kampinfo/«jaar»/«jouw HIT plaats»."
+		    	class="alert alert-info"
+		/>
+		<field
 				name="webadresFoto1"
-				type="URL"
+				type="media"
+				directory="kampinfo/2016"
 				label="Foto 1"
 				description="Foto 1"
 				size="50"
@@ -312,7 +335,8 @@
 		/>
 		<field
 				name="webadresFoto2"
-				type="URL"
+				type="media"
+				directory="kampinfo/2016"
 				label="Foto 2"
 				description="Foto 2"
 				size="50"
@@ -320,12 +344,28 @@
 		/>
 		<field
 				name="webadresFoto3"
-				type="URL"
-				label="Foto 3 / Youtube"
+				type="media"
+				directory="kampinfo/2016"
+				label="Foto 3"
 				description="Een derde foto, OF een link naar een Youtube filmpje, deze laatste wordt zo breed mogelijk onderaan de tekst getoond."
 				size="50"
 				maxlength="255"
 		/>
+		<field
+				name="youtube"
+				type="text"
+				directory="text"
+				label="Youtube code"
+				description="De unieke code van een Youtube filmpje, het filmje wordt zo breed mogelijk onderaan de tekst getoond."
+				size="15"
+				maxlength="11"
+		/>
+		<field
+		    	name="YoutubeNote"
+		    	type="note"
+		    	description="De code is het laatste gedeelte van de url, het gedeelte na de 'https://www.youtube.com/watch?v=«code»' of https://youtu.be/«code»"
+		/>
+		
 		<field
 				name="websiteContactpersoon"
 				type="text"

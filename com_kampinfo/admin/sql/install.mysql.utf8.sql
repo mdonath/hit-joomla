@@ -48,7 +48,8 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
 ,	`isouderkind`							BOOLEAN
-,	`start_elders`							BOOLEAN
+,	`startElders`							BOOLEAN
+,	`sublocatie`							VARCHAR(255)
 ,	`activiteitengebieden`					TEXT
 ,	`titeltekst`							VARCHAR(255)
 ,	`startDatumTijd`						DATETIME
@@ -65,6 +66,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`webadresFoto1`							VARCHAR(255)
 ,	`webadresFoto2`							VARCHAR(255)
 ,	`webadresFoto3`							VARCHAR(255)
+,	`youtube`								VARCHAR(11)
 ,	`websiteContactTelefoonnummer`			VARCHAR(255)
 ,	`websiteContactEmailadres`				VARCHAR(255)
 ,	`websiteContactpersoon`					VARCHAR(255)
