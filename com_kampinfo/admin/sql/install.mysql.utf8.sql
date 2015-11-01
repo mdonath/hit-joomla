@@ -9,14 +9,14 @@ CREATE TABLE `#__kampinfo_hitproject` (
 	`id`									INT(11)		NOT NULL	AUTO_INCREMENT
 ,	`jaar`									YEAR(4)		NOT NULL
 ,	`shantiEvenementId`						INT(5)
-,	`inschrijvingStartdatum`				DATE
-,	`inschrijvingEinddatum`					DATE
-,	`inschrijvingWijzigenTotDatum`			DATE
-,	`inschrijvingKosteloosAnnulerenDatum`	DATE
-,	`inschrijvingGeenRestitutieDatum`		DATE
-,	`inningsdatum`							DATE
-,	`vrijdag`								DATE
-,	`maandag`								DATE
+,	`inschrijvingStartdatum`				DATETIME
+,	`inschrijvingEinddatum`					DATETIME
+,	`inschrijvingWijzigenTotDatum`			DATETIME
+,	`inschrijvingKosteloosAnnulerenDatum`	DATETIME
+,	`inschrijvingGeenRestitutieDatum`		DATETIME
+,	`inningsdatum`							DATETIME
+,	`vrijdag`								DATETIME
+,	`maandag`								DATETIME
 
 ,	`bijdrageProjectteam`					DECIMAL(10,2)			DEFAULT 2.00
 ,	`bijdrageCalamiteitenfonds				DECIMAL(10,2)			DEFAULT 1.50

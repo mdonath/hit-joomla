@@ -20,11 +20,11 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 	}
 
 	foreach($form->getFieldset($fieldsetName) as $field):
-	if ($field->hidden) {
-		echo $field->input;
-	} else {
-		echo pr_field($field, $horizontal);
-	}
+		if ($field->hidden) {
+			echo $field->input;
+		} else {
+			echo pr_field($field, $horizontal);
+		}
 	endforeach;
 	echo '</fieldset>';
 }
