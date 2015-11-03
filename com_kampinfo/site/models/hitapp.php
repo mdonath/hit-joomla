@@ -14,7 +14,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		
 		if ($this->magHet($params)) {
 			$projectId = $params->get('huidigeActieveJaar');
-			$this->hitcourant($this->getHitData($projectId));
+			$this->hitapp($this->getHitData($projectId));
 		} else {
 			echo "What's the magic word?";
 		}
@@ -94,19 +94,17 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	}
 	
 	private function prepareProject($project) {
-		$this->convertDate($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
-		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m',true) != $project->maandag->format('m',true);
-	}
-
-	private function convertDate($object, $datumVelden) {
-		foreach ($datumVelden as $veld) {
-			$object->$veld = DateTime::createFromFormat('Y-m-d', $object->$veld);
-		}
+		$this->convertDateTime($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
+		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m') != $project->maandag->format('m');
+		$project->isInschrijvingBegonnen = $project->inschrijvingStartdatum < new DateTime("now");
 	}
 
 	private function convertDateTime($object, $datumVelden) {
+		$UTC = new DateTimeZone("UTC");
+		$tz = new DateTimeZone("Europe/Amsterdam");
 		foreach ($datumVelden as $veld) {
-			$object->$veld = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld);
+			$object->$veld = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld, $UTC);
+			$object->$veld->setTimezone($tz);
 		}
 	}
 
@@ -124,11 +122,11 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 
 	private function prepareKamp($kamp) {
 		$this->convertDateTime($kamp, array('startDatumTijd', 'eindDatumTijd'));
-		$kamp->heeftBeginEnEindInVerschillendeMaanden = $kamp->startDatumTijd->format('m',true) != $kamp->eindDatumTijd->format('m',true);
+		$kamp->heeftBeginEnEindInVerschillendeMaanden = $kamp->startDatumTijd->format('m') != $kamp->eindDatumTijd->format('m');
 	}
 
 	private function magHet($params) {
-		return true;
+		return true; // Ja hoor, het mag altijd
 		$configuredSecret = $params->get('downloadSecret');
 
 		$jinput = JFactory::getApplication()->input;
@@ -140,7 +138,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	 * 
 	 * @param unknown $hit
 	 */
-	private function hitcourant($hit) {
+	private function hitapp($hit) {
 		$params =JComponentHelper::getParams('com_kampinfo');
 		$shantiUrl = $params->get('shantiUrl');
 		
@@ -158,7 +156,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		]
 
 EOT;
-		$this->hitcourant_krant($hit);
+		$this->hitapp_plaatsen($hit);
 		echo <<< EOT
 	}
 }
@@ -186,13 +184,13 @@ EOT;
 	 * 
 	 * @param unknown $hit
 	 */
-	private function hitcourant_krant($hit) {
+	private function hitapp_plaatsen($hit) {
 		echo <<< EOT
 		, "plaatsen": [
 EOT;
 		$sep = '  ';
 		foreach ($hit->hitPlaatsen as $plaats) {
-			$this->hitcourant_plaats($hit, $plaats, $sep);
+			$this->hitapp_plaats($hit, $plaats, $sep);
 			$sep = ', ';
 		}
 		echo <<< EOT
@@ -205,7 +203,7 @@ EOT;
 	 * 
 	 * @param unknown $plaats
 	 */
-	private function hitcourant_plaats($hit, $plaats, $sep) {
+	private function hitapp_plaats($hit, $plaats, $sep) {
 echo <<< EOT
 	$sep {
 		  "id" : $plaats->id 
@@ -216,7 +214,7 @@ echo <<< EOT
 EOT;
 		$sep = '  ';
 		foreach ($plaats->hitKampen as $kamp) {
-			$this->hitcourant_kamp($hit, $plaats, $kamp, $sep);
+			$this->hitapp_kamp($hit, $plaats, $kamp, $sep);
 			$sep = ', ';
 		}
 echo <<< EOT
@@ -230,7 +228,7 @@ EOT;
 	 * 
 	 * @param unknown $kamp
 	 */
-	private function hitcourant_kamp($hit, $plaats, $kamp, $sep) {
+	private function hitapp_kamp($hit, $plaats, $kamp, $sep) {
 		if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
 			$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
 		} else {
@@ -243,11 +241,13 @@ EOT;
 
 		$vol = KampInfoUrlHelper::isVol($kamp) ? "true" : "false";
 		$volTekst = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
-		$hitnlUrl = JURI::base() . KampInfoUrlHelper::activiteitURL($plaats, $kamp, $hit->jaar, false);
+		
+		$hitnlUrl = JURI::base() . ($hit->isInschrijvingBegonnen ? (KampInfoUrlHelper::activiteitURL($plaats, $kamp, $hit->jaar, false)) : '');
+		$shantiFormuliernummer = $hit->isInschrijvingBegonnen ? $kamp->shantiFormuliernummer : 0;
 		echo <<< EOT
 		$sep {
 			  "id" : $kamp->id
-			, "shantiId": {$kamp->shantiFormuliernummer}
+			, "shantiId": {$shantiFormuliernummer}
 			, "hitnlUrl": "{$hitnlUrl}"
 			, "naam": "{$this->sanitizeText($kamp->naam)}"
 			, "startDatumTijd": "{$this->format($kamp->startDatumTijd, "Y-m-d H:i")}"
@@ -288,7 +288,7 @@ EOT;
 	}
 	
 	private function format($date, $format) {
-		$result = $date->format($format, true);
+		$result = $date->format($format);
 		$vertaling = array(
 				'Monday' => 'maandag',
 				'Tuesday' => 'dinsdag',
