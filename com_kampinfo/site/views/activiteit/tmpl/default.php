@@ -115,7 +115,8 @@ $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 									Bel bij vragen <?php echo($activiteit->websiteContactpersoon); ?>: <?php echo($activiteit->websiteContactTelefoonnummer); ?><br />
 								<?php } ?>
 								<?php if (!empty($activiteit->websiteContactEmailadres)) { ?>
-									<a href="mailto:<?php echo($activiteit->websiteContactEmailadres); ?>" >Mail naar <?php echo($activiteit->websiteContactEmailadres); ?></a><br />
+									<?php echo JHtml::_('email.cloak', $activiteit->websiteContactEmailadres, 1, 'Mail naar '.$activiteit->websiteContactEmailadres, 0); ?>
+									<br />
 								<?php } ?>
 							</td>
 						</tr>

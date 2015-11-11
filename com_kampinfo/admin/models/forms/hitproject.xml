@@ -25,6 +25,16 @@
 		    	default=""
 		    	class="input-mini"
 		/>
+		<field
+				name="thema"
+				type="text"
+				label="Thema"
+				description="Het motto/thema/leus/spreuk op het naambandje"
+				maxlength="255"
+				size="30"
+				required="true"
+				default=""
+		/>
 		<field	name="inschrijvingStartdatum"
 				type="calendar"
 				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_LABEL"

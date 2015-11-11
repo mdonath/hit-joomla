@@ -103,8 +103,9 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		$UTC = new DateTimeZone("UTC");
 		$tz = new DateTimeZone("Europe/Amsterdam");
 		foreach ($datumVelden as $veld) {
-			$object->$veld = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld, $UTC);
-			$object->$veld->setTimezone($tz);
+			$localDate = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld, $UTC);
+			$localDate->setTimezone($tz);
+			$object->$veld = $localDate; 
 		}
 	}
 
@@ -146,6 +147,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 {	"project": {
 		  "id" : {$hit->id}
 		, "jaar": {$hit->jaar}
+		, "thema": {$hit->thema}
 		, "vrijdag": "{$this->format($hit->vrijdag, "Y-m-d")}"
 		, "maandag": "{$this->format($hit->maandag, "Y-m-d")}"
 		, "inschrijvingStartdatum": "{$this->format($hit->inschrijvingStartdatum, "Y-m-d")}"

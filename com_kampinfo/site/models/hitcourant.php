@@ -88,19 +88,17 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 	}
 	
 	private function prepareProject($project) {
-		$this->convertDate($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
-		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m',true) != $project->maandag->format('m',true);
-	}
-
-	private function convertDate($object, $datumVelden) {
-		foreach ($datumVelden as $veld) {
-			$object->$veld = DateTime::createFromFormat('Y-m-d', $object->$veld);
-		}
+		$this->convertDateTime($project, array('vrijdag', 'maandag', 'inschrijvingStartdatum', 'inschrijvingEinddatum'));
+		$project->heeftBeginEnEindInVerschillendeMaanden = $project->vrijdag->format('m') != $project->maandag->format('m');
 	}
 
 	private function convertDateTime($object, $datumVelden) {
+		$UTC = new DateTimeZone("UTC");
+		$tz = new DateTimeZone("Europe/Amsterdam");
 		foreach ($datumVelden as $veld) {
-			$object->$veld = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld);
+			$localDate = DateTime::createFromFormat('Y-m-d H:i:s', $object->$veld, $UTC);
+			$localDate->setTimezone($tz);
+			$object->$veld = $localDate; 
 		}
 	}
 
@@ -161,7 +159,7 @@ EOT;
 	private function hitcourant_intro($hit) {
 		$count='count';
 		echo <<< EOT
-	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">(hier thema $hit->jaar)</h1>
+	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">HIT $hit->jaar: $hit->thema</h1>
 	<h2 style="font-family: Helvetica; font-size:18pt;">HIT $hit->jaar Jouw paasweekend vol Scoutinguitdaging!</h2>
 	<p style="font-family: Helvetica; font-size:8pt;"><strong>Wat ga jij doen met Pasen $hit->jaar? Naar de HIT natuurlijk! Want
 	in $hit->jaar kun je bij de HIT kiezen uit meer dan 60 totaal verschillende, spannende en
@@ -355,7 +353,7 @@ EOT;
 
 	
 	private function format($date, $format) {
-		$result = $date->format($format, true);
+		$result = $date->format($format);
 		$vertaling = array(
 				'Monday' => 'maandag',
 				'Tuesday' => 'dinsdag',
