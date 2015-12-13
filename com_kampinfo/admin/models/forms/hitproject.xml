@@ -149,6 +149,19 @@
 		    	max="50"
 		    	class="input-mini"
 		/>
-				
 	</fieldset>
+
+	<fieldset
+    	name="standaardteksten"
+		addfieldpath="/administrator/components/com_kampinfo/models/fields"
+	>
+		<field	name="ouderkind"
+				type="editor"
+				label="Ouder kind kamp"
+				description="Deze tekst wordt standaard toegevoegd bij alle ouder-kind kampen"
+				required="true"
+				filter="safehtml"
+		/>
+	</fieldset>
+
 </form>

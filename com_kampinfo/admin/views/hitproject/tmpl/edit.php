@@ -46,8 +46,7 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 				</div>
 			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-				
-				
+
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'financien', JText::_('HIT Financien')); ?>
 				<div class="row-fluid">
 					<div class="span12">
@@ -55,7 +54,15 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 					</div>
 				</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-		<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+			
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'standaardteksten', JText::_('Standaardteksten')); ?>
+				<div class="row-fluid">
+					<div class="span12">
+						<?php pr_fieldset($this->form, ('standaardteksten')); ?>
+					</div>
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+					<?php echo JHtml::_('bootstrap.endTabSet'); ?>
 	</div>
 
 	<div>

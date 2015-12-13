@@ -18,6 +18,7 @@ CREATE TABLE `#__kampinfo_hitproject` (
 ,	`vrijdag`								DATETIME
 ,	`maandag`								DATETIME
 ,	`thema`									VARCHAR(255)
+,	`ouderkind`								TEXT
 
 ,	`bijdrageProjectteam`					DECIMAL(10,2)			DEFAULT 2.00
 ,	`bijdrageCalamiteitenfonds				DECIMAL(10,2)			DEFAULT 1.50

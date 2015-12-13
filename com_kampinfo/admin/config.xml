@@ -13,13 +13,6 @@
 			label="Huidige actieve jaar"
 			description="Voor welk HIT jaar zijn we nu bezig?"
 		/>
-		<field
-			name="vrijVraagBriefUrl"
-			type="text"
-			size="40"
-			label="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_LABEL"
-			description="COM_KAMPINFO_PREFS_FRIDAYLETTERURL_DESC"
-		/>
 		
 		<field
 			name="shantiUrl"
