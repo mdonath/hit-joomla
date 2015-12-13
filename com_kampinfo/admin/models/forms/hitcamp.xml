@@ -171,7 +171,8 @@
 		<field
 		    	name="noteCourantTekst"
 		    	type="note" 
-		    	label="LET OP: Niet meer dan enkele regels, te lange tekst wordt ingekort door de redactie"
+		    	label="De volledige tekst hieronder wordt gepubliceerd in de HIT-courant en in de HIT-app."
+		    	description="- Schrijf niet meer dan 600 tekens; uitgebreidere info kan in het tabblad 'website'.&lt;br&gt;- Verzin een pakkende eerste zin; de HIT-app gebruikt de eerste 60 tekens in de zoekresultaten.&lt;br&gt;- Wees origineel; vermijd clichés zoals 'schrijf je snel in, want vol = vol'."
 		    	class="alert alert-warning"
 		 />
 		<field
@@ -299,7 +300,7 @@
 		    	name="noteWebsiteTekst"
 		    	type="note" 
 		    	label="De tekst hieronder wordt gepubliceerd op de HIT-website."
-		    	description="Verzin een pakkende titel; deze komt als subkopje bovenaan het artikel te staan. Geef in het artikel alle informatie die de lezer nodig heeft om een goede keuze voor dit HIT-onderdeel te maken. Denk bijvoorbeeld aan: Wat gaan de deelnemers doen? Wat wordt er van ze verwacht? Wat moeten ze al kunnen? Moeten ze een goede conditie hebben, handig zijn of juist heel creatief? Wat gaan ze leren? Waarom is het leuk? Welke zaken moeten ze nu al weten, en niet pas als ze twee a drie weken vóór de HIT de deelnemersinformatie krijgen?"
+		    	description="Verzin een pakkende titel; deze komt als subkopje bovenaan het artikel te staan.&lt;br&gt;Geef in het artikel alle informatie die de lezer nodig heeft om een goede keuze voor dit HIT-onderdeel te maken. Denk bijvoorbeeld aan: &lt;ul&gt;&lt;li&gt;Wat gaan de deelnemers doen?&lt;li&gt;Wat wordt er van ze verwacht?&lt;li&gt;Wat moeten ze al kunnen?&lt;li&gt;Moeten ze een goede conditie hebben, handig zijn of juist heel creatief?&lt;li&gt;Wat gaan ze leren?&lt;li&gt;Waarom is het leuk?&lt;li&gt;Welke zaken moeten ze nu al weten, en niet pas als ze twee a drie weken vóór de HIT de deelnemersinformatie krijgen?&lt;/ul&gt;"
 		    	class="alert alert-warning"
 		 />
 		<field
