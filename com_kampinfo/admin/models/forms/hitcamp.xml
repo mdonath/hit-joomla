@@ -296,6 +296,13 @@
 				default=""
 		/>
 		<field
+		    	name="noteWebsiteTekst"
+		    	type="note" 
+		    	label="De tekst hieronder wordt gepubliceerd op de HIT-website."
+		    	description="Verzin een pakkende titel; deze komt als subkopje bovenaan het artikel te staan. Geef in het artikel alle informatie die de lezer nodig heeft om een goede keuze voor dit HIT-onderdeel te maken. Denk bijvoorbeeld aan: Wat gaan de deelnemers doen? Wat wordt er van ze verwacht? Wat moeten ze al kunnen? Moeten ze een goede conditie hebben, handig zijn of juist heel creatief? Wat gaan ze leren? Waarom is het leuk? Welke zaken moeten ze nu al weten, en niet pas als ze twee a drie weken vóór de HIT de deelnemersinformatie krijgen?"
+		    	class="alert alert-warning"
+		 />
+		<field
 				name="websiteTekst"
 				type="editor"
 				label="Websitetekst"
