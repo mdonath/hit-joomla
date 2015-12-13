@@ -169,9 +169,28 @@ $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 				<p><b>BELANGRIJKE INFORMATIE VOOR OUDERS:</b><br/>Inschrijven voor dit HIT-onderdeel gebeurt met een groep van twee personen: één kind met één ouder als begeleider. De genoemde kampprijs geldt per persoon, en beide personen schrijven zich afzonderlijk in. Bij uitzondering kunnen ook ouders die geen lid zijn, zich voor dit onderdeel inschrijven, op voorwaarde dat het kind wél lid is van Scouting Nederland. Ouders die geen lid zijn, kiezen bij het inschrijven voor "inschrijven als niet-lid". De niet-leden vullen eerst hun persoonlijke gegevens in voordat ze in het inschrijfformulier terecht komen. Na het betalen via iDEAL volgt een standaardmelding dat er een automatische bevestigingsemail verstuurd zal worden. Voor niet-leden gaat dit niet automatisch; deze email wordt binnen enkele dagen handmatig verstuurd. Ouders die zich op deze manier inschrijven worden geregistreerd als "relatie van de landelijke HIT". Het aanvragen van een inlogaccount is voor een relatie niet mogelijk. Eventuele wijzigingen en annuleringen moeten daarom persoonlijk worden doorgegeven aan de HIT Helpdesk.</p>
 			<?php }?>
 			
-			<?php if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) { ?>
-				<input style="float: right" value="Inschrijven!" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
-			<?php } ?>
+			<?php
+				if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) {
+					$user = JFactory::getUser();
+ 					if ($user->get('guest')) {
+			?>
+						<form action="<?php echo JRoute::_( 'index.php', true); ?>" method="post" name="login" id="form-login" >
+							<fieldset class="input" style="float: right;" >
+								<input type="submit" name="Submit" class="loginButton" value="<?php echo JText::_('Inloggen!') ?>" />
+								<input type="hidden" name="option" value="com_users" />
+								<input type="hidden" name="task" value="user.login" />
+								<input type="hidden" name="username" value=""/>
+								<input type="hidden" name="return" value="<?php echo base64_encode(JUri::getInstance()->toString()); ?>" />
+							    <input type="hidden" name="theme" value="wood"/>
+								<?php echo JHTML::_( 'form.token' ); ?>
+							</fieldset>
+						</form>
+			<?php
+					} else {
+						?><input style="float: right" value="Inschrijven!" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" /><?php
+					}
+				}
+			?>
 		</div>
 		
 		<div class="item column-4 span4">

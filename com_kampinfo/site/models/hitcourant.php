@@ -39,7 +39,7 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
-		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
+		$query->where('(c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
 		$query->order('c.naam');
 	
 		$db->setQuery($query);
@@ -249,7 +249,7 @@ EOT;
 		$strtolower = 'strtolower';
 echo <<< EOT
 	<p style="font-family: Helvetica; font-size:8pt;">
-	<img src="images/stories/hitlogo/hit_logo_h_web_{$strtolower($plaats->naam)}.png"><br/>
+	<img src="images/headers/hit_logo_h_web_{$strtolower($plaats->naam)}.png"><br/>
 	Kijk op https://hit.scouting.nl/{$strtolower($plaats->naam)} voor meer info.<br/>{$plaats->hitCourantTekst}</p>
 EOT;
 		foreach ($plaats->hitKampen as $kamp) {

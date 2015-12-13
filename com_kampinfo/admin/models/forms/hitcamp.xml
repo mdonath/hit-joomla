@@ -132,7 +132,7 @@
 		<field
 				name="margeAantalDagenTeJong"
 				type="text"
-				label="Marge te jong"
+				label="Marge te jong (in dagen)"
 				description="Hoeveel dagen mag een deelnemer te jong zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
 				size="3"
 				maxlength="2"
@@ -143,7 +143,7 @@
 		<field
 				name="margeAantalDagenTeOud"
 				type="text"
-				label="Marge te oud"
+				label="Marge te oud (in dagen)"
 				description="Hoeveel dagen mag een deelnemer te oud zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
 				size="3"
 				maxlength="2"
@@ -369,7 +369,7 @@
 		<field
 				name="websiteContactpersoon"
 				type="text"
-				label="Website contactpersoon"
+				label="Naam contactpersoon"
 				description="De naam van de contactpersoon waar deelnemers contact mee op kunnen nemen."
 				size="30"
 				maxlength="255"
