@@ -182,6 +182,7 @@
 				description="De tekst die in de HIT Courant wordt gepubliceerd. Maak in enkele zinnen op een wervende manier je toekomstige deelnemers enthousiast."
 				rows="6"
 				class="input-xxlarge"
+				maxlength="600"
 				required="true"
 		/>
 	</fieldset>
