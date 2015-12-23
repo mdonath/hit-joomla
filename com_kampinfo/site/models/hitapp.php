@@ -147,7 +147,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 {	"project": {
 		  "id" : {$hit->id}
 		, "jaar": {$hit->jaar}
-		, "thema": {$hit->thema}
+		, "thema": "{$hit->thema}"
 		, "vrijdag": "{$this->format($hit->vrijdag, "Y-m-d")}"
 		, "maandag": "{$this->format($hit->maandag, "Y-m-d")}"
 		, "inschrijvingStartdatum": "{$this->format($hit->inschrijvingStartdatum, "Y-m-d")}"
