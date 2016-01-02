@@ -255,6 +255,18 @@
 				filter="integer"
 		/>
 		<field
+				name="minimumAantalSubgroepjes"
+				type="text"
+				label="Min. aantal subgroepjes"
+				description="Met dit aantal kan je aangeven hoeveel subgroepjes je minimaal in je HIT-Kamp wilt hebben. Geef 0 is als het niet uitmaakt."
+				size="3"
+				maxlength="2"
+				default="0"
+				required="true"
+				class="input-mini"
+				filter="integer"
+		/>
+		<field
 				name="maximumAantalSubgroepjes"
 				type="text"
 				label="Max. aantal subgroepjes"
@@ -266,7 +278,7 @@
 				class="input-mini"
 				filter="integer"
 		/>
-		<field
+				<field
 				name="maximumAantalUitEenGroep"
 				type="text"
 				label="Max. aantal uit één groep"

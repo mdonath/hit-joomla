@@ -13,12 +13,12 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=5022</td>
+	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=5776</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//a[text()='HIT 2015 Basisformulier (niet wijzigen)']</td>
+	<td>//a[text()='HIT 2016 Basisformulier (niet wijzigen)']</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,6 +36,7 @@
 	<td>10000</td>
 	<td></td>
 </tr>
+<!--Koptekst-->
 <tr>
 	<td>select</td>
 	<td>name=fld_type_cd</td>
@@ -49,7 +50,7 @@
 <tr>
 	<td>type</td>
 	<td>name=fld_text_before</td>
-	<td>Welkom bij de inschrijving voor de HIT 2015</td>
+	<td>Welkom bij de inschrijving voor de HIT 2016</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -61,6 +62,7 @@
 	<td>css=div.notice_msg</td>
 	<td>Veld gewijzigd</td>
 </tr>
+<!--Leuk-->
 <tr>
 	<td>select</td>
 	<td>name=fld_type_cd</td>
@@ -86,6 +88,7 @@
 	<td>css=div.notice_msg</td>
 	<td>Veld gewijzigd</td>
 </tr>
+<!--Kloppen de gegevens?-->
 <tr>
 	<td>select</td>
 	<td>name=fld_type_cd</td>
@@ -131,11 +134,33 @@
 	<td>css=div.notice_msg</td>
 	<td>Veld gewijzigd</td>
 </tr>
+<!--Inschrijven met eigen account-->
 <tr>
-	<td>selectWindow</td>
-	<td>null</td>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=toelichtende tekst</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
 	<td></td>
 </tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>LET OP! Je kunt alleen inschrijven voor de HIT met jouw eigen inlogaccount. Als de inschrijving door iemand anders, zoals de teamleider of secretaris/gegevensbeheerder, gedaan wordt gaat er wat fout met de betaling!</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Zwemdiploma-->
 <tr>
 	<td>select</td>
 	<td>name=fld_type_cd</td>
@@ -150,11 +175,6 @@
 	<td>click</td>
 	<td>name=fld_req_yn</td>
 	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>name=fld_text_before</td>
-	<td>Heb je een zwemdiploma (let op kan verplicht zijn)</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -185,6 +205,721 @@
 	<td>clickAndWait</td>
 	<td>name=add_option</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Mobiele telefoon-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Telefoonnummer van de mobiele telefoon die je mee neemt naar de HIT.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier het telefoonnummer in van de mobiele telefoon die je tijdens de HIT mee neemt zodat de staf je kan bereiken (mits mobiele telefoon bij de activiteit van jouw keuze is toegestaan).</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_std_value</td>
+	<td>06-</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Koptekst Gezondheid en Voeding-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=koptekst nr 2; vetgedrukt, middel formaat</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Gezondheid en Voeding</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Opmerkingen gezondheid-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Opmerkingen gezondheid bijvoorbeeld allergieën/ziektes/aandachtspunten</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier in of er allergieën aandachtspunten of ziektes zijn, waar de HIT-organisatie rekening mee moet houden.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Opmerkingen  voeding-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Opmerking voeding bijvoorbeeld diëten</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier in als je bepaalde voeding zoals een dieet of vegetarisch eten wilt hebben. Heb je een heel bijzonder dieet dan nemen we contact met je op.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Medicijngebruik-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Medicijn gebruik</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier in als je medicijnen gebruikt waarvan de HIT-organisatie op de hoogte moet zijn.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Ziektekostenverzekering-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Bij welke maatschappij ben je tegen ziektekosten verzekerd?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier de naam in van de verzekeringsmaatschappij waar jij bij bent aangesloten.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Polisnummer-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Vul hier het polisnummer in van je ziektekostenverzekering</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier het polisnummer in van je ziektekostenverzekering.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Medisch handelen-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=keuzevelden (radio-button)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>De ouder of deelnemer(18+ jaar) gaat akkoord dat medisch handelen is toegestaan als een arts dit noodzakelijk acht. </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>We hebben toestemming nodig van de ouder om de deelnemer door een dokter te laten behandelen als dit door een arts noodzakelijk wordt geacht. We proberen in dit geval ook zo snel mogelijk contact op te nemen met de ouders, familie of partner. Als je meerderjarig bent moet je deze toestemming zelf geven. Deze toestemming is verplicht als je mee wilt doen aan de HIT.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>JA (deze toestemming is verplicht als je aan de HIT meedoet)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Koptekst Bereikbaarheid ouders/familie/partner tijdens de HIT in noodgevallen-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=koptekst nr 2; vetgedrukt, middel formaat</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Bereikbaarheid ouders/familie/partner tijdens de HIT in noodgevallen</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Naam ouders/familie/partner-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Naam ouders/familie/partner</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier de naam van de ouders, familie of partner in die we tijdens de HIT kunnen bereiken.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Relatie met de deelnemer-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=keuzevelden (radio-button)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Relatie met de deelnemer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Selecteer hier wat de relatie met de deelnemer is.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>ouders</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>familie</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>partner</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=new_option_txt</td>
+	<td>anders (vul in)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='anders (vul in)']/../../td[5]/fieldset/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Telefoonnummer-->
+<tr>
+	<td>select</td>
+	<td>id=fld_type_cd</td>
+	<td>label=tekstveld (één regel)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=fld_req_yn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=fld_text_before</td>
+	<td>Telefoonnummer</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Vul hier het telefoonnummer in van de ouders, familie of partner in die we tijdens de HIT kunnen bereiken.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Koptekst HIT alternatief-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=koptekst nr 2; vetgedrukt, middel formaat</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>HIT alternatief</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Toelichting alternatieven-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=toelichtende tekst</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Het kan zijn dat het door jou gekozen HIT-onderdeel niet doorgaat door te weinig inschrijvingen of andere redenen. Met welke HIT zou jij dan mee willen doen? Zorg ervoor dat de andere leden uit jouw groepje hier dezelfde onderdelen aangeven en dat deze ook overeenkomt met jullie leeftijd. Als het door jou gekozen onderdeel niet doorgaat word je automatisch overgeboekt naar de HIT van jouw tweede of derde keuze.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Alternatief 1-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=treklijst (dropdownbox)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Welke HIT kies jij als eerste alternatief?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Het kan zijn dat het door jou gekozen HIT-onderdeel niet doorgaat door te weinig inschrijvingen of andere redenen. Met welke HIT zou jij dan mee willen doen? Zorg ervoor dat de andere leden uit jouw groepje hier dezelfde onderdelen aangeven en dat deze ook overeen komt met jouw leeftijd.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Alternatief 2-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=treklijst (dropdownbox)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Welke HIT kies jij als tweede alternatief?</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Het kan zijn dat het door jou gekozen HIT-onderdeel niet doorgaat door te weinig inschrijvingen of andere redenen. Met welke HIT zou jij dan mee willen doen? Zorg ervoor dat de andere leden uit jouw groepje hier dezelfde onderdelen aangeven en dat deze ook overeen komt met jouw leeftijd.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Deelnamekosten-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=deelnamekosten</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Deelnamekosten HIT 2016</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Met ingang van 1 januari 2014 is de wijze van betalen gewijzigd en kan er alleen nog met iDEAL worden betaald.&nbsp;&nbsp;iDEAL is een online betaalmethode via internetbankieren van je eigen bank.&nbsp;&nbsp;Het is helaas niet meer mogelijk om via incasso of een andere wijze te betalen voor de HIT.&nbsp;&nbsp;Beschik je niet over iDEAL, regel de betaling dan via de rekening van iemand anders.</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=fld_led_id</td>
+	<td>label=901 - Deelnemersbijdrage</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=new_option_txt</td>
+	<td>HIT 2016 Deelnemersbijdrage</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=add_option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@value='HIT 2016 Deelnemersbijdrage']/../../td[4]/input</td>
+	<td>10,00</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//input[@value='HIT 2016 Deelnemersbijdrage']/../../td[5]/div/select[1]</td>
+	<td>label=1</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//input[@value='HIT 2016 Deelnemersbijdrage']/../../td[5]/div/select[2]</td>
+	<td>label=januari</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//input[@value='HIT 2016 Deelnemersbijdrage']/../../td[5]/div/select[3]</td>
+	<td>label=2016</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Restitutie-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=toelichtende tekst</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Let op! Door je in te schrijven voor de HIT ga je akkoord met de deelnemersvoorwaarden die je op de website van de HIT kunt vinden!<br />Na je inschrijving heb je 10 dagen bedenktijd en je kunt binnen deze tijd kosteloos annuleren. Je krijgt dan het deelnamegeld helemaal teruggestort. Dit is ook de termijn waarbinnen jouw groepje compleet moet zijn. Na 10 dagen kun je nog wel annuleren maar krijg je het deelnamegeld terug verminderd met € 10 administratiekosten. Na 11 februari 2016 kun je niet meer annuleren en krijg je geen geld meer terug.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Aantekeningen door helpdesk-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=tekstveld (meerdere regels)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@name='fld_ask_user_yn'][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_text_before</td>
+	<td>Opmerkingen organisatie bijvoorbeeld na contact helpdesk</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_num_rows</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.notice_msg</td>
+	<td>Veld gewijzigd</td>
+</tr>
+<!--Slot-->
+<tr>
+	<td>select</td>
+	<td>name=fld_type_cd</td>
+	<td>label=toelichtende tekst</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=submitBtn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=fld_help_txt</td>
+	<td>Als je het formulier volledig hebt ingevuld, klik je op volgende en daarna krijg je een overzicht van de inschrijving en wordt je verzocht te betalen met iDEAL.<br />iDEAL is een online betaalmethode via internetbankieren van je eigen bank. Het is helaas niet meer mogelijk om via incasso of een andere wijze te betalen voor de HIT. Beschik je niet over iDEAL regel de betaling dan via de rekening van iemand anders.<br /><br />Als de iDEAL betaling goed is gegaan krijg je automatisch direct een bevestigingsmail toegestuurd. Deze mail gaat naar het mailadres dat je hebt opgegeven bij &quot;Mijn gegevens&quot; op het tabblad basis. Je kunt zelf ook controleren of de inschrijving gelukt is. Ook hiervoor ga je naar &quot;Mijn gegevens&quot;. Klik dan op het tabblad &quot;Inschrijvingen&quot;. Daar moet jouw inschrijving tussen staan. Heb je geen bevestigingsmail gehad neem dan contact op het de HIT Helpdesk. (helpdesk@hit.scouting.nl)</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
