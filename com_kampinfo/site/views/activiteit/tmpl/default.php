@@ -23,6 +23,16 @@ $eind = new JDate($activiteit->eindDatumTijd);
 $eind->setTimezone($timezone);
 
 $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
+
+function replaceVariables($text, $act) {
+	foreach ($act as $key => $value) {
+		if (!is_array($value)) {
+			$text = str_replace('${'.$key.'}', $value, $text);
+ 			// $text .= "<br>'$key' => '$value'";
+		}
+	}
+	return $text;
+}
 ?>
 
 <article class="itempage" itemtype="http://schema.org/Article" itemscope="">
@@ -165,7 +175,7 @@ $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 				<?php }?>
 			</p>
 			<?php if ($activiteit->isouderkind == 1) { ?>
-				<?php echo $activiteit->ouderkind; ?>
+				<?php echo replaceVariables($activiteit->ouderkind, $activiteit); ?>
 			<?php }?>
 			
 			<?php
