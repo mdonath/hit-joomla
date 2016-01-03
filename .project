@@ -14,11 +14,4 @@
 	<natures>
 		<nature>net.sourceforge.phpeclipse.phpnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>com_kampinfo/site/models/hitcourant-live.php</name>
-			<type>1</type>
-			<location>/var/www/HIT/components/com_kampinfo/models/hitcourant.php</location>
-		</link>
-	</linkedResources>
 </projectDescription>
