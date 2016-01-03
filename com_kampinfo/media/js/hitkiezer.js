@@ -229,7 +229,8 @@ function initVelden() {
  	
  	$j('.cookiestore').cookieBind();
 	filter.peildatum = parseDate(hit.vrijdag);
-	filter.plaats = $j.getUrlVar('plaats');
+	filter.plaats = $j('#plaats').val() || $j.getUrlVar('plaats');
+	
 
 	updateGeboorteDatum();
 	updateBudget();
