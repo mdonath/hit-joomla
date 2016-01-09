@@ -13,7 +13,7 @@
         text-align: right;
 }
 .kolom6 {
-	width: 200px;
+	width: 400px;
 	white-space: nowrap;
 }
 
@@ -32,4 +32,8 @@ div + div + div.progressbar {
         background-color: green !important;
         color: white;
         float: left;
+}
+
+td.kolom6 {
+	background-color: #eee;
 }

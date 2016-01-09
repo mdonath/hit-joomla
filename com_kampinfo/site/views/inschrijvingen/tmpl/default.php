@@ -39,6 +39,9 @@ function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0
 	$percentageVol = round(100 * $aantal / max($max,$res));
 	$percentageVolText = round(100 * $aantal / $max);
 	$percentageRes = round(100* ($res - $aantal) / max($max,$res));
+	if ($percentageRes + percentageVol > 100) {
+		$percentageRes = $percentageRes - 1;
+	}
 	$percentageGroep = 0;
 	if ($maxGroep > 0 && $aantalGroep >= $maxGroep) {
 		$percentageGroep = 100 - $percentageVol - $percentageRes;

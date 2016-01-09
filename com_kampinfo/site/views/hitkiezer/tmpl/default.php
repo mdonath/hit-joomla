@@ -28,11 +28,12 @@
 				<span id="leeftijd"></span>
 			</p>
 		
-			<p><strong>Stap 2:</strong> Geef het bedrag aan dat je maximaal voor de HIT wilt betalen.</p>
-			<p>Maximaal €&nbsp;
-			<select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore kiezerinput">
-				<option value="-1"></option>
-			</select></p>
+			<p><strong>Stap 2:</strong> Geef het bedrag aan dat je voor de HIT wilt betalen. Ongeveer
+				<select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore kiezerinput">
+					<option value="-1"></option>
+				</select>
+				euro.
+			</p>
 				
 			<p><strong>Stap 3:</strong> Klik op de icoontjes die passen bij wat je graag wilt bij een HIT, of juist niet.</p>
 			<ul>
@@ -47,6 +48,14 @@
 			<p><strong>Stap 4:</strong> Kies eventueel een plaats uit:
 				<select name="plaats" id="plaats" onchange="updatePlaatsEvent();" class="cookiestore kiezerinput">
 					<option value="-1"></option>
+				</select>
+			</p>
+			
+			<p><strong>Stap 5:</strong> Samen met ouder en kind:
+				<select name="ouderkind" id="ouderkind" onchange="updateOuderKindEvent();" class="cookiestore kiezerinput">
+					<option value="-1"></option>
+					<option value="1">Ja</option>
+					<option value="0">Nee</option>
 				</select>
 			</p>
 			

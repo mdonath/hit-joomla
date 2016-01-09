@@ -48,113 +48,118 @@ function IconFilter(color) {
 
 
 var filter = {
-		// Leeftijd tijdens de HIT
-		"peildatum" : null,
-		"geboortedatum": null,
-		// Deelnamekosten
-		"budget": -1,
-		// Icoontjes die positief meetellen
-		"groen": new IconFilter('groen'),
-		// Icoontjes die negatief meetellen
-		"rood": new IconFilter('rood'),
-		// HIT plaats
-		"plaats": null,
+	// Leeftijd tijdens de HIT
+	"peildatum" : null,
+	"geboortedatum": null,
+	// Deelnamekosten
+	"budget": -1,
+	// Icoontjes die positief meetellen
+	"groen": new IconFilter('groen'),
+	// Icoontjes die negatief meetellen
+	"rood": new IconFilter('rood'),
+	// HIT plaats
+	"plaats": -1,
+	// Selectie ouder-kind kampen
+	"ouderkind": -1,
 
-		loadFilters: function() {
-			this.groen.load();
-			this.rood.load();
-		},
-		clearFilters: function() {
-			this.groen.clear();
-			this.rood.clear();
-		},
-		isGroen: function(id) {
-			return this.groen.contains(id);
-		},
-		isRood: function(id) {
-			return this.rood.contains(id);
-		},
-		naarRood: function(id) {
-			this.groen.remove(id);
-			this.rood.add(id);
-		},
-		naarGroen: function(id) {
-			this.groen.add(id);
-			this.rood.remove(id);
-		},
-		naarZwart: function(id) {
-			this.groen.remove(id);
-			this.rood.remove(id);
-		},
+	loadFilters: function() {
+		this.groen.load();
+		this.rood.load();
+	},
+	clearFilters: function() {
+		this.groen.clear();
+		this.rood.clear();
+	},
+	isGroen: function(id) {
+		return this.groen.contains(id);
+	},
+	isRood: function(id) {
+		return this.rood.contains(id);
+	},
+	naarRood: function(id) {
+		this.groen.remove(id);
+		this.rood.add(id);
+	},
+	naarGroen: function(id) {
+		this.groen.add(id);
+		this.rood.remove(id);
+	},
+	naarZwart: function(id) {
+		this.groen.remove(id);
+		this.rood.remove(id);
+	},
 
-		bepaalScore: function (kamp) {
-			var score = 0.0;
-			if (this.filterLeeftijd(kamp) && this.filterBudget(kamp) && this.filterVol(kamp) && this.filterPlaats(kamp)) {
-				if (this.budget != -1) {
-					var afstandTotMaxBudget = this.budget - kamp.deelnamekosten;
-					var factor = afstandTotMaxBudget / this.budget;
-					var invFactor = 1.0 - factor;
-					score += invFactor * 2;
-				}
-				
-				for (var idx = 0; idx < kamp.iconen.length; idx++) {
-						if (!this.groen.isEmpty()) {
-						$j.each(this.groen.list, function(j, gfl) {
-							if (kamp.iconen[idx].bestandsnaam == gfl) {
-								score += 2.0; // elke groene icoon levert 2 punten op
-							}
-						});
-					}
-					if (!this.rood.isEmpty()) {
-						$j.each(this.rood.list, function(j, rfl) {
-							if (kamp.iconen[idx].bestandsnaam == rfl) {
-								score -= 2.0; // elke rode icoon kost 2 punten
-								if (score < 0) {
-									score = 0; // maar nooit minder dan 0
-								}
-							}
-						});
-					}
-				}
-			} else {
-				score = -1;
+	bepaalScore: function (kamp) {
+		var score = 0.0;
+		if (this.filterLeeftijd(kamp) && this.filterBudget(kamp) && this.filterVol(kamp) && this.filterPlaats(kamp) && this.filterOuderKind(kamp)) {
+			if (this.budget != -1) {
+				var afstandTotMaxBudget = this.budget - kamp.deelnamekosten;
+				var factor = afstandTotMaxBudget / this.budget;
+				var invFactor = 1.0 - factor;
+				score += invFactor * 2;
 			}
-			return score;
-		},
-		leeftijdOpPeildatum: function() {
-			var leeftijdInJaren = -1;
-			if (this.geboortedatum != null) {
-				var leeftijdInJaren = this.peildatum.getFullYear() - this.geboortedatum.getFullYear();
-				var verjaardagInHitJaar = createDate(
-						this.peildatum.getFullYear(),
-						this.geboortedatum.getMonth() + 1,
-						this.geboortedatum.getDate());
-				if (verjaardagInHitJaar > this.peildatum) {
-					leeftijdInJaren--;
+			
+			for (var idx = 0; idx < kamp.iconen.length; idx++) {
+					if (!this.groen.isEmpty()) {
+					$j.each(this.groen.list, function(j, gfl) {
+						if (kamp.iconen[idx].bestandsnaam == gfl) {
+							score += 2.0; // elke groene icoon levert 2 punten op
+						}
+					});
+				}
+				if (!this.rood.isEmpty()) {
+					$j.each(this.rood.list, function(j, rfl) {
+						if (kamp.iconen[idx].bestandsnaam == rfl) {
+							score -= 2.0; // elke rode icoon kost 2 punten
+							if (score < 0) {
+								score = 0; // maar nooit minder dan 0
+							}
+						}
+					});
 				}
 			}
-			return leeftijdInJaren;
-		},
-		filterLeeftijd: function (kamp) {
-			var geborenNa = createDate(
-					kamp.eindDatumTijd.getFullYear() - kamp.maximumLeeftijd - 1, // -1; want hele jaar telt mee 
-					kamp.eindDatumTijd.getMonth() + 1, // 0-based
-					kamp.eindDatumTijd.getDate() - kamp.margeAantalDagenTeOud + 1); // +1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
-			var geborenVoor = createDate(
-					kamp.startDatumTijd.getFullYear() - kamp.minimumLeeftijd, 
-					kamp.startDatumTijd.getMonth() + 1, // 0-based 
-					kamp.startDatumTijd.getDate() + kamp.margeAantalDagenTeJong);
-			return this.geboortedatum == null || this.geboortedatum >= geborenNa && this.geboortedatum <= geborenVoor;
-		},
-		filterBudget: function (kamp) {
-			return this.budget == -1 || kamp.deelnamekosten <= this.budget;
-		},
-		filterVol: function (kamp) { // het is ok als...
-			return kamp.gereserveerd < kamp.maximumAantalDeelnemers;
-		},
-		filterPlaats: function (kamp) {
-			return this.plaats == null || kamp.plaats.toLowerCase() == this.plaats.toLowerCase();
+		} else {
+			score = -1;
 		}
+		return score;
+	},
+	leeftijdOpPeildatum: function() {
+		var leeftijdInJaren = -1;
+		if (this.geboortedatum != null) {
+			var leeftijdInJaren = this.peildatum.getFullYear() - this.geboortedatum.getFullYear();
+			var verjaardagInHitJaar = createDate(
+					this.peildatum.getFullYear(),
+					this.geboortedatum.getMonth() + 1,
+					this.geboortedatum.getDate());
+			if (verjaardagInHitJaar > this.peildatum) {
+				leeftijdInJaren--;
+			}
+		}
+		return leeftijdInJaren;
+	},
+	filterLeeftijd: function (kamp) {
+		var geborenNa = createDate(
+				kamp.eindDatumTijd.getFullYear() - kamp.maximumLeeftijd - 1, // -1; want hele jaar telt mee 
+				kamp.eindDatumTijd.getMonth() + 1, // 0-based
+				kamp.eindDatumTijd.getDate() - kamp.margeAantalDagenTeOud + 1); // +1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
+		var geborenVoor = createDate(
+				kamp.startDatumTijd.getFullYear() - kamp.minimumLeeftijd, 
+				kamp.startDatumTijd.getMonth() + 1, // 0-based 
+				kamp.startDatumTijd.getDate() + kamp.margeAantalDagenTeJong);
+		return this.geboortedatum == null || this.geboortedatum >= geborenNa && this.geboortedatum <= geborenVoor;
+	},
+	filterBudget: function (kamp) {
+		return this.budget == -1 || ( (kamp.deelnamekosten <= this.budget+10) && (kamp.deelnamekosten >= this.budget-10) );
+	},
+	filterVol: function (kamp) { // het is ok als...
+		return kamp.gereserveerd < kamp.maximumAantalDeelnemers;
+	},
+	filterPlaats: function (kamp) {
+		return this.plaats == null || this.plaats == -1 || kamp.plaats.toLowerCase() == this.plaats.toLowerCase();
+	},
+	filterOuderKind: function (kamp) {
+		return this.ouderkind == null || this.ouderkind == -1 || (this.ouderkind == kamp.isouderkind);
+	}
 };
 
 function init() {
@@ -201,7 +206,7 @@ function initVelden() {
  		 	$j.each(prijzen, function(k, prijs) {
 	 			found = found || (prijs == kamp.deelnamekosten);
 	 		});
-	 		if (!found){
+	 		if (!found) {
 	 			prijzen.push(kamp.deelnamekosten);
 	 		}
 			kamp.score = 0;
@@ -210,13 +215,17 @@ function initVelden() {
 			kamp.eindDatumTijd = parseDate(kamp.eindDatumTijd);
 		});
     });
-	prijzen.sort(function(a,b){return a - b;}); // sorteer numeriek	 	
- 	$j.each(prijzen, function(i, prijs) {
+ 	
+ 	// prijzen
+	prijzen.sort(function(a,b){return a - b;}); // sorteer numeriek
+	var lowest = (Math.round(prijzen[0] / 10) * 10) + 10;
+	var highest = (Math.round(prijzen[prijzen.length - 1] / 10) * 10) + 10;
+ 	for(var prijs = lowest; prijs < highest; prijs += 10) {
  		$j("<option>")
 			.attr("value", prijs)
-			.text(prijs)
+			.text((prijs-10) + " tot " + (prijs+10))
 			.appendTo("#budget");
-	});
+	};
  	// plaatsen
  	var plaatsen = new Array();
  	$j.each(hit.hitPlaatsen, function(i, plaats) {
@@ -226,14 +235,15 @@ function initVelden() {
  			.appendTo("#plaats");
  	});
 
- 	
  	$j('.cookiestore').cookieBind();
+ 
 	filter.peildatum = parseDate(hit.vrijdag);
 	filter.plaats = $j('#plaats').val() || $j.getUrlVar('plaats');
-	
 
 	updateGeboorteDatum();
 	updateBudget();
+	updateOuderKind();
+
 	filter.loadFilters();
 	toonKampenMetFilter();
 }
@@ -373,7 +383,7 @@ function updateBudgetEvent() {
 }
 
 function updateBudget() {
-	filter.budget = $j('#budget').val();
+	filter.budget = parseInt($j('#budget').val());
 }
 
 /**
@@ -389,6 +399,20 @@ function updatePlaats() {
 	filter.plaats = $j('#plaats').val();
 	if (filter.plaats == -1) {
 		filter.plaats = null;
+	}
+}
+
+/** Als de indicatie Ouder-Kind kamp aangepast wordt. */
+function updateOuderKindEvent() {
+	updateOuderKind();
+	filter.clearFilters();
+	repaint();
+}
+
+function updateOuderKind() {
+	filter.ouderkind = $j('#ouderkind').val();
+	if (filter.ouderkind != null) {
+		filter.ouderkind = parseInt(filter.ouderkind); 
 	}
 }
 

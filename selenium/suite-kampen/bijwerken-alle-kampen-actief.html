@@ -24,7 +24,7 @@
 </tr>
 <!--Zoek het kamp op in de lijst-->
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//a[substring(text(), string-length(text()) - (1+string-length(&quot;${kampinfo_camp_id}&quot;))) = &quot;(${kampinfo_camp_id})&quot;]</td>
 	<td></td>
 </tr>
@@ -48,11 +48,6 @@
 	<td>assertText</td>
 	<td>css=div.notice_msg</td>
 	<td>Formulier gewijzigd</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/?task=as_event&amp;action=forms&amp;button=&amp;evt_id=${kampinfo_project_evenement_id}</td>
-	<td></td>
 </tr>
 <tr>
 	<td>endForJson</td>
