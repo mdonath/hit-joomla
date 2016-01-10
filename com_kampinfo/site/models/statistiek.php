@@ -120,7 +120,7 @@ abstract class AbstractStatistiek {
 /**
  * Standaard statistiek als het soort niet is opgegeven.
  */
-class StandaardStatistiek extends TotaalInschrijvingenPerJaarStatistiek {
+class StandaardStatistiek extends InschrijvingenPerDagPerJaarStatistiek {
 	
 }
 
@@ -182,7 +182,7 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 
 	public function __construct($jaar = null) {
-		parent::__construct("corechart", "Inschrijvingen per dag per jaar", 600, 400);
+		parent::__construct("corechart", "Inschrijvingen per dag per jaar", 800, 600);
 	}
 
 	public function getDrawVisualization() {
@@ -216,17 +216,16 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 
 		$result .= "
 			]);
-			new google.visualization.LineChart(document.getElementById('visualization')).
-			draw(data, {
-				title: '". $this->getTitle()  ."',
-				width : ". $this->getWidth()  .",
-				height: ". $this->getHeight() .",
-				vAxis: {title: \"Cumulatieve inschrijvingen\"},
-				hAxis: {title: \"Inschrijfdag\"},
-				curveType: \"function\",
-			});
+			new google.visualization.LineChart(document.getElementById('visualization'))
+				.draw(data, {
+					title: '". $this->getTitle()  ."',
+					width : ". $this->getWidth()  .",
+					height: ". $this->getHeight() .",
+					vAxis: {title: \"Cumulatieve inschrijvingen\"},
+					hAxis: {title: \"Inschrijfdag\"},
+					curveType: \"function\",
+				});
 		}";
-
 		return $result;
 	}
 
@@ -503,7 +502,7 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 
-		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from kuw4c_kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
+		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from #__kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
 		foreach ($jaren as $jaar) {
 			$query->select("sum(if(d.jaar=$jaar and lower(d.hitsite) = lower(s.naam),1,0)) as \"y$jaar\"");
 		}
@@ -617,26 +616,20 @@ class AantalKampenVoorLeeftijdInJaarStatistiek extends AbstractStatistiek {
 	public function getDrawVisualization() {
 		// Bepaal minimumLeeftijd en maximumLeeftijd
 		// select min(c.minimumLeeftijd), max(c.maximumLeeftijd) from kuw4c_kampinfo_hitcamp c join kuw4c_kampinfo_hitsite s on (c.hitsite_id = s.id) join kuw4c_kampinfo_hitproject p on (p.id = s.hitproject_id and p.jaar = 2014) order by c.minimumLeeftijd
-		$min = 7;
+		$min = 5;
 		$max = 88;
 
-		$leeftijdenKolommen = '';
-		for ($age = $min; $age <= $max; $age++) {
-			$leeftijdenKolommen .= "'$age',";
-		}
 		$result = "
 				function drawVisualization() {
 				var data = google.visualization.arrayToDataTable([
-				[ $leeftijdenKolommen ],
+					['Leeftijd', 'Aantal kampen'],
 				";
+
 		$data = $this->getData($min, $max)[0];
-		
-		$result .= "[";
 		for ($age = $min; $age <= $max; $age++) {
 			$field = 'l'.$age;
-			$result .=  $data->$field. ",";
+			$result .= "[\"". $age . "\", " .$data->$field. "],";
 		}
-		$result .= "],\n";
 		
 		$result .=
 		"	]);
