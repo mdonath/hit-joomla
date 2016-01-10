@@ -276,15 +276,19 @@ function toonKampenMetFilter() {
 
 		// sorteren op score		
 	    kampen.sort(function(a, b) { return b.score - a.score; });
+	    
+	    var volPatt = /vol:/i;
 		// overgebleven kampen tonen
 	    $j.each(kampen, function(i, kamp) {
 			var li = $j("<li>");
+			var fuzzy = fuzzyIndicatieVol(kamp);
+			var fuzzyInNaam = volPatt.test(fuzzy);
 			$j("<a>")
-			  	.text(kamp.naam + " in " + kamp.plaats)
+			  	.text(kamp.naam + " in " + kamp.plaats + (fuzzyInNaam ? " ("+fuzzy+")" : ""))
 			  	.attr({
 			  		title: "leeftijd: " + kamp.minimumLeeftijd + "-" + kamp.maximumLeeftijd 
 			  			 + ", prijs € " + kamp.deelnamekosten
-			  			 + ". " + fuzzyIndicatieVol(kamp)
+			  			 + ". " + fuzzy
 			  			 ,
 			  		href: "../hits-in-" + kamp.plaats.toLowerCase() + "-" + hit.jaar + "/" + urlified(kamp.naam) })
 			  	.appendTo(li);

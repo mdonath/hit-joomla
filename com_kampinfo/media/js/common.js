@@ -65,7 +65,7 @@ function isVol(kamp) {
 }
 
 function isVolQuaGroepjes(kamp) {
-	return kamp.aantalSubgroepen >0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
+	return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
 }
 /**
  * Past de naam aan op de manier waarop Joomla dat ook gedaan heeft.

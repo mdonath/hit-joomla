@@ -50,7 +50,7 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 		$db = JFactory::getDBO();
 
 		$query = $db->getQuery(true);
-		$query->select('c.naam,c.shantiFormuliernummer,c.minimumLeeftijd,c.maximumLeeftijd,c.deelnamekosten,c.minimumAantalDeelnemers,c.maximumAantalDeelnemers,c.aantalDeelnemers,c.gereserveerd,c.subgroepsamenstellingMinimum,c.icoontjes,c.margeAantalDagenTeJong,c.margeAantalDagenTeOud, c.startDatumTijd, c.eindDatumTijd, c.isouderkind');
+		$query->select('c.naam,c.shantiFormuliernummer,c.minimumLeeftijd,c.maximumLeeftijd,c.deelnamekosten,c.minimumAantalDeelnemers,c.maximumAantalDeelnemers,c.aantalDeelnemers,c.gereserveerd,c.subgroepsamenstellingMinimum,c.aantalSubgroepen,c.maximumAantalSubgroepjes,c.icoontjes,c.margeAantalDagenTeJong,c.margeAantalDagenTeOud, c.startDatumTijd, c.eindDatumTijd, c.isouderkind');
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
 		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
