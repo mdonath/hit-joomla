@@ -17,7 +17,13 @@ class KampInfoModelUpdate extends KampInfoModelImport {
 		$givenSecret = $jinput->get('secret', '', 'string');
 		
 		if ($configuredSecret == $givenSecret) {
-			$ok = $this->downloadInschrijvingen();
+			$wat = $jinput->get('wat', '', 'string');
+			$ok = false;
+			if ($wat == '') {
+				$ok = $this->downloadInschrijvingen();
+			} else if ($wat == 'deelnemers') {
+				$ok = $this->downloadDeelnemergegevens();
+			}
 			if ($ok) {
 				echo "OK\n";
 			} else {
