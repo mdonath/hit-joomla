@@ -38,8 +38,8 @@ function printProgressbarKamp($kamp) {
 function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0) {
 	$percentageVol = round(100 * $aantal / max($max,$res));
 	$percentageVolText = round(100 * $aantal / $max);
-	$percentageRes = round(100* ($res - $aantal) / max($max,$res));
-	if ($percentageRes + percentageVol > 100) {
+	$percentageRes = round(100 * ($res - $aantal) / max($max,$res));
+	if ($percentageRes + $percentageVol > 100) { // afrondingsverschillen
 		$percentageRes = $percentageRes - 1;
 	}
 	$percentageGroep = 0;
@@ -47,7 +47,8 @@ function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0
 		$percentageGroep = 100 - $percentageVol - $percentageRes;
 	}
 	$resplaats = ($res-$aantal);
-	echo("<div class=\"progressbar\" style=\"width: $percentageVol%\">$percentageVolText% vol</div>");
+	$volOfIng = $aantal == max($max,$res) ? "vol" : "ing";
+	echo("<div class=\"progressbar\" style=\"width: $percentageVol%\">$percentageVolText% $volOfIng</div>");
 	echo("<div class=\"progressbar\" style=\"width: $percentageRes%\" title=\"$resplaats\">&nbsp;</div>");
 	if ($percentageGroep > 0) {
 		echo("<div class=\"progressbar\" style=\"width: $percentageGroep%\" title=\"Maximum aantal groepen bereikt\">vol</div>");
@@ -65,29 +66,14 @@ function berekenRestCapaciteit($kamp) {
 	return max(0, $kamp->maximumAantalDeelnemers - $kamp->gereserveerd);
 	
 }
-?> 
-<div class="rt-article">
-	<div class="item-page">
-		<div class="module-content-pagetitle">
-			<div class="module-l">
-				<div class="module-r">
-					<div class="rt-headline">
-						<div class="module-title">
-							<div class="module-title2">
-								<h1 class="title rt-pagetitle">HIT-activiteiten <?php echo ($project->jaar); ?></h1>
-							</div>
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
-			</div>
-		</div>
+?>
 
-		<div class="module-content">
-			<div class="module-l">
-				<div class="module-r">
-					<div class="module-inner">
-						<div class="module-inner2">
+<article class="itempage" itemtype="http://schema.org/Article" itemscope="">
+	<hgroup>
+		<h1>HIT-activiteiten <?php echo ($project->jaar); ?></h1>
+	</hgroup>
+
+	<div itemprop="articleBody">
 
 <p>In dit overzicht vind je de inschrijfstatistieken. Onderaan staat de legenda met een verklaring van de kleuren.</p>
 
@@ -198,10 +184,5 @@ function berekenRestCapaciteit($kamp) {
 	</tfoot>
 </table>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
-</div>
+</article>
