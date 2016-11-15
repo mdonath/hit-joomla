@@ -251,6 +251,72 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 }
 
 /**
+ * Toont "Aantal inschrijvingen per dag in een jaar".
+ */
+class AantalInschrijvingenPerDagInJaarStatistiek extends AbstractStatistiek {
+
+	private $jaar;
+	
+	public function __construct($jaar = null) {
+		parent::__construct("corechart", "Aantal inschrijvingen per dag in ". $jaar, 1000, 600);
+		$this->jaar = $jaar;
+	}
+	
+
+	public function getDrawVisualization() {
+		$result = "function drawVisualization() {
+				var data = google.visualization.arrayToDataTable([";
+
+		$result .= "['Dag', 'Aantal inschrijvingen'],";
+
+		$data = $this->getData($this->jaar);
+		$i = 0;
+		foreach ($data as $row) {
+			$result .= "['". $row->inschrijfdag ."',".$row->aantal .'],'."\n";
+			$i++;
+			if ($i > 100) { // na dag 100 is het niet meer interessant
+				break;
+			}
+		}
+
+		$result .= "
+			]);
+			new google.visualization.ColumnChart(document.getElementById('visualization'))
+				.draw(data, {
+					title: '". $this->getTitle()  ."',
+					width : ". $this->getWidth()  .",
+					height: ". $this->getHeight() .",
+					vAxis: {title: \"Aantal inschrijvingen\"},
+					hAxis: {title: \"Inschrijfdag\"},
+				});
+		}";
+		return $result;
+	}
+
+	private function getData($jaar) {
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$jaar = (int) ($db->escape($jaar));
+		
+		$query->select('datumInschrijving as inschrijfdag');
+		$query->select("count(datumInschrijving) as aantal");
+		$query->from('#__kampinfo_deelnemers d');
+		$query->where("d.jaar = $jaar");
+		$query->group('inschrijfdag');
+		
+		$db->setQuery($query);
+
+		$data = $db->loadObjectList();
+		if ($db->getErrorNum()) {
+			JError::raiseWarning(500, $db->getErrorMsg());
+		}
+		return $data;
+	}
+}
+
+
+/**
  * Het verloop van de inschrijvingen per plaats in één specifiek jaar.
  */
 class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistiek {
