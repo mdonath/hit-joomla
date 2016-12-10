@@ -12,6 +12,7 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 		$params =JComponentHelper::getParams('com_kampinfo');
 		//$useComponentUrls = $params->get('useComponentUrls') == 1;
 		
+		
 		if ($this->magHet($params)) {
 			$projectId = $params->get('huidigeActieveJaar');
 			$this->hitapp($this->getHitData($projectId));
@@ -36,13 +37,20 @@ class KampInfoModelHitApp extends KampInfoModelParent {
 	}
 
 	function getHitKampen($hitsiteId, $iconenLijst) {
+		$jinput = JFactory::getApplication()->input;
+		$geef_alles = ($jinput->get('doe_alles_maar', '', 'string')) != '' ;
+		
 		$db = JFactory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
-		$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
+		if ($geef_alles) {
+			$query->where('(c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
+		} else {
+			$query->where('(c.published=1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
+		}
 		$query->order('c.naam');
 	
 		$db->setQuery($query);
