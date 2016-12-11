@@ -71,6 +71,8 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`deelnamekosten`						SMALLINT(3)
 ,	`minimumLeeftijd`						TINYINT
 ,	`maximumLeeftijd`						TINYINT
+,	`minimumLeeftijdOuder`					TINYINT						DEFAULT 21
+,	`maximumLeeftijdOuder`					TINYINT						DEFAULT 88
 ,	`subgroepsamenstellingMinimum`			SMALLINT(2)
 ,	`subgroepsamenstellingMaximum`			SMALLINT(2)
 ,	`subgroepsamenstellingExtra`			SMALLINT(1)

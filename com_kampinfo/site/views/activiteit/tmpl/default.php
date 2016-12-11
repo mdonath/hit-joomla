@@ -64,7 +64,13 @@ function replaceVariables($text, $act) {
 			?>
 			<span style="white-space: nowrap;">Datum: <b><?php echo("$startF t/m $eindF"); ?></b></span> 
 			<span>|</span>
-			<span style="white-space: nowrap;">Leeftijd: <b><?php echo($activiteit->minimumLeeftijd); ?> t/m <?php echo($activiteit->maximumLeeftijd); ?> jaar</b></span>
+			<span style="white-space: nowrap;">Leeftijd: <b>
+			<?php if ($activiteit->isouderkind == '1') {?>
+				<?php echo($activiteit->minimumLeeftijd); ?> t/m <?php echo($activiteit->maximumLeeftijd); ?>,
+				<?php echo($activiteit->minimumLeeftijdOuder); ?> t/m <?php echo($activiteit->maximumLeeftijdOuder); ?> (ouder)	jaar </b></span>
+			<?php } else { ?>
+				<?php echo($activiteit->minimumLeeftijd); ?> t/m <?php echo($activiteit->maximumLeeftijd); ?> jaar</b></span>
+			<?php }?>
 			<span>|</span>
 			<span style="white-space: nowrap;">Groep: <b>
 			<?php

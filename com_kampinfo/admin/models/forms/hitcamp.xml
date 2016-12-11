@@ -160,7 +160,37 @@
 				maxlength="255"
 				class="input-xlarge"
 		/>
-	</fieldset>
+		<field
+		    	name="noteLeeftijdenOuder"
+		    	type="note" 
+		    	label="Onderstaande gegevens worden alléén gebruikt bij Ouder-Kind-kampen"
+		    	class="alert alert-warning"
+		 />
+		<field
+				name="minimumLeeftijdOuder"
+				type="text"
+				label="Minimum leeftijd Ouder"
+				description="De minimale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
+				size="3"
+				maxlength="3"
+				required="true"
+				default="21"
+				class="input-mini"
+				filter="integer"
+		/>
+		<field
+				name="maximumLeeftijdOuder"
+				type="text"
+				label="Maximum leeftijd Ouder"
+				description="De maximale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
+				size="3"
+				maxlength="3"
+				required="true"
+				default="88"
+				class="input-mini"
+				filter="integer"
+		/>
+			</fieldset>
 
 	<!-- ================================================================== -->
 

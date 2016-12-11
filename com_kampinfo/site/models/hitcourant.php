@@ -2,6 +2,18 @@
 
 include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 
+
+function kamp_sort_on_minimum_leeftijd($a, $b) {
+	$result = $a->minimumLeeftijd - $b->minimumLeeftijd;
+	if ($result == 0) {
+		$result = $a->maximumLeeftijd - $b->maximumLeeftijd;
+		if ($result == 0) {
+			$result = strcmp($a->naam, $b->naam);
+		}
+	}
+	return $result;
+}
+
 /**
  * KampInfo HitCourant Model.
  */
@@ -109,14 +121,15 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 			$kampen = $this->getHitKampen($plaats->id, $iconenLijst);
 			$plaats->hitKampen = $kampen;
 			foreach ($kampen as $kamp) {
-				$this->prepareKamp($kamp);
+				$this->prepareKamp($kamp, $plaats);
 			}
 		}
 	}
 
-	private function prepareKamp($kamp) {
+	private function prepareKamp($kamp, $plaats) {
 		$this->convertDateTime($kamp, array('startDatumTijd', 'eindDatumTijd'));
 		$kamp->heeftBeginEnEindInVerschillendeMaanden = $kamp->startDatumTijd->format('m') != $kamp->eindDatumTijd->format('m');
+		$kamp->plaats = $plaats;
 	}
 
 	private function magHet($params) {
@@ -157,20 +170,18 @@ EOT;
 	 * @param unknown $hit
 	 */
 	private function hitcourant_intro($hit) {
-		$count='count';
 		echo <<< EOT
 	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">HIT $hit->jaar: $hit->thema</h1>
-	<h2 style="font-family: Helvetica; font-size:18pt;">HIT $hit->jaar Jouw paasweekend vol Scoutinguitdaging!</h2>
-	<p style="font-family: Helvetica; font-size:8pt;"><strong>Wat ga jij doen met Pasen $hit->jaar? Naar de HIT natuurlijk! Want
-	in $hit->jaar kun je bij de HIT kiezen uit meer dan 60 totaal verschillende, spannende en
-	uitdagende activiteiten op {$count($hit->hitPlaatsen)} plaatsen in Nederland, of zelfs in het
-	buitenland!</strong></p>
-	
-	<p style="font-family: Helvetica; font-size:8pt;">De HIT staat voor Hikes, Interessekampen en Trappersexpedities en wordt elk jaar gehouden
-	tijdens de paasdagen. Een paar duizend scouts tussen de 7 en de 88 jaar beleven een ultieme
-	Scoutingactiviteit waarin je alles kunt tegenkomen wat Scouting te bieden heeft.</p>
-	
-	<p style="font-family: Helvetica; font-size:8pt;">In $hit->jaar vindt de HIT plaats tussen 
+	<p style="font-family: Helvetica; font-size:8pt;"><strong>
+		Jij bent een scout die eruit wil halen wat erin zit: je wilt nieuwe avonturen beleven, je vindt het leuk om andere scouts te leren kennen
+		en je verbetert graag je Scoutingskills. Dan is de HIT iets voor jou. Want in het paasweekend van $hit->jaar wachten er meer
+		dan 60 verschillende, spannende en uitdagende activiteiten op jou, verspreid over heel Nederland!
+	</strong></p>
+
+	<p style="font-family: Helvetica; font-size:8pt;">
+	De HIT staat voor Hikes, Interessekampen en Trappersexpedities en wordt elk jaar gehouden tijdens de paasdagen. Een paar duizend
+	scouts tussen de 5 en de 88 jaar beleven een ultieme Scoutingactiviteit waarin je alles kunt tegenkomen wat Scouting te bieden heeft.
+	In $hit->jaar vindt de HIT plaats van 
 EOT;
 	
 	if ($hit->heeftBeginEnEindInVerschillendeMaanden) {
@@ -180,21 +191,22 @@ EOT;
 	}
 	
 echo <<< EOT
-	en {$this->format($hit->maandag, "l j F")}.
-	Vanaf {$this->format($hit->inschrijvingStartdatum, "j F")} kun je je inschrijven. Lees snel verder in deze HIT-courant of kijk op de website welke te gekke HIT voor jou en je
-	Scoutingvrienden er dit jaar weer bij zit! Schrijf je snel in want elke HIT heeft maar een beperkt aantal plaatsen.</p>
+	tot en met {$this->format($hit->maandag, "l j F")}. Vanaf {$this->format($hit->inschrijvingStartdatum, "j F")}  kun je je inschrijven.
+	Wacht niet te lang met inschrijven, want elke HIT heeft maar een beperkt aantal plaatsen.
+	Lees snel verder in deze HIT-courant of kijk op de website uit welke te gekke activiteiten jij en je Scoutingvrienden dit jaar kunnen kiezen!
+	<br><i>Tip: De HIT-courant is ook via de ScoutingApp te bekijken (zowel Android als iPhone). Meer info vind je op de HIT-website.</i>
+	</p>
 	
 	<div style="font-family: Helvetica; border: .2em solid black; padding: 1em; font-size:8pt;">
-	<h1  style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; text-align: center; margin-top: 0em; font-size:18pt;">Hoe kan ik me inschrijven?</h1>
-	<p>Heb je je keuze gemaakt, of wil je eerst nog meer weten?
-	Ga dan naar de HIT website op <u>hit.scouting.nl</u> voor meer informatie over de door jou gekozen HIT.
-	Vanaf daar vind je onderaan ook meteen een link naar het inschrijfformulier.
-	Log hiervoor wel even in op de website van Scouting Nederland.<br />
-	Kom je er niet meteen uit? Op de website staat een uitgebreide handleiding. Ook kun je via de
-	website contact opnemen met de HIT-helpdesk.<br />
-	<div style="font-family: Helvetica; font-weight: bold; text-align: center; font-size: 120%;">
-	Je kunt je inschrijven vanaf <span style="color: green;">{$this->format($hit->inschrijvingStartdatum, "j F Y")}</span>.
-	De inschrijving sluit op <span style="color: red;">{$this->format($hit->inschrijvingEinddatum, "j F Y")}</span>!
+		<h1  style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; text-align: center; margin-top: 0em; font-size:18pt;">Hoe kan ik me inschrijven?</h1>
+		<p>Heb je je keuze gemaakt? Op de HIT-website <a href="https://hit.scouting.nl/">hit.scouting.nl</a> vind je vanaf
+		1 januari meer informatie over elke HIT-activiteit. Onderaan elke beschrijving vind je – vanaf de inschrijfdatum – ook
+		meteen een link naar het inschrijfformulier. Log hiervoor wel eerst even in op de website van Scouting Nederland.
+		Kom je er niet goed uit? Een handleiding vind je op de HIT-website. Ook kun je via de website contact opnemen met de HIT-helpdesk.<br> 
+		
+		<div style="font-family: Helvetica; font-weight: bold; text-align: center; font-size: 120%;">
+		Je kunt je inschrijven vanaf <span style="color: green;">{$this->format($hit->inschrijvingStartdatum, "j F Y")}</span>.
+		De inschrijving sluit op <span style="color: red;">{$this->format($hit->inschrijvingEinddatum, "j F Y")}</span>!
 	</div>
 	</div>
 	</font>
@@ -235,8 +247,17 @@ EOT;
 	 * @param unknown $hit
 	 */
 	private function hitcourant_krant($hit) {
+		$sortedKampen = array();
 		foreach ($hit->hitPlaatsen as $plaats) {
+			foreach ($plaats->hitKampen as $kamp) {
+				$sortedKampen[] = $kamp;
+			}
 			$this->hitcourant_plaats($plaats);
+		}
+		// Verzamel kampgegevens van alle HIT plaatsen en sorteer op leeftijd
+		usort($sortedKampen, "kamp_sort_on_minimum_leeftijd");
+		foreach ($sortedKampen as $kamp) {
+			$this->hitcourant_kamp($kamp);
 		}
 	}
 	
@@ -248,13 +269,33 @@ EOT;
 	private function hitcourant_plaats($plaats) {
 		$strtolower = 'strtolower';
 echo <<< EOT
-	<p style="font-family: Helvetica; font-size:8pt;">
-	<img src="images/headers/hit_logo_h_web_{$strtolower($plaats->naam)}.png"><br/>
-	Kijk op https://hit.scouting.nl/{$strtolower($plaats->naam)} voor meer info.<br/>{$plaats->hitCourantTekst}</p>
+	<p style="font-family: Helvetica; font-size:8pt;"><img src="images/headers/hit_logo_h_web_{$strtolower($plaats->naam)}.png"></p>
+	<p style="font-family: Helvetica; font-size:8pt;">{$plaats->hitCourantTekst}</p>
 EOT;
-		foreach ($plaats->hitKampen as $kamp) {
-			$this->hitcourant_kamp($kamp);
+		echo('<p style="font-family: Helvetica; font-size:8pt;">');
+		$sortedKampen = $plaats->hitKampen;
+		usort($sortedKampen, "kamp_sort_on_minimum_leeftijd");
+		
+		foreach ($sortedKampen as $kamp) {
+			$this->hitcourant_kamp_naam_leeftijd($kamp);
 		}
+		echo('</p>');
+echo <<< EOT
+		<p style="font-family: Helvetica; font-size:8pt;">Meer info: <a href="https://hit.scouting.nl/{$strtolower($plaats->naam)}">https://hit.scouting.nl/{$strtolower($plaats->naam)}</a></p>
+EOT;
+	}
+	
+	/**
+	 * Print de gegevens van een kamp.
+	 *
+	 * @param unknown $kamp
+	 */
+	private function hitcourant_kamp_naam_leeftijd($kamp) {
+		echo($kamp->naam .' | '. $kamp->minimumLeeftijd .'-'. $kamp->maximumLeeftijd); 
+		if ($kamp->isouderkind == '1') {
+			echo(', '. $kamp->minimumLeeftijdOuder .'-'. $kamp->maximumLeeftijdOuder) . ' (ouder)'; 
+		}
+		echo " jaar<br>";
 	}
 
 	/**
@@ -285,9 +326,15 @@ EOT;
 		foreach ($kamp->icoontjes as $icoon) {
 			echo($this->icoonGroot($icoon));
 		}
+		
+		if ($kamp->isouderkind == '1') {
+			$leeftijden = "{$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} en {$kamp->minimumLeeftijdOuder} - {$kamp->maximumLeeftijdOuder} (ouder) jaar";
+		} else {
+			$leeftijden = "{$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar";
+		}
 		echo <<< EOT
 </p>
-	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold; font-size:8pt;">$startDatumTijd - {$this->format($kamp->eindDatumTijd, "j F")} | {$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar | {$subgroep} | €&nbsp;{$kamp->deelnamekosten}</p>
+	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold; font-size:8pt;">{$kamp->plaats->naam} | $startDatumTijd - {$this->format($kamp->eindDatumTijd, "j F")} | $leeftijden | {$subgroep} | €&nbsp;{$kamp->deelnamekosten}</p>
 	<p style="align: justify; font-family: Helvetica; font-size:8pt;">{$kamp->hitCourantTekst}</p>
 EOT;
 	}
@@ -296,13 +343,13 @@ EOT;
 		echo <<< EOT
 	<div style="padding: 1em; font-family: Helvetica; font-size:8pt;">
 	<h1 style="font-family: Helvetica; margin-top: 0em; font-size:18pt;">Colofon HIT-courant $hit->jaar</h1>
-	<p>De HIT-courant verschijnt een keer per jaar en is bestemd voor alle leden van Scouting Nederland.</p>
+	<p>De HIT-courant verschijnt één keer per jaar en is bestemd voor alle leden van Scouting Nederland.</p>
 	
 	<p>
 	<strong>Redactie:</strong> {$this->courant_contactPersonen($hit->hitPlaatsen)}.
 	<br /><strong>Foto’s:</strong> Sebastiaan Westerweel en de diverse HIT-plaatsen
 	<br /><strong>Illustratie voorkant:</strong> Bart Jansen
-	<br /><strong>Eindredactie:</strong> Maarten Romkes, Sietske Zinkstok-Hoekstra, Lars Vermeij (Team communicatie, Landelijk servicecentrum Scouting Nederland)
+	<br /><strong>Eindredactie:</strong> Maarten Romkes, Sietske Zinkstok-Hoekstra, Lars Vermeij (Team communicatie, landelijk servicecentrum Scouting Nederland)
 	</p>
 	
 	<p>Scouting Nederland<br />
@@ -363,7 +410,7 @@ EOT;
 				'Saturday' => 'zaterdag',
 				'Sunday' => 'zondag',
 				'January' => 'januari',
-				'Febrary' => 'februari',
+				'February' => 'februari',
 				'March' => 'maart',
 				'April' => 'april',
 				'May' => 'mei',
