@@ -687,6 +687,24 @@
 	    	name="financien"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 	>
+		<field
+				name="afkorting"
+				type="text"
+				label="Afkorting"
+				description="De afkorting van het kamp (in te vullen door PT)"
+				maxlength="4"
+		    	class="input-mini"
+		/>
+		<field	name="budgetnummer"
+		    	type="number"
+		    	label="Budgetnummer"
+		    	description="Het basis-budgetnummer van het kamp"
+		    	size="4"
+		    	min="0000"
+		    	max="6890"
+		    	class="input-mini"
+		/>
+	    
 		<field	name="aantalMedewerkers"
 		    	type="number"
 		    	label="Aantal medewerkers"

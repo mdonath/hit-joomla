@@ -43,7 +43,8 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`aantalMedewerkers`						SMALLINT(3)
 ,	`medewerkersBijdrage					DECIMAL(10,2)
 ,	`bijdragePlaats`						DECIMAL(10,2)
-
+,	`afkorting`								VARCHAR(3)
+,	`budgetnummer`							SMALLINT(4)							
 
 ,	`published`								SMALLINT(3) NOT NULL	DEFAULT '0'
 ,	PRIMARY KEY (`id`)
@@ -111,6 +112,9 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 
 ,	`aantalMedewerkers`						SMALLINT(3)
 ,	`aantalDagenVoorAfdracht`				SMALLINT(1)					DEFAULT 2
+,	`afkorting`								VARCHAR(4)
+,	`budgetnummer`							SMALLINT(4)
+
 
 ,	`akkoordHitKamp`						BOOLEAN
 ,	`akkoordHitPlaats`						BOOLEAN

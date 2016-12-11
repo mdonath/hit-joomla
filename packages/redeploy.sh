@@ -49,6 +49,7 @@ echo "Upload returned: $OUTPUT"
 	# It may still need some improvement as it's still displaying "<li>" tags
 echo "Now checking for errors..."
 	OUTPUTEND=$(curl -c cookie.tmp --cookie cookie.tmp -s $JOOMLAURL -d "option=com_installer&layout=default_message&tmpl=component")
+	echo $OUTPUTEND
 	MESSAGE=$(echo $OUTPUTEND | sed 's/.*<dl id="system-message">\(.*\)<\/dl>.*/\1/g')
 
 	ERROR=$(echo $MESSAGE | grep "error")
