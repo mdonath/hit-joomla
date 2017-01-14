@@ -293,7 +293,7 @@ EOT;
 	private function hitcourant_kamp_naam_leeftijd($kamp) {
 		echo($kamp->naam .' | '. $kamp->minimumLeeftijd .'-'. $kamp->maximumLeeftijd); 
 		if ($kamp->isouderkind == '1') {
-			echo(', '. $kamp->minimumLeeftijdOuder .'-'. $kamp->maximumLeeftijdOuder) . ' (ouder)'; 
+			echo(' / '. $kamp->minimumLeeftijdOuder .'-'. $kamp->maximumLeeftijdOuder); 
 		}
 		echo " jaar<br>";
 	}
@@ -304,37 +304,43 @@ EOT;
 	 * @param unknown $kamp
 	 */
 	private function hitcourant_kamp($kamp) {
-		if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
-			$subgroep = $kamp->subgroepsamenstellingMinimum .' - '. $kamp->subgroepsamenstellingMaximum .' pers';
-		} else {
-			if ((int)$kamp->subgroepsamenstellingMinimum == 0) {
-				$subgroep = 'pers nvt';
-			} else {
-				$subgroep = $kamp->subgroepsamenstellingMinimum . ' pers';
-			}
-		}
-		if($kamp->heeftBeginEnEindInVerschillendeMaanden) {
-			$startDatumTijd = ($this->format($kamp->startDatumTijd, "j F"));
-		} else {
-			$startDatumTijd = ($this->format($kamp->startDatumTijd, "j"));
-		}
 		
-		echo <<< EOT
-	<h1 style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">$kamp->naam</h1>
+echo <<< EOT
+<h1 style="font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">$kamp->naam</h1>
 <p style="text-align: right; margin-left: .1em;">
 EOT;
 		foreach ($kamp->icoontjes as $icoon) {
 			echo($this->icoonGroot($icoon));
 		}
-		
+
+		// Start en Eind:
+		$startDatumTijd = substr($this->format($kamp->startDatumTijd, "l"), 0, 2);
+		$eindDatumTijd = substr($this->format($kamp->eindDatumTijd, "l"), 0, 2);
+		$startEind = $startDatumTijd .'-'. $eindDatumTijd;
+
+		// Leeftijden:
 		if ($kamp->isouderkind == '1') {
-			$leeftijden = "{$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} en {$kamp->minimumLeeftijdOuder} - {$kamp->maximumLeeftijdOuder} (ouder) jaar";
+			$leeftijden = "{$kamp->minimumLeeftijd}-{$kamp->maximumLeeftijd}/{$kamp->minimumLeeftijdOuder}-{$kamp->maximumLeeftijdOuder} jr";
 		} else {
-			$leeftijden = "{$kamp->minimumLeeftijd} - {$kamp->maximumLeeftijd} jaar";
+			$leeftijden = "{$kamp->minimumLeeftijd}-{$kamp->maximumLeeftijd} jr";
 		}
-		echo <<< EOT
+
+		// Inschrijven per...
+		if ($kamp->subgroepsamenstellingMinimum != $kamp->subgroepsamenstellingMaximum) {
+			$subgroep = $kamp->subgroepsamenstellingMinimum .'-'. $kamp->subgroepsamenstellingMaximum .' p';
+		} else {
+			if ((int)$kamp->subgroepsamenstellingMinimum == 0) {
+				$subgroep = '1 p'; // individuele inschrijving?
+			} else {
+				$subgroep = $kamp->subgroepsamenstellingMinimum . ' p';
+			}
+		}
+		
+echo <<< EOT
 </p>
-	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold; font-size:8pt;">{$kamp->plaats->naam} | $startDatumTijd - {$this->format($kamp->eindDatumTijd, "j F")} | $leeftijden | {$subgroep} | €&nbsp;{$kamp->deelnamekosten}</p>
+	<p style="text-align: right; font-weight: bold; font-family: Helvetica; font-weight: bold; font-size:8pt;">
+		{$kamp->plaats->naam} | {$startEind} | {$leeftijden} | {$subgroep} | €&nbsp;{$kamp->deelnamekosten}
+	</p>
 	<p style="align: justify; font-family: Helvetica; font-size:8pt;">{$kamp->hitCourantTekst}</p>
 EOT;
 	}
@@ -347,9 +353,9 @@ EOT;
 	
 	<p>
 	<strong>Redactie:</strong> {$this->courant_contactPersonen($hit->hitPlaatsen)}.
-	<br /><strong>Foto’s:</strong> Sebastiaan Westerweel en de diverse HIT-plaatsen
-	<br /><strong>Illustratie voorkant:</strong> Bart Jansen
-	<br /><strong>Eindredactie:</strong> Maarten Romkes, Sietske Zinkstok-Hoekstra, Lars Vermeij (Team communicatie, landelijk servicecentrum Scouting Nederland)
+	<br /><strong>Foto’s:</strong> Nog invullen en de diverse HIT-plaatsen
+	<br /><strong>Illustratie voorkant:</strong> Nog invullen
+	<br /><strong>Eindredactie:</strong> Maarten Romkes, Sietske Zinkstok-Hoekstra, Lisette van Garder (Team communicatie, servicecentrum Scouting Nederland)
 	</p>
 	
 	<p>Scouting Nederland<br />
@@ -398,7 +404,6 @@ EOT;
 		return "<img src=\"media/com_kampinfo/images/iconencourant/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"40px\" height=\"40px\" />";
 	}
 
-	
 	private function format($date, $format) {
 		$result = $date->format($format);
 		$vertaling = array(

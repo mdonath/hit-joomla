@@ -26,7 +26,7 @@ class KampInfoViewFinancien extends JViewLegacy {
 	
 	private function header($rows) {
 		$output = "";
-		$sep = " ";
+		$sep = "";
 		foreach ($rows[0] as $field => $value) {
 			$output .= $sep;
 			$output .= $this->quote($field);
@@ -47,7 +47,7 @@ class KampInfoViewFinancien extends JViewLegacy {
 	
 	private function printRow($row) {
 		$output = '';
-		$sep = " ";
+		$sep = "";
 		foreach ($row as $field => $value) {
 			$output .= $sep;
 			$output .= $this->quote($value);
