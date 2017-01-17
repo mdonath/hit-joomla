@@ -21,6 +21,46 @@ class KampInfoModelHitProject extends JModelAdmin {
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
+	public function getKampen() {
+		$app = JFactory::getApplication();
+		$db = JFactory::getDBO();
+		$item = $this->getItem();
+		$jaarId = $item->id;
+		return $this->getVolledigePlaatsenEnKampenVanJaar($db, $jaarId);
+	}
+	
+	private function getVolledigePlaatsenEnKampenVanJaar($db, $jaarId) {
+		$query = $db->getQuery(true)
+		-> select('c.*, s.naam as plaats, p.jaar')
+		-> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+		-> join('LEFT', '#__kampinfo_hitsite AS s ON (c.hitsite_id = s.id)')
+		-> join('LEFT', '#__kampinfo_hitproject AS p ON (s.hitproject_id = p.id)')
+		-> where($db->quoteName('p.id') .'='. (int) $db->escape($jaarId))
+		-> order('c.naam');
+		$db->setQuery($query);
+	
+		$result = $db->loadObjectList();
+	
+		// expand icons
+		foreach ($result as $kamp) {
+			$query = $db->getQuery(true);
+			$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde');
+			$query->from('#__kampinfo_hiticon i');
+				
+			$values=array();
+			foreach(explode(',', $kamp->icoontjes) as $naam) {
+				$values[] = $db->quote($db->escape($naam));
+			}
+			$query->where('i.bestandsnaam in (' . implode(',', $values) . ')');
+			$query->order('i.volgorde');
+				
+			$db->setQuery($query);
+			$icons = $db->loadObjectList();
+			$kamp->icoontjes = $icons;
+		}
+	
+		return $result;
+	}
 	/**
 	 * Method to get the record form.
 	 *

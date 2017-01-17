@@ -208,6 +208,8 @@ class KampInfoModelImport extends JModelAdmin {
 			$aantalDeelnemers = $inschrijving->aantalDeelnemers;
 			$gereserveerd = $inschrijving->gereserveerd;
 			$aantalSubgroepen = $inschrijving->aantalSubgroepen;
+
+
 			$minimumAantalDeelnemers = $inschrijving->minimumAantalDeelnemers;
 			$maximumAantalDeelnemers = $inschrijving->maximumAantalDeelnemers;
 			$minimumLeeftijd = $inschrijving->minimumLeeftijd;
@@ -216,7 +218,18 @@ class KampInfoModelImport extends JModelAdmin {
 			if (empty($gereserveerd)) {
 				$gereserveerd = 0;
 			}
-			
+			if (empty($aantalSubgroepen)) {
+				$aantalSubgroepen = 0;
+			}
+			if (empty($inschrijving->subgroeptypenr)) {
+				$aantalSubgroepen = $aantalDeelnemers;
+				// In SOL is bij een OK-kamp het aantal gehalveerd, daarom hier weer verdubbelen!
+				$maximumAantalDeelnemers = 2 * $maximumAantalDeelnemers;
+				$aantalDeelnemers = 2 * $aantalDeelnemers;
+				// Omdat er ook geen subgroepjes zijn, moet dit gelijk gesteld worden aan aantal deelnemers
+				$gereserveerd = $aantalDeelnemers;
+			}
+				
 			$formulierNaamParts = array();
 			// Als formulier naam een nummer tussen '{' en '}' heeft, dan is het een speciaal geval.
 			// Het nummer is het shantiFormuliernummer waar de betreffende gegevens bij opgeteld moeten worden.

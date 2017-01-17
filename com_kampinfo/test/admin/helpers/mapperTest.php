@@ -18,3 +18,4 @@ if (false) {
 	$result = $mapper->read("5022_participants_export.xml");
 }
 print_r($result);
+

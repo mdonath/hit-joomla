@@ -91,6 +91,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`aantalDeelnemers`						SMALLINT(3)
 ,	`gereserveerd`							SMALLINT(3)
 ,	`maximumAantalDeelnemers`				SMALLINT(3)
+,	`maximumAantalDeelnemersOrigineel`		SMALLINT(3)
 ,	`minimumAantalSubgroepjes`				SMALLINT(3)
 ,	`aantalSubgroepen`						SMALLINT(2)
 ,	`maximumAantalSubgroepjes`				SMALLINT(3)

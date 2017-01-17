@@ -309,12 +309,16 @@ class PDF extends PDF_HTML {
 				$data[] = array("Aantal te oud:", "Helpdesk mag maximaal $kamp->helpdeskTeOudMagAantal deelnemers die te oud zijn inschrijven");
 			}
 		}
+		if ($kamp->isouderkind == "1") {
+			$leeftijdenOuder = "$kamp->minimumLeeftijdOuder - $kamp->maximumLeeftijdOuder jaar";
+			$data[] = array("Leeftijd ouder:", $leeftijdenOuder);
+		}
 
 		$uitloop = '';
 		if ($kamp->helpdeskOverschrijdingAantal != "") {
-			$uitloop = "(max. $kamp->helpdeskOverschrijdingAantal extra mogelijk)";
+			$uitloop = "max. $kamp->helpdeskOverschrijdingAantal extra mogelijk";
 		}
-		$data[] = array('Aantal deelnemers:', "$kamp->minimumAantalDeelnemers - $kamp->maximumAantalDeelnemers $uitloop");
+		$data[] = array('Aantal deelnemers:', "$kamp->minimumAantalDeelnemers - $kamp->maximumAantalDeelnemers ( $kamp->maximumAantalDeelnemersOrigineel + $uitloop )");
 		$data[] = array('Contactgegevens voor helpdesk:', "$kamp->helpdeskContactpersoon / $kamp->helpdeskContactEmailadres / $kamp->helpdeskContactTelefoonnummer");
 		$deelbaar = '';
 		if ($kamp->subgroepsamenstellingExtra != '' && $kamp->subgroepsamenstellingExtra != "0") {

@@ -44,7 +44,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo JText::_($item->aantalDeelnemers); ?>
 		</td>
 		<td class="hidden-phone">
-			<?php echo JText::_($item->maximumAantalDeelnemers); ?>
+			<?php echo JText::_($item->maximumAantalDeelnemers); ?> (<?php echo JText::_($item->maximumAantalDeelnemersOrigineel); ?>)
 		</td>
 		<td class="hidden-phone">
 			€ <?php echo JText::_($item->deelnamekosten); ?>
