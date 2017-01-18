@@ -19,7 +19,7 @@ class SolMapping {
 				, 'Maximum aantal deelnemers' => new GewoonVeld('maximumAantalDeelnemers')
 				, 'Gereserveerd' => new GewoonVeld('gereserveerd')
 				, 'Subgroepen' => new GewoonVeld('aantalSubgroepen')
-				, 'Nr van subgroeptype' => new GewoonVeld('subgroeptypenr')
+				, 'Subgroepcategorie' => new GewoonVeld('subgroepcategorie')
 		);
 		return $mapping;
 	}

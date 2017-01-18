@@ -12,15 +12,21 @@ $dlnMapping = SolMapping::getInschrijvingenMapping($jaar);
 
 
 $mapper = new XmlMapper($dlnMapping);
-$result = $mapper->read("6406_formulieren.xml");
+$result = $mapper->read("6406_forms.xml");
 
 // print_r($result);
 
-print_r($result[9]);
+$i=0;
+foreach ($result as $e) {
+	print($i);
+	print_r($result[$i]);
+	$i++;
+}
 
-$inschrijving = $result[9];
+print_r($result[27]);
+$inschrijving = $result[27];
 
-$isOuderKind = empty($inschrijving->subgroeptypenr);
+$isOuderKind = $inschrijving->subgroepcategorie != 'Koppelgroepje';
 if ($isOuderKind) {
 	print('Ouder-Kind!');
 } else {

@@ -221,7 +221,7 @@ class KampInfoModelImport extends JModelAdmin {
 			if (empty($aantalSubgroepen)) {
 				$aantalSubgroepen = 0;
 			}
-			if (empty($inschrijving->subgroeptypenr)) {
+			if ($inschrijving->subgroepcategorie != 'Koppelgroepje') {
 				$aantalSubgroepen = $aantalDeelnemers;
 				// In SOL is bij een OK-kamp het aantal gehalveerd, daarom hier weer verdubbelen!
 				$maximumAantalDeelnemers = 2 * $maximumAantalDeelnemers;

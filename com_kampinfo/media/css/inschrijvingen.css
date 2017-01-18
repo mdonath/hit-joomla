@@ -17,14 +17,13 @@
 	white-space: nowrap;
 }
 
-
 .progressbar {
         text-align: center;
         background-color: lime;
         float: left;
 }
 div + div.progressbar {
-        background-color: yellow !important;
+        background-color: #ee8 !important;
         float: left;
 }
 
