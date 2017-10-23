@@ -235,10 +235,15 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 
 		$query->select('1 + datediff(datumInschrijving, ed.eersteDag) as inschrijfdag');
 		foreach ($jaren as $jaar) {
-			$query->select("sum(d.jaar=$jaar) as \"y$jaar\"");
+			if ($jaar >= 2017) {
+				$query->select("sum(if(d.jaar=$jaar,if(c.isouderkind,2,1),0)) as \"y$jaar\"");
+			} else {
+				$query->select("sum(d.jaar=$jaar) as \"y$jaar\"");
+			}
 		}
 		$query->from('#__kampinfo_deelnemers d');
 		$query->innerJoin('(select jaar, min(datumInschrijving) as eersteDag from #__kampinfo_deelnemers group by jaar) ed on (ed.jaar=d.jaar)');
+		$query->join('LEFT', '#__kampinfo_hitcamp c on (c.id = d.hitcampid)');
 		$query->group('inschrijfdag');
 		$db->setQuery($query);
 
