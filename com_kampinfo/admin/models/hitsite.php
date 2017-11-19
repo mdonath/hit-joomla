@@ -152,7 +152,7 @@ class KampInfoModelHitSite extends JModelAdmin {
 				$namen[] = $kamp->naam;
 				
 				$kamp->hitsite_id = $siteId;
-				$kamp->id = null;			
+				$kamp->id = null;
 				$kamp->shantiFormuliernummer = null;
 				$kamp->aantalSubgroepen = 0;
 				$kamp->aantalDeelnemers = 0;

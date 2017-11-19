@@ -53,26 +53,31 @@ abstract class KampInfoHelper {
 	 */
 	public static function eersteHitDag($jaar) { // VRIJDAG DUS
 		$paasKalender = array(
-				2004 => DateTime::createFromFormat('d-m-Y', '09-04-2004'),
-				2005 => DateTime::createFromFormat('d-m-Y', '25-03-2005'),
-				2006 => DateTime::createFromFormat('d-m-Y', '14-04-2006'),
-				2007 => DateTime::createFromFormat('d-m-Y', '06-04-2007'),
-				2008 => DateTime::createFromFormat('d-m-Y', '21-03-2008'),
-				2009 => DateTime::createFromFormat('d-m-Y', '10-04-2009'),
-				2010 => DateTime::createFromFormat('d-m-Y', '02-04-2010'),
-				2011 => DateTime::createFromFormat('d-m-Y', '22-04-2011'),
-				2012 => DateTime::createFromFormat('d-m-Y', '06-04-2012'),
-				2013 => DateTime::createFromFormat('d-m-Y', '29-03-2013'),
-				2014 => DateTime::createFromFormat('d-m-Y', '18-04-2014'),
-				2015 => DateTime::createFromFormat('d-m-Y', '03-04-2015'),
-				2016 => DateTime::createFromFormat('d-m-Y', '25-03-2016'),
-				2017 => DateTime::createFromFormat('d-m-Y', '14-04-2017'),
-				2018 => DateTime::createFromFormat('d-m-Y', '30-03-2018'),
-				2019 => DateTime::createFromFormat('d-m-Y', '19-04-2019'),
-				2020 => DateTime::createFromFormat('d-m-Y', '10-04-2020'),
-				2021 => DateTime::createFromFormat('d-m-Y', '02-04-2021'),
+				  2004 => '09-04-2004'
+				, 2005 => '25-03-2005'
+				, 2006 => '14-04-2006'
+				, 2007 => '06-04-2007'
+				, 2008 => '21-03-2008'
+				, 2009 => '10-04-2009'
+				, 2010 => '02-04-2010'
+				, 2011 => '22-04-2011'
+				, 2012 => '06-04-2012'
+				, 2013 => '29-03-2013'
+				, 2014 => '18-04-2014'
+				, 2015 => '03-04-2015'
+				, 2016 => '25-03-2016'
+				, 2017 => '14-04-2017'
+				, 2018 => '30-03-2018'
+				, 2019 => '19-04-2019'
+				, 2020 => '10-04-2020'
+				, 2021 => '02-04-2021'
+				, 2022 => '15-04-2022'
+				, 2023 => '07-04-2023'
+				, 2024 => '29-03-2024'
+				, 2025 => '18-04-2025'
+				, 2026 => '03-04-2026'
 		);
-		return $paasKalender[$jaar];
+		return DateTime::createFromFormat('d-m-Y', $paasKalender[$jaar]);
 	}
 
 	public static function addSubmenu($submenu) {
