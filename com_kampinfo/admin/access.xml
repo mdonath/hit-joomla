@@ -44,7 +44,7 @@
 	</section>
 
 	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
-		<section name="hitproject">
+	<section name="hitproject">
 		<action name="core.admin"         title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
    		<action name="hitproject.create"  title="Maak HIT Project"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitproject.delete"  title="Verwijder HIT Project"  description="JACTION_DELETE_COMPONENT_DESC" />
@@ -63,7 +63,7 @@
 		<action name="hitcamp.edit"       title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
 		<action name="hitcamp.edit.own"   title="Bewerk eigen HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
-			</section>
+	</section>
 
 	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
 	<section name="hitcamp">

@@ -85,14 +85,15 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 					</div>
 				</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-			
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'financien', JText::_('HIT Financien')); ?>
+			<!-- 
+			<?php //echo JHtml::_('bootstrap.addTab', 'myTab', 'financien', JText::_('HIT Financien')); ?>
 				<div class="row-fluid">
 					<div class="span12">
-						<?php pr_fieldset($this->form, ('financien')); ?>
+						<?php //pr_fieldset($this->form, ('financien')); ?>
 					</div>
 				</div>
-			<?php echo JHtml::_('bootstrap.endTab'); ?>
+			<?php //echo JHtml::_('bootstrap.endTab'); ?>
+			 -->
 			
 			<?php if ($this->canDo->get('core.admin')) { ?>
 				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'rules', JText::_('COM_KAMPINFO_FIELDSET_RULES')); ?>

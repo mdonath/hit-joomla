@@ -355,7 +355,7 @@ EOT;
 	<strong>Redactie:</strong> {$this->courant_contactPersonen($hit->hitPlaatsen)}.
 	<br /><strong>Foto’s:</strong> Nog invullen en de diverse HIT-plaatsen
 	<br /><strong>Illustratie voorkant:</strong> Nog invullen
-	<br /><strong>Eindredactie:</strong> Maarten Romkes, Sietske Zinkstok-Hoekstra, Lisette van Garder (Team communicatie, servicecentrum Scouting Nederland)
+	<br /><strong>Eindredactie:</strong> Maarten Romkes, Bernhard Bergman, Lisette van Garder (Team communicatie, servicecentrum Scouting Nederland)
 	</p>
 	
 	<p>Scouting Nederland<br />

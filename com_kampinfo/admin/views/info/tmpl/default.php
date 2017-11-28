@@ -22,7 +22,7 @@ if (!empty($id)) {
 </div>
 <div id="j-main-container" class="span10">
 <p>Dit is KampInfo, een Joomla component speciaal voor de HIT.</p>
-<table>
+<table class="table table-striped">
 	<tr><td><strong>Versie:</strong></td><td><?php echo($manifest_cache['version']);?></td></tr>
 	<tr><td><strong>Naam:</strong></td><td><?php echo(JText::_($manifest_cache['name']));?></td></tr>
 	<tr><td><strong>Omschrijving:</strong></td><td><?php echo(JText::_($manifest_cache['description']));?></td></tr>
@@ -30,5 +30,15 @@ if (!empty($id)) {
 	<tr><td><strong>Auteur:</strong></td><td><?php echo($manifest_cache['author']);?> (<?php echo($manifest_cache['authorEmail']);?>)</td></tr>
 	<tr><td><strong>Start ontwikkeling:</strong></td><td><?php echo($manifest_cache['creationDate']);?></td></tr>
 </table>
+
+<hr>
+
+<h2>Laatste wijzigingen:</h2>
+<table class="table table-striped">
+	<tr><th>Datum</th><th>Wijzigingen</th></tr>
+	<tr><td>27-11-2017</td><td>Tabbladen Financiën verwijderd op verzoek van Dominicus.</td></tr>
+	<tr><td>20-11-2017</td><td>Nadat een plaats akkoord heeft gegeven, kan een kamp de gegevens niet meer wijzigen.</td></tr>
+</table>
+
 </div>
 

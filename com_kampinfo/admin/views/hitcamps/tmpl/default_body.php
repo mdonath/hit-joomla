@@ -12,7 +12,16 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<?php echo JHtml::_('jgrid.published', $item->published, $i, $this->entityName .'s.', $canPublish, 'cb');?>
 		</td>
 		<td>
-			<?php if ($this->canDo->get($this->entityName.'.edit.'.(int)$item->id)) { ?>
+			<?php 
+				$toonLink = $this->canDo->get($this->entityName.'.edit.'.(int)$item->id);
+				if ($item->akkoordHitPlaats) {
+					$toonLink = false;
+					if ($this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id)) {
+						$toonLink = true;
+					}
+				}
+			?>
+			<?php if ($toonLink) { ?>
 				<a href="<?php echo JRoute::_('index.php?option=com_kampinfo&task='.$this->entityName.'.edit&id='.(int)$item->id); ?>">
 					<?php echo $item->naam; ?>
 				</a>
