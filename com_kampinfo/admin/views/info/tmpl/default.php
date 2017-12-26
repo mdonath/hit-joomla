@@ -36,8 +36,9 @@ if (!empty($id)) {
 <h2>Laatste wijzigingen:</h2>
 <table class="table table-striped">
 	<tr><th>Datum</th><th>Wijzigingen</th></tr>
-	<tr><td>27-11-2017</td><td>Tabbladen Financiën verwijderd op verzoek van Dominicus.</td></tr>
-	<tr><td>20-11-2017</td><td>Nadat een plaats akkoord heeft gegeven, kan een kamp de gegevens niet meer wijzigen.</td></tr>
+		<tr><td>30-11-2017</td><td>Bug opgelost m.b.t. opslaan HIT Plaats.</td></tr>
+		<tr><td>27-11-2017</td><td>Tabbladen Financiën verwijderd op verzoek van Dominicus.</td></tr>
+		<tr><td>20-11-2017</td><td>Nadat een plaats akkoord heeft gegeven, kan een kamp de gegevens niet meer wijzigen.</td></tr>
 </table>
 
 </div>

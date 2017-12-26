@@ -67,7 +67,7 @@
 				maxlength="50"
 		/>
 	</fieldset>
-
+<!-- 
 	<fieldset
 	    	name="financien"
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
@@ -78,7 +78,6 @@
 				label="Afkorting"
 				description="De afkorting voor de plaats (in te vullen door PT)"
 				maxlength="3"
-				required="true"
 		    	class="input-mini"
 		/>
 		<field	name="budgetnummer"
@@ -87,7 +86,6 @@
 		    	description="Het basis-budgetnummer van de plaats (in te vullen door PT)"
 		    	min="1000"
 		    	max="6000"
-				required="true"
 		    	class="input-mini"
 		/>
 		<field	name="aantalMedewerkers"
@@ -114,6 +112,7 @@
 		    	class="input-mini"
 		/>
 		</fieldset>
+-->
 	
 	<!--  -->
 	<fieldset
