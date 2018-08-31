@@ -33,7 +33,7 @@
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2014"
+				default="2018"
 				required="true"
 		/>
 		<field

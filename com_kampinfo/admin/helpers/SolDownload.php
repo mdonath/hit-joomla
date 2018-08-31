@@ -14,11 +14,36 @@ class SolDownload {
 				, 'as_event', $what, 'export', array('evt_id' => $evt_id));
 	}
 
+
 	public function downloadHelp($user, $password, $role, $sui, $keypriv, $wsdl, $clientName) {
 		return $this->download($user, $password, $role, $sui, $keypriv, $wsdl
 				, 'soap_client', 'list', 'tab', array('scl_nm' => $clientName));
 	}
 
+	
+	// https://sol.scouting.nl/as/event/7239/forms/?evt_id=7239&export=true
+	public function downloadEventNew($user, $password, $role, $sui, $keypriv, $wsdl, $evt_id, $what) {
+		return $this->downloadNew($user, $password, $role, $sui, $keypriv, $wsdl
+				, 'event', $evt_id, $what, array(/*'export' => 'true', */'evt_id' => $evt_id));
+	}
+	
+	public function downloadNew($user, $password, $role, $sui, $keypriv, $wsdl, $module, $id, $what, $params) {
+		$client = new SolSoapClient($sui, $keypriv, $wsdl);
+	
+		try {
+			self::signOnWithRole($client, $user, $password, $role);
+			$form_data = $client->doTAB($module, $id, $what, $params);
+			$result = self::toXml($form_data);
+			$soap = $client->logout();
+	
+			return $result;
+		} catch (Exception $e) {
+			// En nou?
+			print_r($e);
+			return false;
+		}
+	}
+	
 	public function download($user, $password, $role, $sui, $keypriv, $wsdl, $task, $action, $button, $params) {
 		$client = new SolSoapClient($sui, $keypriv, $wsdl);
 	

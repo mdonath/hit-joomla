@@ -252,7 +252,7 @@ EOT;
 		$vol = KampInfoUrlHelper::isVol($kamp) ? "true" : "false";
 		$volTekst = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
 		
-		$hitnlUrl = JURI::base() . ($hit->isInschrijvingBegonnen ? (KampInfoUrlHelper::activiteitURL($plaats, $kamp, $hit->jaar, false)) : '');
+		$hitnlUrl = JURI::base() . (/*$hit->isInschrijvingBegonnen*/ true ? (KampInfoUrlHelper::activiteitURL($plaats, $kamp, $hit->jaar, false)) : '');
 		$shantiFormuliernummer = $hit->isInschrijvingBegonnen ? $kamp->shantiFormuliernummer : 0;
 		echo <<< EOT
 		$sep {

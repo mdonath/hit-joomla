@@ -221,6 +221,9 @@ class KampInfoModelImport extends JModelAdmin {
 			if (empty($aantalSubgroepen)) {
 				$aantalSubgroepen = 0;
 			}
+			// FIXME: Detecteren ouder-kind kampen kan niet meer door het detecteren
+			// van afwezigheid koppelgroepje, aangezien deze kampen per 2018 WEL een
+			// koppelgroepje hebben zodat de helpdesk plaatsen kan reserveren!
 			if ($inschrijving->subgroepcategorie != 'Koppelgroepje') {
 				$aantalSubgroepen = $aantalDeelnemers;
 				// In SOL is bij een OK-kamp het aantal gehalveerd, daarom hier weer verdubbelen!

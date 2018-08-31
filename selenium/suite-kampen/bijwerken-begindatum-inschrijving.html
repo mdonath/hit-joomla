@@ -4,14 +4,14 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="https://sol.scouting.nl/" />
-<title>New Test</title>
+<title>bijwerken-begindatum-inschrijving</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">New Test</td></tr>
+<tr><td rowspan="1" colspan="3">bijwerken-begindatum-inschrijving</td></tr>
 </thead><tbody>
-<!--Maakt alle kampen actief-->
+<!--Werkt alle kampen bij-->
 <tr>
 	<td>forJson</td>
 	<td>file:///home/martijn/git/hit-joomla/selenium/data.js</td>
@@ -24,7 +24,7 @@
 </tr>
 <!--Zoek het kamp op in de lijst-->
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>//a[substring(text(), string-length(text()) - (1+string-length(&quot;${kampinfo_camp_id}&quot;))) = &quot;(${kampinfo_camp_id})&quot;]</td>
 	<td></td>
 </tr>
@@ -33,15 +33,25 @@
 	<td>10000</td>
 	<td></td>
 </tr>
-<!--Actief maken kamp-->
+<!--Wijzig 01-Basis-->
 <tr>
-	<td>click</td>
-	<td>xpath=(//input[@name='frm_on_off'])[1]</td>
-	<td></td>
+	<td>select</td>
+	<td>name=frm_book_from_dt_day</td>
+	<td>label=${frm_book_from_dt_day}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_month</td>
+	<td>label=${frm_book_from_dt_month}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=frm_book_from_dt_year</td>
+	<td>label=${frm_book_from_dt_year}</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>css=#buttonbar &gt; div &gt; input[name=&quot;submitBtn&quot;]</td>
+	<td>name=submitBtn</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,6 +64,7 @@
 	<td></td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>
