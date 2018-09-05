@@ -160,6 +160,8 @@ class KampInfoModelHitSite extends JModelAdmin {
 				$kamp->akkoordHitKamp = 0;
 				$kamp->akkoordHitPlaats = 0;
 				$kamp->published = 0;
+				// Zet maximum op het oorspronkelijke maximum aantal en niet het huidige aantal van vorig jaar
+				$kamp->maximumAantalDeelnemers = $kamp->maximumAantalDeelnemersOrigineel;
 				// Zet startdag over naar dit jaar
 				$kamp->startDatumTijd = $this->herberekenDatum($kamp->startDatumTijd);
 				$kamp->eindDatumTijd = $this->herberekenDatum($kamp->eindDatumTijd);
