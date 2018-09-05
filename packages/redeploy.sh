@@ -21,7 +21,7 @@
 # JOOMLAURL is the path to the administrator directory of your Joomla (don't forget the trailing slash)
 # ADMINNAME is the username of an user who can install extension on the joomla
 # ADMINPASS is the password of that user
-JOOMLAURL=http://localhost/HIT/administrator/
+JOOMLAURL=http://localhost/administrator/
 ADMINNAME=admin
 ADMINPASS=admin
 

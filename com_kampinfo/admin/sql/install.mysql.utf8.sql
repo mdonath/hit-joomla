@@ -21,7 +21,7 @@ CREATE TABLE `#__kampinfo_hitproject` (
 ,	`ouderkind`								TEXT
 
 ,	`bijdrageProjectteam`					DECIMAL(10,2)			DEFAULT 2.00
-,	`bijdrageCalamiteitenfonds				DECIMAL(10,2)			DEFAULT 1.50
+,	`bijdrageCalamiteitenfonds`				DECIMAL(10,2)			DEFAULT 1.50
 ,	`bijdrageLSC`							DECIMAL(10,2)			DEFAULT 1.00
 ,	`percentageReservering`					SMALLINT(2)				DEFAULT 10
 
@@ -41,7 +41,7 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,	`akkoordHitPlaats`						BOOLEAN
 
 ,	`aantalMedewerkers`						SMALLINT(3)
-,	`medewerkersBijdrage					DECIMAL(10,2)
+,	`medewerkersBijdrage`					DECIMAL(10,2)
 ,	`bijdragePlaats`						DECIMAL(10,2)
 ,	`afkorting`								VARCHAR(3)
 ,	`budgetnummer`							SMALLINT(4)							
