@@ -33,6 +33,9 @@ function replaceVariables($text, $act) {
 	}
 	return $text;
 }
+function createInschrijfFormulierLink($template, $id) {
+	return str_replace('{0}', $id, $template);
+}
 ?>
 
 <article class="itempage" itemtype="http://schema.org/Article" itemscope="">
@@ -205,7 +208,7 @@ function replaceVariables($text, $act) {
 			<?php
 					} else {
 			?>
-						<input style="float: right" value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo($shantiUrl . $activiteit->shantiFormuliernummer); ?>')" />
+						<input style="float: right" value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
 			<?php
 					}
 				}
