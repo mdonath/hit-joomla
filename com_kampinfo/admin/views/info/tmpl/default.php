@@ -36,9 +36,10 @@ if (!empty($id)) {
 <h2>Laatste wijzigingen:</h2>
 <table class="table table-striped">
 	<tr><th>Datum</th><th>Wijzigingen</th></tr>
-		<tr><td>30-11-2017</td><td>Bug opgelost m.b.t. opslaan HIT Plaats.</td></tr>
-		<tr><td>27-11-2017</td><td>Tabbladen Financiën verwijderd op verzoek van Dominicus.</td></tr>
-		<tr><td>20-11-2017</td><td>Nadat een plaats akkoord heeft gegeven, kan een kamp de gegevens niet meer wijzigen.</td></tr>
+	<tr><td>06-09-2018</td><td>Link naar SOL is aangepast (<a href="https://github.com/mdonath/hit-joomla/issues/26">#26</a>), bij kopi&euml;ren kamp van vorig jaar wordt het originele max aantal overgenomen bij niew maximum aantal voor dat jaar (https://github.com/mdonath/hit-joomla/issues/25)</td></tr>
+	<tr><td>30-11-2017</td><td>Bug opgelost m.b.t. opslaan HIT Plaats.</td></tr>
+	<tr><td>27-11-2017</td><td>Tabbladen Financiën verwijderd op verzoek van Dominicus.</td></tr>
+	<tr><td>20-11-2017</td><td>Nadat een plaats akkoord heeft gegeven, kan een kamp de gegevens niet meer wijzigen.</td></tr>
 </table>
 
 </div>
