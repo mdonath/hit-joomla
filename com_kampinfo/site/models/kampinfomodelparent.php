@@ -157,10 +157,18 @@ abstract class KampInfoModelParent extends JModelItem {
 		}
 
 		$nieuweIcoontjes = array();
+
+		$aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
+		$overnachtingKey = "aantalnacht".$aantalNachten;
+		// if (array_key_exists($overnachtingKey, $iconenLijst)) {
+			$nieuweIcoontjes[] = $iconenLijst[$overnachtingKey];
+		// }
 		if (!empty($kamp->icoontjes)) {
 			$icoontjes = explode(',', $kamp->icoontjes);
 			foreach ($icoontjes as $icoon) {
-				$nieuweIcoontjes[] = $iconenLijst[$icoon];
+				if (array_key_exists($icoon, $iconenLijst)) {
+					$nieuweIcoontjes[] = $iconenLijst[$icoon];
+				}
 			}
 		}
 		return $nieuweIcoontjes;

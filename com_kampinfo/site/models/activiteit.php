@@ -50,6 +50,8 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 		}
 		$activiteit = $activiteiten[0];
 
+		$aantalNachten = KampInfoHelper::aantalOvernachtingen($activiteit);
+		$activiteit->icoontjes = "aantalnacht{$aantalNachten},". $activiteit->icoontjes;
 		$activiteit->icoontjes =  $this->createIcons($activiteit->icoontjes);
 		$activiteit->activiteitengebieden = $this->createActiviteitengebieden($activiteit->activiteitengebieden);
 		$activiteit->doelgroepen = $this->createDoelgroepen($activiteit->doelgroepen);

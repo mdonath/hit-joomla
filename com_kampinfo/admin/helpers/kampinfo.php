@@ -244,6 +244,7 @@ abstract class KampInfoHelper {
 
 		$query->select('bestandsnaam As value, tekst As text');
 		$query->from('#__kampinfo_hiticon');
+		$query->where('soort <> "S"');
 		$query->order('volgorde');
 
 		// Get the options.
@@ -336,7 +337,8 @@ abstract class KampInfoHelper {
 				"I" => "Inschrijven",
 				"O" => "Overnachten",
 				"A" => "Afstand",
-				"K" => "Koken"
+				"K" => "Koken",
+				"S" => "Systeem"
 		);
 	}
 
@@ -383,12 +385,23 @@ abstract class KampInfoHelper {
 		return new DateTimeZone($timeZone);
 	}
 
-	public static function startsWith($haystack, $needle)
-	{
+	public static function aantalOvernachtingen($kamp) {
+		$start = self::clearTime($kamp->startDatumTijd);
+		$eind = self::clearTime($kamp->eindDatumTijd);
+		return $start->diff($eind)->days;
+	}
+
+	private static function clearTime($datumTijd) {
+		$datum = new JDate($datumTijd);
+		$datum->setTimezone(self::getTimezone());
+		$datum->setTime(0,0,0);
+		return $datum;
+	}
+
+	public static function startsWith($haystack, $needle) {
 		return $needle === "" || strpos($haystack, $needle) === 0;
 	}
-	public static function endsWith($haystack, $needle)
-	{
+	public static function endsWith($haystack, $needle) {
 		return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 	}
 	

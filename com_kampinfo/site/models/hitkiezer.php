@@ -62,6 +62,8 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 		foreach ($kampenInPlaats as $kamp) {
 			$nieuweIcoontjes = array();
 			if (!empty($kamp->icoontjes)) {
+				$aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
+				$kamp->icoontjes = "aantalnacht{$aantalNachten},". $kamp->icoontjes;
 				$icoontjes = explode(',', $kamp->icoontjes);
 				foreach ($icoontjes as $icoon) {
 					$nieuweIcoontjes[] = $iconenLookup[$icoon];
