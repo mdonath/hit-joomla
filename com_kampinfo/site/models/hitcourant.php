@@ -174,8 +174,8 @@ EOT;
 	<h1 style="text-align: center; font-family: Impact; color: #005eb0; margin-top: .75em; margin-bottom: 0em; font-weight: normal; font-size:18pt;">HIT $hit->jaar: $hit->thema</h1>
 	<p style="font-family: Helvetica; font-size:8pt;"><strong>
 		Jij bent een scout die eruit wil halen wat erin zit: je wilt nieuwe avonturen beleven, je vindt het leuk om andere scouts te leren kennen
-		en je verbetert graag je Scoutingskills. Dan is de HIT iets voor jou. Want in het paasweekend van $hit->jaar wachten er meer
-		dan 60 verschillende, spannende en uitdagende activiteiten op jou, verspreid over heel Nederland!
+		en je verbetert graag je Scoutingskills. Dan is de HIT iets voor jou. Want in het paasweekend van $hit->jaar wachten er rond
+		de 80 verschillende, spannende en uitdagende activiteiten op jou, verspreid over heel Nederland!
 	</strong></p>
 
 	<p style="font-family: Helvetica; font-size:8pt;">
@@ -397,11 +397,11 @@ EOT;
 	}
 	
 	private function icoonGroot($icoon) {
-		return "<img src=\"media/com_kampinfo/images/iconencourant/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"25px\" height=\"25px\" />";
+		return "<img src=\"media/com_kampinfo/images/xxxhdpi/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"25px\" height=\"25px\" />";
 	}
 	
 	private function icoonHeelGroot($icoon) {
-		return "<img src=\"media/com_kampinfo/images/iconencourant/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"40px\" height=\"40px\" />";
+		return "<img src=\"media/com_kampinfo/images/xxxhdpi/{$icoon->naam}.png\" alt=\"{$icoon->tekst}\" title=\"{$icoon->tekst}\" width=\"40px\" height=\"40px\" />";
 	}
 
 	private function format($date, $format) {
