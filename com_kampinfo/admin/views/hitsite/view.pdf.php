@@ -273,6 +273,12 @@ class PDF extends PDF_HTML {
 		$this->Cell(0, 0, '', 'T');
 	}
 
+	function printDatumTijd($datumtijd) {
+		$dt = new JDate($datumtijd);
+		$dt->setTimezone(new DateTimeZone(JFactory::getApplication()->get('offset')));
+		return $dt->calendar('d-m-Y H:i', true);
+	}
+
 	function printKamp($kamp) {
 		$this->kampNaam = $kamp->naam;
 		$this->AddPage();
@@ -284,8 +290,8 @@ class PDF extends PDF_HTML {
 
 		$data = array();
 		$data[] = array('Naam:', $this->c($kamp->naam));
-		$data[] = array('Startdatum en -tijd:', $kamp->startDatumTijd);
-		$data[] = array('Einddatum en -tijd:', $kamp->eindDatumTijd);
+		$data[] = array('Startdatum en -tijd:', $this->printDatumTijd($kamp->startDatumTijd));
+		$data[] = array('Einddatum en -tijd:', $this->printDatumTijd($kamp->eindDatumTijd));
 		$data[] = array('Prijs:', $this->c('€ '.$kamp->deelnamekosten));
 		$data[] = array('Is ouderkind-kamp:', $kamp->isouderkind == "1" ? "Ja":"Nee");
 		$ouder = '';
@@ -320,6 +326,9 @@ class PDF extends PDF_HTML {
 		}
 		$data[] = array('Aantal deelnemers:', "$kamp->minimumAantalDeelnemers - $kamp->maximumAantalDeelnemers ( $kamp->maximumAantalDeelnemersOrigineel + $uitloop )");
 		$data[] = array('Contactgegevens voor helpdesk:', "$kamp->helpdeskContactpersoon / $kamp->helpdeskContactEmailadres / $kamp->helpdeskContactTelefoonnummer");
+		if ($kamp->helpdeskOpmerkingen != "") {
+			$data[] = array('Opmerkingen voor helpdesk:', $kamp->helpdeskOpmerkingen);
+		}
 		$deelbaar = '';
 		if ($kamp->subgroepsamenstellingExtra != '' && $kamp->subgroepsamenstellingExtra != "0") {
 			$deelbaar = "(grootte moet deelbaar zijn door $kamp->subgroepsamenstellingExtra)";
@@ -350,12 +359,16 @@ class PDF extends PDF_HTML {
 		$this->subheader('Icoontjes');
 		$this->Ln(1);
 		$icoontjes =  $kamp->icoontjes;
+		$even = false;
 		foreach ($icoontjes as $icon) {
 			$img = JPATH_ROOT .'/'. $this->iconFolder .'/'. $icon->naam .$this->iconExtension;
-			$this->Image($img, $this->GetX(), $this->GetY());
+			$this->Image($img, $this->getX(), $this->GetY());
 			$this->x += 12;
-			$this->Cell(100, 12, $icon->tekst);
-			$this->Ln();
+			$this->Cell(80, 12, $icon->tekst);
+			if ($even) {
+				$this->Ln();
+			}
+			$even = !$even;
 		}
 	}
 
