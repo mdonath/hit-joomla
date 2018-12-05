@@ -16,6 +16,9 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<th class="hidden-phone">
 		<?php echo JText::_('COM_KAMPINFO_HITICONS_HEADING_TEKST'); ?>
 	</th>
+	<th class="hidden-phone">
+		<?php echo JText::_('COM_KAMPINFO_HITICONS_HEADING_UITLEG'); ?>
+	</th>
 	<th>
 		<?php echo JHtml::_('searchtools.sort', 'COM_KAMPINFO_HITICONS_HEADING_SOORT', 'soort', $listDirn, $listOrder); ?>
 	</th>

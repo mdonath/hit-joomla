@@ -42,9 +42,6 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	<th class="hidden-phone">
 		<?php echo JHtml::_('searchtools.sort', 'Prijs', 'deelnamekosten', $listDirn, $listOrder); ?>
 	</th>
-	<th class="hidden-phone">
-		#Mdw
-	</th>
 	<th width="5" class="hidden-phone">
 		<?php echo JHtml::_('searchtools.sort', 'COM_KAMPINFO_HITCAMPS_HEADING_ID', 'id', $listDirn, $listOrder); ?>
 	</th>

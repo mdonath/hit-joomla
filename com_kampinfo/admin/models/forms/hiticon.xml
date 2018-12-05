@@ -47,5 +47,14 @@
 				class="inputbox"
 				required="true"
 		/>
+		<field
+				name="uitleg"
+				type="textarea"
+				label="COM_KAMPINFO_HITICON_UITLEG_LABEL"
+				description="COM_KAMPINFO_HITICON_UITLEG_DESC"
+				rows="6"
+				class="input-xxlarge"
+				required="true"
+		/>
 	</fieldset>
 </form>

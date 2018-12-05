@@ -242,7 +242,7 @@ abstract class KampInfoHelper {
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query->select('bestandsnaam As value, tekst As text');
+		$query->select('bestandsnaam As value, tekst As text, uitleg');
 		$query->from('#__kampinfo_hiticon');
 		$query->where('soort <> "S"');
 		$query->order('volgorde');

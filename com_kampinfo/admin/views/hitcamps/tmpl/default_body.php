@@ -59,9 +59,6 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			€ <?php echo JText::_($item->deelnamekosten); ?>
 		</td>
 		<td class="hidden-phone">
-			<?php echo JText::_($item->aantalMedewerkers); ?>
-		</td>
-		<td class="hidden-phone">
 			<?php echo $item->id; ?>
 		</td>
 	</tr>

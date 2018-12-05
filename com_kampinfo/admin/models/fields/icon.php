@@ -40,29 +40,32 @@ class JFormFieldIcon extends JFormField {
 		$options = $this->getOptions();
 
 		// Build the checkbox field output.
-		$html[] = '<ul>';
+		$html[] = '<table>';
 		foreach ($options as $i => $option)
 		{
-
 			// Initialize some option attributes.
 			$checked = (in_array((string) $option->value, (array) $this->value) ? ' checked="checked"' : '');
 			$class = !empty($option->class) ? ' class="' . $option->class . '"' : '';
 			$disabled = !empty($option->disable) ? ' disabled="disabled"' : '';
+			$uitleg = !empty($option->uitleg) ? htmlspecialchars($option->uitleg, ENT_COMPAT, 'UTF-8') : '';
 
 			// Initialize some JavaScript option attributes.
 			$onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
-			$html[] = '<li>';
-			$html[] = '<input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
-				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
+			$html[] = '<tr>';
+			$html[] = '<td><input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
+				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled 
+				. '/></td>';
 
-			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			//$html[] = KampInfoUrlHelper::imgUrl($iconFolderSmall, $option->value, $iconExtension, '', JText::_($option->text));
+			$html[] = '<td style="width:48px"><label for="' . $this->id . $i . '"' . $class . '>';
 			$html[] = KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', JText::_($option->text));
-			$html[] =  JText::_($option->text) . '</label>';
-			$html[] = '</li>';
+			$html[] = '</label></td>';
+			$html[] = '<td><label for="' . $this->id . $i . '"' . $class . '>';
+			$html[] =  JText::_($option->text) . '</label></td>';
+			$html[] =  '<td>' . $uitleg . '</td>';
+			$html[] = '</tr>';
 		}
-		$html[] = '</ul>';
+		$html[] = '</table>';
 
 		// End the checkbox field output.
 		$html[] = '</fieldset>';

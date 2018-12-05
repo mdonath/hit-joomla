@@ -62,10 +62,15 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'website', JText::_('Website')); ?>
 				<div class="row-fluid">
-					<div class="span6">
+					<div class="span8">
 						<?php pr_fieldset($this->form, ('hitwebsite')); ?>
 					</div>
-					<div class="span6">
+				</div>
+			<?php echo JHtml::_('bootstrap.endTab'); ?>
+
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'websiteextra', JText::_('Website Extra')); ?>
+				<div class="row-fluid">
+					<div class="span8">
 						<?php pr_fieldset($this->form, ('hitwebsiteextra')); ?>
 					</div>
 				</div>
@@ -73,7 +78,7 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'icons', JText::_('Iconen')); ?>
 				<div class="row-fluid">
-					<div class="span3">
+					<div class="span6">
 						<?php pr_fieldset($this->form, ('iconen'), false); ?>
 					</div>
 					<div class="span3">

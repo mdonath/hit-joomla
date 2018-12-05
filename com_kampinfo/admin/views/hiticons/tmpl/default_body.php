@@ -24,6 +24,9 @@ $options = KampInfoHelper::getHitIconSoortOptions();
 		<td class="hidden-phone">
 			<?php echo $item->tekst; ?>
 		</td>
+		<td class="hidden-phone">
+			<?php echo $item->uitleg; ?>
+		</td>
 		<td>
 			<?php echo $options[$item->soort]; ?>
 		</td>

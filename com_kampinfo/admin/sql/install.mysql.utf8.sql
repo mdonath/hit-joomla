@@ -134,6 +134,7 @@ CREATE TABLE `#__kampinfo_hiticon` (
 ,	`volgorde`								INT(10)			NOT NULL
 ,	`bestandsnaam`							VARCHAR(20)		NOT NULL
 ,	`tekst`									VARCHAR(255)	NOT NULL
+,	`uitleg`								TEXT
 ,	`soort`									CHAR(1)
 ,	PRIMARY KEY (`id`)
 );
