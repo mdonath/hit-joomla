@@ -12,24 +12,21 @@ jimport('joomla.application.component.modeladmin');
 jimport('joomla.filesystem.file');
 
 
-class SolConfig {
-	
-	
-}
 /**
  * Import Model.
 */
 class KampInfoModelImport extends JModelAdmin {
 
 	/**
-	 * Downloadt de inschrijfaantallen via SOAP en importeert deze om zo de huidige records weer bij te werken.
+	 * Downloadt de inschrijfaantallen via de nieuwe REST call en importeert deze om zo de
+	 * huidige records weer bij te werken.
 	 * 
 	 * @return boolean
 	 */
 	public function downloadInschrijvingen() {
 		$app = JFactory::getApplication();
 
-		$params =JComponentHelper::getParams('com_kampinfo');
+		$params = JComponentHelper::getParams('com_kampinfo');
 
 		// Voor welk jaar staat in de configuratie
 		$projectId = $params->get('huidigeActieveJaar');
@@ -45,14 +42,15 @@ class KampInfoModelImport extends JModelAdmin {
 		$jaar = $project->jaar;
 		$app->enqueueMessage("Jaar: " . $jaar);
 		
-		// Via Soap Downloaden
+		// Via JSON downloaden
 		$solConfig = new SolConfiguration($params);
 		$sol = new SolDownload();
-		$result = $sol->downloadEvent($solConfig->user, $solConfig->password, $solConfig->role, $solConfig->sui, $solConfig->keypriv, $solConfig->wsdl, $eventId, 'forms');
-		
+		$result = $sol->downloadInschrijvingen($eventId, $solConfig);
+
 		// Importeer gegevens
-		$mapper = new XmlMapper(SolMapping::getInschrijvingenMapping($jaar));
-		$rows = $mapper->readString($result);
+		$mapper = new JsonMapper(SolMapping::getInschrijvingenMapping($jaar, "json"));
+		$rows = $mapper->readList($result);
+
 		$count = count($rows);
 
 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
@@ -65,7 +63,6 @@ class KampInfoModelImport extends JModelAdmin {
 		
 		return true;
 	}
-
 
 	/**
 	 * Importeert de inschrijfaantallen via CSV en werkt zo de bestaande gegevens bij.
@@ -138,11 +135,11 @@ class KampInfoModelImport extends JModelAdmin {
 		// Via Soap Downloaden
 		$solConfig = new SolConfiguration($params);
 		$sol = new SolDownload();
-		$result = $sol->downloadEvent($solConfig->user, $solConfig->password, $solConfig->role, $solConfig->sui, $solConfig->keypriv, $solConfig->wsdl, $eventId, 'participants');
+		$result = $sol->downloadDeelnemers($eventId, $solConfig);
 
 		// Importeer gegevens
-		$mapper = new XmlMapper(SolMapping::getDeelnemergegevensMapping($jaar));
-		$rows = $mapper->readString($result);
+		$mapper = new JsonMapper(SolMapping::getDeelnemergegevensMapping($jaar, "json"));
+		$rows = $mapper->readList($result);
 
 		$count = count($rows);
 		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);

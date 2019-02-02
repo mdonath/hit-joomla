@@ -59,13 +59,22 @@ function printInfo($kamp) {
 	return 'Leeftijd: ' .$kamp->minimumLeeftijd .' - '. $kamp->maximumLeeftijd . ' jaar.';
 }
 
-function berekenRestCapaciteit($kamp) {
+function berekenRestCapaciteit($project, $kamp) {
 	if (KampInfoUrlHelper::isVolQuaGroepjes($kamp)) {
 		return 0;
 	}
-	return max(0, $kamp->maximumAantalDeelnemers - $kamp->gereserveerd);
-	
+	return max(0, factorAantal($project, $kamp) * ($kamp->maximumAantalDeelnemers - $kamp->gereserveerd));
 }
+
+function factorAantal($project, $kamp) {
+	// Pas sinds 2018 staan de inschrijving van de ouder bij de inschrijving van het kind.
+	// De ene inschrijving telt dus voor twee deelnemers.
+	if ($kamp->isouderkind == '1' && ($project->jaar == 2018 || $project->jaar == 2019)) {
+		return 2;
+	}
+	return 1;
+}
+
 ?>
 
 <article class="itempage" itemtype="http://schema.org/Article" itemscope="">
@@ -109,6 +118,10 @@ function berekenRestCapaciteit($kamp) {
 		<?php foreach ($plaats->kampen as $kamp) { ?>
 			<?php
 			$status = bepaalStatus($kamp);
+			$factor = factorAantal($project, $kamp);
+			$kampAantalIngeschreven = $factor * $kamp->aantalDeelnemers;
+			$kampAantalGereserveerd = $factor * $kamp->gereserveerd;
+			$kampMaximumAantal = $factor * $kamp->maximumAantalDeelnemers;
 			?>
 		<tr>
 			<td class="kolom1 <?php echo $status?>"
@@ -117,18 +130,18 @@ function berekenRestCapaciteit($kamp) {
 				<?php echo($kamp->naam); ?>
 			</td>
 			<td class="kolom2"><?php echo($kamp->minimumAantalDeelnemers); ?></td>
-			<td class="kolom3"><?php echo($kamp->aantalDeelnemers); ?></td>
-			<td class="kolom4"><?php echo($kamp->gereserveerd); ?></td>
-			<td class="kolom5"><?php echo($kamp->maximumAantalDeelnemers); ?></td>
+			<td class="kolom3"><?php echo($kampAantalIngeschreven); ?></td>
+			<td class="kolom4"><?php echo($kampAantalGereserveerd); ?></td>
+			<td class="kolom5"><?php echo($kampMaximumAantal); ?></td>
 			<td class="kolom7"><?php echo($kamp->aantalSubgroepen . ($kamp->maximumAantalSubgroepjes == 0 ? '' : ('/'.$kamp->maximumAantalSubgroepjes))); ?></td>
-			<?php $rest = berekenRestCapaciteit($kamp); ?>
+			<?php $rest = berekenRestCapaciteit($project, $kamp); ?>
 			<td class="kolom9"><?php echo($rest); ?></td>
 			<td class="kolom6"><?php printProgressbarKamp($kamp); ?></td>
 		</tr>
 		<?php
 			$plaatsMinimumAantal += $kamp->minimumAantalDeelnemers;
-			$plaatsAantalIngeschreven += $kamp->aantalDeelnemers;
-			$plaatsAantalGereserveerd += $kamp->gereserveerd;
+			$plaatsAantalIngeschreven += $kampAantalIngeschreven;
+			$plaatsAantalGereserveerd += $kampAantalGereserveerd;
 			$plaatsMaximumAantal += $kamp->maximumAantalDeelnemers;
 			$plaatsRest += $rest;
 		?>

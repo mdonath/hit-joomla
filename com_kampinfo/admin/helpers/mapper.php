@@ -16,6 +16,41 @@ abstract class AbstractMapper {
 
 }
 
+class JsonMapper extends AbstractMapper {
+
+	public function __construct($mapping) {
+		parent::__construct($mapping);
+	}
+
+	public function readList($list) {
+		$rows = array();
+
+		if (!is_null($list)) {
+			foreach ($list as $item) {
+				$object = new stdClass();
+				foreach ($item as $key => $value) {
+					echo($key . ' => '. $value . "\n");
+					if ($this->isMappable($key)) {
+						$veld = $this->mapping[$key];
+						$veld->set($object, $value);
+					}
+				}
+				if (isset($object->status)) {
+					if ($object->status == 'Deelname afgerond'
+					|| $object->status == 'Deelnemer staat ingeschreven'
+					|| $object->status == 'Participant registered'
+					) {
+						$rows[] = $object;
+					}
+				} else {
+					$rows[] = $object;
+				}
+			}
+		}
+		return $rows;
+	}
+}
+
 class XmlMapper extends AbstractMapper {
 
 	public function __construct($mapping) {
@@ -190,12 +225,22 @@ class GewoonVeld extends ImportVeld {
 
 /** Bewaart alleen de eerste letter. */
 class GeslachtVeld extends ImportVeld {
-	public function __construct($kolom, $actief=true) {
+	private $man = 'M';
+	private $vrouw = 'V';
+	public function __construct($kolom, $man='M', $vrouw='V', $actief=true) {
 		parent::__construct($kolom, $actief);
+		$this->man = $man;
+		$this->vrouw = $vrouw;
 	}
 	
 	public function convert($value) {
-		return substr($value, 0, 1);
+		$first = substr($value, 0, 1);
+		if ($first == $this->vrouw) {
+			$first = 'V';
+		} else if ($first == $this->man) {
+			$first = 'M';
+		}
+		return $first;
 	}
 }
 
@@ -217,15 +262,17 @@ class LeeftijdVeld extends ImportVeld {
 
 /** Een datumveld, werkt samen met tijdveld. */
 class DatumVeld extends ImportVeld {
-	public function __construct($kolom, $actief=true) {
+	private $format = null;
+	public function __construct($kolom, $format='d-m-Y', $actief=true) {
 		parent::__construct($kolom, $actief);
+		$this->format = $format;
 	}
 
 	public function set($object, $value) {
 		if($this->isActief() && $value != '') {
 			$kolom = $this->getKolom();
 			$value = $this->convert($value);
-			$date = DateTime::createFromFormat('d-m-Y', $value);
+			$date = DateTime::createFromFormat($this->format, $value);
 			$date->setTime(0, 0);
 			if (property_exists($object, $kolom)) {
 				$object->$kolom->setDate($date);
