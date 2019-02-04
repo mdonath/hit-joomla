@@ -86,6 +86,8 @@ function factorAantal($project, $kamp) {
 
 <p>In dit overzicht vind je de inschrijfstatistieken. Onderaan staat de legenda met een verklaring van de kleuren.</p>
 
+<p class="nogNietGenoeg"><strong>LET OP:</strong> met ingang van maandag 4 februari zijn de aantallen van de Ouder-Kind kampen verdubbeld zodat de ouders ook meetellen in de aantallen!</p>
+
 <table id="inschrijvingen">
 	<?php
 		$minimumAantal = 0;
@@ -119,6 +121,7 @@ function factorAantal($project, $kamp) {
 			<?php
 			$status = bepaalStatus($kamp);
 			$factor = factorAantal($project, $kamp);
+			$kampMinimumAantal = $factor * $kamp->minimumAantalDeelnemers;
 			$kampAantalIngeschreven = $factor * $kamp->aantalDeelnemers;
 			$kampAantalGereserveerd = $factor * $kamp->gereserveerd;
 			$kampMaximumAantal = $factor * $kamp->maximumAantalDeelnemers;
@@ -129,7 +132,7 @@ function factorAantal($project, $kamp) {
 			>
 				<?php echo($kamp->naam); ?>
 			</td>
-			<td class="kolom2"><?php echo($kamp->minimumAantalDeelnemers); ?></td>
+			<td class="kolom2"><?php echo($kampMinimumAantal); ?></td>
 			<td class="kolom3"><?php echo($kampAantalIngeschreven); ?></td>
 			<td class="kolom4"><?php echo($kampAantalGereserveerd); ?></td>
 			<td class="kolom5"><?php echo($kampMaximumAantal); ?></td>
@@ -139,10 +142,10 @@ function factorAantal($project, $kamp) {
 			<td class="kolom6"><?php printProgressbarKamp($kamp); ?></td>
 		</tr>
 		<?php
-			$plaatsMinimumAantal += $kamp->minimumAantalDeelnemers;
+			$plaatsMinimumAantal += $kampMinimumAantal;
 			$plaatsAantalIngeschreven += $kampAantalIngeschreven;
 			$plaatsAantalGereserveerd += $kampAantalGereserveerd;
-			$plaatsMaximumAantal += $kamp->maximumAantalDeelnemers;
+			$plaatsMaximumAantal += $kampMaximumAantal;
 			$plaatsRest += $rest;
 		?>
 		<?php } // foreach.kamp ?>

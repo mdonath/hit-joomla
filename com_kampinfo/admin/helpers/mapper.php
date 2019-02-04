@@ -39,6 +39,7 @@ class JsonMapper extends AbstractMapper {
 					if ($object->status == 'Deelname afgerond'
 					|| $object->status == 'Deelnemer staat ingeschreven'
 					|| $object->status == 'Participant registered'
+					|| $object->status == 'Registered, but has todo iDEAL-payment'
 					) {
 						$rows[] = $object;
 					}

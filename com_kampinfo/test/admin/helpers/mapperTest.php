@@ -9,17 +9,18 @@ require_once 'SolMapping.php';
 $jaar = 2019;
 
 $insMapping = SolMapping::getInschrijvingenMapping($jaar, "json");
-$dlnMapping = SolMapping::getDeelnemergegevensMapping($jaar, "json");
 
-if (false) {
+if (true) {
+	$dlnMapping = SolMapping::getDeelnemergegevensMapping($jaar);
 	$mapper = new CsvMapper($dlnMapping);
-	$result = $mapper->read("3331_deelnemergegevens.csv");
+	$result = $mapper->read("2018-xxxx_deelnemergegevens.csv");
 } else {
 	if (false) {
 		$mapper = new JsonMapper($insMapping);
 		$string = file_get_contents("./event-download.json");
 		$result = $mapper->readString($string);
 	} else {
+		$dlnMapping = SolMapping::getDeelnemergegevensMapping($jaar, "json");
 		$mapper = new JsonMapper($dlnMapping);
 		$string = file_get_contents("./participants-output.json");
 		$result = $mapper->readString($string);

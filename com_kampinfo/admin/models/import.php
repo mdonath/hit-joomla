@@ -178,7 +178,7 @@ class KampInfoModelImport extends JModelAdmin {
 		}
 		$app->enqueueMessage('File: ' . $file);
 
-		$mapper = new XmlMapper(SolMapping::getDeelnemergegevensMapping($jaar));
+		$mapper = new CsvMapper(SolMapping::getDeelnemergegevensMapping($jaar));
 		$rows = $mapper->read($file);
 
 		$count = count($rows);
