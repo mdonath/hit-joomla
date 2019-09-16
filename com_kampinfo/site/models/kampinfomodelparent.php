@@ -62,7 +62,7 @@ abstract class KampInfoModelParent extends JModelItem {
 		$query->from('#__kampinfo_hitcamp c');
 		$query->where('(c.hitsite_id = ' . (int)($db->escape($hitsiteId)) . ')');
 		$query->where('(c.published = 1 and c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
-		$query->order('c.minimumLeeftijd');
+		$query->order('c.minimumLeeftijd, c.maximumLeeftijd, c.naam');
 
 		$db->setQuery($query);
 		$kampenInPlaats = $db->loadObjectList();

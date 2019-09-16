@@ -50,6 +50,11 @@ function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0
 	$volOfIng = $aantal == max($max,$res) ? "vol" : "ing";
 	echo("<div class=\"progressbar\" style=\"width: $percentageVol%\">$percentageVolText% $volOfIng</div>");
 	echo("<div class=\"progressbar\" style=\"width: $percentageRes%\" title=\"$resplaats\">&nbsp;</div>");
+	if ($res < $min) {
+		$tekort = $min - $res;
+		$percTekort = round(100 * $tekort / max($max,$res));
+		echo("<div class=\"progressbar remain\" style=\"width: $percTekort%\" title=\"$tekort\">$tekort</div>");
+	}
 	if ($percentageGroep > 0) {
 		echo("<div class=\"progressbar\" style=\"width: $percentageGroep%\" title=\"Maximum aantal groepen bereikt\">vol</div>");
 	}

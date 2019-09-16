@@ -27,6 +27,12 @@ div + div.progressbar {
         float: left;
 }
 
+div.progressbar.remain {
+        background-color: pink !important;
+        color: black;
+        float: left;
+}
+
 div + div + div.progressbar {
         background-color: green !important;
         color: white;

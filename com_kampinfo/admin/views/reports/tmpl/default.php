@@ -25,8 +25,8 @@ $statistiekPrefix = $prefix . '&view=statistiek&soort=';
 	<ul>
 		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>InschrijvingenPerDagPerJaar">Inschrijvingen per dag per jaar</a></li>
 		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>TotaalInschrijvingenPerJaar">Totaal aantal inschrijvingen</a></li>
-		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>InschrijvingenPerPlaatsInSpecifiekJaar&jaar=2016">Inschrijvingen per plaats (2016)</a></li>
+		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>InschrijvingenPerPlaatsInSpecifiekJaar&jaar=2019">Inschrijvingen per plaats (2019)</a></li>
 		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>OpbouwLeeftijdPerJaar">Opbouw leeftijd per jaar</a></li>
-		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>AantalKampenVoorLeeftijdInJaar&jaar=2016">Aantal kampen voor leeftijd (2016)</a></li>
+		<li><a target="_blank" href="<?php echo($statistiekPrefix); ?>AantalKampenVoorLeeftijdInJaar&jaar=2019">Aantal kampen voor leeftijd (2019)</a></li>
 	</ul>
 </div>
