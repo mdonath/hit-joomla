@@ -314,7 +314,7 @@ class KampInfoModelImport extends JModelAdmin {
 		$deelnemerNummers = array(); // FIXME uitzoeken of deelnemerNummers inderdaad vaker kunnen voorkomen
 		$count = 0;
 		foreach ($rows as $deelnemer) {
-			if (!in_array($deelnemer->dlnnr, $deelnemerNummers) && isset($deelnemer->formulier)) {
+			if (!in_array($deelnemer->dlnnr, $deelnemerNummers, true) && isset($deelnemer->formulier)) {
 				$deelnemerNummers[] = $deelnemer->dlnnr;
 				
 				$formulier = array();

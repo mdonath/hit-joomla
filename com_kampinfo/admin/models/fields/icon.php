@@ -44,7 +44,7 @@ class JFormFieldIcon extends JFormField {
 		foreach ($options as $i => $option)
 		{
 			// Initialize some option attributes.
-			$checked = (in_array((string) $option->value, (array) $this->value) ? ' checked="checked"' : '');
+			$checked = (in_array((string) $option->value, (array) $this->value, true) ? ' checked="checked"' : '');
 			$class = !empty($option->class) ? ' class="' . $option->class . '"' : '';
 			$disabled = !empty($option->disable) ? ' disabled="disabled"' : '';
 			$uitleg = !empty($option->uitleg) ? htmlspecialchars($option->uitleg, ENT_COMPAT, 'UTF-8') : '';

@@ -2,6 +2,9 @@
 
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
+$document = JFactory::getDocument();
+$document->setMetaData( 'robots', 'noindex' );
+
 // config
 $params =JComponentHelper::getParams('com_kampinfo');
 $useComponentUrls = $params->get('useComponentUrls') == 1;
