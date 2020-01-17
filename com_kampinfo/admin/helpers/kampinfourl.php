@@ -25,19 +25,23 @@ abstract class KampInfoUrlHelper {
 			$hitcampId = $kamp->id;
 			return "index.php?option=com_kampinfo&amp;view=activiteit&amp;hitcamp_id=$hitcampId";
 		} else {
-			return KampInfoUrlHelper::plaatsURL($plaats, $jaar, $use) . "/" . KampInfoUrlHelper::aliassify($kamp);
+			return KampInfoUrlHelper::plaatsURL($plaats, $jaar, $use, FALSE) . "/" . KampInfoUrlHelper::aliassify($kamp);
 		}
 	}
 
-	public static function plaatsURL($plaats, $jaar, $use = TRUE) {
+	public static function plaatsURL($plaats, $jaar, $use = TRUE, $overzicht = TRUE) {
 		if ($use) {
 			$code = $plaats->id;
 			return "index.php?option=com_kampinfo&amp;view=overzichtplaats&amp;hitsite_id=$code";
 		} else {
+			$overzichtExtra = '';
+			if ($overzicht) {
+				$overzichtExtra = '/overzicht';
+			}
 			if ($jaar == NULL) {
-				return "hits-in-" . strtolower($plaats->naam);
+				return "hits-in-" . strtolower($plaats->naam) . $overzichtExtra;
 			} else {
-				return "hits-in-" . strtolower($plaats->naam) . '-' . $jaar;
+				return "hits-in-" . strtolower($plaats->naam) . '-' . $jaar . $overzichtExtra;
 			}
 		}
 	}

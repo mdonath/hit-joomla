@@ -77,7 +77,7 @@ function urlified(naam) {
 	return naam
 		.replace(/ - /g, "-")
 		.replace(/ /g, "-")
-		.replace(/°/g, "d")
+		.replace(/°/g, "")
 		.replace(/º/g, "o")
 		.replace(/&/g, "")
 		.toLowerCase()

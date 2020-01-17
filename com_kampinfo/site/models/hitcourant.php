@@ -236,7 +236,8 @@ EOT;
 		$result = '';
 		$welkeKolomMethod = array('icoonLinkerKolom', 'icoonMiddelKolom', 'icoonRechterKolom');
 		foreach($iconen as $index => $icoon) {
-			$result .= $this->$welkeKolomMethod[$index%3]($icoon);
+			$whichMethod = $welkeKolomMethod[$index%3];
+			$result .= $this->$whichMethod($icoon);
 		}
 		return $result;
 	}

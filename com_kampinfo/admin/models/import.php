@@ -232,8 +232,14 @@ class KampInfoModelImport extends JModelAdmin {
 				
 			$formulierNaamParts = array();
 			// Als formulier naam een nummer tussen '{' en '}' heeft, dan is het een speciaal geval.
+			// mdo@20191226: accolades mogen niet meer in de bestandsnaam voorkomen. Daarom nu daarvoor in de plaats
+			// dubbele haakjes:
+			// "HIT Plaats kampnaam (ki-id) ((SOL-id))" <--- nieuw
+			// en het WAS dus voorheen:
+			// "HIT Plaats kampnaam (ki-id) {SOL-id}" <--- oud
+			
 			// Het nummer is het shantiFormuliernummer waar de betreffende gegevens bij opgeteld moeten worden.
-			preg_match("/HIT .* \{(\d+)\}/", $inschrijving->formulierNaam, $formulierNaamParts);
+			preg_match("/HIT .* \(\()(\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
 			if (count($formulierNaamParts) > 0) {
 				// Het extra optellen stellen we uit tot nadat we alle gewone formulieren hebben gehad.
 				$postActionRows[] = $inschrijving;
@@ -266,7 +272,7 @@ class KampInfoModelImport extends JModelAdmin {
 			$gereserveerd = $inschrijving->gereserveerd;
 				
 			$formulierNaamParts = array();
-			preg_match("/HIT .* \{(\d+)\}/", $inschrijving->formulierNaam, $formulierNaamParts);
+			preg_match("/HIT .* \(\()(\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
 			
 			if (empty($gereserveerd)) {
 				$gereserveerd = 0;

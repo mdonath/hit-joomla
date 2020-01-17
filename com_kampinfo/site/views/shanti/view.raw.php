@@ -28,8 +28,11 @@ class KampInfoViewShanti extends JViewLegacy {
 	 */
 	private function shanti($rows) {
 		$output = "[\n";
+		$sep = '';
 		foreach ($rows as $row) {
+			$output .= $sep;
 			$output .= $this->printRow($row);
+			$sep = ",\n";
 		}
 		$output .= "]";
 		return $output;
@@ -47,12 +50,13 @@ class KampInfoViewShanti extends JViewLegacy {
 				if (!is_numeric($value)) {
 					$output .= $this->quote($value);
 				} else {
-					$output .= $value;
+					// remove illegal (for json) leading zeroes
+					$output .= (string)((int)($value));
 				}
 			}
 			$sep = "\n, ";
 		}
-		$output .= "\n},\n";
+		$output .= "\n}\n";
 		return $output;
 	}
 	

@@ -41,7 +41,28 @@
 			<exclude name="cookie.tmp" />
 		</zip>
 	</target>
+
+	<target name="plugin_init">
+		<xmlproperty file="plugins/content/kampinfo/kampinfo.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<tstamp>
+			<format property="TODAY" pattern="yyyyMMdd-HHmm" />
+		</tstamp>
+		<property name="str.destfilename" value="plg_kampinfo-${xml.version}_${TODAY}.zip" />
+		<property name="str.destfile" value="${cfg.packages}/${str.destfilename}" />
+	</target>
+
+	<target name="plugin_zip" depends="plugin_init" description="Makes an uploadable zip package for plugins">
+		<mkdir dir="${cfg.packages}" />
+		<zip destfile="${str.destfile}" basedir="plugins/content/kampinfo" />
+	</target>
 	
+	<target name="plugin_deploy" depends="plugin_zip" description="Deploys plugin package to localhost">
+		<exec executable="/bin/bash">
+			<arg value="${cfg.packages}/redeploy.sh" />
+			<arg value="${str.destfile}" />
+		</exec>
+	</target>
+
 	<target name="deploy" depends="zip" description="Deploys package to localhost">
 		<exec executable="/bin/bash">
 			<arg value="${cfg.packages}/redeploy.sh" />

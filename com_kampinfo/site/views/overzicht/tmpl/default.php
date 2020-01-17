@@ -39,7 +39,7 @@ $project = $this->project;
 						<div class="module-inner2">
 
 <p><strong>In dit overzicht vind je alle HITs van <?php echo ($project->jaar); ?>, gesorteerd per HIT-plaats. </strong></p>
-<p>Vind je het moeilijk een keuze te maken? Gebruik dan de speciale <a href="hit-activiteiten-<?php echo($project->jaar);?>/hit-kiezer-<?php echo($project->jaar);?>">HIT-kiezer</a>!
+<p>Vind je het moeilijk een keuze te maken? Gebruik dan de speciale <a href="hit-activiteiten/hit-kiezer">HIT-kiezer</a>!
    Hiermee kun je kijken welke HIT er bij je past, op basis van je leeftijd tijdens de HIT, je budget, en dingen die je graag
    wilt doen bij een HIT of juist liever niet.</p>
 

@@ -394,7 +394,7 @@
 		<field
 				name="webadresFoto1"
 				type="media"
-				directory="kampinfo/2016"
+				directory="kampinfo/2020"
 				label="Foto 1"
 				description="Foto 1"
 				size="50"
@@ -403,7 +403,7 @@
 		<field
 				name="webadresFoto2"
 				type="media"
-				directory="kampinfo/2016"
+				directory="kampinfo/2020"
 				label="Foto 2"
 				description="Foto 2"
 				size="50"
@@ -412,7 +412,7 @@
 		<field
 				name="webadresFoto3"
 				type="media"
-				directory="kampinfo/2016"
+				directory="kampinfo/2020"
 				label="Foto 3"
 				description="Een derde foto, OF een link naar een Youtube filmpje, deze laatste wordt zo breed mogelijk onderaan de tekst getoond."
 				size="50"
