@@ -195,6 +195,27 @@ class KampInfoModelImport extends JModelAdmin {
 		return true;
 	}
 
+	/**
+	 * In de subgroepcategorie is bij ouderkind-kampen nu opgenomen hoeveel keer een inschrijving meetelt.
+	 * De naam is normaal "Koppelgroepje"
+	 * Bij ouderkind-kampen zal dit "Koppelgroepje (2)" of "Koppelgroepje (1)" zijn.
+	 * Bij de eerste variant (2) telt een inschrijving als twee (ouder+kind)
+	 * Bij de tweede variant (1) telt een inschrijving maar als één inschrijving, dit is dan één extra kind dat eigenlijk nog bij een ander koppel hoort
+	 */
+	private function bepaalFactor($subgroepcategorie) {
+		$result = 1;
+		if ($subgroepcategorie != "Koppelgroepje") {
+			// Uitzoeken hoeveel mensen tegelijk met één formulier worden ingeschreven
+							
+			$parts = array();
+			preg_match("/Koppelgroepje \((\d+)\)/", $subgroepcategorie, $parts);
+			if (count($parts) > 0) {
+				$result = (int) $parts[1];
+			}
+		}
+		return $result;
+	}
+
 	private function updateInschrijvingen($rows, $jaar) {
 		$db = JFactory::getDbo();
 		$count = 0;
@@ -218,18 +239,7 @@ class KampInfoModelImport extends JModelAdmin {
 			if (empty($aantalSubgroepen)) {
 				$aantalSubgroepen = 0;
 			}
-			// FIXME: Detecteren ouder-kind kampen kan niet meer door het detecteren
-			// van afwezigheid koppelgroepje, aangezien deze kampen per 2018 WEL een
-			// koppelgroepje hebben zodat de helpdesk plaatsen kan reserveren!
-			if ($inschrijving->subgroepcategorie != 'Koppelgroepje') {
-				$aantalSubgroepen = $aantalDeelnemers;
-				// In SOL is bij een OK-kamp het aantal gehalveerd, daarom hier weer verdubbelen!
-				$maximumAantalDeelnemers = 2 * $maximumAantalDeelnemers;
-				$aantalDeelnemers = 2 * $aantalDeelnemers;
-				// Omdat er ook geen subgroepjes zijn, moet dit gelijk gesteld worden aan aantal deelnemers
-				$gereserveerd = $aantalDeelnemers;
-			}
-				
+							
 			$formulierNaamParts = array();
 			// Als formulier naam een nummer tussen '{' en '}' heeft, dan is het een speciaal geval.
 			// mdo@20191226: accolades mogen niet meer in de bestandsnaam voorkomen. Daarom nu daarvoor in de plaats
@@ -239,17 +249,25 @@ class KampInfoModelImport extends JModelAdmin {
 			// "HIT Plaats kampnaam (ki-id) {SOL-id}" <--- oud
 			
 			// Het nummer is het shantiFormuliernummer waar de betreffende gegevens bij opgeteld moeten worden.
-			preg_match("/HIT .* \(\()(\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
+			preg_match("/HIT .* \(\((\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
 			if (count($formulierNaamParts) > 0) {
 				// Het extra optellen stellen we uit tot nadat we alle gewone formulieren hebben gehad.
 				$postActionRows[] = $inschrijving;
 			} else {
+				// In de subgroepcategorie is bij ouderkind-kampen nu opgenomen hoeveel keer een inschrijving meetelt.
+				// De naam is normaal "Koppelgroepje"
+				// Bij ouderkind-kampen kan dit "Koppelgroepje (2)" of "Koppelgroepje (1)" zijn.
+				// Bij de eerste variant (2) telt een inschrijving als twee (ouder+kind)
+				// Bij de tweede variant (1) telt een inschrijving maar als één inschrijving, dit is dan één extra kind dat eigenlijk nog bij een ander koppel hoort
+
+				$factor = $this->bepaalFactor($inschrijving->subgroepcategorie);
+
 				$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
-						. "	 c.aantalDeelnemers = " .	(int)($db->escape($aantalDeelnemers))
-						. ", c.gereserveerd = " .		(int)($db->escape($gereserveerd))
-						. ", c.aantalSubgroepen = " .	(int)($db->escape($aantalSubgroepen))
-						. ", c.minimumAantalDeelnemers = " . (int)($db->escape($minimumAantalDeelnemers))
-						. ", c.maximumAantalDeelnemers = " . (int)($db->escape($maximumAantalDeelnemers))
+						. "	 c.aantalDeelnemers = " .			$factor * (int)($db->escape($aantalDeelnemers))
+						. ", c.gereserveerd = " .				$factor * (int)($db->escape($gereserveerd))
+						. ", c.aantalSubgroepen = " .			$factor * (int)($db->escape($aantalSubgroepen))
+						. ", c.minimumAantalDeelnemers = " .	$factor * (int)($db->escape($minimumAantalDeelnemers))
+						. ", c.maximumAantalDeelnemers = " .	$factor * (int)($db->escape($maximumAantalDeelnemers))
 						. ", c.minimumLeeftijd = " . (int)($db->escape($minimumLeeftijd))
 						. ", c.maximumLeeftijd = " . (int)($db->escape($maximumLeeftijd))
 						. " WHERE "
@@ -272,17 +290,22 @@ class KampInfoModelImport extends JModelAdmin {
 			$gereserveerd = $inschrijving->gereserveerd;
 				
 			$formulierNaamParts = array();
-			preg_match("/HIT .* \(\()(\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
+			preg_match("/HIT .* \(\((\d+)\)\)/", $inschrijving->formulierNaam, $formulierNaamParts);
 			
 			if (empty($gereserveerd)) {
 				$gereserveerd = 0;
 			}
-				
+
+			// Voor hoeveel personen telt een inschrijving mee 
+			$factor = $this->bepaalFactor($inschrijving->subgroepcategorie);
+
 			$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
-					. "	 c.aantalDeelnemers = c.aantalDeelnemers + " .	(int)($db->escape($inschrijving->aantalDeelnemers))
-					. ", c.gereserveerd = c.gereserveerd + " .			(int)($db->escape($gereserveerd))
-					. ", c.aantalSubgroepen = c.aantalSubgroepen + " .	(int)($db->escape($inschrijving->aantalSubgroepen))
-					. " WHERE "
+					. "	 c.aantalDeelnemers = c.aantalDeelnemers + " .					$factor * (int)($db->escape($inschrijving->aantalDeelnemers))
+					. ", c.gereserveerd = c.gereserveerd + " .							$factor * (int)($db->escape($gereserveerd))
+					. ", c.aantalSubgroepen = c.aantalSubgroepen + " .					(int)($db->escape($inschrijving->aantalSubgroepen))
+					. ", c.minimumAantalDeelnemers = c.minimumAantalDeelnemers + " .	$factor * (int)($db->escape($inschrijving->minimumAantalDeelnemers))
+					. ", c.maximumAantalDeelnemers = c.maximumAantalDeelnemers + " .	$factor * (int)($db->escape($inschrijving->maximumAantalDeelnemers))
+				. " WHERE "
 					. " c.hitsite_id = s.id AND s.hitproject_id = p.id AND p.jaar = ". ($db->escape($jaar))
 					. " AND c.shantiFormuliernummer = " . (int)($db->escape($formulierNaamParts[1]))
 			;

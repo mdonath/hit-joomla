@@ -80,6 +80,9 @@ function factorAantal($project, $kamp) {
 	if ($kamp->isouderkind == '1' && ($project->jaar == 2018 || $project->jaar == 2019)) {
 		return 2;
 	}
+	// Maar per 2020 niet meer, omdat extra kinderen die los ingeschreven worden via gekoppelde formulieren
+	// NIET dubbel geteld moeten worden.
+	// Daarom wordt bij het importeren al gelijk verdubbeld en hoeft dat niet meer in de statistieken.
 	return 1;
 }
 

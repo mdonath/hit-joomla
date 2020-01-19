@@ -10,7 +10,7 @@
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2019"
+				default="2020"
 				required="true"
 		/>
 		<field
@@ -33,7 +33,7 @@
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2019"
+				default="2020"
 				required="true"
 		/>
 		<field
@@ -56,7 +56,7 @@
 				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
 				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
 				class="inputbox"
-				default="2019"
+				default="2020"
 				required="true"
 		/>
 		<field

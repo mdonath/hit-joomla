@@ -29,7 +29,7 @@ class JsonMapper extends AbstractMapper {
 			foreach ($list as $item) {
 				$object = new stdClass();
 				foreach ($item as $key => $value) {
-					echo($key . ' => '. $value . "\n");
+					// echo($key . ' => '. $value . "\n");
 					if ($this->isMappable($key)) {
 						$veld = $this->mapping[$key];
 						$veld->set($object, $value);

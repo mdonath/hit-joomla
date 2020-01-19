@@ -9,11 +9,12 @@ class SolMapping {
 	 */
 	public static function getInschrijvingenMapping($jaar, $type="normal") {
 		if ($type == "json") {
-			// Iemand vond het handig om enkele velden ineens lowercase te maken...
+			// 2019: Iemand vond het handig om enkele velden ineens lowercase te maken...
+			// 2020: En dit jaar heet 'Formulier' ineens 'Formuliernaam'...
 			$mapping = array(
 				'Locatie' => new IgnoredVeld()
 				, 'formuliernummer' => new GewoonVeld('shantiFormuliernummer')
-				, 'Formulier' => new GewoonVeld('formulierNaam')
+				, 'Formuliernaam' => new GewoonVeld('formulierNaam')
 				, 'Aantal dln\'s' => new GewoonVeld('aantalDeelnemers')
 				, 'minimum leeftijd' => new GewoonVeld('minimumLeeftijd')
 				, 'maximum leeftijd' => new GewoonVeld('maximumLeeftijd')
