@@ -56,7 +56,7 @@ function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0
 	if ($res < $min) {
 		$tekort = $min - $res;
 		$percTekort = round(100 * $tekort / max($max,$res));
-		echo("<div class=\"progressbar remain\" style=\"width: $percTekort%\" title=\"$tekort\">$tekort</div>");
+		echo("<div class=\"progressbar remain\" style=\"width: $percTekort%\" title=\"$tekort\"><small>nog $tekort</small></div>");
 	}
 	if ($percentageGroep > 0) {
 		echo("<div class=\"progressbar\" style=\"width: $percentageGroep%\" title=\"Maximum aantal groepen bereikt\">vol</div>");
@@ -94,7 +94,7 @@ function factorAantal($project, $kamp) {
 
 <p>In dit overzicht vind je de inschrijfstatistieken. Onderaan staat de legenda met een verklaring van de kleuren.</p>
 
-<p class="nogNietGenoeg"><strong>LET OP:</strong> met ingang van maandag 4 februari zijn de aantallen van de Ouder-Kind kampen verdubbeld zodat de ouders ook meetellen in de aantallen!</p>
+<p class="nogNietGenoeg"><strong>LET OP:</strong> Als er nog niet genoeg deelnemers zijn, kun je in deze kleur zien hoeveel deelnemers nog nodig zijn om het minimum te halen.</p>
 
 <table id="inschrijvingen">
 	<?php
@@ -201,7 +201,7 @@ function factorAantal($project, $kamp) {
 				<div class="vol">Vol</div>
 				<div class="zoGoedAlsVol">Gaat door op basis van inschrijvingen</div>
 				<div class="quaReserveringen">Gaat wel door obv reserveringen, te weinig inschrijvingen</div>
-				<div class="nogNietGenoeg">Nog te weinig deelnemers</div>
+				<div class="nogNietGenoeg">Nog te weinig deelnemers (aantal tot minimum)</div>
 				<div class="leeg">Nog geen inschrijvingen</div>
 			</th>
 		</tr>

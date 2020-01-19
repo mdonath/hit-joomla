@@ -44,6 +44,8 @@ if (!empty($id)) {
 <h2>Laatste wijzigingen:</h2>
 <table class="table table-striped">
 	<tr><th>Datum</th><th>Wijzigingen</th></tr>
+	<tr><td>17-01-2020</td><td>Link naar HIT Helpdesk formulier gewijzigd</td></tr>
+	<tr><td>xx-11-2019</td><td>Contentplugin voor het tonen van een lijst van kamponderdelen in een article</td></tr>
 	<tr><td>30-11-2018</td><td>Datumprobleem in PDF export op plaatsniveau opgelost (<a href="https://github.com/mdonath/hit-joomla/issues/30">#30</a>)</td></tr>
 	<tr><td>06-09-2018</td><td>Link naar SOL is aangepast (<a href="https://github.com/mdonath/hit-joomla/issues/26">#26</a>), bij kopi&euml;ren kamp van vorig jaar wordt het originele max aantal overgenomen bij nieuw maximum aantal voor dat jaar (<a href="https://github.com/mdonath/hit-joomla/issues/25">#25</a>)</td></tr>
 	<tr><td>30-11-2017</td><td>Bug opgelost m.b.t. opslaan HIT Plaats.</td></tr>

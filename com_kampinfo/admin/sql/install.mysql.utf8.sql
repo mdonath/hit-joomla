@@ -60,6 +60,8 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`hitsite_id`							INT(11)			NOT NULL
 ,	`deelnemersnummer`						INT(10)			NOT NULL
 ,	`shantiFormuliernummer`					INT(10)
+,	`ouderShantiFormuliernummer`			INT(10)
+,	`extraShantiFormuliernummer`			INT(10)
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
 ,	`isouderkind`							BOOLEAN

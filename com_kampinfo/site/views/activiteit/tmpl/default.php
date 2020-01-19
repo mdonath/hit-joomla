@@ -149,7 +149,7 @@ function createInschrijfFormulierLink($template, $id) {
 						<?php } ?>
 					</tbody>
 				</table>
-				<p>Neem voor vragen over de inschrijving contact op met de <a href="contact/">helpdesk</a>.</p>
+				<p>Neem voor vragen over de inschrijving contact op met de <a href="contact/hit-helpdesk">helpdesk</a>.</p>
 			<?php } ?>
 			
 			<h3>Aanvullende info:</h3>
@@ -192,6 +192,7 @@ function createInschrijfFormulierLink($template, $id) {
 					$user = JFactory::getUser();
 			?>
 					<p><b>Let op! Doe de HIT inschrijving bij voorkeur op een laptop of desktop computer. De inschrijving kan op een tablet fout gaan!</b></p>
+					<div style="float: right">
  			<?php	if ($user->get('guest')) {
 			?>
 						<form action="<?php echo JRoute::_( 'index.php', true); ?>" method="post" name="login" id="form-login" >
@@ -207,12 +208,26 @@ function createInschrijfFormulierLink($template, $id) {
 						</form>
 			<?php
 					} else {
+						if ($activiteit->ouderShantiFormuliernummer > 0) {
+			?>
+						<span>Inschrijven met: </span>
+						<input value="kind is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
+						<input value="ouder is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->ouderShantiFormuliernummer)); ?>')" />
+			<?php
+							if ($activiteit->extraShantiFormuliernummer > 0) {
+			?>
+						<input value="extra kind" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>')" />
+			<?php
+							}
+						} else {
 			?>
 						<input style="float: right" value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
 			<?php
+						}		
 					}
 				}
 			?>
+					</div>
 		</div>
 		
 		<div class="item column-4 span4">

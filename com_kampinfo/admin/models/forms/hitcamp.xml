@@ -666,6 +666,28 @@
 				class="input-mini"
 		/>
 		<field
+				name="ouderShantiFormuliernummer"
+				fieldName="ouderShantiFormuliernummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_LABEL"
+				description="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_DESC"
+				maxlength="6"
+				size="6"
+				default=""
+				class="input-mini"
+		/>
+		<field
+				name="extraShantiFormuliernummer"
+				fieldName="extraShantiFormuliernummer"
+				type="text"
+				label="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_LABEL"
+				description="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_DESC"
+				maxlength="6"
+				size="6"
+				default=""
+				class="input-mini"
+		/>
+		<field
 				name="aantalDeelnemers"
 				type="text"
 				label="Ingeschreven deelnemers"
