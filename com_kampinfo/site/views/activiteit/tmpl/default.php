@@ -187,47 +187,33 @@ function createInschrijfFormulierLink($template, $id) {
 				<?php echo replaceVariables($activiteit->ouderkind, $activiteit); ?>
 			<?php }?>
 			
+			<!-- Inschrijfknoppen -->
 			<?php
 				if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) {
-					$user = JFactory::getUser();
 			?>
 					<p><b>Let op! Doe de HIT inschrijving bij voorkeur op een laptop of desktop computer. De inschrijving kan op een tablet fout gaan!</b></p>
 					<div style="float: right">
- 			<?php	if ($user->get('guest')) {
-			?>
-						<form action="<?php echo JRoute::_( 'index.php', true); ?>" method="post" name="login" id="form-login" >
-							<fieldset class="input" style="float: right;" >
-								<input type="submit" name="Submit" class="loginButton" value="<?php echo JText::_('Inloggen') ?>" />
-								<input type="hidden" name="option" value="com_users" />
-								<input type="hidden" name="task" value="user.login" />
-								<input type="hidden" name="username" value=""/>
-								<input type="hidden" name="return" value="<?php echo base64_encode(JUri::getInstance()->toString()); ?>" />
-							    <input type="hidden" name="theme" value="wood"/>
-								<?php echo JHTML::_( 'form.token' ); ?>
-							</fieldset>
-						</form>
-			<?php
-					} else {
-						if ($activiteit->ouderShantiFormuliernummer > 0) {
+ 			<?php	if ($activiteit->ouderShantiFormuliernummer > 0) {
 			?>
 						<span>Inschrijven met: </span>
 						<input value="kind is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
 						<input value="ouder is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->ouderShantiFormuliernummer)); ?>')" />
 			<?php
-							if ($activiteit->extraShantiFormuliernummer > 0) {
+						if ($activiteit->extraShantiFormuliernummer > 0) {
 			?>
 						<input value="extra kind" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>')" />
 			<?php
-							}
-						} else {
+						}
+					} else {
 			?>
 						<input style="float: right" value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
 			<?php
-						}		
 					}
-				}
 			?>
 					</div>
+			<?php
+				}
+			?>
 		</div>
 		
 		<div class="item column-4 span4">
