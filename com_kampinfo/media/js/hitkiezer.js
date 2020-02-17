@@ -137,16 +137,40 @@ var filter = {
 		}
 		return leeftijdInJaren;
 	},
+	relativeDate: function (kamp, datumTijd, jaarOffset, dagOffset) {
+		return createDate(
+			datumTijd.getFullYear() - jaarOffset,
+			datumTijd.getMonth() + 1,
+			datumTijd.getDate() - dagOffset
+		);
+	},
+	isOuderLeeftijdInRange: function(kamp) {
+		if (this.ouderkind != null && this.ouderkind != -1 && kamp.isouderkind === 1) {
+			var geborenNaOuder = this.relativeDate(kamp, kamp.eindDatumTijd,
+				kamp.maximumLeeftijdOuder + 1,
+				-1
+			);
+			var geborenVoorOuder = this.relativeDate(kamp, kamp.startDatumTijd,
+				kamp.minimumLeeftijdOuder,
+				0
+			);
+			return (this.geboortedatum >= geborenNaOuder && this.geboortedatum <= geborenVoorOuder);
+		}
+		return false;
+	},
+	isKindLeeftijdInRange: function(kamp) {
+		var geborenNa = this.relativeDate(kamp, kamp.eindDatumTijd,
+			kamp.maximumLeeftijd + 1, // +1; want hele jaar telt mee 
+			kamp.margeAantalDagenTeOud - 1 // -1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
+		);
+		var geborenVoor = this.relativeDate(kamp, kamp.startDatumTijd,
+			kamp.minimumLeeftijd,
+			kamp.margeAantalDagenTeJong
+		);
+		return (this.geboortedatum >= geborenNa && this.geboortedatum <= geborenVoor);
+	},
 	filterLeeftijd: function (kamp) {
-		var geborenNa = createDate(
-				kamp.eindDatumTijd.getFullYear() - kamp.maximumLeeftijd - 1, // -1; want hele jaar telt mee 
-				kamp.eindDatumTijd.getMonth() + 1, // 0-based
-				kamp.eindDatumTijd.getDate() - kamp.margeAantalDagenTeOud + 1); // +1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
-		var geborenVoor = createDate(
-				kamp.startDatumTijd.getFullYear() - kamp.minimumLeeftijd, 
-				kamp.startDatumTijd.getMonth() + 1, // 0-based 
-				kamp.startDatumTijd.getDate() + kamp.margeAantalDagenTeJong);
-		return this.geboortedatum == null || this.geboortedatum >= geborenNa && this.geboortedatum <= geborenVoor;
+		return this.geboortedatum == null || this.isKindLeeftijdInRange(kamp) || this.isOuderLeeftijdInRange(kamp);
 	},
 	filterBudget: function (kamp) {
 		return this.budget == -1 || ( (kamp.deelnamekosten <= this.budget+10) && (kamp.deelnamekosten >= this.budget-10) );
