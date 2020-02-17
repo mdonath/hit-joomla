@@ -265,7 +265,7 @@ class KampInfoModelImport extends JModelAdmin {
 				$query = "UPDATE #__kampinfo_hitcamp c, #__kampinfo_hitsite s, #__kampinfo_hitproject p SET"
 						. "	 c.aantalDeelnemers = " .			$factor * (int)($db->escape($aantalDeelnemers))
 						. ", c.gereserveerd = " .				$factor * (int)($db->escape($gereserveerd))
-						. ", c.aantalSubgroepen = " .			$factor * (int)($db->escape($aantalSubgroepen))
+						. ", c.aantalSubgroepen = " .			(int)($db->escape($aantalSubgroepen))
 						. ", c.minimumAantalDeelnemers = " .	$factor * (int)($db->escape($minimumAantalDeelnemers))
 						. ", c.maximumAantalDeelnemers = " .	$factor * (int)($db->escape($maximumAantalDeelnemers))
 						. ", c.minimumLeeftijd = " . (int)($db->escape($minimumLeeftijd))
