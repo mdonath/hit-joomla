@@ -1,0 +1,44 @@
+.leeg {background-color: red; }
+.nogNietGenoeg {background-color: pink; }
+.quaReserveringen {background-color: orange; }
+.quaInschrijvingen {background-color: yellow; }
+.overDeHelft {background-color: lightgreen; }
+.zoGoedAlsVol {background-color: lime; }
+.vol {background-color: green; }
+.proppievol {background-color: purple; }
+
+.leeg, .vol, .proppievol { color: white; }
+
+.kolom2, .kolom3, .kolom4, .kolom5, .kolom7, .kolom8, .kolom9 {
+        text-align: right;
+}
+.kolom6 {
+	width: 400px;
+	white-space: nowrap;
+}
+
+.progressbar {
+        text-align: center;
+        background-color: lime;
+        float: left;
+}
+div + div.progressbar {
+        background-color: #ee8 !important;
+        float: left;
+}
+
+div.progressbar.remain {
+        background-color: pink !important;
+        color: black;
+        float: left;
+}
+
+div + div + div.progressbar {
+        background-color: green !important;
+        color: white;
+        float: left;
+}
+
+td.kolom6 {
+	background-color: #eee;
+}
