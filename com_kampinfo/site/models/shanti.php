@@ -30,6 +30,8 @@ class KampInfoModelShanti extends KampInfoModelParent {
 			-> select("s.projectcode							AS projectcode")
 			-> select("c.naam									AS frm_nm")
 			-> select("COALESCE(c.isouderkind,0)				AS kampinfo_camp_isouder")
+			-> select("COALESCE(c.optieAlleenOuderLid,0)		AS kampinfo_camp_ouderlid")
+			-> select("c.shantiFormuliernummer					AS kampinfo_camp_shanti_id")
 			-> select("c.deelnamekosten							AS frm_price")
 			-> select("c.startDatumTijd							AS frm_from_dt")
 			-> select("c.eindDatumTijd							AS frm_till_dt")

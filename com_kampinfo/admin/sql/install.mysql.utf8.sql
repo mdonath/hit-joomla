@@ -65,6 +65,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`hitsite`								VARCHAR(20)		NOT NULL
 ,	`naam`									VARCHAR(255)	NOT NULL
 ,	`isouderkind`							BOOLEAN
+,	`optieAlleenOuderLid`					BOOLEAN				NULL DEFAULT 0
 ,	`startElders`							BOOLEAN
 ,	`sublocatie`							VARCHAR(255)
 ,	`activiteitengebieden`					TEXT

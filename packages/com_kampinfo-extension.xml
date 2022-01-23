@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+<update>
+<name>COM_KAMPINFO</name>
+<element>com_kampinfo</element>
+<type>component</type>
+<version>0.3.2</version>
+<downloads>
+<downloadurl type="full" format="zip">file:///home/martijn/git/hit-joomla/packages/com_kampinfo-0.3.2-2414_20220122.zip</downloadurl>
+</downloads>
+</targetplatform name="joomla" version="2.5" />
+</update>
+</updates>

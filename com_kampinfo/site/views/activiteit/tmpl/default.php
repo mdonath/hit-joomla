@@ -170,10 +170,7 @@ function createInschrijfFormulierLink($template, $id) {
 					$startDTF = $start->format('l j F \o\m H:i \u\u\r', true);
 					$eindDTF = $eind->format('l j F H:i \u\u\r', true);
 					$begintOpGoedeVrijdag = $start->format('N', true) == '5'; // vrijdag
-			
-					$nu = (new JDate())->getTimestamp();
-					$isInschrijvingGestart = $nu >= (new JDate($activiteit->startInschrijving))->getTimestamp();
-					$isInschrijvingNogNietGestopt = $nu <= (new JDate($activiteit->startInschrijving))->getTimestamp();
+
 				?>
 				Dit HIT-onderdeel start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
 				<?php if ($activiteit->startElders == 1) { ?>
@@ -189,7 +186,14 @@ function createInschrijfFormulierLink($template, $id) {
 			
 			<!-- Inschrijfknoppen -->
 			<?php
-				if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart) {
+				$nu = (new JDate('now'))->getTimestamp();
+				$isInschrijvingGestart = $nu >= ((new JDate($activiteit->startInschrijving))->getTimestamp());
+				$stopMoment = (new JDate($activiteit->eindInschrijving))->getTimestamp();
+				$isInschrijvingNogNietGestopt = ($nu <= $stopMoment);
+			?>
+			
+			<?php
+				if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart && $isInschrijvingNogNietGestopt) {
 			?>
 					<p><b>Let op! Doe de HIT inschrijving bij voorkeur op een laptop of desktop computer. De inschrijving kan op een tablet fout gaan!</b></p>
 					<div style="float: right">
@@ -206,8 +210,11 @@ function createInschrijfFormulierLink($template, $id) {
 						}
 					} else {
 			?>
-						<input style="float: right" value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
-			<?php
+						<input value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
+			<?php		if ($activiteit->extraShantiFormuliernummer > 0) {
+			?>
+							<input value="Begeleider" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>')" />
+			<?php		}
 					}
 			?>
 					</div>
