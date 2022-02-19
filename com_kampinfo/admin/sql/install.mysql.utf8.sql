@@ -97,7 +97,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,	`maximumAantalDeelnemersOrigineel`		SMALLINT(3)
 ,	`minimumAantalSubgroepjes`				SMALLINT(3)
 ,	`aantalSubgroepen`						SMALLINT(2)
-,	`maximumAantalSubgroepjes`				SMALLINT(3)
+,	`maximumAantalSubgroepjes`				INT(6)
 ,	`maximumAantalUitEenGroep`				SMALLINT(3)
 ,	`margeAantalDagenTeJong`				SMALLINT(3)
 ,	`margeAantalDagenTeOud`					SMALLINT(3)
