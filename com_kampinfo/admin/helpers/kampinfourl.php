@@ -6,7 +6,7 @@ defined('_JEXEC') or die;
  */
 abstract class KampInfoUrlHelper {
 
-	public static function imgUrl($folder, $naam, $ext = '.gif', $title, $alt = '') {
+	public static function imgUrl($folder, $naam, $title, $ext = '.gif', $alt = '') {
 		return '<img src="' . JURI::root() . $folder . '/' . $naam . $ext . '" title="' . $title . '" alt="' . $alt . '"/>';
 	}
 

@@ -40,7 +40,8 @@ abstract class KampInfoViewListDefault extends JViewLegacy {
 		$this->authoriseItems($this->items);
 
 		// Check for errors
-		if (count($errors = $this->get('Errors'))) {
+		$errors = $this->get('Errors');
+		if (!empty($errors)) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}

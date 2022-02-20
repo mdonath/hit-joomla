@@ -49,7 +49,7 @@ class JFormFieldActivityarea extends JFormField {
 				. htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '/>';
 
 			$html[] = '<label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $option->value, $activiteitengebiedenExtension, JText::_($option->text));
+			$html[] = KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $option->value, JText::_($option->text), $activiteitengebiedenExtension);
 			$html[] =  JText::_($option->text) . '</label>';
 			$html[] = '</li>';
 		}

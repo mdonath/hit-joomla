@@ -43,7 +43,7 @@ function createInschrijfFormulierLink($template, $id) {
 	<!-- Activiteitengebieden -->
 	<div class="hidden-phone">
 		<?php foreach ($activiteit->activiteitengebieden as $gebied) { ?>
-			<?php echo(KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $gebied->value, $activiteitengebiedenExtension, $gebied->text) . ' '); ?>
+			<?php echo(KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $gebied->value, $gebied->text, $activiteitengebiedenExtension) . ' '); ?>
 		<?php } ?>
 	</div>
 	
@@ -51,7 +51,7 @@ function createInschrijfFormulierLink($template, $id) {
 		<!-- Icoontjes -->
 		<p style="float: right;">
 			<?php foreach ($activiteit->icoontjes as $icoon) { ?>
-				<?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $icoon->naam, $iconExtension, $icoon->tekst));?>
+				<?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $icoon->naam, $icoon->tekst, $iconExtension));?>
 			<?php }	?>
 		</p>
 
@@ -127,7 +127,7 @@ function createInschrijfFormulierLink($template, $id) {
 					<tbody>
 						<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres)) { ?>
 						<tr>
-							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'info', $iconExtension, '','Meer informatie? Mail of bel naar de contactpersoon van deze HIT')); ?></td>
+							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'info', '', $iconExtension, 'Meer informatie? Mail of bel naar de contactpersoon van deze HIT')); ?></td>
 							<td>
 								<?php if (!empty($activiteit->websiteContactTelefoonnummer)) { ?>
 									Bel bij vragen <?php echo($activiteit->websiteContactpersoon); ?>: <?php echo($activiteit->websiteContactTelefoonnummer); ?><br />
@@ -141,7 +141,7 @@ function createInschrijfFormulierLink($template, $id) {
 						<?php } ?>
 						<?php if (!empty($activiteit->websiteAdres)) { ?>
 						<tr>
-							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'web', $iconExtension, '','Link naar een website over dit HIT onderdeel')); ?></td>
+							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'web', '', $iconExtension, 'Link naar een website over dit HIT onderdeel')); ?></td>
 							<td>
 								<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a><br/>
 							</td>
@@ -156,7 +156,7 @@ function createInschrijfFormulierLink($template, $id) {
 			<p>
 				<?php 
 				if (KampInfoUrlHelper::isVol($activiteit)) {
-					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit)));
+					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', KampInfoUrlHelper::fuzzyIndicatieVol($activiteit), $iconExtension));
 				}
 				echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ."</span>");
 				?>

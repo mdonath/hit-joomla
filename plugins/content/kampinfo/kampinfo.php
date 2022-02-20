@@ -114,7 +114,7 @@ class plgContentKampinfo extends JPlugin {
                 $output .= $this->outputDelimiter($row, $config);
                 $output .= "<span class='icons'>";
                 foreach ($row->iconen as $icoon) {
-                    $output .= (KampInfoUrlHelper::imgUrl($config['iconFolderSmall'], $icoon->naam, $config['iconExtension'], $icoon->tekst));
+                    $output .= (KampInfoUrlHelper::imgUrl($config['iconFolderSmall'], $icoon->naam, $icoon->tekst, $config['iconExtension']));
                 }
                 $output .= "</span>";
             }

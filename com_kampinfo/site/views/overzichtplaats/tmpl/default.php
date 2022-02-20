@@ -79,10 +79,10 @@ $plaats = $this->plaats;
 			<td class="kolom4">
 				<?php
 					if (KampInfoUrlHelper::isVol($kamp)) {
-						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp)));
+						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', KampInfoUrlHelper::fuzzyIndicatieVol($kamp), $iconExtension));
 					}
 					foreach ($kamp->icoontjes as $icoon) {
-						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst));
+						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $icoon->tekst, $iconExtension));
 					}
 				?>
 			</td>

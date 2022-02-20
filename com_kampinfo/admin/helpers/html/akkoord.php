@@ -2,7 +2,7 @@
 defined('_JEXEC') or die;
 abstract class JHtmlAkkoord {
 
-	static function akkoordplaats($value = 0, $i, $prefix = '', $enabled = true, $translate = true, $checkbox = 'cb') {
+	static function akkoordplaats($value, $i, $prefix = '', $enabled = true, $translate = true, $checkbox = 'cb') {
 		$states = array(
 				// (      'task',       'text',  	    'active_title'  			'inactive_title','tip','active_class', 'inactive_class')
 				0 => array('akkoordPlaats',     'Niet akkoord Plaats', 'Maak Akkoord Plaats',      'Niet Akkoord Plaats', false, 'unpublish', 'unpublish'),
@@ -11,7 +11,7 @@ abstract class JHtmlAkkoord {
 		return JHtmlAkkoord::akkoord($states, $value, $i, $prefix, $enabled, $translate, $checkbox);
 	}
 
-	static function akkoordkamp($value = 0, $i, $prefix = '', $enabled = true, $translate = true, $checkbox = 'cb') {
+	static function akkoordkamp($value, $i, $prefix = '', $enabled = true, $translate = true, $checkbox = 'cb') {
 		$states = array(
 				// (      'task',       'text',  	    'active_title'  			'inactive_title','tip','active_class', 'inactive_class')
 				0 => array('akkoordKamp',     'Niet akkoord Kamp', 'Maak Akkoord Kamp',      'Niet Akkoord Kamp', false, 'unpublish', 'unpublish'),
