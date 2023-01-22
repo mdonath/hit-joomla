@@ -43,22 +43,22 @@ function createInschrijfFormulierLink($template, $id) {
 	<!-- Activiteitengebieden -->
 	<div class="hidden-phone">
 		<?php foreach ($activiteit->activiteitengebieden as $gebied) { ?>
-			<?php echo(KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $gebied->value, $gebied->text, $activiteitengebiedenExtension) . ' '); ?>
+			<?php echo(KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $gebied->value, $activiteitengebiedenExtension, $gebied->text, '') . ' '); ?>
 		<?php } ?>
 	</div>
 	
-	<div style="float:right;">
-		<!-- Icoontjes -->
-		<p style="float: right;">
+	<div>
+		<!-- Icoontjes-deel2 -->
+		<p>
 			<?php foreach ($activiteit->icoontjes as $icoon) { ?>
-				<?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $icoon->naam, $icoon->tekst, $iconExtension));?>
+				<?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $icoon->naam, $iconExtension, $icoon->tekst, ''));?>
 			<?php }	?>
 		</p>
 
 		<div class="clear"> </div>
 		
 		<!-- Detailgegevens -->
-		<p style="float: right">
+		<p>
 			<span style="white-space: nowrap;">Plaats: <b><?php echo($activiteit->plaats); ?></b></span>
 			<span>|</span>
 			<?php
@@ -101,8 +101,7 @@ function createInschrijfFormulierLink($template, $id) {
 			<!--  Header / kopjes -->
 			<hgroup>
 				<!-- Hoofd header -->
-				<h2><?php echo($activiteit->naam); ?></h2>
-				
+				<h1><?php echo($activiteit->naam); ?></h1>
 				
 				<!-- Subtitel -->				
 				<?php if (strtolower($activiteit->titeltekst) == strtolower($activiteit->naam)) { ?>
@@ -127,7 +126,7 @@ function createInschrijfFormulierLink($template, $id) {
 					<tbody>
 						<?php if (!empty($activiteit->websiteContactTelefoonnummer) or !empty($activiteit->websiteContactEmailadres)) { ?>
 						<tr>
-							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'info', '', $iconExtension, 'Meer informatie? Mail of bel naar de contactpersoon van deze HIT')); ?></td>
+							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'info', $iconExtension, '', 'Meer informatie? Mail of bel naar de contactpersoon van deze HIT')); ?></td>
 							<td>
 								<?php if (!empty($activiteit->websiteContactTelefoonnummer)) { ?>
 									Bel bij vragen <?php echo($activiteit->websiteContactpersoon); ?>: <?php echo($activiteit->websiteContactTelefoonnummer); ?><br />
@@ -141,7 +140,7 @@ function createInschrijfFormulierLink($template, $id) {
 						<?php } ?>
 						<?php if (!empty($activiteit->websiteAdres)) { ?>
 						<tr>
-							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'web', '', $iconExtension, 'Link naar een website over dit HIT onderdeel')); ?></td>
+							<td><?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, 'web', $iconExtension, '', 'Link naar een website over dit HIT onderdeel')); ?></td>
 							<td>
 								<a href="<?php echo($activiteit->websiteAdres); ?>"><?php echo($activiteit->websiteAdres); ?></a><br/>
 							</td>
@@ -156,7 +155,7 @@ function createInschrijfFormulierLink($template, $id) {
 			<p>
 				<?php 
 				if (KampInfoUrlHelper::isVol($activiteit)) {
-					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', KampInfoUrlHelper::fuzzyIndicatieVol($activiteit), $iconExtension));
+					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit), ''));
 				}
 				echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ."</span>");
 				?>
@@ -196,24 +195,26 @@ function createInschrijfFormulierLink($template, $id) {
 				if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart && $isInschrijvingNogNietGestopt) {
 			?>
 					<p><b>Let op! Doe de HIT inschrijving bij voorkeur op een laptop of desktop computer. De inschrijving kan op een tablet fout gaan!</b></p>
-					<div style="float: right">
+					<div>
  			<?php	if ($activiteit->ouderShantiFormuliernummer > 0) {
 			?>
 						<span>Inschrijven met: </span>
-						<input value="kind is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
-						<input value="ouder is lid" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->ouderShantiFormuliernummer)); ?>')" />
+						<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>" target="_self">kind is lid</a>
+						<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->ouderShantiFormuliernummer)); ?>" target="_self">ouder is lid</a>
 			<?php
 						if ($activiteit->extraShantiFormuliernummer > 0) {
 			?>
-						<input value="extra kind" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>')" />
+							<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>" target="_self">extra kind</a>
 			<?php
 						}
 					} else {
 			?>
-						<input value="Inschrijven" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>')" />
 			<?php		if ($activiteit->extraShantiFormuliernummer > 0) {
-			?>
-							<input value="Begeleider" type="BUTTON" onclick="window.open('<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>')" />
+			?>				<span>Inschrijven met: </span>
+							<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>" target="_self">kind is lid</a>
+							<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer)); ?>" target="_self">extra kind</a>
+			<?php		} else {
+			?>				<a class="btn btn-primary" href="<?php echo(createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer)); ?>" target="_self">Inschrijven</a>
 			<?php		}
 					}
 			?>
@@ -222,8 +223,10 @@ function createInschrijfFormulierLink($template, $id) {
 				}
 			?>
 		</div>
-		
-		<div class="item column-4 span4">
+
+		<div class="clear"> </div>
+
+		<div class="item column-5 span5">
 			<?php if (!KampInfoUrlHelper::isEmptyUrl($activiteit->webadresFoto1)) { ?>
 				<img src="<?php echo($activiteit->webadresFoto1); ?>" alt="" border="0" width="100%" /><br /><br />
 			<?php } ?>

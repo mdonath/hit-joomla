@@ -58,7 +58,7 @@ class JFormFieldIcon extends JFormField {
 				. '/></td>';
 
 			$html[] = '<td style="width:48px"><label for="' . $this->id . $i . '"' . $class . '>';
-			$html[] = KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, '', $iconExtension, JText::_($option->text));
+			$html[] = KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', JText::_($option->text));
 			$html[] = '</label></td>';
 			$html[] = '<td><label for="' . $this->id . $i . '"' . $class . '>';
 			$html[] =  JText::_($option->text) . '</label></td>';

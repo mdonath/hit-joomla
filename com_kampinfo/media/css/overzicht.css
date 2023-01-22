@@ -36,15 +36,17 @@ table#overzicht td img {
 }
 
 .kolom1 {
-	width: 200px;
+	width: 30%;
 	text-align: left !important;
 }
 .kolom2 {
 	width: 60px;
 }
 .kolom3 {
-	width: 70px;
+	width: 10%;
 }
-.kolom4 {
-	
+.kolom4 img {
+	margin-left: 2px !important;;
+	margin-bottom: 2px !important;;
+	height: 2em !important;;
 }
