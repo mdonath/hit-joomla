@@ -10,24 +10,18 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelStatistiek extends KampInfoModelParent {
 
 	public function getSoort() {
-		$soort =  JRequest::getString('soort');
-		if (empty($soort)) {
-			$soort = 'Standaard';
-		}
-		return $soort;
+		$input = JFactory::getApplication()->input;
+		return $input->getString('soort', 'Standaard');
 	}
 
 	public function getJaar() {
-		$jaar = JRequest::getInt('jaar');
-		if (empty($jaar)) {
-			$jaar = date("Y");
-		}
-		return $jaar;
+		$input = JFactory::getApplication()->input;
+		return $input->getInt('jaar', date("Y"));
 	}
 
 	public function getPlaats() {
-		$plaats = JRequest::getString('plaats');
-		return $plaats;
+		$input = JFactory::getApplication()->input;
+		return $input->getString('plaats', '');
 	}
 	
 	/**

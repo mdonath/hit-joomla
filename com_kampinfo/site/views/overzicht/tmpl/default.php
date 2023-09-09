@@ -84,7 +84,7 @@ $project = $this->project;
 			<td class="kolom4">
 				<?php
 					if (KampInfoUrlHelper::isVol($kamp)) {
-						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), ''));
+						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), ''));
 					}
 					foreach ($kamp->icoontjes as $icoon) {
 						echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, ''));

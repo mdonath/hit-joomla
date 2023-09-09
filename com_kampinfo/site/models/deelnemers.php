@@ -10,7 +10,8 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelDeelnemers extends KampInfoModelParent {
 
 	public function getJaar() {
-		return JRequest::getInt('jaar');
+		$input = JFactory::getApplication()->input;
+		return $input->getInt('jaar', date("Y"));
 	}
 
 	public function getProject() {

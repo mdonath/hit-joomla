@@ -1,7 +1,9 @@
 <?php
 // No direct access
 defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tooltip');
+JHtmlBootstrap::tooltip();
+//JHtml::_('behavior.formvalidation');
+
 
 function pr_field($field, $horizontal = true) {
 	return <<<EOD
@@ -14,18 +16,18 @@ EOD;
 
 function pr_fieldset($form, $fieldsetName, $horizontal = true) {
 	$orientation = $horizontal ? 'horizontal' : 'vertical';
-	echo "<fieldset class=\"form-{$orientation}\">";
+	echo "<fieldset id=\"fieldset-details\" class=\"form-{$orientation} options-form\">";
 	$label = $form->getFieldsets()[$fieldsetName]->label;
 	if ($label != '') {
 		echo "<legend>{$label}</legend>";
 	}
 
-	foreach($form->getFieldset($fieldsetName) as $field):
-	if ($field->hidden) {
-		echo $field->input;
-	} else {
-		echo pr_field($field, $horizontal);
-	}
+	foreach ($form->getFieldset($fieldsetName) as $field):
+		if ($field->hidden) {
+			echo $field->input;
+		} else {
+			echo pr_field($field, $horizontal);
+		}
 	endforeach;
 	echo '</fieldset>';
 }
@@ -36,29 +38,22 @@ function pr_fieldset($form, $fieldsetName, $horizontal = true) {
       method="post"
       name="adminForm"
       id="adminForm"
+	  class="form-validate"
 >
 	<div class="form-horizontal">
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'hitproject')); ?>
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'hitproject', JText::_('COM_KAMPINFO_HITPROJECT_DETAILS', true)); ?>
 			<div class="row-fluid">
-				<div class="span6">
+				<div class="col-md-6">
 					<?php pr_fieldset($this->form, ('hitproject')); ?>
 				</div>
 			</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
-<!-- 
-			<?php //echo JHtml::_('bootstrap.addTab', 'myTab', 'financien', JText::_('HIT Financien')); ?>
-				<div class="row-fluid">
-					<div class="span12">
-						<?php //pr_fieldset($this->form, ('financien')); ?>
-					</div>
-				</div>
-			<?php //echo JHtml::_('bootstrap.endTab'); ?>
- -->
+
 			
 			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'standaardteksten', JText::_('Standaardteksten')); ?>
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="col-md-12">
 						<?php pr_fieldset($this->form, ('standaardteksten')); ?>
 					</div>
 				</div>

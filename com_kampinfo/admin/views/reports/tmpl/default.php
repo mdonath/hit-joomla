@@ -4,9 +4,8 @@ defined('_JEXEC') or die('Restricted Access');
 
 jimport('joomla.application.component.helper');
 // load tooltip behavior
-JHtml::_('behavior.tooltip');
-
-$option = JRequest::getVar('option');
+JHtmlBootstrap::tooltip();
+$option = JFactory::getApplication()->input->get('option', 'com_kampinfo', 'CMD');
 $prefix = "../index.php?option=".$option;
 $statistiekPrefix = $prefix . '&view=statistiek&soort=';
 ?>

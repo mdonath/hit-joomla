@@ -25,7 +25,8 @@ class KampInfoControllerHitSites extends JControllerAdmin {
 	}
 	
 	public function akkoordPlaats() {
-		$ids = JRequest::getVar('cid', array(), '', 'array');
+		$input = JFactory::getApplication()->input;
+		$ids = $input->get('cid', array(), 'array');
 
 		JArrayHelper::toInteger($ids );
 		$cids = implode( ',', $ids);
@@ -38,7 +39,7 @@ class KampInfoControllerHitSites extends JControllerAdmin {
 		$db->setQuery($query);
 		$result = $db->query();
 
-		$redirectTo = JRoute::_('index.php?option='.JRequest::getVar('option').'&view=hitsites', false);
+		$redirectTo = JRoute::_('index.php?option='.$input->get('option').'&view=hitsites', false);
 		$this->setRedirect($redirectTo);
 	}
 	

@@ -1,5 +1,5 @@
 <?php defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tooltip');
+JHtmlBootstrap::tooltip();
 
 function pr_field($field, $horizontal = true) {
 	return <<<EOD

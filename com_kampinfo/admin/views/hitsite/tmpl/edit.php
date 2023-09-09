@@ -1,6 +1,6 @@
 <?php defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+JHtmlBootstrap::tooltip();
+// JHtml::_('behavior.formvalidation');
 
 function pr_field($field, $horizontal = true) {
 	return <<<EOD

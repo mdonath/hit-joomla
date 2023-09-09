@@ -1,6 +1,6 @@
 <?php defined('_JEXEC') or die('Restricted Access');
 // load tooltip behavior
-JHtml::_('behavior.tooltip');
+JHtmlBootstrap::tooltip();
 ?>
 
 <form	action="<?php echo JRoute::_('index.php?option=com_kampinfo&controller=hitsites&view=hitsites'); ?>"
@@ -8,10 +8,10 @@ JHtml::_('behavior.tooltip');
 		name="adminForm"
 		id="adminForm"
 >
-	<div id="j-sidebar-container" class="span2">
+	<div id="j-sidebar-container" class="col-md-2">
 		<?php echo $this->sidebar; ?>
 	</div>
-	<div id="j-main-container" class="span10">
+	<div id="j-main-container" class="col-md-10">
 		<?php echo $this->loadTemplate('list'); ?>
 	</div>
 </form>

@@ -2,9 +2,7 @@
 
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/mapper.php';
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolDownload.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolMapping.php';
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/SolConfiguration.php';
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -16,53 +14,6 @@ jimport('joomla.filesystem.file');
  * Import Model.
 */
 class KampInfoModelImport extends JModelAdmin {
-
-	/**
-	 * Downloadt de inschrijfaantallen via de nieuwe REST call en importeert deze om zo de
-	 * huidige records weer bij te werken.
-	 * 
-	 * @return boolean
-	 */
-	public function downloadInschrijvingen() {
-		$app = JFactory::getApplication();
-
-		$params = JComponentHelper::getParams('com_kampinfo');
-
-		// Voor welk jaar staat in de configuratie
-		$projectId = $params->get('huidigeActieveJaar');
-		if ($projectId < 0) {
-			$app->enqueueMessage('Geen jaartal opgegeven');
-			return false;
-		}
-
-		$project = self::getHitProject($projectId);
-		$eventId = $project->shantiEvenementId;
-		$app->enqueueMessage("Shanti evenement: " . $eventId);
-
-		$jaar = $project->jaar;
-		$app->enqueueMessage("Jaar: " . $jaar);
-		
-		// Via JSON downloaden
-		$solConfig = new SolConfiguration($params);
-		$sol = new SolDownload();
-		$result = $sol->downloadInschrijvingen($eventId, $solConfig);
-
-		// Importeer gegevens
-		$mapper = new JsonMapper(SolMapping::getInschrijvingenMapping($jaar, "json"));
-		$rows = $mapper->readList($result);
-
-		$count = count($rows);
-
-		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-
-		$count = self::updateInschrijvingen($rows,  $jaar);
-
-		$msg = "Er zijn nu $count kampen bijgewerkt met hun inschrijvingen";
-		$app->enqueueMessage($msg);
-		$this->updateLaatstBijgewerkt($jaar, 'INSC', $msg);
-		
-		return true;
-	}
 
 	/**
 	 * Importeert de inschrijfaantallen via CSV en werkt zo de bestaande gegevens bij.
@@ -105,51 +56,6 @@ class KampInfoModelImport extends JModelAdmin {
 		$msg = "Er zijn nu $count kampen gewijzigd met hun inschrijvingen t.o.v. de vorige keer";
 		$app->enqueueMessage($msg);
 		$this->updateLaatstBijgewerkt($jaar, 'INSC', $msg);
-		
-		return true;
-	}
-
-	/**
-	 * Downloadt de deelnemerinschrijfgegevens en vervangt de huidige gegevens.
-	 * @return boolean
-	 */
-	public function downloadDeelnemergegevens() {
-		$app = JFactory::getApplication();
-
-		$params =JComponentHelper::getParams('com_kampinfo');
-	
-		// Voor welk jaar staat in de configuratie
-		$projectId = $params->get('huidigeActieveJaar');
-		if ($projectId < 0) {
-			$app->enqueueMessage('Geen jaartal opgegeven');
-			return false;
-		}
-
-		$project = self::getHitProject($projectId);
-		$eventId = $project->shantiEvenementId;
-		$app->enqueueMessage("Shanti evenement: " . $eventId);
-
-		$jaar = $project->jaar;
-		$app->enqueueMessage("Jaar: " . $jaar);
-	
-		// Via Soap Downloaden
-		$solConfig = new SolConfiguration($params);
-		$sol = new SolDownload();
-		$result = $sol->downloadDeelnemers($eventId, $solConfig);
-
-		// Importeer gegevens
-		$mapper = new JsonMapper(SolMapping::getDeelnemergegevensMapping($jaar, "json"));
-		$rows = $mapper->readList($result);
-
-		$count = count($rows);
-		$app->enqueueMessage('aantal import rijen gevonden: ' . $count);
-
-		// Gegevens van het ingelezen jaar moeten eerst verwijderd worden, anders blijven geannuleerde deelnemers in de database staan.
-		$count = self::updateDeelnemergegevens($rows,  $jaar);
-		$msg = "Er zijn nu $count deelnemers toegevoegd.";
-
-		$app->enqueueMessage($msg);
-		$this->updateLaatstBijgewerkt($jaar, 'DEEL', $msg);
 		
 		return true;
 	}
@@ -422,7 +328,6 @@ class KampInfoModelImport extends JModelAdmin {
 
 		return $tmp_dest;
 	}
-
 
 	/**
 	 * Werkt de tabel met logging mbt updates bij.

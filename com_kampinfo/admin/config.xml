@@ -88,41 +88,7 @@
 			<option value=".jpg">JPG</option>
 		</field>
 	</fieldset>
-	
-	
-	<fieldset
-		name="Soap"
-		label="SOL koppeling"
-		description="Configuratie van de koppeling met Scouts Online."
-	>
-		<field
-			name="apikey"
-			type="text"
-			size="20"
-			label="API KEY"
-			description="De API-key voor de authenticatie in Scouts Online"
-		/>
 
-		<field
-			name="shantiUrl"
-			type="text"
-			size="120"
-			default="https://sol.scouting.nl/as/form/{0}/participant/new"
-			label="COM_KAMPINFO_PREFS_SHANTIURL_LABEL"
-			description="COM_KAMPINFO_PREFS_SHANTIURL_DESC"
-		/>
-
-		<field
-			name="downloadSecret"
-			type="text"
-			default="paaskonijn"
-			size="8"
-			label="Secret"
-			description="De secret handshake voor het extern aanschoppen van de download van inschrijvingen"
-		/>
-	</fieldset>
-
-	
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"

@@ -13,7 +13,7 @@ abstract class KampInfoHelper {
 		$result = new JObject;
 
 		$user = JFactory::getUser();
-		$actions = JAccess::getActions('com_kampinfo', $entity);
+		$actions = JAccess::getActionsFromFile(JPATH_ADMINISTRATOR . '/components/com_kampinfo/access.xml', "/access/section[@name='" . $entity . "']/");
 		
 		if (empty($entityIds)) {
 			foreach ($actions as $action) {
@@ -76,6 +76,13 @@ abstract class KampInfoHelper {
 				, 2024 => '29-03-2024'
 				, 2025 => '18-04-2025'
 				, 2026 => '03-04-2026'
+				, 2027 => '26-03-2027'
+				, 2028 => '14-04-2028'
+				, 2029 => '30-03-2029'
+				, 2030 => '19-04-2030'
+				, 2031 => '11-04-2031'
+				, 2032 => '26-03-2032'
+				, 2033 => '15-04-2033'
 		);
 		return DateTime::createFromFormat('d-m-Y', $paasKalender[$jaar]);
 	}
@@ -85,26 +92,23 @@ abstract class KampInfoHelper {
 		$document = JFactory::getDocument();
 		$document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
 
-		// Retrieve authorisation
-		$canDo = KampInfoHelper::getActions();
-		
 		// Show submenu items
 		JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
 		
-		if ($canDo->get('hitproject.menu')) {
+		if (JFactory::getUser()->authorise('hitproject.menu', 'com_kampinfo')) {
 			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
 		}
-		if ($canDo->get('hitsite.menu')) {
+		if (JFactory::getUser()->authorise('hitsite.menu', 'com_kampinfo')) {
 			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
 		}
-		if ($canDo->get('hitcamp.menu')) {
-				JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
+		if (JFactory::getUser()->authorise('hitcamp.menu', 'com_kampinfo')) {
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
 		}
-		if ($canDo->get('core.admin')) {
+		if (JFactory::getUser()->authorise('core.admin', 'com_kampinfo')) {
 			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
 			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
 			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
-			JHtmlSidebar::addEntry('Overzichten', 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
+			JHtmlSidebar::addEntry(JText::_('COM_KAMPINFO_SUBMENU_REPORTS'), 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
 		}
 				
 		// Set the title

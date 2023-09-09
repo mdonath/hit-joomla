@@ -5,9 +5,6 @@
 			addfieldpath="/administrator/components/com_kampinfo/models/fields"
 			label="Algemene info"
 	>
-		<field	name="id"
-				type="hidden"
-		/>
 		<field	name="jaar"
 				type="text"
 				label="COM_KAMPINFO_HITPROJECT_JAAR_LABEL"
@@ -110,6 +107,9 @@
 				required="true"
 				default=""
 				filter="SERVER_UTC"
+		/>
+		<field	name="id"
+				type="hidden"
 		/>
 	</fieldset>
 	

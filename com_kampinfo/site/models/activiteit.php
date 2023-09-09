@@ -10,8 +10,9 @@ include_once dirname(__FILE__).'/kampinfomodelparent.php';
 class KampInfoModelActiviteit extends KampInfoModelParent {
 
 	public function getActiviteit() {
-		$hitcampId = JRequest::getInt('hitcamp_id');
-		if (!empty($hitcampId)) {
+		$input = JFactory::getApplication()->input;
+		$hitcampId = $input->getInt('hitcamp_id', 0);
+		if ($hitcampId != 0) {
 			$activiteit = $this->getHitKampById($hitcampId);
 		} else {
 			JError::raiseWarning(404, "Kamp niet gevonden?!");

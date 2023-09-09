@@ -21,15 +21,16 @@ class KampInfoController extends JControllerLegacy {
 	function display($cachable = false, $urlparams = false) {
 
 		require_once JPATH_COMPONENT.'/helpers/kampinfo.php';
-		
+		$input = JFactory::getApplication()->input;
+
 		// Set the submenu
-		KampInfoHelper::addSubmenu(JRequest::getCmd('view', $this->default_view));
+		KampInfoHelper::addSubmenu($input->get('view', $this->default_view));
 
 		// Check for edit form.
-		$layout = JRequest::getCmd('layout', 'default');
+		$layout = $input->get('layout', 'default');
 		if ($layout == 'edit') {
-			$view = JRequest::getCmd('view', 'hitprojects');
-			$id = JRequest::getInt('id');
+			$view = $input->get('view', 'hitprojects');
+			$id = $input->getInt('id', 0);
 			if ($view == 'hitprojects' && !$this->checkEditId('com_kampinfo.edit.hitproject', $id)) {
 	
 				// Somehow the person just went to the form - we don't allow that.

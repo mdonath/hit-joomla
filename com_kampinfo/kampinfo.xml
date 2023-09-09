@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5.0" method="upgrade">
+<extension type="component" method="upgrade">
  
         <name>COM_KAMPINFO</name>
 
-        <creationDate>October 2012</creationDate>
         <author>Martijn Donath</author>
-        <authorEmail>martijn.donath@scouting.nl</authorEmail>
+        <creationDate>October 2012</creationDate>
         <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
         <license>LGPL</license>
+        <authorEmail>martijn.donath@scouting.nl</authorEmail>
+
         <!--  The version string is recorded in the components table -->
         <version>0.3.4</version>
+
         <!-- The description is optional and defaults to the name -->
         <description>COM_KAMPINFO_DESCRIPTION</description>
  
@@ -43,7 +45,7 @@
                 <folder>views</folder>
         </files>
  
-        <media destination="com_kampinfo" folder="media">
+        <media folder="media" destination="com_kampinfo">
                 <filename>index.html</filename>
                 <folder>images</folder>
                 <folder>css</folder>
@@ -53,11 +55,20 @@
         <administration>
                 <!-- Administration Menu Section -->
                 <menu img="../media/com_kampinfo/images/kampinfo-16x16.png">COM_KAMPINFO_MENU</menu>
-                <!-- 
                 <submenu>
-					<menu link="option=com_kampinfo&amp;view=info">Info</menu>
-				</submenu>	
-                 -->
+                        <!-- PAS BIJ JOOMLA 4!
+                        <menu view="hitprojects">COM_KAMPINFO_SUBMENU_HITPROJECTS</menu>
+                        <menu view="hitsites">COM_KAMPINFO_SUBMENU_HITSITES</menu>
+                        <menu view="hitcamps">COM_KAMPINFO_SUBMENU_HITCAMPS</menu>
+
+                        <menu view="hiticons">COM_KAMPINFO_SUBMENU_HITICONS</menu>
+                        <menu view="import">COM_KAMPINFO_SUBMENU_IMPORT</menu>
+                        <menu view="downloads">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
+                        <menu view="reports">COM_KAMPINFO_SUBMENU_REPORTS</menu>
+                        -->
+                        <menu view="info">COM_KAMPINFO_SUBMENU_INFO</menu>
+                </submenu>	
+
                 <!-- Administration Main File Copy Section -->
                 <!-- Note the folder attribute: This attribute describes the folder
                         to copy FROM in the package to install therefore files copied

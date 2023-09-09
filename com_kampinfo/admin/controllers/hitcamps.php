@@ -25,8 +25,9 @@ class KampInfoControllerHitCamps extends JControllerAdmin {
 	}
 	
 	public function akkoordPlaats() {
-		$ids = JRequest::getVar('cid', array(), '', 'array');
-		JArrayHelper::toInteger($ids );
+		$input = JFactory::getApplication()->input;
+		$ids = $input->get('cid', array(), 'array');
+		JArrayHelper::toInteger($ids);
 		$cids = implode( ',', $ids);
 		$values = array('akkoordPlaats' => 1, 'nietAkkoordPlaats' => 0);
 		$task = $this->getTask();
@@ -37,12 +38,13 @@ class KampInfoControllerHitCamps extends JControllerAdmin {
 		$db->setQuery($query);
 		$result = $db->query();
 	
-		$redirectTo = JRoute::_('index.php?option='.JRequest::getVar('option').'&view=hitcamps', false);
+		$redirectTo = JRoute::_('index.php?option='.$input->get('option', 'com_kampinfo').'&view=hitcamps', false);
 		$this->setRedirect($redirectTo);
 	}
 	
 	public function akkoordKamp() {
-		$ids = JRequest::getVar('cid', array(), '', 'array');
+		$input = JFactory::getApplication()->input;
+		$ids = $input->get('cid', array(), 'array');
 		JArrayHelper::toInteger($ids );
 		$cids = implode( ',', $ids);
 		$values = array('akkoordKamp' => 1, 'nietAkkoordKamp' => 0);
@@ -54,7 +56,7 @@ class KampInfoControllerHitCamps extends JControllerAdmin {
 		$db->setQuery($query);
 		$result = $db->query();
 	
-		$redirectTo = JRoute::_('index.php?option='.JRequest::getVar('option').'&view=hitcamps', false);
+		$redirectTo = JRoute::_('index.php?option='.$input->get('option', 'com_kampinfo').'&view=hitcamps', false);
 		$this->setRedirect($redirectTo);
 	}
 }

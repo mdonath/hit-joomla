@@ -45,7 +45,8 @@ class KampInfoControllerHitSite extends JControllerForm {
 	public function copyCamps($model = null) {
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('HitSite', 'KampInfoModel');
-		$recordId = JRequest::getInt('id');
+		$input = JFactory::getApplication()->input;
+		$recordId = $input->getInt('id', 0);
 		$this->setRedirect(JRoute::_('index.php?option=com_kampinfo&view=hitsite' . $this->getRedirectToItemAppend($recordId), false));
 		$model->copyKampen($recordId);
 		

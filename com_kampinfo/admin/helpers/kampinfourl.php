@@ -65,14 +65,18 @@ abstract class KampInfoUrlHelper {
 
 	public static function fuzzyIndicatieVol($kamp) {
 		if (KampInfoUrlHelper::isVol($kamp)) {
-			if (intval($kamp->aantalDeelnemers) < intval($kamp->gereserveerd)) {
-				$eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
-				$result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
+			if (KampInfoUrlHelper::volOfLoterij() == 'loterij') {
+				$result = "Er zijn meer aanmeldingen dan plaatsen, er gaat geloot worden!";
 			} else {
-				if (self::isVolQuaGroepjes($kamp)) {
-					$result = "Vol: Maximum aantal groepjes is bereikt. Inschrijven is niet meer mogelijk";
+				if (intval($kamp->aantalDeelnemers) < intval($kamp->gereserveerd)) {
+					$eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
+					$result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
 				} else {
-					$result = "Vol: inschrijven is niet meer mogelijk.";
+					if (self::isVolQuaGroepjes($kamp)) {
+						$result = "Vol: Maximum aantal groepjes is bereikt. Inschrijven is niet meer mogelijk";
+					} else {
+						$result = "Vol: inschrijven is niet meer mogelijk.";
+					}
 				}
 			}
 		} else {
@@ -101,5 +105,8 @@ abstract class KampInfoUrlHelper {
 	public static function isVolQuaGroepjes($kamp) {
 		return intval($kamp->maximumAantalSubgroepjes) > 0 && intval($kamp->aantalSubgroepen) >= intval($kamp->maximumAantalSubgroepjes);	
 	}
-
+	public static function volOfLoterij() {
+		// TODO: afhankelijk van datum moet hier 'loterij' of 'vol' terugkomen.
+		return 'vol';
+	}
 }

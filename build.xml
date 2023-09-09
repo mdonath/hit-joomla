@@ -39,6 +39,7 @@
 			<exclude name="build.xml" />
 			<exclude name="build.number" />
 			<exclude name="cookie.tmp" />
+			<exclude name="**/test/" />
 		</zip>
 	</target>
 

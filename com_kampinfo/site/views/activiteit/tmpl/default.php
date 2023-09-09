@@ -155,7 +155,7 @@ function createInschrijfFormulierLink($template, $id) {
 			<p>
 				<?php 
 				if (KampInfoUrlHelper::isVol($activiteit)) {
-					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, 'vol', $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit), ''));
+					echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($activiteit), ''));
 				}
 				echo("<span>". KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ."</span>");
 				?>
@@ -171,6 +171,10 @@ function createInschrijfFormulierLink($template, $id) {
 					$begintOpGoedeVrijdag = $start->format('N', true) == '5'; // vrijdag
 
 				?>
+				<?php if ($activiteit->subgroepsamenstellingExtra > '1') { ?>
+					Er zijn speciale eisen aan de koppelgrootte, het aantal mensen moet een veelvoud zijn van
+					<?php echo($activiteit->subgroepsamenstellingExtra);?>.
+				<?php }?>
 				Dit HIT-onderdeel start op <?php echo($startDTF); ?> en duurt tot en met <?php echo($eindDTF); ?>.
 				<?php if ($activiteit->startElders == 1) { ?>
 					Dit kamp start niet op de hoofdlocatie. 
