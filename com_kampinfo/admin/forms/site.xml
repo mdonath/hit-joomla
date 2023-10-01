@@ -54,7 +54,7 @@
 		/>
 		<field
 				name="contactPersoonTelefoon"
-				type="text"
+				type="tel"
 				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
 				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
 				maxlength="50"

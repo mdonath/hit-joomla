@@ -10,10 +10,11 @@
                 class="readonly"
         />
         <field  name="volgorde"
-                type="text"
+                type="number"
                 label="COM_KAMPINFO_HITICON_VOLGORDE_LABEL"
                 description="COM_KAMPINFO_HITICON_VOLGORDE_DESC"
-                size="3"
+                min="0"
+                max="255"
                 class="validate-numeric"
                 required="true"
                 default=""

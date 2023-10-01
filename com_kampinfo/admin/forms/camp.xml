@@ -101,7 +101,7 @@
 				addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
 	>
 		<field	name="minimumLeeftijd"
-				type="text"
+				type="number"
 				label="Minimum leeftijd"
 				description="De minimale leeftijd van een deelnemer om mee te mogen doen."
 				size="3"
@@ -110,7 +110,7 @@
 				default="8"
 				filter="integer"/>
 		<field	name="maximumLeeftijd"
-				type="text"
+				type="number"
 				label="Maximum leeftijd"
 				description="De maximale leeftijd van een deelnemer om mee te mogen doen."
 				size="3"
@@ -149,7 +149,7 @@
 				addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
 	>
 		<field	name="minimumLeeftijdOuder"
-				type="text"
+				type="number"
 				label="Minimum leeftijd"
 				description="De minimale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
 				size="3"
@@ -159,7 +159,7 @@
 				filter="integer"
 				showon="isouderkind:1"/>
 		<field	name="maximumLeeftijdOuder"
-				type="text"
+				type="number"
 				label="Maximum leeftijd"
 				description="De maximale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
 				size="3"
@@ -193,7 +193,7 @@
 				addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
 	>
 		<field	name="minimumAantalSubgroepjes"
-				type="text"
+				type="number"
 				label="Minimum aantal"
 				description="Met dit aantal kan je aangeven hoeveel subgroepjes je minimaal in je HIT-Kamp wilt hebben. Geef 0 is als het niet uitmaakt."
 				size="3"
@@ -203,7 +203,7 @@
 				filter="integer"
 		/>
 		<field	name="maximumAantalSubgroepjes"
-				type="text"
+				type="number"
 				label="Maximum aantal"
 				description="Met dit aantal kan je aangeven hoeveel subgroepjes je maximaal in je HIT-Kamp wilt hebben. De HIT-HelpDesk zal niet uit zichzelf hiervan afwijken. Geef 0 is als het niet uitmaakt."
 				size="7"
@@ -214,7 +214,7 @@
 		/>
 
 		<field	name="subgroepsamenstellingMinimum"
-				type="text"
+				type="number"
 				label="Minimum grootte"
 				description="Minimale groepsgrootte waarmee ingeschreven kan worden (individueel: 1, koppel: 2, troppel: 3, etc)."
 				size="3"
@@ -223,7 +223,7 @@
 				filter="integer"
 		/>
 		<field	name="subgroepsamenstellingMaximum"
-				type="text"
+				type="number"
 				label="Maximum grootte"
 				description="Maximale groepsgrootte waarmee ingeschreven kan worden."
 				size="3"
@@ -232,7 +232,7 @@
 				filter="integer"
 		/>
 		<field	name="subgroepsamenstellingExtra"
-				type="text"
+				type="number"
 				label="Aantal deelbaar door"
 				description="Getal waardoor de groepsgrootte te delen moet zijn (bijv '2' betekent alleen koppels, dus geen 1, 3, 5, etc.)."
 				size="3"
@@ -247,7 +247,7 @@
 				addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
 	>
 		<field	name="minimumAantalDeelnemers"
-				type="text"
+				type="number"
 				label="Minimum aantal"
 				description="Het minimale aantal deelnemers om het HIT Kamp door te kunnen laten gaan."
 				size="3"
@@ -257,7 +257,7 @@
 				filter="integer"
 		/>
 		<field	name="maximumAantalDeelnemers"
-				type="text"
+				type="number"
 				label="Maximum aantal"
 				description="De huidige maximale hoeveelheid deelnemers die zich kunnen inschrijven. Dit kan door de helpdesk via SOL worden opgehoogd met het aantal dat op het eerste tabblad is aangegeven."
 				size="3"
@@ -267,7 +267,7 @@
 				filter="integer"
 		/>
 		<field	name="maximumAantalDeelnemersOrigineel"
-				type="text"
+				type="number"
 				label="Maximum aantal(origineel)"
 				description="De maximale hoeveelheid deelnemers die zich kunnen inschrijven zoals opgegeven door het kamponderdeel."
 				size="3"
@@ -277,7 +277,7 @@
 				filter="integer"
 		/>
 		<field	name="maximumAantalUitEenGroep"
-				type="text"
+				type="number"
 				label="Max. aantal uit één groep"
 				description="Met dit aantal kan je het aantal deelnemers die zich aanmelden uit 1 Scoutinggroep beperken. Geef 0 op als het niet uitmaakt. LET OP: Landelijke Plusscouts worden ook als 1 groep gezien."
 				size="3"
@@ -440,7 +440,7 @@
 				default=""
 		/>
 		<field	name="helpdeskOverschrijdingAantal"
-				type="text"
+				type="number"
 				label="Overschrijding aantal"
 				description="Hoeveel extra deelnemers mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
 				size="3"
@@ -458,7 +458,7 @@
 			<option value="1">JYES</option>
 		</field>
 		<field	name="helpdeskTeJongMagAantal"
-				type="text"
+				type="number"
 				label="Aantal te jong"
 				description="Hoeveel deelnemers die te jong zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
 				size="3"
@@ -466,7 +466,7 @@
 				default="0"
 		/>
 		<field	name="helpdeskTeOudMagAantal"
-				type="text"
+				type="number"
 				label="Aantal te oud"
 				description="Hoeveel deelnemers die te oud zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
 				size="3"
@@ -557,7 +557,7 @@
 	>
 		<field	name="shantiFormuliernummer"
 				fieldName="shantiFormuliernummer"
-				type="text"
+				type="number"
 				label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
 				description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
 				maxlength="6"
@@ -566,7 +566,7 @@
 		/>
 		<field	name="ouderShantiFormuliernummer"
 				fieldName="ouderShantiFormuliernummer"
-				type="text"
+				type="number"
 				label="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_LABEL"
 				description="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_DESC"
 				maxlength="6"
@@ -575,7 +575,7 @@
 		/>
 		<field	name="extraShantiFormuliernummer"
 				fieldName="extraShantiFormuliernummer"
-				type="text"
+				type="number"
 				label="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_LABEL"
 				description="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_DESC"
 				maxlength="6"
@@ -588,7 +588,7 @@
 				addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
 	>
 		<field	name="aantalDeelnemers"
-				type="text"
+				type="number"
 				label="Ingeschreven deelnemers"
 				description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
 				maxlength="3"
@@ -596,7 +596,7 @@
 				default=""
 		/>
 		<field	name="gereserveerd"
-				type="text"
+				type="number"
 				label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
 				description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
 				maxlength="3"
@@ -604,7 +604,7 @@
 				default=""
 		/>
 		<field	name="aantalSubgroepen"
-				type="text"
+				type="number"
 				label="Ingeschreven subgroepen"
 				description="Het huidige aantal ingeschreven subgroepen"
 				maxlength="3"
@@ -613,8 +613,6 @@
 		/>
 	</fieldset>
 	
-	<!-- ================================================================== -->
-
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"

@@ -11,7 +11,7 @@
 				class="readonly"
 		/>
 		<field	name="jaar"
-				type="text"
+				type="number"
 				label="COM_KAMPINFO_HITPROJECT_JAAR_LABEL"
 				description="COM_KAMPINFO_HITPROJECT_JAAR_DESC"
 				required="true"
@@ -19,7 +19,7 @@
 				class="validate-numeric"
 		/>
 		<field	name="shantiEvenementId"
-				type="text"
+				type="number"
 				label="Shanti EventId"
 				description="Evenement Id in Shanti"
 				size="5"
