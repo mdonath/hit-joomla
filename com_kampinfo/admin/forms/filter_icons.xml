@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field">
+    <fields name="filter">
+       <field   name="search"
+                type="text"
+                label="ZOEKEN"
+                hint="JSEARCH_FILTER"
+        />
+
+        <field  name="soort"
+                type="iconsoort"
+                label="COM_KAMPINFO_SELECT_HITICON_SOORT"
+                description="COM_KAMPINFO_SELECT_HITICON_SOORT"
+                class="js-select-submit-on-change"
+        >
+           <option value="-1">- Selecteer soort -</option>
+       </field>
+    </fields>
+
+    <fields name="list">
+        <field
+            name="limit"
+            type="limitbox"
+            label="JGLOBAL_LIST_LIMIT"
+            default="25"
+            class="js-select-submit-on-change"
+        />
+    </fields>
+</form>

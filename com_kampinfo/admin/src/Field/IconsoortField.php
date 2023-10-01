@@ -7,14 +7,14 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Form\Field\ListField;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
-class ProjectField extends ListField {
+class IconsoortField extends ListField {
 
-    protected $type = 'Project';
+    protected $type = 'Iconsoort';
 
     public function getOptions() {
         return array_merge(
             parent::getOptions(),
-            KampInfoHelper::getHitProjectOptions()
+            KampInfoHelper::getHitIconSoortOptions()
         );
     }
 }

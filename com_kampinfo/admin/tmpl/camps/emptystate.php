@@ -12,7 +12,7 @@ $displayData = [
 
 $user = Factory::getApplication()->getIdentity();
 
-if ($user->authorise('core.create', 'com_contact') || count($user->getAuthorisedCategories('com_kampinfo', 'core.create')) > 0) {
+if ($user->authorise('core.create', 'com_kampinfo') || count($user->getAuthorisedCategories('com_kampinfo', 'core.create')) > 0) {
     $displayData['createURL'] = 'index.php?option=com_kampinfo&task=camp.add';
 }
 
