@@ -1,4 +1,7 @@
 <?php
+
+use Joomla\CMS\Factory;
+ 
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controllerform');
@@ -13,10 +16,10 @@ class KampInfoControllerHitCourant extends JControllerForm {
 	
 	public function generate()
 	{
-		$app    = JFactory::getApplication();
+		$app    = Factory::getApplication();
 		$model  = $this->getModel('hitcourant');
 		$model->generate();
-		JFactory::getApplication()->close();
+		Factory::getApplication()->close();
 	}
 		
 }

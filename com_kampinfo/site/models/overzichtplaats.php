@@ -1,4 +1,7 @@
 <?php
+
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
@@ -11,7 +14,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelOverzichtplaats extends KampInfoModelParent {
 
 	public function getPlaats() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$hitsiteId = $input->getString('hitsite_id', '');
 
 		$plaats = $this->getHitPlaats($hitsiteId);

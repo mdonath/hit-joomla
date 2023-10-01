@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
 jimport('joomla.application.component.view');
@@ -23,7 +27,7 @@ class KampInfoViewHitkiezer extends JViewLegacy {
 		$iconFolderLarge = $params->get('iconFolderLarge');
 		$iconExtension = $params->get('iconExtension');
 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet("media/com_kampinfo/css/hitkiezer.css");
 
 		$document->addScript("https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");

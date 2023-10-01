@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
  
-        <name>COM_KAMPINFO</name>
+        <name>KampInfo</name>
 
         <author>Martijn Donath</author>
         <creationDate>October 2012</creationDate>
         <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
         <license>LGPL</license>
         <authorEmail>martijn.donath@scouting.nl</authorEmail>
-
-        <!--  The version string is recorded in the components table -->
-        <version>0.3.4</version>
-
-        <!-- The description is optional and defaults to the name -->
+        <authorUrl>https://github.com/mdonath/hit-joomla</authorUrl>
+        <version>2.0.0</version>
         <description>COM_KAMPINFO_DESCRIPTION</description>
- 
+
+        <namespace path="src">HITScoutingNL\Component\KampInfo</namespace>
+
+        
         <install> <!-- Runs on install -->
                 <sql>
                         <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -56,17 +56,16 @@
                 <!-- Administration Menu Section -->
                 <menu img="../media/com_kampinfo/images/kampinfo-16x16.png">COM_KAMPINFO_MENU</menu>
                 <submenu>
-                        <!-- PAS BIJ JOOMLA 4!
-                        <menu view="hitprojects">COM_KAMPINFO_SUBMENU_HITPROJECTS</menu>
-                        <menu view="hitsites">COM_KAMPINFO_SUBMENU_HITSITES</menu>
-                        <menu view="hitcamps">COM_KAMPINFO_SUBMENU_HITCAMPS</menu>
+                        <menu view="info">COM_KAMPINFO_SUBMENU_INFO</menu>
 
-                        <menu view="hiticons">COM_KAMPINFO_SUBMENU_HITICONS</menu>
+                        <menu view="projects">COM_KAMPINFO_SUBMENU_HITPROJECTS</menu>
+                        <menu view="sites">COM_KAMPINFO_SUBMENU_HITSITES</menu>
+                        <menu view="camps">COM_KAMPINFO_SUBMENU_HITCAMPS</menu>
+
+                        <menu view="icons">COM_KAMPINFO_SUBMENU_HITICONS</menu>
                         <menu view="import">COM_KAMPINFO_SUBMENU_IMPORT</menu>
                         <menu view="downloads">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
                         <menu view="reports">COM_KAMPINFO_SUBMENU_REPORTS</menu>
-                        -->
-                        <menu view="info">COM_KAMPINFO_SUBMENU_INFO</menu>
                 </submenu>	
 
                 <!-- Administration Main File Copy Section -->
@@ -81,12 +80,17 @@
                         <filename>kampinfo.php</filename>
                         <filename>controller.php</filename>
                         <folder>sql</folder>
-                        <folder>libraries</folder>
+                        <!-- <folder>libraries</folder>
                         <folder>models</folder>
                         <folder>views</folder>
                         <folder>controllers</folder>
                         <folder>tables</folder>
-                        <folder>helpers</folder>
+                        <folder>helpers</folder> -->
+
+                        <folder>forms</folder>
+                        <folder>services</folder>
+                        <folder>src</folder>
+                        <folder>tmpl</folder>
                 </files>
  
                 <languages folder="admin">

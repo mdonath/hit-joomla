@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field">
+	<fields name="filter">
+		<field
+	            name="search"
+	            type="text"
+	            label="ZOEKEN"
+	            hint="JSEARCH_FILTER"
+        />
+		
+		<field
+	            name="published"
+	            type="list"
+	            label="COM_CONTENT_FILTER_PUBLISHED"
+	            description="COM_CONTENT_FILTER_PUBLISHED_DESC"
+	            class="js-select-submit-on-change"
+            >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+
+		<field
+				name="jaar"
+	            type="project"
+	            label="COM_KAMPINFO_SELECT_HITPROJECT"
+	            description="COM_KAMPINFO_SELECT_HITPROJECT"
+				extension="com_kampinfo"
+				class="form-select js-select-submit-on-change"
+		>
+			<option value="-1">COM_KAMPINFO_SELECT_HITPROJECT</option>
+		</field>
+	</fields>
+
+	<fields name="list">
+		<field
+				name="fullordering"
+				type="list"
+				label="JGLOBAL_SORT_BY"
+				class="js-select-submit-on-change"
+				default="p.jaar DESC"
+				validate="options"
+		>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="p.jaar ASC">Jaar oplopend</option>
+			<option value="p.jaar DESC">Jaar aflopend</option>
+			<option value="s.naam ASC">Naam oplopend</option>
+			<option value="s.naam DESC">Naam aflopend</option>
+			<option value="s.id ASC">Id oplopend</option>
+			<option value="s.id DESC">Id aflopend</option>
+		</field>
+        <field
+				name="limit"
+				type="limitbox"
+				label="COM_CONTENT_LIST_LIMIT"
+				default="25"
+				class="js-select-submit-on-change"
+        />
+    </fields>
+</form>

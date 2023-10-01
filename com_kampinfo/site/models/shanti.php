@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 
@@ -16,7 +20,7 @@ class KampInfoModelShanti extends KampInfoModelParent {
 	//////////////////////////////////////
 	
 	private function getData($projectId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		
 		$query = $db
 			-> getQuery(true)

@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
 jimport('joomla.application.component.view');
@@ -19,7 +23,7 @@ class KampInfoViewDeelnemers extends JViewLegacy {
 			return false;
 		}
 		
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet(JURI::base() . 'media/com_kampinfo/css/deelnemers.css', 'text/css', 'screen');
 		
 		// Display the view

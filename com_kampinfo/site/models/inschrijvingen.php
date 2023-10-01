@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -10,7 +14,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelInschrijvingen extends KampInfoModelParent {
 
 	public function getProject() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$projectId = $input->getInt('hitproject_id', 0);
 
 		$project = $this->getHitProject($projectId);

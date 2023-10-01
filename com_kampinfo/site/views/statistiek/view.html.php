@@ -1,6 +1,7 @@
 <?php
 
-// No direct access to this file
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
@@ -21,7 +22,7 @@ class KampInfoViewStatistiek extends JViewLegacy {
 			return false;
 		}
 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet("media/com_kampinfo/css/statistiek.css");
 		$document->addScript("https://www.google.com/jsapi");
 		$document->addScriptDeclaration("google.load('visualization', '1', {packages: ['". $this->statistiek->getPackages() ."']});");

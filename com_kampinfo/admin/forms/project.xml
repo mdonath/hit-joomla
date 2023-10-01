@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset
+			name="algemeen"
+			label="Algemeen"
+	>
+		<field	name="id"
+				type="hidden"
+				default="0"
+				readonly="true"
+				class="readonly"
+		/>
+		<field	name="jaar"
+				type="text"
+				label="COM_KAMPINFO_HITPROJECT_JAAR_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_JAAR_DESC"
+				required="true"
+				default="2000"
+				class="validate-numeric"
+		/>
+		<field	name="shantiEvenementId"
+				type="text"
+				label="Shanti EventId"
+				description="Evenement Id in Shanti"
+				size="5"
+				default="0"
+				class="validate-numeric"
+		/>
+		<field
+				name="thema"
+				type="text"
+				label="Thema"
+				description="Het motto/thema/leus/spreuk op het naambandje"
+				maxlength="255"
+				size="30"
+				required="true"
+				default=""
+		/>
+	</fieldset>
+	<fieldset
+	    	name="inschrijving"
+			label="Inschrijving"
+	>
+		<field	name="inschrijvingStartdatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_START_DESC"
+				size="20"
+				maxlength="19"
+				format="%d-%m-%Y %H:%M"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="inschrijvingEinddatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_EIND_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_EIND_DESC"
+				size="20"
+				maxlength="19"
+				format="%d-%m-%Y %H:%M"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="inschrijvingWijzigenTotDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_WIJZIGENTOT_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_WIJZIGENTOT_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="inschrijvingKosteloosAnnulerenDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_KOSTELOOSANNULEREN_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_KOSTELOOSANNULEREN_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="inschrijvingGeenRestitutieDatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_GEENRESTITUTIE_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INSCHRIJVING_GEENRESTITUTIE_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="inningsdatum"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_INNINGSDATUM_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_INNINGSDATUM_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+	</fieldset>
+	<fieldset
+	    	name="pasen"
+			label="Pasen"
+	>
+		<field	name="vrijdag"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_VRIJDAG_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_VRIJDAG_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+		<field	name="maandag"
+				type="calendar"
+				label="COM_KAMPINFO_HITPROJECT_MAANDAG_LABEL"
+				description="COM_KAMPINFO_HITPROJECT_MAANDAG_DESC"
+				format="%d-%m-%Y"
+				required="true"
+				default=""
+				filter="SERVER_UTC"
+		/>
+	</fieldset>
+	<fieldset
+	    	name="teksten"
+			label="Teksten"
+	>
+		<field	name="ouderkind"
+				type="editor"
+				label="Ouder kind kamp"
+				description="Deze tekst wordt standaard toegevoegd bij alle ouder-kind kampen"
+				required="true"
+				filter="safehtml"
+		/>
+	</fieldset>
+
+</form>

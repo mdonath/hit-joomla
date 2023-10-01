@@ -1,6 +1,7 @@
 <?php
 
-// No direct access to this file
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
@@ -21,7 +22,7 @@ class KampInfoViewActiviteit extends JViewLegacy {
 			return false;
 		}
 
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->addStyleSheet("media/com_kampinfo/css/activiteit.css");
 		$document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 

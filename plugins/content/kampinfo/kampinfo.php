@@ -1,12 +1,17 @@
 <?php
 // No direct access
 defined('_JEXEC') or die ('Restricted access');
+
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
+
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfourl.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
 
 
-class plgContentKampinfo extends JPlugin {
-	protected $db;
+class PlgContentKampinfo extends CMSPlugin {
+
+    protected $db;
 
 	protected $autoloadLanguage = true;
 
@@ -31,7 +36,7 @@ class plgContentKampinfo extends JPlugin {
 		$regex = "/{". $plugincode ."\ ([^}]+)\}|{". $plugincode ."\}/m";
 		if (preg_match_all($regex, $article->text, $matches)) {
 
-            $params = JComponentHelper::getParams('com_kampinfo');
+            $params = ComponentHelper::getParams('com_kampinfo');
 
             for ($i = 0; $i < count($matches[0]); $i++) {
 
@@ -100,8 +105,9 @@ class plgContentKampinfo extends JPlugin {
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
 
+        $db = $this->db;
         $query = $this->createBaseQuery($config);
-        $query->where('s.naam = '. $this->db->quote($this->db->escape($config['plaats'])));
+        $query->where('s.naam = '. $db->quote($db->escape($config['plaats'])));
         $this->zetOpVolgorde($query, $config);
 
         $result = $this->loadObjectList($query);
@@ -148,8 +154,9 @@ class plgContentKampinfo extends JPlugin {
     function loadObjectList($query) {
         $iconList = $this->getIconenLijst();
 
-        $this->db->setQuery($query);
-        $result = $this->db->loadObjectList();
+        $db = $this->db;
+        $db->setQuery($query);
+        $result = $db->loadObjectList();
         foreach ($result as $row) {
             $row->plaatsObj = (object) [
                 'id' => $row->plaatsId,
@@ -171,7 +178,8 @@ class plgContentKampinfo extends JPlugin {
     }
      
     function createBaseQuery($config) {
-        $query = $this->db->getQuery(true)
+        $db = $this->db;
+        $query = $db->getQuery(true)
             ->select('p.jaar')
             ->select('s.id as plaatsId')
             ->select('s.naam as plaats')
@@ -181,16 +189,16 @@ class plgContentKampinfo extends JPlugin {
             ->select('c.icoontjes')
             ->select('c.hitCourantTekst as hitcourant')
             ->select('c.webadresFoto1 as foto')
-		    ->from($this->db->quoteName('#__kampinfo_hitcamp', 'c'))
-		    ->join('LEFT', $this->db->quoteName('#__kampinfo_hitsite', 's').' ON s.id=c.hitsite_id')
-            ->join('LEFT', $this->db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id=s.hitproject_id')
+		    ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+		    ->join('LEFT', $db->quoteName('#__kampinfo_hitsite', 's').' ON s.id=c.hitsite_id')
+            ->join('LEFT', $db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id=s.hitproject_id')
         ;
         if ($this->getParamIfExists($config, 'skipAkkoord') == null) {
             $query->where('(c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
         }
 
         if ($this->getParamIfExists($config, 'jaar') != null) {
-            $query->where('p.jaar = '. ((int)$this->db->escape($config['jaar'])));
+            $query->where('p.jaar = '. ((int)$db->escape($config['jaar'])));
         }
 		return $query; 
     }
@@ -216,29 +224,28 @@ class plgContentKampinfo extends JPlugin {
     public function getIconenLijst() {
 		$db = $this->db;
 
-		$query = $db->getQuery(true);
-		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort');
-        $query->from('#__kampinfo_hiticon i');
-        $query->order('i.bestandsnaam');
+		$query = $db->getQuery(true)
+		    -> select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort')
+            -> from('#__kampinfo_hiticon i')
+            -> order('i.bestandsnaam');
 
 		$db->setQuery($query);
-		$icons = $db->loadObjectList();
-		
-		// Check for a database error.
-		if ($db->getErrorNum()) {
-			JError::raiseWarning(500, $db->getErrorMsg());
-		}
-		
-		$result = array();
-		foreach ($icons as $icon) {
-			$result[$icon->naam] = (object) [
-                'naam' => $icon->naam,
-                'tekst' => $icon->tekst,
-                'volgorde' => $icon->volgorde,
-                'soort' => $icon->soort
-                ];
+        try {
+    		$icons = $db->loadObjectList();
+            
+            $result = array();
+            foreach ($icons as $icon) {
+                $result[$icon->naam] = (object) [
+                    'naam' => $icon->naam,
+                    'tekst' => $icon->tekst,
+                    'volgorde' => $icon->volgorde,
+                    'soort' => $icon->soort
+                    ];
+            }
+            return $result;
+        } catch (\RuntimeException $e) {
+            JError::raiseWarning(500, $e);
         }
-		return $result;
 	}
 }
 ?>

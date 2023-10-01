@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field">
+	<fields name="filter">
+		<field
+				name="search"
+				type="text"
+				inputmode="search"
+				label="ZOEKEN"
+				hint="JSEARCH_FILTER"
+        />
+		<field
+				name="jaar"
+	            type="project"
+	            label="COM_KAMPINFO_SELECT_HITPROJECT"
+	            description="COM_KAMPINFO_SELECT_HITPROJECT"
+				extension="com_kampinfo"
+	            class="js-select-submit-on-change"
+		>
+			<option value="-1">COM_KAMPINFO_SELECT_HITPROJECT</option>
+		</field>
+
+		<field
+		    	name="plaats"
+		    	type="site"
+		    	label="COM_KAMPINFO_SELECT_HITSITE"
+		    	description="COM_KAMPINFO_SELECT_HITSITE"
+				extension="com_kampinfo"
+	            class="js-select-submit-on-change"
+		>
+			<option value="-1">COM_KAMPINFO_SELECT_HITSITE</option>
+		</field>
+
+		<field
+	            name="published"
+	            type="list"
+	            label="COM_CONTENT_FILTER_PUBLISHED"
+	            description="COM_CONTENT_FILTER_PUBLISHED_DESC"
+	            class="js-select-submit-on-change"
+            >
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+	</fields>
+
+	<fields name="list">
+        <field
+	            name="limit"
+	            type="limitbox"
+	            label="JGLOBAL_LIST_LIMIT"
+	            default="25"
+	            class="js-select-submit-on-change"
+        />
+    </fields>
+</form>

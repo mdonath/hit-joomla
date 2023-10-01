@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -10,7 +14,7 @@ include_once dirname(__FILE__).'/kampinfomodelparent.php';
 class KampInfoModelActiviteit extends KampInfoModelParent {
 
 	public function getActiviteit() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$hitcampId = $input->getInt('hitcamp_id', 0);
 		if ($hitcampId != 0) {
 			$activiteit = $this->getHitKampById($hitcampId);
@@ -25,7 +29,7 @@ class KampInfoModelActiviteit extends KampInfoModelParent {
 	}
 
 	function getHitKampById($hitcampId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('c.*');

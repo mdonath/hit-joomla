@@ -1,5 +1,7 @@
 <?php
-// No direct access to this file
+
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
  
 // import joomla controller library
@@ -12,7 +14,7 @@ $controller = JControllerLegacy::getInstance('KampInfo');
 JLoader::register('KampInfoHelper', JPATH_COMPONENT_ADMINISTRATOR.'/helpers/kampinfo.php');
 
 // Perform the Request task
-$controller->execute(JFactory::getApplication()->input->getCmd('task'));
+$controller->execute(Factory::getApplication()->input->getCmd('task'));
  
 // Redirect if set by the controller
 $controller->redirect();

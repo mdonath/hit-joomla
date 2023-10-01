@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 
@@ -32,7 +36,7 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 
 	//////////////////////////////////////
 	function getHitPlaatsen($projectId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -45,7 +49,7 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 		return $plaatsenInJaar;
 	}
 	function getHitKampen($hitsiteId, $iconenLijst) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -136,7 +140,7 @@ class KampInfoModelHitCourant extends KampInfoModelParent {
 		return true;
 		$configuredSecret = $params->get('downloadSecret');
 
-		$jinput = JFactory::getApplication()->input;
+		$jinput = Factory::getApplication()->input;
 		$givenSecret = $jinput->get('secret', '', 'string');
 		return $configuredSecret == $givenSecret;
 	}

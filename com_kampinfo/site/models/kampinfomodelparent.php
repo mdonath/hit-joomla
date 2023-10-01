@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -9,7 +13,7 @@ jimport('joomla.application.component.modelitem');
 abstract class KampInfoModelParent extends JModelItem {
 
 	function getHitProject($projectId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -26,7 +30,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 	
 	function getHitPlaatsen($projectId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -41,7 +45,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	function getHitPlaats($hitsiteId) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true)
 			-> select('s.*, p.jaar')
@@ -55,7 +59,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	function getHitKampen($hitsiteId, $iconenLijst) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('*');
@@ -74,7 +78,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	}
 
 	protected function getLaatstBijgewerktOp($jaar) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		
 		$query = $db->getQuery(true);
 		$query->select('max(bijgewerktOp) as bijgewerktOp');
@@ -97,7 +101,7 @@ abstract class KampInfoModelParent extends JModelItem {
 	 * @param $namen - comma separated string
 	 */
 	public function createIcons($namen) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde');
@@ -174,9 +178,8 @@ abstract class KampInfoModelParent extends JModelItem {
 		return $nieuweIcoontjes;
 	}
 
-
 	public function getIconenLijst() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort');

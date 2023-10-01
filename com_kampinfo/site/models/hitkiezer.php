@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -10,7 +14,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelHitkiezer extends KampInfoModelParent {
 
 	public function getProject() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		$projectId = $input->getInt('hitproject_id', 0);
 
 		$project = $this->getHitProject($projectId);
@@ -30,7 +34,7 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 	}
 
 	public function getIconenLijstJSON() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('i.volgorde, i.bestandsnaam, i.tekst');
@@ -48,7 +52,7 @@ class KampInfoModelHitkiezer extends KampInfoModelParent {
 	}
 
 	function getHitKampenJSON($hitsiteId, $iconenLookup) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('c.naam,c.shantiFormuliernummer,c.minimumLeeftijd,c.maximumLeeftijd,c.deelnamekosten,c.minimumAantalDeelnemers,c.maximumAantalDeelnemers,c.aantalDeelnemers,c.gereserveerd,c.subgroepsamenstellingMinimum,c.aantalSubgroepen,c.maximumAantalSubgroepjes,c.icoontjes,c.margeAantalDagenTeJong,c.margeAantalDagenTeOud, c.startDatumTijd, c.eindDatumTijd, c.isouderkind, c.minimumLeeftijdOuder, c.maximumLeeftijdOuder');

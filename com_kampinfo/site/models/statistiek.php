@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -10,17 +14,17 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelStatistiek extends KampInfoModelParent {
 
 	public function getSoort() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		return $input->getString('soort', 'Standaard');
 	}
 
 	public function getJaar() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		return $input->getInt('jaar', date("Y"));
 	}
 
 	public function getPlaats() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		return $input->getString('plaats', '');
 	}
 	
@@ -65,7 +69,7 @@ abstract class AbstractStatistiek {
 	public abstract function getDrawVisualization();
 
 	protected function getBeschikbareJaren() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 
 		$query = $db->getQuery(true);
 		$query->select('jaar');
@@ -87,7 +91,7 @@ abstract class AbstractStatistiek {
 	}
 	
 	protected function getPlaatsenInJaar($jaar) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('naam');
@@ -151,7 +155,7 @@ class TotaalInschrijvingenPerJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db
 		-> getQuery(true)
@@ -224,7 +228,7 @@ class InschrijvingenPerDagPerJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('1 + datediff(datumInschrijving, ed.eersteDag) as inschrijfdag');
@@ -293,7 +297,7 @@ class AantalInschrijvingenPerDagInJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaar) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 		
 		$jaar = (int) ($db->escape($jaar));
@@ -367,7 +371,7 @@ class InschrijvingenPerPlaatsInSpecifiekJaarStatistiek extends AbstractStatistie
 	}
 	
 	private function getData($plaatsNamen) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 		
 		$query->select("d.jaar");
@@ -426,7 +430,7 @@ class HerkomstDeelnemersInJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 	
 		$query->select("d.herkomst as plaats");
@@ -483,7 +487,7 @@ class HerkomstDeelnemersInPlaatsInJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData() {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select("d.herkomst as plaats");
@@ -564,7 +568,7 @@ class VerloopInschrijvingenInPlaatsStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('1 + datediff(datumInschrijving, (select min(datumInschrijving) from #__kampinfo_deelnemers d2 where d2.jaar=d.jaar)) as inschrijfdag');
@@ -651,7 +655,7 @@ class OpbouwLeeftijdPerJaarStatistiek extends AbstractStatistiek {
 	}
 
 	private function getData($jaren) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 
 		$query->select('leeftijd');
@@ -710,7 +714,7 @@ class AantalKampenVoorLeeftijdInJaarStatistiek extends AbstractStatistiek {
 	}
 	
 	private function getData($min, $max) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		
 		// Query
 		// select sum(if(7 between data.mini and data.maxi,1,0)) as l7, sum(if(8 between data.mini and data.maxi,1,0)) as l8 from ;

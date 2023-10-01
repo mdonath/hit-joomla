@@ -43,6 +43,15 @@
 		</zip>
 	</target>
 
+	<target name="copy" depends="zip" description="Kopieert de zip naar de work_directory">
+		<delete>
+			<fileset dir="../hit-docker/j4/work_directory" includes="com_kampinfo*" />
+		</delete>
+		<copy file="${str.destfile}" todir="../hit-docker/j4/work_directory" verbose="true" />
+	</target>
+
+
+
 	<target name="plugin_init">
 		<xmlproperty file="plugins/content/kampinfo/kampinfo.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<tstamp>
@@ -57,52 +66,11 @@
 		<zip destfile="${str.destfile}" basedir="plugins/content/kampinfo" />
 	</target>
 	
-	<target name="plugin_deploy" depends="plugin_zip" description="Deploys plugin package to localhost">
-		<exec executable="/bin/bash">
-			<arg value="${cfg.packages}/redeploy.sh" />
-			<arg value="${str.destfile}" />
-		</exec>
+	<target name="plugin_copy" depends="plugin_zip" description="Kopieert de zip naar de work_directory">
+		<delete>
+			<fileset dir="../hit-docker/j4/work_directory" includes="plg_kampinfo*" />
+		</delete>
+		<copy file="${str.destfile}" todir="../hit-docker/j4/work_directory" verbose="true" />
 	</target>
-
-	<target name="deploy" depends="zip" description="Deploys package to localhost">
-		<exec executable="/bin/bash">
-			<arg value="${cfg.packages}/redeploy.sh" />
-			<arg value="${str.destfile}" />
-		</exec>
-	</target>
-
-	<target name="build_update_xml" depends="info" description="">
-		<fileset id="site" dir="${str.sitetrunkpath}" />
-		<echo message="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>${line.separator}" file="${str.updatefile}" append="false" />
-		<echo message="&lt;updates&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;update&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;name&gt;${xml.name}&lt;/name&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;element&gt;${cfg.prefix}${cfg.name}&lt;/element&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;type&gt;component&lt;/type&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;version&gt;${xml.version}&lt;/version&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;downloads&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;downloadurl type=&quot;full&quot; format=&quot;zip&quot;&gt;file:///home/martijn/git/hit-joomla/packages/${str.destfilename}&lt;/downloadurl&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;/downloads&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;/targetplatform name=&quot;joomla&quot; version=&quot;2.5&quot; /&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;/update&gt;${line.separator}" file="${str.updatefile}" append="true" />
-		<echo message="&lt;/updates&gt;${line.separator}" file="${str.updatefile}" append="true" />
-<!-- 
-		<replace file="${str.xmlfile}" token="${str.sitetrunkpath}/" value="" />
-		<replace file="${str.xmlfile}" token="${str.admintrunkpath}/" value="" />
- -->		
-	</target>
-
-
-	<macrodef name="echo-fileset" description="creates a printable directory listing">
-		<attribute name="filesetref" />
-		<sequential>
-			<pathconvert pathsep="&lt;/filename&gt;${line.separator}&lt;filename&gt;" property="@{filesetref}.echopath">
-				<path>
-					<fileset refid="@{filesetref}" />
-				</path>
-			</pathconvert>
-			<echo message="${@{filesetref}.echopath}" file="${str.xmlfile}" append="true" />
-		</sequential>
-	</macrodef>
 
 </project>

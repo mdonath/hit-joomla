@@ -1,8 +1,12 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 require_once JPATH_COMPONENT_ADMINISTRATOR .'/../com_kampinfo/helpers/kampinfourl.php';
 
-$document = JFactory::getDocument();
+$document = Factory::getDocument();
 $document->setMetaData( 'robots', 'noindex' );
 
 // config

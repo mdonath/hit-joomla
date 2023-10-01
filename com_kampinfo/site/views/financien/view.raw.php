@@ -1,5 +1,7 @@
 <?php
-// No direct access to this file
+
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die('Restricted access');
 
 // import Joomla view library
@@ -11,7 +13,7 @@ jimport('joomla.application.component.view');
 class KampInfoViewFinancien extends JViewLegacy {
 	
 	function display($tpl = null) {
-		$document = JFactory::getDocument();
+		$document = Factory::getDocument();
 		$document->setMimeEncoding('text/plain');
 
 		$data = $this->get('FinancienData');

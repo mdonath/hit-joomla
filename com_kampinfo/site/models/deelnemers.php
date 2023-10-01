@@ -1,4 +1,8 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php
+
+use Joomla\CMS\Factory;
+
+defined('_JEXEC') or die('Restricted access');
 
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
@@ -10,7 +14,7 @@ include_once dirname(__FILE__) . '/kampinfomodelparent.php';
 class KampInfoModelDeelnemers extends KampInfoModelParent {
 
 	public function getJaar() {
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 		return $input->getInt('jaar', date("Y"));
 	}
 
@@ -63,7 +67,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 		$inschrijvingStartdatum = new DateTime($inschrijvingStartdatum);
 		$inschrijvingEinddatum= new DateTime($inschrijvingEinddatum);
 		
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('s.naam as plaats, c.naam');
 		
@@ -91,7 +95,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 	}
 	
 	function getLaatsteInschrijvingOp($jaar) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('max(d.datumInschrijving) as laatsteInschrijving');
@@ -108,7 +112,7 @@ class KampInfoModelDeelnemers extends KampInfoModelParent {
 	}
 
 	function getHitProjectRow($jaar) {
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 	
 		$query = $db->getQuery(true);
 		$query->select('*');
