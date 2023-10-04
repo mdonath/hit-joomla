@@ -6,7 +6,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 
 $displayData = [
-    'textPrefix' => 'COM_KAMPINFO',
+    'textPrefix' => 'COM_KAMPINFO_HITPROJECT',
     'formURL'    => 'index.php?option=com_kampinfo',
 ];
 
