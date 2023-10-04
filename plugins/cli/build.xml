@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="Group CLI Plugin" default="copy" basedir=".">
+
+    <target name="init">
+        <xmlproperty file="plg_group_cli/group_cli.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+        <tstamp>
+            <format property="TODAY" pattern="yyyyMMdd-HHmm" />
+        </tstamp>
+        <property name="str.destfilename" value="plg_group_cli-${xml.version}_${TODAY}.zip" />
+        <property name="str.destfile" value="dist/${str.destfilename}" />
+    </target>
+
+    <target name="zip" depends="init">
+        <zip destfile="${str.destfile}" basedir="plg_group_cli" />
+    </target>
+
+    <target name="copy" depends="zip">
+        <delete>
+            <fileset dir="../../../hit-docker/j4/work_directory" includes="plg_group_cli*" />
+        </delete>
+        <copy file="${str.destfile}" todir="../../../hit-docker/j4/work_directory" verbose="true" />
+    </target>
+</project>

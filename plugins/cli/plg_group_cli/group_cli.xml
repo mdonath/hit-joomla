@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="console" method="upgrade">
+    <name>Group Console Plugin</name>
+    <version>1.0.0</version>
+    <creationDate>today</creationDate>
+    <author>HIT Scouting</author>
+    <description>Plugin to add usergroups via the console application</description>
+    <namespace path="src">HITScoutingNL\Plugin\Console\Group</namespace>
+    <files>
+        <folder plugin="group_cli">services</folder>
+        <folder>src</folder>
+    </files>
+</extension>
