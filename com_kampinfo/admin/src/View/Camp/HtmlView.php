@@ -8,6 +8,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
 defined('_JEXEC') or die;
 
@@ -26,6 +27,10 @@ class HtmlView extends BaseHtmlView {
         if (\count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
+
+        $ids = array();
+        $ids[] = $item->id;
+        $this->canDo = KampInfoHelper::getActions('hitsite', $ids);
 
         $this->addToolbar();
 

@@ -12,10 +12,10 @@ defined('_JEXEC') or die;
 
 class SitesController extends AdminController {
 
-	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null) {
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null) {
         parent::__construct($config, $factory, $app, $input);
-		$this->registerTask('nietAkkoordPlaats', 'akkoordPlaats');
-	}
+       $this->registerTask('nietAkkoordPlaats', 'akkoordPlaats');
+    }
 
     public function getModel($name = 'Site', $prefix = 'Administrator', $config = array('ignore_request' => true)) {
         return parent::getModel($name, $prefix, $config);
@@ -25,9 +25,9 @@ class SitesController extends AdminController {
         $this->checkToken();
 
         $ids = (array) $this->input->get('cid', [], 'int');
-		$values = array('akkoordPlaats' => 1, 'nietAkkoordPlaats' => 0);
-		$task = $this->getTask();
-		$value = ArrayHelper::getValue($values, $task, 0, 'int');
+        $values = array('akkoordPlaats' => 1, 'nietAkkoordPlaats' => 0);
+        $task = $this->getTask();
+        $value = ArrayHelper::getValue($values, $task, 0, 'int');
 
         // Remove zero values resulting from input filter
         $ids = array_filter($ids);

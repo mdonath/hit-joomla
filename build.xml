@@ -35,17 +35,17 @@
 
 	<target name="zip" depends="info" description="Makes an uploadable zip package">
 		<mkdir dir="${cfg.packages}" />
-		<zip destfile="${str.destfile}" basedir="${cfg.dir}">
-			<exclude name="build.xml" />
-			<exclude name="build.number" />
-			<exclude name="cookie.tmp" />
-			<exclude name="**/test/" />
-		</zip>
+		<zip
+			destfile="${str.destfile}"
+			basedir="${cfg.dir}"
+			update="false"
+			excludes="build.*, **/test/**, **/ouwe_meuk/**, **/doc/**"
+		/>
 	</target>
 
 	<target name="copy" depends="zip" description="Kopieert de zip naar de work_directory">
 		<delete>
-			<fileset dir="../hit-docker/j4/work_directory" includes="com_kampinfo*" />
+			<fileset dir="../hit-docker/j4/work_directory" includes="com_kampinfo-*" />
 		</delete>
 		<copy file="${str.destfile}" todir="../hit-docker/j4/work_directory" verbose="true" />
 	</target>

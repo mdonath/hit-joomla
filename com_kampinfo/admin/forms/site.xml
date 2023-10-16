@@ -1,124 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset
-			name="hitsite"
-			addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
-	>
-		<field
-				name="id"
-				type="hidden"
-				default="0"
-				readonly="true"
-				class="readonly"
-		/>
+    <fieldset
+            name="hitsite"
+            addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+    >
+        <field
+                name="id"
+                type="hidden"
+                default="0"
+                readonly="true"
+                class="readonly"
+        />
+        <field
+                name="title"
+                type="hidden"
+        />
 
-		<field
-				name="hitproject_id"
-				type="Project"
-				label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
-				description="COM_KAMPINFO_HITSITE_JAAR_DESC"
-				required="true"
-		>
-			<option value="">- HIT-Project -</option>
-		</field>
-		<field
-				name="naam"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_NAAM_LABEL"
-				description="COM_KAMPINFO_HITSITE_NAAM_DESC"
-				maxlength="50"
-				required="true"
-				default=""
-		/>
-	</fieldset>
+        <field
+                name="naam"
+                type="text"
+                label="COM_KAMPINFO_HITSITE_NAAM_LABEL"
+                description="COM_KAMPINFO_HITSITE_NAAM_DESC"
+                maxlength="50"
+                required="true"
+                default=""
+        />
+        <field
+                name="hitproject_id"
+                type="Project"
+                label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
+                description="COM_KAMPINFO_HITSITE_JAAR_DESC"
+                required="true"
+        >
+            <option value="">- HIT-Project -</option>
+        </field>
+    </fieldset>
 
-	<fieldset
-			name="helpdesk"
-	>
-		<field
-				name="contactPersoonNaam"
-				type="text"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
-				maxlength="50"
-				required="true"
-		/>
-		<field
-				name="contactPersoonEmail"
-				type="email"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
-				maxlength="50"
-				required="true"
-				validate="email"
-		/>
-		<field
-				name="contactPersoonTelefoon"
-				type="tel"
-				label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
-				description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
-				maxlength="50"
-				required="true"
-		/>
-	</fieldset>
+    <fieldset
+            name="helpdesk"
+    >
+        <field
+                name="contactPersoonNaam"
+                type="text"
+                label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
+                description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
+                maxlength="50"
+                required="true"
+        />
+        <field
+                name="contactPersoonEmail"
+                type="email"
+                label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
+                description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
+                maxlength="50"
+                required="true"
+                validate="email"
+        />
+        <field
+                name="contactPersoonTelefoon"
+                type="tel"
+                label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
+                description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
+                maxlength="50"
+                required="true"
+        />
+    </fieldset>
 
-	<!--  -->
-	<fieldset
-			name="financien"
-			addfieldpath="/administrator/components/com_kampinfo/models/fields"
-	>
-		<field
-				name="projectcode"
-				type="text"
-				label="Projectcode"
-				description="De projectcode voor de financiële administratie van Scouting Nederland (in te vullen door PT)"
-				maxlength="50"
-		/>
-	</fieldset>
+    <!--  -->
+    <fieldset
+            name="financien"
+            addfieldpath="/administrator/components/com_kampinfo/models/fields"
+    >
+        <field
+                name="projectcode"
+                type="text"
+                label="Projectcode"
+                description="De projectcode voor de financiële administratie van Scouting Nederland (in te vullen door PT)"
+                maxlength="50"
+        />
+    </fieldset>
 
-	<!--  -->
-	<fieldset
-			name="hitcourant"
-	>
-		<field
-				name="hitCourantTekst"
-				type="textarea"
-				label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
-				description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
-				rows="6"
-				class="input-xxlarge"
-				required="true"
-		/>
-	</fieldset>
-	
-	<fieldset
-        		name="akkoorden"
-        		label="Akkoorden"
-	>
-		<field
-				name="akkoordHitPlaats"
-				type="radio"
-				label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
-				description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
-				class="btn-group btn-group-yesno"
-				default="0"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-	</fieldset>
-	
-	<fieldset name="accesscontrol">
-		<field name="asset_id" type="hidden" filter="unset" />
-		<field name="rules"
-				type="rules"
-				label="JFIELD_RULES_LABEL"
-				translate_label="false"
-				filter="rules"
-				validate="rules"
-				component="com_kampinfo"
-				section="hitsite"
-		/>
-	</fieldset>
-	
+    <!--  -->
+    <fieldset
+            name="hitcourant"
+    >
+        <field
+                name="hitCourantTekst"
+                type="textarea"
+                label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
+                description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
+                rows="6"
+                class="input-xxlarge"
+                required="true"
+        />
+    </fieldset>
+
+    <fieldset
+                name="akkoorden"
+                label="Akkoorden"
+    >
+        <field
+                name="akkoordHitPlaats"
+                type="radio"
+                label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
+                description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
+                class="btn-group btn-group-yesno"
+                default="0"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+    </fieldset>
+
+    <fieldset
+            name="permissions"
+            label="JCONFIG_PERMISSIONS_LABEL"
+    >
+        <field name="asset_id" type="hidden" filter="unset" />
+        <field
+                name="rules"
+                type="rules"
+                label="JCONFIG_PERMISSIONS_LABEL"
+                hiddenLabel="true"
+                filter="rules"
+                validate="rules"
+                component="com_kampinfo"
+                section="hitsite"
+        />
+    </fieldset>
+
 </form>

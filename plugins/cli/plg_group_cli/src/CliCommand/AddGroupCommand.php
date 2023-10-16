@@ -92,16 +92,18 @@ class AddGroupCommand extends AbstractCommand
 
         return $db->loadResult();
     }
+
     protected function configure(): void {
         $help = <<<EOF
         The <info>%command.name%</info> command adds a new usergroup
         <info>php %command.full_name%</info>
         EOF;
         
-        $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'name of new group');
-        $this->addOption('parent', null, InputOption::VALUE_OPTIONAL, 'parent group of new group');
+        $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Name of the new group');
+        $this->addOption('parent', null, InputOption::VALUE_OPTIONAL, 'Name of the parent group of then new group');
 
-        $this->setDescription('This command adds a new usergroup');
+        $this->setDescription('Adds a new usergroup');
         $this->setHelp($help);
     }
+
 }

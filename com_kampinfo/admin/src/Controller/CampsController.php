@@ -25,9 +25,9 @@ class CampsController extends AdminController {
         $this->checkToken();
 
         $ids = (array) $this->input->get('cid', [], 'int');
-		$values = array('akkoordPlaats' => 1, 'nietAkkoordPlaats' => 0);
-		$task = $this->getTask();
-		$value = ArrayHelper::getValue($values, $task, 0, 'int');
+        $values = array('akkoordPlaats' => 1, 'nietAkkoordPlaats' => 0);
+        $task = $this->getTask();
+        $value = ArrayHelper::getValue($values, $task, 0, 'int');
 
         // Remove zero values resulting from input filter
         $ids = array_filter($ids);
@@ -52,15 +52,15 @@ class CampsController extends AdminController {
         }
 
         $this->setRedirect('index.php?option=com_kampinfo&view=camps');
-	}
+    }
 
     public function akkoordKamp() {
         $this->checkToken();
 
         $ids = (array) $this->input->get('cid', [], 'int');
-		$values = array('akkoordKamp' => 1, 'nietAkkoordKamp' => 0);
-		$task = $this->getTask();
-		$value = ArrayHelper::getValue($values, $task, 0, 'int');
+        $values = array('akkoordKamp' => 1, 'nietAkkoordKamp' => 0);
+        $task = $this->getTask();
+        $value = ArrayHelper::getValue($values, $task, 0, 'int');
 
         // Remove zero values resulting from input filter
         $ids = array_filter($ids);
@@ -85,5 +85,6 @@ class CampsController extends AdminController {
         }
 
         $this->setRedirect('index.php?option=com_kampinfo&view=camps');
-	}
+    }
+
 }

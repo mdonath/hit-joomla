@@ -1,108 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fieldset
-		name="preferences"
-		label="COM_KAMPINFO_PREFERENCES_LABEL"
-		description="COM_KAMPINFO_PREFERENCES_DESCRIPTION"
-		addfieldpath="/administrator/components/com_kampinfo/models/fields"
-	>
-		<field
-			name="huidigeActieveJaar"
-			type="Project"
-			default=""
-			label="Huidige actieve jaar"
-			description="Voor welk HIT jaar zijn we nu bezig?"
-		/>
-				
-		<field
-			name="useComponentUrls"
-			type="radio"
-			default="0"
-			label="COM_KAMPINFO_PREFS_USECOMPONENTURLS_LABEL"
-			description="COM_KAMPINFO_PREFS_USECOMPONENTURLS_DESC"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
+    <fieldset
+        name="preferences"
+        label="COM_KAMPINFO_PREFERENCES_LABEL"
+        description="COM_KAMPINFO_PREFERENCES_DESCRIPTION"
+        addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+    >
+        <field
+            name="huidigeActieveJaar"
+            type="project"
+            default=""
+            label="Huidige actieve jaar"
+            description="Voor welk HIT jaar zijn we nu bezig?"
+        />
 
-		<field
-			name="template"
-			type="text"
-			size=""
-			default="tpl_kampinfopreview"
-			label="Preview template"
-			description="Joomla Template voor het tonen van een preview van een HIT Kamp"
-		/>
-	</fieldset>
+        <field
+            name="useComponentUrls"
+            type="radio"
+            default="0"
+            label="COM_KAMPINFO_PREFS_USECOMPONENTURLS_LABEL"
+            description="COM_KAMPINFO_PREFS_USECOMPONENTURLS_DESC"
+            class="btn-group btn-group-yesno"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
 
-	
-	<fieldset
-		name="icons"
-		label="Icoontjes"
-		description="Configuratie mbt de iconen en afbeeldingen"
-	>
-		<field
-			name="iconFolderSmall"
-			type="text"
-			size="80"
-			default="media/com_kampinfo/images/ldpi"
-			label="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_LABEL"
-			description="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_DESC"
-		/>
-		<field
-			name="iconFolderLarge"
-			type="text"
-			size="80"
-			default="media/com_kampinfo/images/mdpi"
-			label="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_LABEL"
-			description="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_DESC"
-		/>
-		<field
-			name="iconExtension"
-			type="list"
-			default=".png"
-			label="COM_KAMPINFO_PREFS_ICONEXTENSION_LABEL"
-			description="COM_KAMPINFO_PREFS_ICONEXTENSION_DESC"
-		>
-			<option value=".gif">GIF</option>
-			<option value=".png">PNG</option>
-			<option value=".jpg">JPG</option>
-		</field>
-		<field
-			name="activiteitengebiedenFolder"
-			type="text"
-			size="80"
-			default="media/com_kampinfo/images/activiteitengebieden"
-			label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_LABEL"
-			description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_DESC"
-		/>
-		<field
-			name="activiteitengebiedenExtension"
-			type="list"
-			default=".png"
-			label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_LABEL"
-			description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_DESC"
-		>
-			<option value=".gif">GIF</option>
-			<option value=".png">PNG</option>
-			<option value=".jpg">JPG</option>
-		</field>
-	</fieldset>
+        <field
+            name="template"
+            type="templatestyle"
+            default="tpl_kampinfopreview"
+            label="Preview template"
+            description="Joomla Template voor het tonen van een preview van een HIT Kamp"
+        />
+    </fieldset>
 
-	<fieldset
-		name="permissions"
-		label="JCONFIG_PERMISSIONS_LABEL"
-		description="JCONFIG_PERMISSIONS_DESC"
-	>
-		<field
-			name="rules"
-			type="rules"
-			label="JCONFIG_PERMISSIONS_LABEL"
-			class="inputbox"
-			validate="rules"
-			filter="rules"
-			component="com_kampinfo"
-			section="component" />
-	</fieldset>
+
+    <fieldset
+        name="icons"
+        label="Icoontjes"
+        description="Configuratie mbt de iconen en afbeeldingen"
+    >
+        <field
+            name="iconFolderSmall"
+            type="text"
+            size="80"
+            default="media/com_kampinfo/images/ldpi"
+            label="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_LABEL"
+            description="COM_KAMPINFO_PREFS_ICONFOLDERSMALL_DESC"
+        />
+        <field
+            name="iconFolderLarge"
+            type="text"
+            size="80"
+            default="media/com_kampinfo/images/mdpi"
+            label="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_LABEL"
+            description="COM_KAMPINFO_PREFS_ICONFOLDERLARGE_DESC"
+        />
+        <field
+            name="iconExtension"
+            type="list"
+            default=".png"
+            label="COM_KAMPINFO_PREFS_ICONEXTENSION_LABEL"
+            description="COM_KAMPINFO_PREFS_ICONEXTENSION_DESC"
+        >
+            <option value=".gif">GIF</option>
+            <option value=".png">PNG</option>
+            <option value=".jpg">JPG</option>
+        </field>
+        <field
+            name="activiteitengebiedenFolder"
+            type="text"
+            size="80"
+            default="media/com_kampinfo/images/activiteitengebieden"
+            label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_LABEL"
+            description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENFOLDER_DESC"
+        />
+        <field
+            name="activiteitengebiedenExtension"
+            type="list"
+            default=".png"
+            label="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_LABEL"
+            description="COM_KAMPINFO_PREFS_ACTIVITEITENGEBIEDENEXTENSION_DESC"
+        >
+            <option value=".gif">GIF</option>
+            <option value=".png">PNG</option>
+            <option value=".jpg">JPG</option>
+        </field>
+    </fieldset>
+
+    <fieldset
+        name="permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC"
+    >
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            class="inputbox"
+            validate="rules"
+            filter="rules"
+            component="com_kampinfo"
+            section="component" />
+    </fieldset>
 
 </config>

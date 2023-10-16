@@ -40,4 +40,8 @@ class IconModel extends AdminModel {
         return $data;
     }
 
+    protected function canDelete($record) {
+        return Factory::getUser()->authorise('hiticon.delete', $this->option);
+    }
+
 }

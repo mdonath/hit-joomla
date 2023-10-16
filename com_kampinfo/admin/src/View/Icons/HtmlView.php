@@ -33,37 +33,40 @@ class HtmlView extends BaseHtmlView {
             $this->setLayout('emptystate');
         }
 
+        $this->canDo = ContentHelper::getActions('com_kampinfo', 'hiticon');
+
         $this->addToolbar();
 
         parent::display($tpl);
     }
 
     protected function addToolbar() {
-        $canDo   = ContentHelper::getActions('com_kampinfo');
+        $canDo   = $this->canDo;
         $user    = Factory::getApplication()->getIdentity();
         $toolbar = Toolbar::getInstance();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_SUBMENU_HITICONS'), 'kampinfo');
 
-        //if ($canDo->get('core.create')) {
+        if ($canDo->get('hiticon.create')) {
             $toolbar->addNew('icon.add');
-        //}
+        }
 
-        $toolbar->edit('icon.edit')
-            ->listCheck(true);
-        $toolbar->divider();
+        if ($this->canDo->get('hiticon.edit')) {
+            $toolbar
+                ->edit('icon.edit')
+                ->listCheck(true);
+        }
 
-        // if ($canDo->get('core.delete')) {
-            $toolbar->delete('icons.delete')
+        if ($canDo->get('hiticon.delete')) {
+            $toolbar
+                ->delete('icons.delete')
                 ->message('JGLOBAL_CONFIRM_DELETE')
                 ->listCheck(true);
-            $toolbar->divider();
-        // }
+        }
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
             $toolbar->preferences('com_kampinfo');
-            $toolbar->divider();
         }
-
     }
+
 }

@@ -17,7 +17,8 @@ $wa ->useScript('keepalive')
       id="site-form"
       class="form-validate">
 
-    <?php echo $this->form->renderField('id'); ?>
+      <?php echo $this->form->renderField('id'); ?>
+      <?php echo $this->form->renderField('title'); ?>
 
     <div class="row form-vertical">
         <div class="col-md-6">
@@ -29,39 +30,48 @@ $wa ->useScript('keepalive')
     </div>
 
     <div class="main-card">
-        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'helpdesk', 'recall' => true, 'breakpoint' => 768]); ?>
+        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'algemeen', 'recall' => true, 'breakpoint' => 768]); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'helpdesk', 'Helpdesk'); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'algemeen', 'Algemeen'); ?>
         <div class="row">
-            <div class="col-lg-6">
-                <?php echo $this->form->renderFieldset('helpdesk'); ?>
-            </div>
-        </div>
-        <?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'financien', 'Financiën'); ?>
-        <div class="row">
-            <div class="col-lg-12">
-                <?php echo $this->form->renderFieldset('financien'); ?>
-            </div>
-        </div>
-        <?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'hitcourant', 'HIT Courant'); ?>
-        <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 <?php echo $this->form->renderFieldset('hitcourant'); ?>
             </div>
-        </div>
-        <?php echo HTMLHelper::_('uitab.endTab'); ?>
-
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'akkoorden', 'Akkoorden'); ?>
-        <div class="row">
-            <div class="col-lg-12">
-                <?php echo $this->form->renderFieldset('akkoorden'); ?>
+            <div class="col-lg-4">
+            <fieldset id="akkoorden" class="options-form">
+                    <legend>Akkoorden</legend>
+                    <div><?php echo $this->form->renderFieldset('akkoorden'); ?></div>
+                </fieldset>
+                <fieldset id="helpdesk" class="options-form">
+                    <legend>Contactgegevens voor Helpdesk</legend>
+                    <div><?php echo $this->form->renderFieldset('helpdesk'); ?></div>
+                </fieldset>
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+        <?php if ($this->canDo->get('core.admin')) { ?>
+            <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'financien', 'Financiën'); ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php echo $this->form->renderFieldset('financien'); ?>
+                </div>
+            </div>
+            <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+            <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('JCONFIG_PERMISSIONS_LABEL')); ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <fieldset id="fieldset-rules" class="options-form">
+                        <legend><?php echo(Text::_('JCONFIG_PERMISSIONS_LABEL')); ?></legend>
+                        <div>
+                            <?php echo $this->form->renderFieldset('permissions'); ?>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <?php echo HTMLHelper::_('uitab.endTab'); ?>
+        <?php } ?>
 
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
     </div>

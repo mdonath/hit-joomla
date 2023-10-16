@@ -33,32 +33,37 @@ class HtmlView extends BaseHtmlView {
             $this->setLayout('emptystate');
         }
 
+        $this->canDo = ContentHelper::getActions('com_kampinfo');
+
         $this->addToolbar();
 
         parent::display($tpl);
     }
 
     protected function addToolbar() {
-        $canDo   = ContentHelper::getActions('com_kampinfo');
-        $user    = Factory::getApplication()->getIdentity();
+        $canDo   = $this->canDo;
         $toolbar = Toolbar::getInstance();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'kampinfo');
 
-        //if ($canDo->get('core.create')) {
+        if ($canDo->get('hitproject.create')) {
             $toolbar->addNew('project.add');
-        //}
+        }
 
-        $toolbar->edit('project.edit')
-            ->listCheck(true);
-        $toolbar->divider();
-
-        // if ($canDo->get('core.delete')) {
-            $toolbar->delete('projects.delete')
-                ->message('JGLOBAL_CONFIRM_DELETE')
-                ->listCheck(true);
+        if ($canDo->get('hitproject.edit')) {
+            $toolbar
+                -> edit('project.edit')
+                -> listCheck(true);
             $toolbar->divider();
-        // }
+        }
+
+        if ($canDo->get('hitproject.delete')) {
+            $toolbar
+                -> delete('projects.delete')
+                -> message('JGLOBAL_CONFIRM_DELETE')
+                -> listCheck(true);
+            $toolbar->divider();
+        }
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
             $toolbar->preferences('com_kampinfo');

@@ -2,63 +2,43 @@
 <access component="com_kampinfo">
 
 	<section name="component">
-	    <!-- Kun je gebruik maken van KampInfo? -->
-		<action name="core.manage"        title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<!-- Wie mag de component level permissions via de 'Options' toolbar button bewerken? -->
+		<action name="core.admin"         title="JACTION_ADMIN"   description="JACTION_ADMIN_COMPONENT_DESC" />
 		<!-- Kun je de instellingen van KampInfo wijzigen? -->
-	    <action name="core.admin"         title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
-		
-	    
-		<action name="hitproject.menu"    title="Toon HIT Project menu"  description="Toont het submenu" />
+		<action name="core.options"       title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC"/>
+		<!-- Kun je gebruik maken van KampInfo? -->
+		<action name="core.manage"        title="JACTION_MANAGE"  description="JACTION_MANAGE_COMPONENT_DESC" />
+
 		<action name="hitproject.create"  title="Maak HIT Project"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hitproject.delete"  title="Verwijder HIT Project"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitproject.edit"    title="Bewerk HIT Project"    description="JACTION_EDIT_COMPONENT_DESC" />
-		
-		
-		<action name="hiticon.menu"       title="Toon HIT Icoon menu"  description="Toont het submenu" />
-		<action name="hiticon.create"     title="Maak HIT Icoon"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hiticon.delete"     title="Verwijder HIT Icoon"  description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="hiticon.edit"       title="Bewerk HIT Icoon"    description="JACTION_EDIT_COMPONENT_DESC" />
-		
-		
-		<action name="hitsite.menu"       title="Toon HIT Plaats menu"  description="Toont het submenu" />
+		<action name="hitproject.delete"  title="Verwijder HIT Project"  description="JACTION_DELETE_COMPONENT_DESC" />
+
 		<action name="hitsite.create"     title="Maak HIT Plaats"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hitsite.delete"     title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitsite.edit"       title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitsite.edit.state" title="Publiceer HIT Plaats"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
-		
-		
-		<action name="hitcamp.menu"       title="Toon HIT Kamponderdeel menu"  description="Toont het submenu" />
+		<action name="hitsite.delete"     title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
+
 		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hitcamp.delete"     title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitcamp.edit"       title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
 		<action name="hitcamp.edit.own"   title="Bewerk eigen HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
-		
-	</section>
-	
-	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
-	<section name="hiticon">
-   		<action name="hiticon.create"     title="Maak HIT Icoon"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hiticon.delete"     title="Verwijder HIT Icoon"  description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="hiticon.edit"       title="Bewerk HIT Icoon"    description="JACTION_EDIT_COMPONENT_DESC" />
-	</section>
+		<action name="hitcamp.delete"     title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
 
-	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
-	<section name="hitproject">
-		<action name="core.admin"         title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
-   		<action name="hitproject.create"  title="Maak HIT Project"  description="JACTION_CREATE_COMPONENT_DESC" />
-		<action name="hitproject.delete"  title="Verwijder HIT Project"  description="JACTION_DELETE_COMPONENT_DESC" />
-		<action name="hitproject.edit"    title="Bewerk HIT Project"    description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="hiticon.create"     title="Maak HIT Icoon"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hiticon.edit"       title="Bewerk HIT Icoon"    description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="hiticon.delete"     title="Verwijder HIT Icoon"  description="JACTION_DELETE_COMPONENT_DESC" />
+
 	</section>
 
 	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
 	<section name="hitsite">
-		<action name="core.admin"         title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.admin"         title="JACTION_ADMIN"   description="JACTION_ADMIN_COMPONENT_DESC" />
+
 		<action name="hitsite.create"     title="Maak HIT Plaats"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitsite.delete"     title="Verwijder HIT Plaats"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitsite.edit"       title="Bewerk HIT Plaats"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitsite.edit.state" title="Publiceer HIT Plaats"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
-   		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitcamp.delete"     title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitcamp.edit"       title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
@@ -67,12 +47,13 @@
 
 	<!-- Dit maakt dat het bewerk-scherm ook autorisatie snapt -->
 	<section name="hitcamp">
-		<action name="core.admin"         title="JACTION_ADMIN"  description="JACTION_ADMIN_COMPONENT_DESC" />
-   		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.admin"         title="JACTION_ADMIN"   description="JACTION_ADMIN_COMPONENT_DESC" />
+
+		<action name="hitcamp.create"     title="Maak HIT Kamponderdeel"  description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="hitcamp.delete"     title="Verwijder HIT Kamponderdeel"  description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="hitcamp.edit"       title="Bewerk HIT Kamponderdeel"    description="JACTION_EDIT_COMPONENT_DESC" />
 		<action name="hitcamp.edit.state" title="Publiceer HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
 		<action name="hitcamp.edit.own"   title="Bewerk eigen HIT Kamponderdeel"    description="JACTION_EDITSTATE_COMPONENT_DESC" />
 	</section>
-		
+
 </access>

@@ -8,8 +8,7 @@ defined('_JEXEC') or die;
 
 class IconsController extends AdminController {
 
-    public function getModel($name = 'Icon', $prefix = 'Administrator', $config = array('ignore_request' => true))
-    {
+    public function getModel($name = 'Icon', $prefix = 'Administrator', $config = array('ignore_request' => true)) {
         return parent::getModel($name, $prefix, $config);
     }
 

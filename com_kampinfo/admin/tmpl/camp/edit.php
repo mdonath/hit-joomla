@@ -156,12 +156,17 @@ $wa ->useScript('keepalive')
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', 'Toegangsrechten'); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('JCONFIG_PERMISSIONS_LABEL')); ?>
         <div class="row">
-            <div class="col-md-12">
-                <?php echo $this->form->renderFieldset('permissions'); ?>
+                <div class="col-lg-12">
+                    <fieldset id="fieldset-rules" class="options-form">
+                        <legend><?php echo(Text::_('JCONFIG_PERMISSIONS_LABEL')); ?></legend>
+                        <div>
+                            <?php echo $this->form->renderFieldset('permissions'); ?>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
-        </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>

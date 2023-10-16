@@ -27,6 +27,10 @@ class CampModel extends AdminModel {
         return $form;
     }
 
+    protected function canEditState($record) {
+        return $this->getCurrentUser()->authorise('hitcamp.edit.state', 'com_kampinfo.hitcamp.' . (int) $record->id);
+    }
+
     protected function loadFormData() {
         $data = Factory::getApplication()->getUserState('com_kampinfo.edit.camp.data', []);
 

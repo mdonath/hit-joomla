@@ -47,13 +47,18 @@ class IconsModel extends ListModel {
 
         $filterSearch = $this->getState('filter.search');
         if (!empty ($filterSearch)) {
-            $term = $db->quote('%'.$db->escape($filterSearch).'%');
-            $query->where('(i.bestandsnaam LIKE ' . $term . ') OR (i.tekst LIKE ' . $term . ')');
+            $term = '%' . $filterSearch . '%';
+            $query
+                -> where('(i.bestandsnaam LIKE :term1) OR (i.tekst LIKE :term2)')
+                -> bind(':term1', $term)
+                -> bind(':term2', $term);
         }
 
         $filterSoort = $this->getState('filter.soort');
         if (!empty ($filterSoort) && $filterSoort != '-1') {
-            $query->where('(i.soort = ' . $db->quote($db->escape($filterSoort)) . ')');
+            $query
+                -> where('(i.soort = :soort)')
+                -> bind(':soort', $filterSoort);
         }
 
         // ordering clause
