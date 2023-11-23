@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView {
             }
         }
         // What Access Permissions does this user have? What can (s)he do?
-        $this->canDo = KampInfoHelper::getActions('hitsite', $ids);
+        $this->canDo = KampInfoHelper::getActions('site', $ids);
     }
 
     protected function addToolbar() {

@@ -13,7 +13,7 @@ class CampController extends FormController {
         $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
         if( !empty( $id ) ) {
             $user = Factory::getUser();
-            return $user->authorise("hitcamp.edit", "com_kampinfo.hitcamp." . $id );
+            return $user->authorise("hitcamp.edit", "com_kampinfo.camp." . $id );
         }
     }
 

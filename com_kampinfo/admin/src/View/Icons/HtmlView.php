@@ -33,7 +33,7 @@ class HtmlView extends BaseHtmlView {
             $this->setLayout('emptystate');
         }
 
-        $this->canDo = ContentHelper::getActions('com_kampinfo', 'hiticon');
+        $this->canDo = ContentHelper::getActions('com_kampinfo');
 
         $this->addToolbar();
 

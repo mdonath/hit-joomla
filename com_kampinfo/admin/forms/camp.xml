@@ -9,6 +9,10 @@
                 readonly="true"
                 class="readonly"
         />
+        <field
+                name="title"
+                type="hidden"
+        />
         <field  name="hitsite_id"
                 type="Site"
                 label="HIT Plaats"
@@ -219,6 +223,7 @@
                 description="Minimale groepsgrootte waarmee ingeschreven kan worden (individueel: 1, koppel: 2, troppel: 3, etc)."
                 size="3"
                 maxlength="2"
+                default="1"
                 required="true"
                 filter="integer"
         />
@@ -228,6 +233,7 @@
                 description="Maximale groepsgrootte waarmee ingeschreven kan worden."
                 size="3"
                 maxlength="2"
+                default="1"
                 required="true"
                 filter="integer"
         />
@@ -562,7 +568,7 @@
                 description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
                 maxlength="6"
                 size="6"
-                default=""
+                default="0"
         />
         <field	name="ouderShantiFormuliernummer"
                 fieldName="ouderShantiFormuliernummer"
@@ -571,7 +577,7 @@
                 description="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_DESC"
                 maxlength="6"
                 size="6"
-                default=""
+                default="0"
         />
         <field	name="extraShantiFormuliernummer"
                 fieldName="extraShantiFormuliernummer"
@@ -580,7 +586,7 @@
                 description="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_DESC"
                 maxlength="6"
                 size="6"
-                default=""
+                default="0"
         />
     </fieldset>
 
@@ -593,7 +599,7 @@
                 description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
                 maxlength="3"
                 size="3"
-                default=""
+                default="0"
         />
         <field	name="gereserveerd"
                 type="number"
@@ -601,7 +607,7 @@
                 description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
                 maxlength="3"
                 size="3"
-                default=""
+                default="0"
         />
         <field	name="aantalSubgroepen"
                 type="number"
@@ -609,7 +615,7 @@
                 description="Het huidige aantal ingeschreven subgroepen"
                 maxlength="3"
                 size="3"
-                default=""
+                default="0"
         />
     </fieldset>
 
@@ -626,7 +632,7 @@
             filter="rules"
             validate="rules"
             component="com_kampinfo"
-            section="hitcamp"
+            section="camp"
         />
     </fieldset>
 </form>

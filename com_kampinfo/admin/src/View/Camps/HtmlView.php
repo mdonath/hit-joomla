@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView {
             }
         }
         // What Access Permissions does this user have? What can (s)he do?
-        $this->canDo = KampInfoHelper::getActions('hitcamp', $ids);
+        $this->canDo = KampInfoHelper::getActions('camp', $ids);
     }
 
     protected function addToolbar() {
@@ -62,7 +62,20 @@ class HtmlView extends BaseHtmlView {
             $toolbar->addNew('camp.add');
         }
 
-        if (!$this->isEmptyState && ($this->canDo->get('hitcamp.edit') || $this->canDo->get('hitcamp.delete') || $this->canDo->get('hitcamp.edit.state') || $user->authorise('core.admin'))) {
+        if ($this->canDo->get('hitcamp.edit')) {
+            $toolbar
+                ->edit('camp.edit')
+                ->listCheck(true);
+        }
+
+        if ($this->canDo->get('hitcamp.delete')) {
+            $toolbar
+                ->delete('camps.delete')
+                ->message('JGLOBAL_CONFIRM_DELETE')
+                ->listCheck(true);
+        }
+
+        if (!$this->isEmptyState && ($this->canDo->get('hitsite.edit') || $this->canDo->get('hitcamp.edit') || $this->canDo->get('hitcamp.edit.state'))) {
             $dropdown = $toolbar
                 ->dropdownButton('status-group', 'JTOOLBAR_CHANGE_STATUS')
                 ->toggleSplit(false)
@@ -72,22 +85,26 @@ class HtmlView extends BaseHtmlView {
         
             $childBar = $dropdown->getChildToolbar();
 
-            if ($this->canDo->get('hitcamp.edit')) {
-                $childBar
-                    ->edit('camp.edit')
-                    ->listCheck(true);
-            }
-
-            if ($this->canDo->get('hitcamp.delete')) {
-                $childBar
-                    ->delete('camps.delete')
-                    ->message('JGLOBAL_CONFIRM_DELETE')
-                    ->listCheck(true);
-            }
-
             if ($this->canDo->get('hitcamp.edit.state')) {
                 $childBar
                     ->publish('camps.publish')
+                    ->listCheck(true);
+                $childBar
+                    ->unpublish('camps.unpublish')
+                    ->listCheck(true);
+            }
+
+            if ($this->canDo->get('hitcamp.edit')) {
+                $childBar->standardButton('publish', 'Akkoord kamp', 'camps.akkoordKamp')
+                    ->listCheck(true);
+                $childBar->standardButton('unpublish', 'Niet akkoord kamp', 'camps.nietAkkoordKamp')
+                    ->listCheck(true);
+            }
+
+            if ($this->canDo->get('hitsite.edit')) {
+                $childBar->standardButton('publish', 'Akkoord plaats', 'camps.akkoordPlaats')
+                    ->listCheck(true);
+                $childBar->standardButton('unpublish', 'Niet akkoord plaats', 'camps.nietAkkoordPlaats')
                     ->listCheck(true);
             }
         }

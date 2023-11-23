@@ -30,7 +30,7 @@ class HtmlView extends BaseHtmlView {
 
         $ids = array();
         $ids[] = $item->id;
-        $this->canDo = KampInfoHelper::getActions('hitsite', $ids);
+        $this->canDo = KampInfoHelper::getActions('camp', $ids);
 
         $this->addToolbar();
 

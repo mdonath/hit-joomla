@@ -5,6 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 
 
@@ -28,7 +29,15 @@ class CampModel extends AdminModel {
     }
 
     protected function canEditState($record) {
-        return $this->getCurrentUser()->authorise('hitcamp.edit.state', 'com_kampinfo.hitcamp.' . (int) $record->id);
+        return $this->getCurrentUser()->authorise('hitcamp.edit.state', 'com_kampinfo.camp.' . (int) $record->id);
+    }
+
+    protected function canEdit($record) {
+        return $this->getCurrentUser()->authorise('hitcamp.edit', 'com_kampinfo.camp.' . (int) $record->id);
+    }
+
+    protected function canEditParent($record) {
+        return $this->getCurrentUser()->authorise('hitsite.edit', 'com_kampinfo.site.' . (int) $record->hitsite_id);
     }
 
     protected function loadFormData() {
@@ -50,7 +59,7 @@ class CampModel extends AdminModel {
         // Access checks.
         foreach ($pks as $i => $pk) {
             if ($table->load($pk)) {
-                if (!$this->canEditState($table)) {
+                if (!$this->canEditParent($table)) {
                     // Prune items that you can't change.
                     unset($pks[$i]);
                     Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'), 'error');
@@ -74,7 +83,7 @@ class CampModel extends AdminModel {
         // Access checks.
         foreach ($pks as $i => $pk) {
             if ($table->load($pk)) {
-                if (!$this->canEditState($table)) {
+                if (!$this->canEdit($table)) {
                     // Prune items that you can't change.
                     unset($pks[$i]);
                     Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'), 'error');

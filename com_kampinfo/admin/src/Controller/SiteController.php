@@ -13,7 +13,7 @@ class SiteController extends FormController {
         $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
         if( !empty( $id ) ) {
             $user = Factory::getUser();
-            return $user->authorise("hitsite.edit", "com_kampinfo.hitsite." . $id );
+            return $user->authorise("hitsite.edit", "com_kampinfo.site." . $id );
         }
     }
 

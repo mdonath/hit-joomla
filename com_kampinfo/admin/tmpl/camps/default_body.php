@@ -20,9 +20,9 @@ defined('_JEXEC') or die('Restricted Access');
             <td>
                 <?php 
                     $toonLink = $this->canDo->get('hitcamp.edit.'.(int)$item->id);
-                    if ($item->akkoordHitPlaats) {
-                        $toonLink = $this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id);
-                    }
+                    // if ($item->akkoordHitPlaats) {
+                    //     $toonLink = $this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id);
+                    // }
                 ?>
                 <?php if ($toonLink) { ?>
                     <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=camp.edit&id='.(int)$item->id); ?>">

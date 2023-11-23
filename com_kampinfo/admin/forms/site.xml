@@ -14,6 +14,7 @@
         <field
                 name="title"
                 type="hidden"
+                default="Een HIT Plaats"
         />
 
         <field
@@ -125,7 +126,7 @@
                 filter="rules"
                 validate="rules"
                 component="com_kampinfo"
-                section="hitsite"
+                section="site"
         />
     </fieldset>
 

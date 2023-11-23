@@ -29,11 +29,11 @@ class SiteModel extends AdminModel {
     }
 
     protected function canEditState($record) {
-        return $this->getCurrentUser()->authorise('hitsite.edit.state', 'com_kampinfo.hitsite.' . (int) $record->id);
+        return $this->getCurrentUser()->authorise('hitsite.edit.state', 'com_kampinfo.site.' . (int) $record->id);
     }
 
     protected function canEdit($record) {
-        return $this->getCurrentUser()->authorise('hitsite.edit', 'com_kampinfo.hitsite.' . (int) $record->id);
+        return $this->getCurrentUser()->authorise('hitsite.edit', 'com_kampinfo.site.' . (int) $record->id);
     }
 
     protected function loadFormData() {

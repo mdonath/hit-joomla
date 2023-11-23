@@ -32,12 +32,10 @@ class KampInfoHelper {
         } else {
             foreach ($actions as $action) {
                 $result->set($action->name, $user->authorise($action->name, 'com_kampinfo'));
-                if (self::startsWith($action->name, $entity) && !self::endsWith($action->name, 'create')) {
+                if (self::startsWith($action->name, "hit$entity") && !self::endsWith($action->name, 'create')) {
                     foreach ($entityIds as $entityId) {
-                        $assetName = 'com_kampinfo.'.$entity.'.'. $entityId;
-                        $isAuth = $user->authorise($action->name, $assetName);
-                        // echo ("assetname $assetName isAuth: $isAuth<br>");
-                        $result->set($action->name.'.'.$entityId, $isAuth);
+                        $isAuth = $user->authorise($action->name, "com_kampinfo.$entity.$entityId");
+                        $result->set("$action->name.$entityId", $isAuth);
                         if (!empty($isAuth)) {
                             $result->set($action->name, $isAuth);
                         }
@@ -45,13 +43,13 @@ class KampInfoHelper {
                 }
             }
         }
-/*
+
         echo("<h1>Entity: $entity</h1><ul>");
         foreach ($result as $k=>$v) {
             echo ("<li>Action: $k: $v</li>");
         }
         echo '</ul>';
-*/
+
         return $result;
     }
 
@@ -96,6 +94,7 @@ class KampInfoHelper {
         return DateTime::createFromFormat('d-m-Y', $paasKalender[$jaar]);
     }
 
+    // TODO: WEGGOOIEN?
     public static function addSubmenu($submenu) {
         // set some global property
         $document = Factory::getDocument();

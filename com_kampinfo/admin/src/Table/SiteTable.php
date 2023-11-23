@@ -28,13 +28,13 @@ class SiteTable extends Table {
     protected function _getAssetName() {
         $k = $this->_tbl_key;
         $id = (int) $this->$k;
-        return 'com_kampinfo.hitsite.'.$id;
+        return 'com_kampinfo.site.'.$id;
     }
 
     protected function _getAssetTitle() {
         return $this->naam;
     }
-	
+
     protected function _getAssetParentId(Table $table = NULL, $id = NULL) {
         // We will retrieve the parent-asset from the Asset-table
         $assetParent = Table::getInstance('Asset');

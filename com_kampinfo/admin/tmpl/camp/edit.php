@@ -18,6 +18,7 @@ $wa ->useScript('keepalive')
       class="form-validate">
 
     <?php echo $this->form->renderField('id'); ?>
+    <?php echo $this->form->renderField('title'); ?>
 
     <div class="row form-vertical">
         <div class="col-md-6">
