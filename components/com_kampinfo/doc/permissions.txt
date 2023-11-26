@@ -1,0 +1,24 @@
+Users > Groups:
+===============
+Registered
+    - Author
+        - KampInfo
+            - HIT Alphen
+            - HIT Dwingeloo
+            - HIT Harderwijk Kamp
+                - HIT Harderwijk
+            - HIT Heerenveen Kamp
+                - HIT Heerenveen
+            - HIT Mook Kamp
+                - HIT Mook
+            - HIT Ommen Kamp
+                - HIT Ommen
+            - HIT Zeeland Kamp
+                - HIT Zeeland
+            - HIT Zeewolde Kamp
+                - HIT Zeewolde
+
+
+System > Setup | Global Configuration > Permissions:
+====================================================
+KampInfo -> Administrator Login: Allowed
