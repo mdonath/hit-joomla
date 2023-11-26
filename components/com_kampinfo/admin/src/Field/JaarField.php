@@ -18,4 +18,5 @@ class JaarField extends ListField {
             KampInfoHelper::getHitJaarOptions()
         );
     }
+
 }

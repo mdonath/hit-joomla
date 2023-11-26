@@ -8,6 +8,9 @@ use Joomla\CMS\Form\Field\ListField;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
 
+/**
+ * Field voor Iconsoorten.
+ */
 class IconsoortField extends ListField {
 
     protected $type = 'Iconsoort';
@@ -18,4 +21,5 @@ class IconsoortField extends ListField {
             KampInfoHelper::getHitIconSoortOptions()
         );
     }
+
 }

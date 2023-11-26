@@ -18,4 +18,5 @@ class ProjectField extends ListField {
             KampInfoHelper::getHitProjectOptions()
         );
     }
+
 }
