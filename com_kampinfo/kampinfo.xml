@@ -64,7 +64,7 @@
 
                         <menu view="icons">COM_KAMPINFO_SUBMENU_HITICONS</menu>
                         <menu view="import">COM_KAMPINFO_SUBMENU_IMPORT</menu>
-                        <menu view="downloads">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
+                        <menu view="downloadlog">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
                         <menu view="reports">COM_KAMPINFO_SUBMENU_REPORTS</menu>
                 </submenu>	
 

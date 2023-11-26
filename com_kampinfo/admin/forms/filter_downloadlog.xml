@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+    addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field">
+
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                label="ZOEKEN"
+                hint="JSEARCH_FILTER"
+        />
+        
+        <field
+                name="jaar"
+                type="project"
+                label="COM_KAMPINFO_SELECT_HITPROJECT"
+                description="COM_CONTENT_LIST_LIMIT_DESC"
+                extension="com_kampinfo"
+                class="form-select js-select-submit-on-change"
+        >
+            <option value="">- Selecteer jaar -</option>
+        </field>
+    </fields>
+
+    <fields name="list">
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            default="25"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />
+    </fields>
+</form>

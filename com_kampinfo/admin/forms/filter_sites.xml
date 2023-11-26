@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field">
-	<fields name="filter">
-		<field
-	            name="search"
-	            type="text"
-	            label="ZOEKEN"
-	            hint="JSEARCH_FILTER"
+    <fields name="filter">
+        <field
+                name="search"
+                type="text"
+                label="ZOEKEN"
+                hint="JSEARCH_FILTER"
         />
-		
-		<field
-	            name="published"
-	            type="list"
-	            label="COM_CONTENT_FILTER_PUBLISHED"
-	            description="COM_CONTENT_FILTER_PUBLISHED_DESC"
-	            class="js-select-submit-on-change"
+        <field
+                name="published"
+                type="list"
+                label="COM_CONTENT_FILTER_PUBLISHED"
+                description="COM_CONTENT_FILTER_PUBLISHED_DESC"
+                class="js-select-submit-on-change"
             >
             <option value="">JOPTION_SELECT_PUBLISHED</option>
             <option value="1">JPUBLISHED</option>
             <option value="0">JUNPUBLISHED</option>
         </field>
 
-		<field
-				name="jaar"
-	            type="project"
-	            label="COM_KAMPINFO_SELECT_HITPROJECT"
-	            description="COM_KAMPINFO_SELECT_HITPROJECT"
-				extension="com_kampinfo"
-				class="form-select js-select-submit-on-change"
-		>
-			<option value="-1">COM_KAMPINFO_SELECT_HITPROJECT</option>
-		</field>
+        <field
+                name="jaar"
+                type="project"
+                label="COM_KAMPINFO_SELECT_HITPROJECT"
+                description="COM_KAMPINFO_SELECT_HITPROJECT"
+                extension="com_kampinfo"
+                class="form-select js-select-submit-on-change"
+        >
+            <option value="-1">COM_KAMPINFO_SELECT_HITPROJECT</option>
+        </field>
 	</fields>
 
 	<fields name="list">
