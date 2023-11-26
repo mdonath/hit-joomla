@@ -1,7 +1,9 @@
 <?php
 namespace HITScoutingNL\Plugin\Console\Group\CliCommand;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
+
+use Joomla\Console\Command\AbstractCommand;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Usergroup;
 use Joomla\Database\DatabaseAwareTrait;
@@ -12,10 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Joomla\Console\Command\AbstractCommand;
 
-class AddGroupCommand extends AbstractCommand
-{
+
+class AddGroupCommand extends AbstractCommand {
+
     use DatabaseAwareTrait;
 
     protected static $defaultName = 'group:add';

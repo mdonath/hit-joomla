@@ -10,8 +10,8 @@ use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use HITScoutingNL\Plugin\Console\Group\Extension\GroupConsolePlugin;
 
-return new class implements ServiceProviderInterface
-{
+return new class implements ServiceProviderInterface {
+
     /**
      * Registers the service provider with a DI container.
      *
@@ -21,8 +21,7 @@ return new class implements ServiceProviderInterface
      *
      * @since   4.2.0
      */
-    public function register(Container $container)
-    {
+    public function register(Container $container) {
         $container->set(
             PluginInterface::class,
             function (Container $container) {

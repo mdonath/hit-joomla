@@ -4,101 +4,106 @@ defined('_JEXEC') or die ('Restricted access');
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Registry\Registry;
 
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfourl.php';
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/../com_kampinfo/helpers/kampinfo.php';
+use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
+use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
 
 class PlgContentKampinfo extends CMSPlugin {
 
     protected $db;
 
-	protected $autoloadLanguage = true;
+    protected $autoloadLanguage = true;
 
     /*
      * Usage:
      * 
-     * {kampinfo [type="landelijk|plaats"] [plaats="$PLAATS"] [kopje=0|1] [volgorde="naam|leeftijd"]} 
+     * {kampinfo [type="landelijk|plaats"] [plaats="$PLAATS"] [kopje=0|1] [volgorde="naam|leeftijd"] [delim="|"]} 
      */
+    public function onContentPrepare($context, &$row, &$params, $page = 0) {
+        if ($context === 'com_finder.indexer') {
+            return;
+        }
 
-	function onContentPrepare($context, $article, $params, $limitstart) {
-        $allowed_contexts = array('com_content.article', 'com_content.featured', 'com_content.category');
-        
-		if (!in_array($context, $allowed_contexts, true)) {
-			return true;
-		}
+        $allowed_contexts = ['com_content.article', 'com_content.featured', 'com_content.category'];
+        if (!in_array($context, $allowed_contexts, true)) {
+            return;
+        }
 
-		if (!isset($article->id) || !(int) $article->id) {
-			return true;
-		}
+        if (!($params instanceof Registry)) {
+            return;
+        }
 
-		$plugincode = 'kampinfo';
-		$regex = "/{". $plugincode ."\ ([^}]+)\}|{". $plugincode ."\}/m";
-		if (preg_match_all($regex, $article->text, $matches)) {
+        if (!isset($row->id) || !(int) $row->id) {
+            return;
+        }
+
+        $plugincode = 'kampinfo';
+        $regex = "/{". $plugincode ."\ ([^}]+)\}|{". $plugincode ."\}/m";
+        if (preg_match_all($regex, $row->text, $matches)) {
 
             $params = ComponentHelper::getParams('com_kampinfo');
 
             for ($i = 0; $i < count($matches[0]); $i++) {
-
-				$configs = explode(' ', $matches[1][$i]);
-                $config = array();
+                $configs = explode(' ', $matches[1][$i]);
+                $config = [];
                 $config['useComponentUrls'] = $params->get('useComponentUrls') == 1;
                 $config['iconFolderSmall'] = $params->get('iconFolderSmall');
                 $config['iconExtension'] = $params->get('iconExtension');
                 
                 // collect parameters
-				foreach ($configs as $item) {
-					list($key, $value) = explode("=", $item);
-					$config[$key] = str_replace(array("'",'"'), '', $value);
-				}
+                foreach ($configs as $item) {
+                    list($key, $value) = explode("=", $item);
+                    $config[$key] = str_replace(array("'",'"'), '', $value);
+                }
 
-				$type = '';
-				if (array_key_exists('type', $config)) {
-					$type = $config['type'];
-				}
-				if ($type == '' || $type == 'landelijk') {
-					$result = $this->load_landelijk_overzicht($config);
-					$article->text = str_replace($matches[0][$i], $result, $article->text);
+                $type = '';
+                if (array_key_exists('type', $config)) {
+                    $type = $config['type'];
+                }
+                if ($type == '' || $type == 'landelijk') {
+                    $result = $this->loadLandelijkOverzicht($config);
+                    $row->text = str_replace($matches[0][$i], $result, $row->text);
 
-				} else if ($type == 'plaats') {
-					$result = $this->load_plaats_overzicht($config);
-					$article->text = str_replace($matches[0][$i], $result, $article->text);
-				}
-			}
-		}
-		return true;
-	}
+                } else if ($type == 'plaats') {
+                    $result = $this->loadPlaatsOverzicht($config);
+                    $row->text = str_replace($matches[0][$i], $result, $row->text);
+                }
+            }
+        }
+    }
 
-    function getParamIfExists($config, $key) {
+    private function getParamIfExists($config, $key) {
         if (array_key_exists($key, $config)) {
             return $config[$key];
         }
         return null;
     }
 
-    function load_landelijk_overzicht($config) {
+    private function loadLandelijkOverzicht($config) {
         if ($this->getParamIfExists($config, 'kopje') == "1") {
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
 
-		$query = $this->createBaseQuery($config);
+        $query = $this->createBaseQuery($config);
         $this->zetOpVolgorde($query, $config);
 
         $result = $this->loadObjectList($query);
         $output = "";
-		foreach ($result as $row) {
-			$output .= "<div class='kamp'>";
-			$output .= $this->span('plaats', $row->plaats);
-			$output .= $this->outputDelimiter($row, $config);
-			$output .= $this->span('naam', $this->kampLink($row, $config));
-			$output .= $this->outputDelimiter($row, $config);
-			$output .= $this->span('leeftijd', $row->minl ."-". $row->maxl . " jaar");
-			$output .= "</div>";
-		}
-		return $output;
+        foreach ($result as $row) {
+            $output .= "<div class='kamp'>";
+            $output .= $this->span('plaats', $row->plaats);
+            $output .= $this->outputDelimiter($row, $config);
+            $output .= $this->span('naam', $this->kampLink($row, $config));
+            $output .= $this->outputDelimiter($row, $config);
+            $output .= $this->span('leeftijd', $row->minl ."-". $row->maxl . " jaar");
+            $output .= "</div>";
+        }
+        return $output;
     }
 
-    function load_plaats_overzicht($config) {
+    private function loadPlaatsOverzicht($config) {
         $output = "";
         
         if ($this->getParamIfExists($config, 'kopje') == "1") {
@@ -107,20 +112,23 @@ class PlgContentKampinfo extends CMSPlugin {
 
         $db = $this->db;
         $query = $this->createBaseQuery($config);
-        $query->where('s.naam = '. $db->quote($db->escape($config['plaats'])));
+        $query
+            -> where('s.naam = :plaats')
+            -> bind(':plaats', $config['plaats'])
+        ;
         $this->zetOpVolgorde($query, $config);
 
         $result = $this->loadObjectList($query);
         foreach ($result as $row) {
-			$output .= "<div class='kamp'>";
+            $output .= "<div class='kamp'>";
             $output .= $this->span('naam', $this->kampLink($row, $config));
             $output .= $this->outputDelimiter($row, $config);
-			$output .= $this->span('leeftijd', $row->minl ."-". $row->maxl . " jaar");
+            $output .= $this->span('leeftijd', $row->minl ."-". $row->maxl . " jaar");
             if ($this->getParamIfExists($config, 'icons')) { 
                 $output .= $this->outputDelimiter($row, $config);
                 $output .= "<span class='icons'>";
                 foreach ($row->iconen as $icoon) {
-                    $output .= (KampInfoUrlHelper::imgUrl($config['iconFolderSmall'], $icoon->naam, $icoon->tekst, $config['iconExtension']));
+                    $output .= (KampInfoUrlHelper::imgUrl($config['iconFolderSmall'], $icoon->naam, $config['iconExtension'], $icoon->tekst));
                 }
                 $output .= "</span>";
             }
@@ -130,12 +138,12 @@ class PlgContentKampinfo extends CMSPlugin {
             }
             // $output .= $this->outputDelimiter($row, $config);
             // $output .= $this->span('foto', $row->foto);
-			$output .= "</div>";
-		}
-		return $output;
+            $output .= "</div>";
+        }
+        return $output;
     }
 
-    function outputDelimiter($row, $config) {
+    private function outputDelimiter($row, $config) {
         $delim = $this->getParamIfExists($config, 'delim');
         if ($delim != null) {
             return $this->span('delim', '&nbsp;'.$delim.'&nbsp;');
@@ -143,15 +151,15 @@ class PlgContentKampinfo extends CMSPlugin {
         return "";
     }
 
-    function kampLink($row, $config) {
+    private function kampLink($row, $config) {
         return "<a href='". KampInfoUrlHelper::activiteitURL($row->plaatsObj, $row->kampObj, $config['jaar'], $config['useComponentUrls'])."'>". $row->kamp ."</a>";
     }
 
-    function span($clazz, $contents) {
+    private function span($clazz, $contents) {
         return "<span class='". $clazz . "'>" . $contents . "</span>";
     }
 
-    function loadObjectList($query) {
+    private function loadObjectList($query) {
         $iconList = $this->getIconenLijst();
 
         $db = $this->db;
@@ -166,7 +174,7 @@ class PlgContentKampinfo extends CMSPlugin {
                 'id' => $row->kampId,
                 'naam' => $row->kamp,
             ];
-            $ics = array();
+            $ics = [];
             foreach (explode(',', $row->icoontjes) as $icon) {
                 if (array_key_exists($icon, $iconList)) {
                     $ics[] = $iconList[$icon];
@@ -177,63 +185,76 @@ class PlgContentKampinfo extends CMSPlugin {
         return $result;
     }
      
-    function createBaseQuery($config) {
+    private function createBaseQuery($config) {
         $db = $this->db;
         $query = $db->getQuery(true)
-            ->select('p.jaar')
-            ->select('s.id as plaatsId')
-            ->select('s.naam as plaats')
-            ->select('c.id as kampId')
-            ->select('c.naam as kamp')
-            ->select('c.minimumLeeftijd as minl, c.maximumLeeftijd as maxl')
-            ->select('c.icoontjes')
-            ->select('c.hitCourantTekst as hitcourant')
-            ->select('c.webadresFoto1 as foto')
-		    ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
-		    ->join('LEFT', $db->quoteName('#__kampinfo_hitsite', 's').' ON s.id=c.hitsite_id')
-            ->join('LEFT', $db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id=s.hitproject_id')
+            -> select('p.jaar')
+            -> select('s.id as plaatsId')
+            -> select('s.naam as plaats')
+            -> select('c.id as kampId')
+            -> select('c.naam as kamp')
+            -> select('c.minimumLeeftijd as minl, c.maximumLeeftijd as maxl')
+            -> select('c.icoontjes')
+            -> select('c.hitCourantTekst as hitcourant')
+            -> select('c.webadresFoto1 as foto')
+            -> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            -> join('LEFT', $db->quoteName('#__kampinfo_hitsite', 's').' ON s.id = c.hitsite_id')
+            -> join('LEFT', $db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id = s.hitproject_id')
         ;
         if ($this->getParamIfExists($config, 'skipAkkoord') == null) {
-            $query->where('(c.akkoordHitKamp=1 and c.akkoordHitPlaats=1)');
+            $query
+                -> where('c.akkoordHitKamp = 1')
+                -> where('c.akkoordHitPlaats = 1')
+            ;
         }
 
-        if ($this->getParamIfExists($config, 'jaar') != null) {
-            $query->where('p.jaar = '. ((int)$db->escape($config['jaar'])));
+        $jaar = $this->getParamIfExists($config, 'jaar');
+        if ($jaar != null) {
+            $query
+                -> where('p.jaar = :jaar')
+                -> bind(':jaar', $jaar)
+            ;
         }
-		return $query; 
+        return $query; 
     }
 
-    function zetOpVolgorde(&$query, $config) {
+    private function zetOpVolgorde(&$query, $config) {
         if (array_key_exists('volgorde', $config)) {
             $volgordes = explode(',', $config['volgorde']);
             foreach ($volgordes as $volgorde) {
                 if ($volgorde == 'naam') {
-                    $query->order('c.naam ASC');
+                    $query
+                        -> order('c.naam ASC')
+                    ;
                 } elseif ($volgorde == 'leeftijd') {
-                    $query->order('c.minimumLeeftijd ASC');
-                    $query->order('c.maximumLeeftijd ASC');
-                    $query->order('c.naam ASC');
+                    $query
+                        -> order('c.minimumLeeftijd ASC')
+                        -> order('c.maximumLeeftijd ASC')
+                        -> order('c.naam ASC')
+                    ;
                 } elseif ($volgorde == 'plaats') {
-                    $query->order('s.naam ASC');
+                    $query
+                        -> order('s.naam ASC')
+                    ;
                 }
             }
         }
         return $query;
     }
 
-    public function getIconenLijst() {
-		$db = $this->db;
+    private function getIconenLijst() {
+        $db = $this->db;
 
-		$query = $db->getQuery(true)
-		    -> select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort')
+        $query = $db->getQuery(true)
+            -> select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort')
             -> from('#__kampinfo_hiticon i')
             -> order('i.bestandsnaam');
 
-		$db->setQuery($query);
         try {
-    		$icons = $db->loadObjectList();
+            $db->setQuery($query);
+            $icons = $db->loadObjectList();
             
-            $result = array();
+            $result = [];
             foreach ($icons as $icon) {
                 $result[$icon->naam] = (object) [
                     'naam' => $icon->naam,
@@ -244,8 +265,9 @@ class PlgContentKampinfo extends CMSPlugin {
             }
             return $result;
         } catch (\RuntimeException $e) {
-            JError::raiseWarning(500, $e);
+            throw new GenericDataException($e->getMessage(), 500);
         }
-	}
+    }
+
 }
 ?>
