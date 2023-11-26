@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Site\Controller;
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -16,7 +16,9 @@ class DisplayController extends BaseController {
 
     public function display($cachable = false, $urlparams = []) {
         parent::display($cachable, $urlparams);
-        return $this;
+        return $this;defined('_JEXEC') or die('Restricted Access');
+
+
     }
 
 }

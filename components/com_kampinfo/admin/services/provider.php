@@ -1,6 +1,6 @@
 <?php
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Component\Router\RouterFactoryInterface;
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;

@@ -2,11 +2,12 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Form\Field\RangeField;
 use Joomla\CMS\Form\Field\NumberField;
 use Joomla\CMS\HTML\HTMLHelper;
+
 
 class RangenumField extends NumberField {
 

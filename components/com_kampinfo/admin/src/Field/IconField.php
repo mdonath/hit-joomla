@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\FormField;

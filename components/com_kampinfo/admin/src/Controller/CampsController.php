@@ -2,12 +2,13 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Controller;
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 
-defined('_JEXEC') or die;
 
 class CampsController extends AdminController {
 

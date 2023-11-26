@@ -1,10 +1,10 @@
 <?php
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
-
-defined('_JEXEC') or die('Restricted Access');
 ?>
 
 <form	action="<?php echo Route::_('index.php?option=com_kampinfo&controller=camps'); ?>"

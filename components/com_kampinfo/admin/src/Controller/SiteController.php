@@ -2,10 +2,11 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Controller;
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\FormController;
 
-defined('_JEXEC') or die;
 
 class SiteController extends FormController {
 

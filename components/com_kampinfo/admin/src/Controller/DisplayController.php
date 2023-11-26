@@ -2,9 +2,10 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\MVC\Controller\BaseController;
+
 
 class DisplayController extends BaseController {
 

@@ -1,8 +1,8 @@
 <?php
 
-use Joomla\CMS\Language\Text;
+\defined('_JEXEC') or die('Restricted Access');
 
-defined('_JEXEC') or die('Restricted Access');
+use Joomla\CMS\Language\Text;
 ?>
 
 <?php if (empty($this->items)) : ?>

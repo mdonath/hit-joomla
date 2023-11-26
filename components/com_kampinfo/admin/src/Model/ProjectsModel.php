@@ -2,13 +2,14 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
+
 
 class ProjectsModel extends ListModel {
 

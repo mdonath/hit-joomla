@@ -2,13 +2,14 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Table;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
+
 
 class SiteTable extends Table {
 

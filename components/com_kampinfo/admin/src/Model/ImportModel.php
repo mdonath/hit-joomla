@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -14,6 +14,7 @@ use Joomla\Registry\Registry;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\Mapper\CsvMapper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\SolMapping;
+
 
 class ImportModel extends AdminModel {
 

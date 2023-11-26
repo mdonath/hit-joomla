@@ -2,15 +2,17 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\View\Camp;
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
-defined('_JEXEC') or die;
 
 class HtmlView extends BaseHtmlView {
 

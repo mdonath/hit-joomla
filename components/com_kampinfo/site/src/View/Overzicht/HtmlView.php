@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Site\View\Overzicht;
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;

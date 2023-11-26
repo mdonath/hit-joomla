@@ -2,12 +2,13 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
+
 
 class SiteModel extends AdminModel {
 

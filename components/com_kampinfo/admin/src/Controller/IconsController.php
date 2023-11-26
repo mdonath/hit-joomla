@@ -2,9 +2,10 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Controller;
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\MVC\Controller\AdminController;
 
-defined('_JEXEC') or die;
 
 class IconsController extends AdminController {
 

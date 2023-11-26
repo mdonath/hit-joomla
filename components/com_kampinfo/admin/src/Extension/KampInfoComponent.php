@@ -2,6 +2,8 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Extension;
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
@@ -9,7 +11,6 @@ use Psr\Container\ContainerInterface;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Akkoord;
 
-defined('_JEXEC') or die;
 
 class KampInfoComponent extends MVCComponent implements BootableExtensionInterface {
     

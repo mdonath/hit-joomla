@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;

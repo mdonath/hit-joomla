@@ -1,9 +1,9 @@
 <?php
 
+\defined('_JEXEC') or die('Restricted Access');
+
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
-defined('_JEXEC') or die('Restricted Access');
 
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));

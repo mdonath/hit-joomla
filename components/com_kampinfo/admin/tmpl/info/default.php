@@ -1,6 +1,6 @@
 <?php
 
-defined('_JEXEC') or die('Restricted Access');
+\defined('_JEXEC') or die('Restricted Access');
 
 $manifest = $this->getModel()->getItems();
 ?>

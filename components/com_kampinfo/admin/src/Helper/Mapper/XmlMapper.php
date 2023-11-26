@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Helper\Mapper;
 
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\Mapper\AbstractMapper;
 

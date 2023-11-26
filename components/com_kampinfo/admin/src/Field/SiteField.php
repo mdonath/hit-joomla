@@ -2,11 +2,12 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
-defined('_JEXEC') or die('Restricted access');
+\defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+
 
 class SiteField extends ListField {
 

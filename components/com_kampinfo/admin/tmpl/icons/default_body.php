@@ -1,6 +1,6 @@
 <?php
 
-defined('_JEXEC') or die('Restricted Access');
+\defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
