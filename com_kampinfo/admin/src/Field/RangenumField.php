@@ -2,7 +2,7 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Field\RangeField;
 use Joomla\CMS\Form\Field\NumberField;

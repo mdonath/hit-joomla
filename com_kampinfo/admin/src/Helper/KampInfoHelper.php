@@ -2,6 +2,8 @@
 
 namespace HITScoutingNL\Component\KampInfo\Administrator\Helper;
 
+defined('_JEXEC') or die('Restricted access');
+
 use DateTimeZone;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
@@ -9,8 +11,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Object\CMSObject;
-
-defined('_JEXEC') or die('Restricted access');
 
 /**
  * KampInfo component helper.

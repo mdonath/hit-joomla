@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset
+        name="import"
+        addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+    >
+        <field
+                name="jaar"
+                type="Jaar"
+                label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
+                description="COM_KAMPINFO_HITSITE_JAAR_DESC"
+                class="inputbox"
+                default="2023"
+                required="true"
+        />
+        <field
+                name="import_inschrijvingen"
+                type="file"
+                label="Inschrijvingen"
+                description="Importeer de export uit ScoutsOnline (.csv)"
+                class="inputbox"
+                required="true"
+        />
+        <field
+                name="import_kampgegevens"
+                type="file"
+                label="Kampgegevens"
+                description="Importeer de export uit ScoutsOnline (.csv)"
+                class="inputbox"
+                required="true"
+        />
+        <field
+                name="import_deelnemers"
+                type="file"
+                label="Deelnemers"
+                description="Importeer de export uit ScoutsOnline (.csv)"
+                class="inputbox"
+                required="true"
+        />
+    </fieldset>
+
+</form>
