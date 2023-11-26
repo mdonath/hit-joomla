@@ -44,6 +44,7 @@
  
         <media folder="media" destination="com_kampinfo">
                 <filename>index.html</filename>
+                <filename>joomla.asset.json</filename>
                 <folder>images</folder>
                 <folder>css</folder>
                 <folder>js</folder>

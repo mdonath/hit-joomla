@@ -20,7 +20,7 @@ class HtmlView extends BaseHtmlView {
         $document = Factory::getApplication()->getDocument();
 
         $wa = $document->getWebAssetManager();
-        $wa->registerAndUseStyle('com_kampinfo-overzicht', 'com_kampinfo/activiteit.css');
+        $wa->useStyle('com_kampinfo-activiteit');
 
         $document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_kampinfo",
+    "version": "1.0.0",
+    "description": "HIT KampInfo",
+    "license": "GPL-2.0+",
+    "assets": [
+      {
+        "name": "com_kampinfo-overzicht",
+        "type": "style",
+        "uri": "com_kampinfo/overzicht.css"
+      },
+      {
+        "name": "com_kampinfo-activiteit",
+        "type": "style",
+        "uri": "com_kampinfo/activiteit.css"
+      },
+      {
+        "name": "com_kampinfo-hitkiezer",
+        "type": "style",
+        "uri": "com_kampinfo/hitkiezer.css"
+      },
+      {
+        "name": "com_kampinfo-common",
+        "type": "script",
+        "uri": "com_kampinfo/common.js",
+        "dependencies": ["jquery-noconflict"]
+      },
+      {
+        "name": "com_kampinfo-hitkiezer",
+        "type": "script",
+        "uri": "com_kampinfo/hitkiezer.js",
+        "dependencies": ["com_kampinfo-common"]
+      },
+      {
+        "name": "com_kampinfo-jquery-cookies",
+        "type": "script",
+        "uri": "com_kampinfo/jquery.cookies.2.2.0.min.js",
+        "dependencies": ["jquery"]
+      }
+    ]
+  }

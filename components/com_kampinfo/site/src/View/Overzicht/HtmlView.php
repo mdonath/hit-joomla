@@ -18,7 +18,7 @@ class HtmlView extends BaseHtmlView {
         $this->project = $this->get('Project');
 
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->registerAndUseStyle('com_kampinfo-overzicht', 'com_kampinfo/overzicht.css');
+        $wa->useStyle('com_kampinfo-overzicht');
 
         return parent::display($tpl);
     }

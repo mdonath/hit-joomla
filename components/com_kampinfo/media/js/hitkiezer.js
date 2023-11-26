@@ -1,8 +1,6 @@
 // Copyright (c) 2012, HIT Scouting Nederland
 
-var $j = jQuery.noConflict();
-
-$j(init);
+$(init);
 
 /**
  * Filtert/scoort met behulp van pictogrammen. 
@@ -101,14 +99,14 @@ var filter = {
 			
 			for (var idx = 0; idx < kamp.iconen.length; idx++) {
 					if (!this.groen.isEmpty()) {
-					$j.each(this.groen.list, function(j, gfl) {
+					$.each(this.groen.list, function(j, gfl) {
 						if (kamp.iconen[idx].bestandsnaam == gfl) {
 							score += 2.0; // elke groene icoon levert 2 punten op
 						}
 					});
 				}
 				if (!this.rood.isEmpty()) {
-					$j.each(this.rood.list, function(j, rfl) {
+					$.each(this.rood.list, function(j, rfl) {
 						if (kamp.iconen[idx].bestandsnaam == rfl) {
 							score -= 2.0; // elke rode icoon kost 2 punten
 							if (score < 0) {
@@ -187,7 +185,6 @@ var filter = {
 };
 
 function init() {
-	fixStupidBrowsers();
 	extend();
 	initVelden();
 	repaint();
@@ -197,16 +194,16 @@ function initVelden() {
 
 	// Geboortedag
 	for (var i = 1; i < 32; i++) {
-		$j("<option>")
+		$("<option>")
 			.attr("value", i)
 			.text(i)
 			.appendTo("#geboortedag");
 	}
 	
 	// Geboortemaand
-	$j.each(['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']
+	$.each(['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december']
 			, function(i, maand) {
-				$j("<option>")
+				$("<option>")
 					.attr("value", i+1)
 					.text(maand)
 					.appendTo("#geboortemaand");
@@ -215,7 +212,7 @@ function initVelden() {
  	// Geboortejaar; afhankelijk van minimum- en maximumleeftijd.
 	var minMax = minMaxJaar();
  	for (var i = minMax.min; i >= minMax.max; i--) {
-		$j("<option>")
+		$("<option>")
 			.attr("value", i)
 			.text(i)
 			.appendTo("#geboortejaar");
@@ -224,10 +221,10 @@ function initVelden() {
 
  	// prijzen, score, plaatsnaam en start/einddatumtijd
  	var prijzen = new Array();
- 	$j.each(hit.hitPlaatsen, function(i, plaats) {
- 		$j.each(plaats.kampen, function(j, kamp) {
+ 	$.each(hit.hitPlaatsen, function(i, plaats) {
+ 		$.each(plaats.kampen, function(j, kamp) {
 	 		var found = false;
- 		 	$j.each(prijzen, function(k, prijs) {
+ 		 	$.each(prijzen, function(k, prijs) {
 	 			found = found || (prijs == kamp.deelnamekosten);
 	 		});
 	 		if (!found) {
@@ -245,24 +242,24 @@ function initVelden() {
 	var lowest = (Math.round(prijzen[0] / 10) * 10) + 10;
 	var highest = (Math.round(prijzen[prijzen.length - 1] / 10) * 10) + 10;
  	for(var prijs = lowest; prijs < highest; prijs += 10) {
- 		$j("<option>")
+ 		$("<option>")
 			.attr("value", prijs)
 			.text((prijs-10) + " tot " + (prijs+10))
 			.appendTo("#budget");
 	};
  	// plaatsen
  	var plaatsen = new Array();
- 	$j.each(hit.hitPlaatsen, function(i, plaats) {
- 		$j("<option>")
+ 	$.each(hit.hitPlaatsen, function(i, plaats) {
+ 		$("<option>")
  			.attr("value", plaats.naam)
  			.text("HIT " + plaats.naam)
  			.appendTo("#plaats");
  	});
 
- 	$j('.cookiestore').cookieBind();
+ 	$('.cookiestore').cookieBind();
  
 	filter.peildatum = parseDate(hit.vrijdag);
-	filter.plaats = $j('#plaats').val() || $j.getUrlVar('plaats');
+	filter.plaats = $('#plaats').val() || $.getUrlVar('plaats');
 
 	updateGeboorteDatum();
 	updateBudget();
@@ -280,12 +277,12 @@ function repaint() {
 
 function toonKampenMetFilter() {
 	// kieper huidige lijst leeg
-	$j('#kampen').empty();
+	$('#kampen').empty();
 
 	// verzamel kampen met score >= 0
 	var kampen = new Array();
-    $j.each(hit.hitPlaatsen, function(i, plaats) {
-		 	$j.each(plaats.kampen, function(j, kamp) {
+    $.each(hit.hitPlaatsen, function(i, plaats) {
+		 	$.each(plaats.kampen, function(j, kamp) {
 		 		kamp.score = filter.bepaalScore(kamp);
 		 		if (kamp.score >= 0) {
 					kampen.push(kamp);
@@ -293,21 +290,21 @@ function toonKampenMetFilter() {
 		});
     });
 
-	$j("#count").text(kampen.length);
+	$("#count").text(kampen.length);
 	
 	if (kampen.length > 0) {
-		$j("<ul>").attr("id", "kampList").appendTo("#kampen");
+		$("<ul>").attr("id", "kampList").appendTo("#kampen");
 
 		// sorteren op score		
 	    kampen.sort(function(a, b) { return b.score - a.score; });
 	    
 	    var volPatt = /vol:/i;
 		// overgebleven kampen tonen
-	    $j.each(kampen, function(i, kamp) {
-			var li = $j("<li>");
+	    $.each(kampen, function(i, kamp) {
+			var li = $("<li>");
 			var fuzzy = fuzzyIndicatieVol(kamp);
 			var fuzzyInNaam = volPatt.test(fuzzy);
-			$j("<a>")
+			$("<a>")
 			  	.text(kamp.naam + " in " + kamp.plaats + (fuzzyInNaam ? " ("+fuzzy+")" : ""))
 			  	.attr({
 			  		title: "leeftijd: " + kamp.minimumLeeftijd + "-" + kamp.maximumLeeftijd 
@@ -316,14 +313,14 @@ function toonKampenMetFilter() {
 			  			 ,
 			  		href: "../hits-in-" + kamp.plaats.toLowerCase() + "-" + hit.jaar + "/" + urlified(kamp.naam) })
 			  	.appendTo(li);
-			$j("<span>")
+			$("<span>")
 				.text("[" + (Math.round(10*kamp.score)/10) + "]")
 				.attr({title: "score", 'class': "score"})
 				.appendTo(li);
 			li.appendTo("#kampList");
 	    });
 	} else {
-		$j("<p>").text("Helaas, geen activiteiten gevonden!").appendTo("#kampen");
+		$("<p>").text("Helaas, geen activiteiten gevonden!").appendTo("#kampen");
 	}
 }
 
@@ -332,17 +329,17 @@ function toonKampenMetFilter() {
  */
 function filterPictogrammen() {
 	// Maak pictogrammen op scherm leeg.
-	$j("#pictos").empty();
+	$("#pictos").empty();
 	
 	// Verzamel de gewenste set iconen.
 	var gebruikteIconen = new Array();
-	$j.each(hit.hitPlaatsen, function(i, plaats) {
-		$j.each(plaats.kampen, function(j, kamp) {
+	$.each(hit.hitPlaatsen, function(i, plaats) {
+		$.each(plaats.kampen, function(j, kamp) {
 			if (kamp.score >= 0) {
 				// Kijk voor elk kamp met voldoende score of zijn icoontjes al in de gewenste set zit
-				$j.each(kamp.iconen, function(k, kampIcoon) {
+				$.each(kamp.iconen, function(k, kampIcoon) {
 					var found = false;
-					$j.each(gebruikteIconen, function(l, verzameldIcoon) {
+					$.each(gebruikteIconen, function(l, verzameldIcoon) {
 						found = found || (kampIcoon.bestandsnaam == verzameldIcoon.bestandsnaam);
 					});						
 					if (!found) {
@@ -357,11 +354,11 @@ function filterPictogrammen() {
 	gebruikteIconen.sort(function (a,b) { return a.volgorde - b.volgorde; });
 	
 	// Druk iconen af.
-	$j.each(gebruikteIconen, function(i, icoon) {
+	$.each(gebruikteIconen, function(i, icoon) {
 		var borderColor = filter.isGroen(icoon.bestandsnaam) ? "green"
 				: filter.isRood(icoon.bestandsnaam)	? "red"
 				: "black";
-	 	$j("<img>")
+	 	$("<img>")
 			.attr({
 				id: icoon.bestandsnaam,
 				onclick: "selectIcoonEvent('" + icoon.bestandsnaam + "')",
@@ -387,18 +384,18 @@ function updateGeboorteDatumEvent() {
 
 function updateGeboorteDatum() {
 	if (validateGeboortedatumForm()) {
-		filter.geboortedatum = createDate($j('#geboortejaar').val(), $j('#geboortemaand').val(), $j('#geboortedag').val());
+		filter.geboortedatum = createDate($('#geboortejaar').val(), $('#geboortemaand').val(), $('#geboortedag').val());
 		var leeftijd = filter.leeftijdOpPeildatum();
 
-		$j("#leeftijd").text(", dan is je leeftijd tijdens de HIT " + leeftijd + " jaar.");
+		$("#leeftijd").text(", dan is je leeftijd tijdens de HIT " + leeftijd + " jaar.");
 	} else {
-		$j("#leeftijd").text('');
+		$("#leeftijd").text('');
 		filter.geboortedatum = null;
 	}
 }
 
 function validateGeboortedatumForm() {
-	return !($j('#geboortedag').val() == '' || $j('#geboortemaand').val() == '' || $j('#geboortejaar').val() == '');
+	return !($('#geboortedag').val() == '' || $('#geboortemaand').val() == '' || $('#geboortejaar').val() == '');
 }
 
 /**
@@ -411,7 +408,7 @@ function updateBudgetEvent() {
 }
 
 function updateBudget() {
-	filter.budget = parseInt($j('#budget').val());
+	filter.budget = parseInt($('#budget').val());
 }
 
 /**
@@ -424,7 +421,7 @@ function updatePlaatsEvent() {
 }
 
 function updatePlaats() {
-	filter.plaats = $j('#plaats').val();
+	filter.plaats = $('#plaats').val();
 	if (filter.plaats == -1) {
 		filter.plaats = null;
 	}
@@ -438,7 +435,7 @@ function updateOuderKindEvent() {
 }
 
 function updateOuderKind() {
-	filter.ouderkind = $j('#ouderkind').val();
+	filter.ouderkind = $('#ouderkind').val();
 	if (filter.ouderkind != null) {
 		filter.ouderkind = parseInt(filter.ouderkind); 
 	}
@@ -470,8 +467,8 @@ function minMaxJaar() {
 	var min = 100;
 	var max = 0;
 
-  	$j.each(hit.hitPlaatsen, function(i, plaats) {
-	 	$j.each(plaats.kampen, function(j, kamp) {
+  	$.each(hit.hitPlaatsen, function(i, plaats) {
+	 	$.each(plaats.kampen, function(j, kamp) {
 	 		min = Math.min(min, kamp.minimumLeeftijd);
 	 		max = Math.max(max, kamp.maximumLeeftijd);
 		 });
