@@ -9,7 +9,7 @@
 	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
 	<property name="cfg.prefix" value="com_" />
 	<!-- Relative path to your project -->
-	<property name="cfg.dir" value="com_${cfg.name}" />
+	<property name="cfg.dir" value="components/com_${cfg.name}" />
 	<!-- Relative path to store the packages -->
 	<property name="cfg.packages" value="packages" />
 
