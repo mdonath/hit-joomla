@@ -4,6 +4,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\View\Camp;
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
@@ -49,6 +50,7 @@ class HtmlView extends BaseHtmlView {
 
         $toolbar->apply('camp.apply');
         $toolbar->save('camp.save');
+        $toolbar->preview("../index.php?option=com_kampinfo&view=activiteit&hitcamp_id={$this->item->id}", 'JGLOBAL_PREVIEW', true);
         $toolbar->cancel('camp.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
     }
 
