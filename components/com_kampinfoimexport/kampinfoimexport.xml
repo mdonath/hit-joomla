@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+ 
+        <name>KampInfoImExport</name>
+
+        <creationDate>September 2015</creationDate>
+        <author>Martijn Donath</author>
+        <authorEmail>martijn.donath@scouting.nl</authorEmail>
+        <authorUrl>https://github.com/mdonath/hit-joomla-imexport</authorUrl>
+        <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
+        <license>LGPL</license>
+        <version>2.0.0</version>
+        <description>Import en export module voor KampInfo</description>
+ 
+        <namespace path="src">HITScoutingNL\Component\KampInfoImExport</namespace>
+
+        <administration>
+                <menu>KampInfo im/export</menu>
+                <submenu>
+                        <menu view="info">Info</menu>
+                        <menu view="import">Import</menu>
+                        <menu view="export">Export</menu>
+                </submenu>
+
+                <files folder="admin/">
+                        <folder>services</folder>
+                        <folder>src</folder>
+                        <folder>tmpl</folder>
+                </files>
+ 
+        </administration>
+ 
+</extension>

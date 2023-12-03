@@ -1,76 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
-<!-- For Eclipse -->
-<project name="KampInfo" default="deploy" basedir=".">
-	<description>Ant Build File for Joomla! extensions</description>
 
-	<!-- The name of your extension's main XML file -->
-	<property name="cfg.name" value="kampinfo" />
-	<!-- Prefix, eg com, bot, mod, or a brand name (or empty) -->
-	<property name="cfg.prefix" value="com_" />
-	<!-- Relative path to your project -->
-	<property name="cfg.dir" value="components/com_${cfg.name}" />
-	<!-- Relative path to store the packages -->
-	<property name="cfg.packages" value="packages" />
+<project name="KampInfo" default="copy" basedir=".">
+    <description>Ant Build File for KampInfo Joomla! extensions</description>
 
-	<target name="init">
-	    <!-- Leest 'extension'.xml als properties met prefix 'xml' -->
-		<xmlproperty file="${cfg.dir}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
-		<buildnumber />
-		<tstamp>
-			<format property="TODAY" pattern="yyyyMMdd" />
-		</tstamp>
+    <property name="cfg.docker" value="../hit-docker/j4/work_directory/kampinfo" />
 
-		<property name="str.version" value="${xml.version}-${build.number}" />
-		<property name="str.destfilename" value="${cfg.prefix}${cfg.name}-${str.version}_${TODAY}.zip" />
-		<property name="str.destfile" value="${cfg.packages}/${str.destfilename}" />
-		<property name="str.sitetrunkpath" value="${cfg.dir}/site" />
-		<property name="str.admintrunkpath" value="${cfg.dir}/admin" />
-		<property name="str.updatefile" value="${cfg.packages}/${cfg.prefix}${cfg.name}-extension.xml" />
-	</target>
+    <target name="init">
+        <mkdir dir="${cfg.docker}" />
+    </target>
 
-	<target name="info" depends="init" description="prints information">
-		<echo message="${cfg.name} - ${str.version} / ${ant.version}" />
-	</target>
+    <target name="delete_all">
+        <delete dir="${cfg.docker}" />
+    </target>
 
-	<target name="zip" depends="info" description="Makes an uploadable zip package">
-		<mkdir dir="${cfg.packages}" />
-		<zip
-			destfile="${str.destfile}"
-			basedir="${cfg.dir}"
-			update="false"
-			excludes="build.*, **/test/**, **/ouwe_meuk/**, **/doc/**"
-		/>
-	</target>
+    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_kampinfo, plg_group_cli">
+        <copy todir="${cfg.docker}" flatten="true" verbose="true">
+            <fileset dir=".">
+                <filename name="components/**/dist/*.zip" />
+            </fileset>
+            <fileset dir=".">
+                <filename name="plugins/**/dist/*.zip" />
+            </fileset>
+        </copy>
+    </target>
 
-	<target name="copy" depends="zip" description="Kopieert de zip naar de work_directory">
-		<delete>
-			<fileset dir="../hit-docker/j4/work_directory" includes="com_kampinfo-*" />
-		</delete>
-		<copy file="${str.destfile}" todir="../hit-docker/j4/work_directory" verbose="true" />
-	</target>
+    <target name="com_kampinfo" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="components" />
+            <param name="cmp.name" value="com_kampinfo" />
+         </antcall>
+    </target>
 
+    <target name="com_kampinfoimexport" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="components" />
+            <param name="cmp.name" value="com_kampinfoimexport" />
+         </antcall>
+    </target>
 
+    <target name="plg_kampinfo" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="plugins/content" />
+            <param name="cmp.name" value="plg_kampinfo" />
+         </antcall>
+    </target>
 
-	<target name="plugin_init">
-		<xmlproperty file="plugins/content/kampinfo/kampinfo.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
-		<tstamp>
-			<format property="TODAY" pattern="yyyyMMdd-HHmm" />
-		</tstamp>
-		<property name="str.destfilename" value="plg_kampinfo-${xml.version}_${TODAY}.zip" />
-		<property name="str.destfile" value="${cfg.packages}/${str.destfilename}" />
-	</target>
+    <target name="plg_group_cli" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="plugins/cli" />
+            <param name="cmp.name" value="plg_group_cli" />
+         </antcall>
+    </target>
 
-	<target name="plugin_zip" depends="plugin_init" description="Makes an uploadable zip package for plugins">
-		<mkdir dir="${cfg.packages}" />
-		<zip destfile="${str.destfile}" basedir="plugins/content/kampinfo" />
-	</target>
-	
-	<target name="plugin_copy" depends="plugin_zip" description="Kopieert de zip naar de work_directory">
-		<delete>
-			<fileset dir="../hit-docker/j4/work_directory" includes="plg_kampinfo*" />
-		</delete>
-		<copy file="${str.destfile}" todir="../hit-docker/j4/work_directory" verbose="true" />
-	</target>
+    <target name="buildAndCopy">
+        <ant dir="${cmp.dir}/${cmp.name}" />
+        <delete dir="${cfg.docker}">
+            <filename name="${cmp.name}-*.zip" />
+        </delete>
+        <copy todir="${cfg.docker}" flatten="true" verbose="true">
+            <fileset dir="${cmp.dir}/${cmp.name}/dist/" />
+        </copy>
+    </target>
 
 </project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="Common Ant build file" default="dist" basedir=".">
+
+    <target name="init">
+        <property name="cfg.fullname" value="${cfg.prefix}${cfg.name}" />
+
+        <xmlproperty file="${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+        <buildnumber />
+        <tstamp>
+            <format property="TODAY" pattern="yyyyMMdd" />
+        </tstamp>
+
+        <property name="str.version" value="${xml.version}-${build.number}" />
+        <property name="str.destfilename" value="${cfg.fullname}-${str.version}_${TODAY}.zip" />
+    </target>
+
+    <target name="dist" depends="init">
+        <delete dir="dist" />
+        <mkdir dir="dist" />
+        <zip
+            destfile="dist/${str.destfilename}"
+            basedir="."
+            update="false"
+            excludes="build.*, **/doc/**"
+        />
+    </target>
+
+</project>

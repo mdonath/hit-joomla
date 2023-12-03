@@ -2,3 +2,4 @@
 *.zip
 API-KEY
 **/dist
+**/build.number

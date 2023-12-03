@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="Component KampInfo Import en Export" default="dist" basedir=".">
+
+    <property name="cfg.prefix" value="com_" />
+    <property name="cfg.name" value="kampinfoimexport" />
+
+    <import file="../../common/build.xml" />
+
+</project>
