@@ -10,9 +10,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 
-class ImportModel extends AdminModel {
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Common\KampInfoImporter;
 
-    const TABLE_PREFIX = 'HITScoutingNL\\Component\\KampInfoImExport\\Administrator\\Table\\';
+
+class ImportModel extends AdminModel {
 
     public function getForm($data = array(), $loadData = true) {
         return self::loadForm(
@@ -35,10 +36,14 @@ class ImportModel extends AdminModel {
         }
         $app->enqueueMessage('File: ' . $file);
 
-        $hit = json_decode(file_get_contents($file));
-        $this->importProjecten($hit);
+        try {
+            $importer = new KampInfoImporter();
 
-        $app->enqueueMessage('Alles geïmporteerd');
+            $importer->importAlles($file);
+            $app->enqueueMessage('Alles geïmporteerd');
+        } catch (GenericDataException $e) {
+            $app->enqueueMessage("Error {$e}");
+        }
     }
 
     public function importEenPlaats() {
@@ -51,31 +56,13 @@ class ImportModel extends AdminModel {
         }
         $app->enqueueMessage('File: ' . $file);
 
-        $hit = json_decode(file_get_contents($file));
-        $this->importEnkelePlaats($hit);
-
-        $app->enqueueMessage('Enkele plaats geïmporteerd');
-    }
-
-    private function importEnkelePlaats($hit) {
-        $app = Factory::getApplication();
-
-        // welk jaar?
-        $project = $hit->projects[0];
-        $jaar = $project->jaar;
-
-        $projectTable = $this->getTable('HitProject');
-        $projectDB = $projectTable->find(['jaar' => $jaar]);
-        $projectId = $projectDB[0]->id;
-
-        // welke plaats
-        $plaats = $project->plaatsen[0];
-        $plaatsnaam = $plaats->naam;
-        $app->enqueueMessage('Importeer ' . $plaatsnaam . ' in ' . $jaar . ' met project_id '. $projectId);
-        $plaats->naam = $plaats->naam . '-IMPORT';
-        $plaats->hitproject_id = $projectId;
-
-        $this->importPlaats($plaats);
+        try {
+            $importer = new KampInfoImporter();
+            $importer->importEnkelePlaats($hit);
+            $app->enqueueMessage('Enkele plaats geïmporteerd');
+        } catch (GenericDataException $e) {
+            $app->enqueueMessage("Error {$e}");
+        }
     }
 
     private function importProjecten($hit) {

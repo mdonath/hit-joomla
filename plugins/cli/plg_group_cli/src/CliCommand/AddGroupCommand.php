@@ -101,8 +101,8 @@ class AddGroupCommand extends AbstractCommand {
         <info>php %command.full_name%</info>
         EOF;
         
-        $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Name of the new group');
-        $this->addOption('parent', null, InputOption::VALUE_OPTIONAL, 'Name of the parent group of then new group');
+        $this->addOption('name', null, InputOption::VALUE_REQUIRED, 'Name of the new group');
+        $this->addOption('parent', null, InputOption::VALUE_REQUIRED, 'Name of the parent group of then new group');
 
         $this->setDescription('Adds a new usergroup');
         $this->setHelp($help);

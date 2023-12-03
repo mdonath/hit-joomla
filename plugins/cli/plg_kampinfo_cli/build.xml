@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="CLI Plugin KampInfo" default="dist" basedir=".">
+
+    <property name="cfg.prefix" value="plg_" />
+    <property name="cfg.name" value="kampinfo_cli" />
+
+    <import file="../../../common/build.xml" />
+
+</project>

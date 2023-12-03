@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="console" method="upgrade">
+
+    <description>Plugin to import KampInfo data via the console application</description>
+
+    <name>KampInfo Console Plugin</name>
+    <version>1.0</version>
+
+    <creationDate>December 2023</creationDate>
+    <copyright>2023</copyright>
+    <author>Martijn Donath</author>
+
+    <namespace path="src">HITScoutingNL\Plugin\Console\KampInfo</namespace>
+
+    <files>
+        <folder plugin="kampinfo_cli">services</folder>
+        <folder>src</folder>
+    </files>
+
+</extension>
