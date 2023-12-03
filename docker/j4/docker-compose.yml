@@ -2,11 +2,12 @@ version: "3.7"
 
 services:
   joomla:
-    image: mdo-php80-joomla310:latest
+    image: joomla:4
     ports:
       - 80:80
     volumes:
-      - hit-joomla-data:/var/www/html
+      - hit-j4-joomla-data:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
     links:
       - joomladb:mysql
     environment:
@@ -18,11 +19,11 @@ services:
   joomladb:
     image: mysql:5.7
     volumes:
-      - hit-mysql-data:/var/lib/mysql
+      - hit-j4-mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: hit_joomla_db
 
 volumes:
-  hit-joomla-data:
-  hit-mysql-data:
+  hit-j4-joomla-data:
+  hit-j4-mysql-data:

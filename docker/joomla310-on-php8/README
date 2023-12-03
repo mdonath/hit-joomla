@@ -1,3 +1,0 @@
-De officiële Docker Joomla had geen Joomla 3.10 met PHP8.0, daarom heb ik die maar zelf gemaakt.
-
-Omdat Scouting Nederland (vermoedelijk) de HIT webserver heeft geüpgradet naar PHP-8.0, werkte KampInfo niet meer vanwege het gebruik van deprecated constructies.

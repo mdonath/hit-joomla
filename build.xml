@@ -4,7 +4,7 @@
 <project name="KampInfo" default="copy" basedir=".">
     <description>Ant Build File for KampInfo Joomla! extensions</description>
 
-    <property name="cfg.docker" value="../hit-docker/j4/work_directory/kampinfo" />
+    <property name="cfg.docker" value="docker/j4/work_directory/kampinfo" />
 
     <target name="init">
         <mkdir dir="${cfg.docker}" />
