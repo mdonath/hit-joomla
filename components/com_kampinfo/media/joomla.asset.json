@@ -16,6 +16,11 @@
         "uri": "com_kampinfo/activiteit.css"
       },
       {
+        "name": "com_kampinfo-inschrijvingen",
+        "type": "style",
+        "uri": "com_kampinfo/inschrijvingen.css"
+      },
+      {
         "name": "com_kampinfo-hitkiezer",
         "type": "style",
         "uri": "com_kampinfo/hitkiezer.css"

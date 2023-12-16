@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_KAMPINFO_INSCHRIJVINGEN_VIEW_DEFAULT_TITLE">
+        <message>COM_KAMPINFO_INSCHRIJVINGEN_VIEW_DEFAULT_DESC</message>
+    </layout>
+    <fields 
+            name="request"
+            addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+    >
+        <fieldset
+                name="request"
+        >
+            <field
+                    name="hitproject_id"
+                    type="Project"
+                    label="COM_KAMPINFO_INSCHRIJVINGEN_FIELD_JAAR_LABEL"
+                    description="COM_KAMPINFO_INSCHRIJVINGEN_FIELD_JAAR_DESC"
+            />
+        </fieldset>
+    </fields>
+</metadata>

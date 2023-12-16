@@ -24,7 +24,7 @@ RUN { \
     } > /usr/local/etc/php/conf.d/max_sizes.ini && \
     \
     apt update && apt install -y mariadb-client && \
-    apt install libmagickwand-dev libmemcached-tools libzip4 && \
+    apt install -y libmagickwand-dev libmemcached-tools libzip4 && \
     \
     head -n -1 /entrypoint.sh > /tmp/entrypoint.sh && \
     echo "/tmp/hit/setup_joomla.sh" >> /tmp/entrypoint.sh && \

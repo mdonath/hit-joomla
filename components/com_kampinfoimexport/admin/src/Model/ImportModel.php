@@ -10,7 +10,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 
-use HITScoutingNL\Component\KampInfoImExport\Administrator\Common\KampInfoImporter;
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Common\KampInfoImporterExporter;
 
 
 class ImportModel extends AdminModel {
@@ -37,7 +37,7 @@ class ImportModel extends AdminModel {
         $app->enqueueMessage('File: ' . $file);
 
         try {
-            $importer = new KampInfoImporter();
+            $importer = new KampInfoImporterExporter();
 
             $importer->importAlles($file);
             $app->enqueueMessage('Alles geïmporteerd');
@@ -57,7 +57,7 @@ class ImportModel extends AdminModel {
         $app->enqueueMessage('File: ' . $file);
 
         try {
-            $importer = new KampInfoImporter();
+            $importer = new KampInfoImporterExporter();
             $importer->importEnkelePlaats($hit);
             $app->enqueueMessage('Enkele plaats geïmporteerd');
         } catch (GenericDataException $e) {
