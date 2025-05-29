@@ -57,7 +57,7 @@ class HtmlView extends BaseHtmlView {
         $user = Factory::getApplication()->getIdentity();
         $toolbar = Toolbar::getInstance();
 
-        ToolbarHelper::title(Text::_('COM_KAMPINFO_SUBMENU_HITSITES'), 'kampinfo');
+        ToolbarHelper::title(Text::_('COM_KAMPINFO_HITSITES_DOCTITLE'), 'kampinfo');
 
         if ($this->canDo->get('hitsite.create')) {
             $toolbar->addNew('site.add');

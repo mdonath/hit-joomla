@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView {
         $canDo   = $this->canDo;
         $toolbar = Toolbar::getInstance();
 
-        ToolbarHelper::title(Text::_('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'kampinfo');
+        ToolbarHelper::title(Text::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'), 'kampinfo');
 
         if ($canDo->get('hitproject.create')) {
             $toolbar->addNew('project.add');

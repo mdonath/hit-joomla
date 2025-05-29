@@ -46,7 +46,7 @@ class HtmlView extends BaseHtmlView {
         $user    = Factory::getApplication()->getIdentity();
         $toolbar = Toolbar::getInstance();
 
-        ToolbarHelper::title(Text::_('COM_KAMPINFO_SUBMENU_HITICONS'), 'kampinfo');
+        ToolbarHelper::title(Text::_('COM_KAMPINFO_HITICONS_DOCTITLE'), 'kampinfo');
 
         if ($canDo->get('hiticon.create')) {
             $toolbar->addNew('icon.add');

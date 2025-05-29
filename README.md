@@ -53,3 +53,7 @@ Inloggen op de backend
 ----------------------
 Bij de eerste keer opstarten wordt er ook een user `admin` gemaakt. Deze heeft als wachtwoord: `adminadminadmin`. Dat is ook een manier om aan de minimale lengte te komen...
 
+
+Hoofdmenu
+---------
+Hoofdmenu -> Modules -> Position: J4Scouting, navbar
