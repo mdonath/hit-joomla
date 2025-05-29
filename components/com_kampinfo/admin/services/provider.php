@@ -15,20 +15,22 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use HITScoutingNL\Component\KampInfo\Administrator\Extension\KampInfoComponent;
 
-return new class implements ServiceProviderInterface {
+return new class () implements ServiceProviderInterface {
     
     public function register(Container $container): void {
 
-        $container->registerServiceProvider(new ComponentDispatcherFactory('\\HITScoutingNL\\Component\\KampInfo'));
         $container->registerServiceProvider(new MVCFactory('\\HITScoutingNL\\Component\\KampInfo'));
+        $container->registerServiceProvider(new ComponentDispatcherFactory('\\HITScoutingNL\\Component\\KampInfo'));
+        $container->registerServiceProvider(new RouterFactory('\\HITScoutingNL\\Component\\KampInfo'));
 
         $container->set(
             ComponentInterface::class,
             function (Container $container) {
                 $component = new KampInfoComponent($container->get(ComponentDispatcherFactoryInterface::class));
 
-                $component->setMVCFactory($container->get(MVCFactoryInterface::class));
                 $component->setRegistry($container->get(Registry::class));
+                $component->setMVCFactory($container->get(MVCFactoryInterface::class));
+                $component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
                 return $component;
             }

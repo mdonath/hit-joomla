@@ -35,6 +35,7 @@ $manifest = $this->getModel()->getItems();
             <h2>Laatste wijzigingen:</h2>
             <table class="table table-striped">
                 <tr><th>Datum</th><th>Wijzigingen</th></tr>
+                <tr><td>Q2-2025</td><td>Herbouw naar Joomla 5</td></tr>
                 <tr><td>Q3-2023</td><td>Herbouw naar Joomla 4</td></tr>
                 <tr><td>17-01-2020</td><td>Link naar HIT Helpdesk formulier gewijzigd</td></tr>
                 <tr><td>xx-11-2019</td><td>Contentplugin voor het tonen van een lijst van kamponderdelen in een article</td></tr>

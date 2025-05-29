@@ -21,7 +21,7 @@ Bouwen applicatie
 -----------------
 In de root van het project staat een Ant build-file, `build.xml`.
 
-Met het commando `ant com_kampinfo` wordt het component gebouwd en in de map `docker/j4/work_directory/kampinfo` geplaatst.
+Met het commando `ant com_kampinfo` wordt het component gebouwd en in de map `docker/j5/work_directory/kampinfo` geplaatst.
 
 Voor de overige componenten geldt hetzelfde:
 
@@ -43,7 +43,7 @@ Standaard kom je met een shell in de map `/var/www/html`, maar de work_directory
 Dus:
 `cd ..`
 
-`php joomla/cli/joomla.php extension:install --path work_directory/kampinfo/com_kampinfo-2.0.0-*`
+`php joomla/cli/joomla.php extension:install --path work_directory/kampinfo/com_kampinfo-3.0.0-*`
 
 Als het niet werkt:
 - Als je een of andere foutmelding krijgt met "Copy Failed", dan is de owner van de component mappen niet goed in `/var/www/html/administrator/components`. Die kun je dan goed zetten met `chown -R www-data:www-data /var/www/html/administrator/componentscom_kampinfo*`.

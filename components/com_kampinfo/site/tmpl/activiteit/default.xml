@@ -14,8 +14,8 @@
                     name="hitcamp_id"
                     type="Activiteit"
                     required="true"
-                    label="Hit Kamp"
-                    description="COM_KAMPINFO_ACTIVITEIT_ID_JAAR_DESC"
+                    label="COM_KAMPINFO_ACTIVITEIT_FIELD_ID_LABEL"
+                    description="COM_KAMPINFO_ACTIVITEIT_FIELD_ID_DESC"
             />
         </fieldset>
     </fields>

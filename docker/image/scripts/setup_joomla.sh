@@ -55,7 +55,7 @@ mysql -h"$JOOMLA_DB_HOST" -u"$JOOMLA_DB_USER" --password="$JOOMLA_DB_PASSWORD" "
 
 
 echo "Installing KampInfo and Im/Export Components"
-php joomla.php extension:install --path=/tmp/hit/own/com_kampinfo-2.0.0.zip
+php joomla.php extension:install --path=/tmp/hit/own/com_kampinfo-3.0.0.zip
 php joomla.php extension:install --path=/tmp/hit/own/com_kampinfoimexport-2.0.0.zip
 
 echo "Installing and enabling Content plugin 'plg_kampinfo'"

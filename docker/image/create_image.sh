@@ -1,7 +1,7 @@
 #!/bin/bash
-set -e
+set -eux
 
-SOURCE_DIR=../j4/work_directory/kampinfo/
+SOURCE_DIR=../j5/work_directory/kampinfo/
 TARGET_DIR=components
 
 if ! [ -d $SOURCE_DIR ]; then
@@ -10,12 +10,12 @@ if ! [ -d $SOURCE_DIR ]; then
   exit 1;
 fi
 
-cp ${SOURCE_DIR}/com_kampinfo-2.* ${TARGET_DIR}/com_kampinfo-2.0.0.zip
+cp ${SOURCE_DIR}/com_kampinfo-3.* ${TARGET_DIR}/com_kampinfo-3.0.0.zip
 cp ${SOURCE_DIR}/com_kampinfoimexport-2.* ${TARGET_DIR}/com_kampinfoimexport-2.0.0.zip
 cp ${SOURCE_DIR}/plg_kampinfo-1.* ${TARGET_DIR}/plg_kampinfo-1.0.zip
 cp ${SOURCE_DIR}/plg_group_cli-1.* ${TARGET_DIR}/plg_group_cli-1.0.zip
 
 docker build \
-  --tag hit_dev_docker \
+  --tag hit_dev_docker_j5 \
   .
 
