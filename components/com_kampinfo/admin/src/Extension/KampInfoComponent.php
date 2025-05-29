@@ -15,11 +15,9 @@ use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Akkoord;
 
 
 class KampInfoComponent extends MVCComponent implements
-    BootableExtensionInterface,
-    RouterServiceInterface
+    BootableExtensionInterface
 {
     use HTMLRegistryAwareTrait;
-    use RouterServiceTrait;
 
     public function boot(ContainerInterface $container) {
         $this->getRegistry()->register('akkoord', new Akkoord());

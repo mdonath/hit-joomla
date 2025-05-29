@@ -21,7 +21,6 @@ return new class () implements ServiceProviderInterface {
 
         $container->registerServiceProvider(new MVCFactory('\\HITScoutingNL\\Component\\KampInfo'));
         $container->registerServiceProvider(new ComponentDispatcherFactory('\\HITScoutingNL\\Component\\KampInfo'));
-        $container->registerServiceProvider(new RouterFactory('\\HITScoutingNL\\Component\\KampInfo'));
 
         $container->set(
             ComponentInterface::class,
@@ -30,7 +29,6 @@ return new class () implements ServiceProviderInterface {
 
                 $component->setRegistry($container->get(Registry::class));
                 $component->setMVCFactory($container->get(MVCFactoryInterface::class));
-                $component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
                 return $component;
             }
