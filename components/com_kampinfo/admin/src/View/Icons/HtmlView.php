@@ -14,27 +14,31 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 class HtmlView extends BaseHtmlView {
 
+    public $filterForm;
+    public $activeFilters = [];
+
     protected $items = [];
     protected $state;
-
-    public $filterForm;
-
-    public $pagination;
+    protected $pagination;
 
     private $isEmptyState = false;
 
     function display($tpl = null): void {
-        $this->items         = $this->get('Items');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->pagination    = $this->get('Pagination');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->pagination    = $model->getPagination();
+        $this->activeFilters = $model->getActiveFilters();
 
-        if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
+        if (!\count($this->items) && $this->isEmptyState = $model->getIsEmptyState()) {
             $this->setLayout('emptystate');
         }
 
-        $this->canDo = ContentHelper::getActions('com_kampinfo');
+        // Check for errors.
+        if (\count($errors = $model->getErrors())) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         $this->addToolbar();
 
@@ -42,9 +46,9 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar() {
-        $canDo   = $this->canDo;
-        $user    = Factory::getApplication()->getIdentity();
-        $toolbar    = $this->getDocument()->getToolbar();
+        $canDo   = ContentHelper::getActions('com_kampinfo');
+        $user    = $this->getCurrentUser();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITICONS_DOCTITLE'), 'kampinfo');
 
@@ -52,7 +56,7 @@ class HtmlView extends BaseHtmlView {
             $toolbar->addNew('icon.add');
         }
 
-        if ($this->canDo->get('hiticon.edit')) {
+        if ($canDo->get('hiticon.edit')) {
             $toolbar
                 ->edit('icon.edit')
                 ->listCheck(true);
@@ -65,7 +69,7 @@ class HtmlView extends BaseHtmlView {
                 ->listCheck(true);
         }
 
-        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
     }

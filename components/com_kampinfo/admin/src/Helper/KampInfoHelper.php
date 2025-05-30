@@ -287,39 +287,6 @@ class KampInfoHelper {
         );
     }
 
-    public static function getTargetgroupOptions() {
-        return array (
-            (object) array (
-                "value" => "bevers",
-                "text" => "Bevers (5-7 jaar)"
-            ),
-            (object) array (
-                "value" => "welpen",
-                "text" => "Welpen (7-11 jaar)"
-            ),
-            (object) array (
-                "value" => "scouts",
-                "text" => "Scouts (11-15 jaar)"
-            ),
-            (object) array (
-                "value" => "explorers",
-                "text" => "Explorers (15-18 jaar)"
-            ),
-            (object) array (
-                "value" => "roverscouts",
-                "text" => "Roverscouts (18 t/m 21 jaar)"
-            ),
-            (object) array (
-                "value" => "plusscouts",
-                "text" => "Plusscouts (21+)"
-            ),
-            (object) array (
-                "value" => "ndlg",
-                "text" => "Volwassenen (ndlg)"
-            )
-        );
-    }
-
     public static function getHitIconSoortOptions() {
         return array (
                 "?" => "Gewoon",
@@ -331,25 +298,6 @@ class KampInfoHelper {
                 "S" => "Systeem"
         );
     }
-
-    public static function getHitPrijzenOptions() {
-        $params = ComponentHelper::getParams('com_kampinfo');
-        $prijzenConfig = $params->get('mogelijkeDeelnamekosten');
-        if (empty($prijzenConfig)) {
-            $prijzenConfig = '35,40,45,50,55,60,65,70';
-        }
-        
-        $prijzen = explode(',', $prijzenConfig);
-        $result = array();
-        foreach ($prijzen as $prijs) {
-            $result[] = (object) array (
-                "value" => $prijs,
-                "text" => '€ '. $prijs
-            );
-        }
-        return $result;
-    }
-
 
     public static function reverse($date, $metTijd=false) {
         if ($date != '0000-00-00') {

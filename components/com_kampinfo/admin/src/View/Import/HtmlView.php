@@ -16,8 +16,8 @@ class HtmlView extends BaseHtmlView {
     protected $form;
 
     function display($tpl = null) {
-        $this->form  = $this->get('Form');
-        // $this->item  = $this->get('Item');
+        $model       = $this->getModel();
+        $this->form  = $model->getForm();
 
         $this->addToolbar();
 
@@ -25,12 +25,16 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar() {
+        $canDo   = ContentHelper::getActions('com_kampinfo');
+        $user    = $this->getCurrentUser();
+        $toolbar = $this->getDocument()->getToolbar();
+
         ToolbarHelper::title(Text::_('COM_KAMPINFO_IMPORT_DOCTITLE'), 'kampinfo');
 
-        $canDo = ContentHelper::getActions('com_kampinfo');
-        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar    = $this->getDocument()->getToolbar();
+        // Button - Options
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
     }
+
 }

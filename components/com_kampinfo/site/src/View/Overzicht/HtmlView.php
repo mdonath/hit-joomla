@@ -14,11 +14,16 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView {
 
-    public function display($tpl = null) {
-        $this->project = $this->get('Project');
+    protected $project;
 
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->useStyle('com_kampinfo-overzicht');
+    public function display($tpl = null) {
+        $model      = $this->getModel();
+        $app        = Factory::getApplication();
+        $document   = $app->getDocument();
+
+        $this->project = $model->getProject();
+
+        $document->getWebAssetManager()->useStyle('com_kampinfo-overzicht');
 
         return parent::display($tpl);
     }

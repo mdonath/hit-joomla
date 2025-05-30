@@ -20,7 +20,6 @@ class HtmlView extends BaseHtmlView {
     protected $form;
     protected $item;
     protected $state;
-    protected $canDo;
 
     public function display($tpl = null): void {
         $model       = $this->getModel();

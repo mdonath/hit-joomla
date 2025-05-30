@@ -16,30 +16,32 @@ $iconFolderSmall = $params->get('iconFolderSmall');
 $iconFolderLarge = $params->get('iconFolderLarge');
 $iconExtension = $params->get('iconExtension');
 
+$user = $this->getCurrentUser();
+
+$canEdit    = $user->authorise('hiticon.edit', 'com_kampinfo');
+$canDelete  = $user->authorise('hiticon.delete', 'com_kampinfo');
 ?>
 
 <tbody>
     <?php foreach($this->items as $i => $item) : ?>
         <tr>
-            <?php if ($this->canDo->get('hiticon.edit') || $this->canDo->get('hiticon.delete')) { ?>
-                <td>
-                    <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                </td>
-            <?php } ?>
+            <td>
+                <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+            </td>
             <td>
                 <?php echo $item->volgorde; ?>
             </td>
             <td>
-                <?php echo(KampInfoUrlHelper::imgUrl($iconFolderLarge, $item->bestandsnaam, $iconExtension, $item->tekst, $item->tekst)); ?>
+                <?php echo KampInfoUrlHelper::imgUrl($iconFolderLarge, $item->bestandsnaam, $iconExtension, $item->tekst, $item->tekst); ?>
             </td>
             <td>
-                <?php if ($this->canDo->get('hiticon.edit')) { ?>
-                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=icon.edit&id='.(int)$item->id); ?>">
-                        <?php echo $item->bestandsnaam; ?>
+                <?php if ($canEdit) : ?>
+                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=icon.edit&id=' . (int)$item->id); ?>">
+                        <?= $item->bestandsnaam ?>
                     </a>
-                <?php } else { ?>
-                    <?php echo $item->bestandsnaam; ?>
-                <?php } ?>
+                <?php else : ?>
+                    <?= $item->bestandsnaam ?>
+                <?php endif; ?>
             </td>
             <td class="hidden-phone">
                 <?php echo $item->tekst; ?>

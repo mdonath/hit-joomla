@@ -16,12 +16,14 @@ use Joomla\CMS\Uri\Uri;
  */
 class HtmlView extends BaseHtmlView {
 
+    protected $project;
+
     public function display($tpl = null) {
-        $this->project = $this->get('Project');
+        $model      = $this->getModel();
+        $app        = Factory::getApplication();
+        $document   = $app->getDocument();
 
-        $document = Factory::getApplication()->getDocument();
-
-        $wa = $document->getWebAssetManager();
+        $this->project = $model->getProject();
 
         $params = ComponentHelper::getParams('com_kampinfo');
         $iconFolderLarge = $params->get('iconFolderLarge');
@@ -30,7 +32,7 @@ class HtmlView extends BaseHtmlView {
         self::integerifyFields($this->project);
         $json = json_encode($this->project);
 
-        $wa
+        $document->getWebAssetManager()
             -> useStyle('com_kampinfo-hitkiezer')
             -> useScript('com_kampinfo-jquery-cookies')
             -> addInlineScript("var hit = $json")
@@ -76,7 +78,9 @@ class HtmlView extends BaseHtmlView {
         foreach ($project->hitPlaatsen as $plaats) {
             foreach ($plaats->kampen as $kamp) {
                 foreach ($kampFields as $field) {
-                    $kamp->$field = intval($kamp->$field);
+                    if (property_exists($kamp, $field)) {
+                        $kamp->$field = intval($kamp->$field);
+                    }
                 }
             }
         }

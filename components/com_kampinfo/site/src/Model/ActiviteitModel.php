@@ -17,7 +17,7 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 class ActiviteitModel extends AbstractKampInfoModel {
 
     public function getActiviteit() {
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         $hitcampId = $input->getInt('hitcamp_id', 0);
 
         if ($hitcampId == 0) {
@@ -58,7 +58,6 @@ class ActiviteitModel extends AbstractKampInfoModel {
             $activiteit->icoontjes = "aantalnacht{$aantalNachten},". $activiteit->icoontjes;
             $activiteit->icoontjes =  $this->createIcons($activiteit->icoontjes);
             $activiteit->activiteitengebieden = $this->createActiviteitengebieden($activiteit->activiteitengebieden);
-            $activiteit->doelgroepen = $this->createDoelgroepen($activiteit->doelgroepen);
             return $activiteit;
         } catch (\Exception $e) {
             throw new GenericDataException($e->getMessage(), 500);
@@ -101,22 +100,6 @@ class ActiviteitModel extends AbstractKampInfoModel {
             }
         }
         return $result;		
-    }
-
-    private function createDoelgroepen($doelgroepen) {
-        $doelgroepenLookup = array();
-        foreach (KampInfoHelper::getTargetgroupOptions() as $v) {
-            $doelgroepenLookup[$v->value] = $v->text;
-        }
-        $result = '';
-        $sep = '';
-        foreach (explode(',', $doelgroepen) as $doelgroep) {
-            if (!empty($doelgroep)) {
-                $result .= $sep . $doelgroepenLookup[$doelgroep];
-                $sep = ', ';
-            }
-        }
-        return $result;
     }
 
 }

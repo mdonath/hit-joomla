@@ -49,7 +49,7 @@ $project = $this->project;
     <?php foreach ($project->plaatsen as $plaats) { ?>
     <thead>
         <tr>
-            <th class="kolom1"><a href="<?php echo(KampInfoUrlHelper::plaatsURL($plaats, $project->jaar, $useComponentUrls)); ?>"><?php echo($plaats->naam);?></a></th>
+            <th class="kolom1"><a href="<?php echo KampInfoUrlHelper::plaatsURL($plaats, $project->jaar, $useComponentUrls); ?>"><?php echo $plaats->naam;?></a></th>
             <th class="kolom2">Leeftijd</th>
             <th class="kolom3">Groep</th>
             <th class="kolom4">&nbsp;</th>
@@ -63,33 +63,33 @@ $project = $this->project;
         ?>
         <tr>
             <td class="kolom1">
-                <a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $project->jaar, $useComponentUrls)); ?>"
-                    title="<?php echo(KampInfoUrlHelper::fuzzyIndicatieVol($kamp)); ?>"
+                <a  href="<?php echo KampInfoUrlHelper::activiteitURL($plaats, $kamp, $project->jaar, $useComponentUrls); ?>"
+                    title="<?php echo KampInfoUrlHelper::fuzzyIndicatieVol($kamp); ?>"
                 >
-                    <?php echo($kamp->naam); ?>
+                    <?php echo $kamp->naam; ?>
                 </a>
             </td>
-            <td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>&nbsp;-&nbsp;<?php echo($kamp->maximumLeeftijd); ?></td>
+            <td class="kolom2"><?php echo $kamp->minimumLeeftijd; ?>&nbsp;-&nbsp;<?php echo $kamp->maximumLeeftijd; ?></td>
             <td class="kolom3">
                 <?php
                     $subgroepMin = $kamp->subgroepsamenstellingMinimum;
                     $subgroepMax = $kamp->subgroepsamenstellingMaximum;
                     if ($subgroepMin == 0 || $subgroepMax == 0) {
-                        echo('&nbsp;');						
+                        echo '&nbsp;';
                     } elseif ($subgroepMin == $subgroepMax) {
-                        echo("$subgroepMin pers.");
+                        echo "$subgroepMin pers.";
                     } else {
-                        echo("$subgroepMin - $subgroepMax pers.");
+                        echo "$subgroepMin - $subgroepMax pers.";
                     }
                 ?>
             </td>
             <td class="kolom4">
                 <?php
                     if (KampInfoUrlHelper::isVol($kamp)) {
-                        echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), ''));
+                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), '');
                     }
                     foreach ($kamp->icoontjes as $icoon) {
-                        echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, ''));
+                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, '');
                     }
                     ?>
             </td>
@@ -99,10 +99,10 @@ $project = $this->project;
     <?php } ?>
     <tfoot>
         <tr>
-            <th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.
-            <?php if (!empty($project->laatstBijgewerktOp)) { ?>
-                Laatst bijgewerkt op: <?php echo($project->laatstBijgewerktOp); ?></th>
-            <?php } ?>
+            <th colspan="4">Totaal aantal gereserveerd: <?php echo $aantalGereserveerd; ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.
+            <?php if (!empty($project->laatstBijgewerktOp)) : ?>
+                Laatst bijgewerkt op: <?php echo $project->laatstBijgewerktOp; ?></th>
+            <?php endif; ?>
         </tr>
     </tfoot>
 </table>

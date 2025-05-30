@@ -17,7 +17,7 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 class KiezerModel extends AbstractKampInfoModel {
 
     public function getProject() {
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         $projectId = $input->getInt('hitproject_id', 0);
 
         $project = $this->getHitProject($projectId);
@@ -95,7 +95,9 @@ class KiezerModel extends AbstractKampInfoModel {
                 $nieuweIcoontjes = [];
                 if (!empty($kamp->icoontjes)) {
                     $aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
-                    $kamp->icoontjes = "aantalnacht{$aantalNachten},". $kamp->icoontjes;
+                    if  ($aantalNachten > 0) {
+                        $kamp->icoontjes = "aantalnacht{$aantalNachten},". $kamp->icoontjes;
+                    }
                     $icoontjes = explode(',', $kamp->icoontjes);
                     foreach ($icoontjes as $icoon) {
                         $lookedUp = $iconenLookup[$icoon];

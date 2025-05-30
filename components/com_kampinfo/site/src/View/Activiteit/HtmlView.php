@@ -14,13 +14,16 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView {
 
+    protected $activiteit;
+
     public function display($tpl = null) {
-        $this->activiteit = $this->get('Activiteit');
+        $model      = $this->getModel();
+        $app        = Factory::getApplication();
+        $document   = $app->getDocument();
 
-        $document = Factory::getApplication()->getDocument();
+        $this->activiteit = $model->getActiviteit();
 
-        $wa = $document->getWebAssetManager();
-        $wa->useStyle('com_kampinfo-activiteit');
+        $document->getWebAssetManager()->useStyle('com_kampinfo-activiteit');
 
         $document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 

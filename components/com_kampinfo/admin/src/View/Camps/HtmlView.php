@@ -45,17 +45,11 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar():void  {
+        $canDo = ContentHelper::getActions('com_kampinfo', 'camp', $this->state->get('filter.plaats'));
+        $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITCAMPS_DOCTITLE'), 'kampinfo');
-
-        $canDo = ContentHelper::getActions('com_kampinfo', 'camp', $this->state->get('filter.plaats'));
-
-        echo("<ul>");
-        foreach ($canDo as $k=>$v) {
-            echo ("<li>Action: $k: $v</li>");
-        }
-        echo('</ul>');
 
         // Button - New
         if ($canDo->get('hitcamp.create')) {
@@ -98,7 +92,7 @@ class HtmlView extends BaseHtmlView {
                     ->listCheck(true);
             }
 
-            // Dropdown Item: 'Akkoord Kamp' & 'Niet akkoord kamp'
+            // Dropdown Item - 'Akkoord Kamp' & 'Niet akkoord kamp'
             if ($canDo->get('hitcamp.edit')) {
                 $childBar->standardButton('publish', 'Akkoord kamp', 'camps.akkoordKamp')
                     ->listCheck(true);
@@ -106,7 +100,7 @@ class HtmlView extends BaseHtmlView {
                     ->listCheck(true);
             }
 
-            // Dropdown Item: 'Akkoord plaats' & 'Niet akkoord plaats'
+            // Dropdown Item - 'Akkoord plaats' & 'Niet akkoord plaats'
             if ($canDo->get('hitsite.edit')) {
                 $childBar->standardButton('publish', 'Akkoord plaats', 'camps.akkoordPlaats')
                     ->listCheck(true);
@@ -115,9 +109,9 @@ class HtmlView extends BaseHtmlView {
             }
         }
 
-        if ($canDo->get('core.admin', 'com_kampinfo') || $canDo->get('core.options', 'com_kampinfo')) {
+        // Button - Options
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
-            $toolbar->divider();
         }
     }
 

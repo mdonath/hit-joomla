@@ -16,9 +16,7 @@ class DisplayController extends BaseController {
 
     public function display($cachable = false, $urlparams = []) {
         parent::display($cachable, $urlparams);
-        return $this;defined('_JEXEC') or die('Restricted Access');
-
-
+        return $this;
     }
 
 }

@@ -19,12 +19,13 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar() {
-        $canDo = ContentHelper::getActions('com_kampinfo');
+        $canDo   = ContentHelper::getActions('com_kampinfo');
+        $user    = $this->getCurrentUser();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_INFO_DOCTITLE'), 'kampinfo');
 
-        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar    = $this->getDocument()->getToolbar();
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
     }

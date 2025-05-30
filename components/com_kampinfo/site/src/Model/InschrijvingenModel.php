@@ -17,7 +17,7 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 class InschrijvingenModel extends AbstractKampInfoModel {
 
     public function getProject() {
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         $projectId = $input->getInt('hitproject_id', 0);
 
         $project = $this->getHitProject($projectId);

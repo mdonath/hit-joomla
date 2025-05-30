@@ -20,9 +20,10 @@ class HtmlView extends BaseHtmlView {
     protected $state;
 
     public function display($tpl = null): void {
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $model       = $this->getModel();
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
         // Check for errors.
         if (\count($errors = $this->get('Errors'))) {
@@ -42,8 +43,11 @@ class HtmlView extends BaseHtmlView {
             Text::_('COM_KAMPINFO_HITICON_MANAGER_NEW') :
             Text::_('COM_KAMPINFO_HITICON_MANAGER_EDIT'), 'kampinfo');
 
+        // Button: Save
         $toolbar->apply('icon.apply');
+        // Button: Save & Close
         $toolbar->save('icon.save');
+        // Button: Close
         $toolbar->cancel('icon.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
     }
 

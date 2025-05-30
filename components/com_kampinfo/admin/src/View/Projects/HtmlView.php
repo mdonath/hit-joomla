@@ -46,11 +46,11 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar(): void {
+        $canDo   = ContentHelper::getActions('com_kampinfo', 'project');
+        $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'), 'kampinfo');
-
-        $canDo = ContentHelper::getActions('com_kampinfo', 'project');
 
         if ($canDo->get('hitproject.create')) {
             $toolbar->addNew('project.add');
@@ -60,7 +60,6 @@ class HtmlView extends BaseHtmlView {
             $toolbar
                 -> edit('project.edit')
                 -> listCheck(true);
-            $toolbar->divider();
         }
 
         if ($canDo->get('hitproject.delete')) {
@@ -68,12 +67,10 @@ class HtmlView extends BaseHtmlView {
                 -> delete('projects.delete')
                 -> message('JGLOBAL_CONFIRM_DELETE')
                 -> listCheck(true);
-            $toolbar->divider();
         }
 
-        if ($canDo->get('core.admin') || $canDo->get('core.options')) {
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
-            $toolbar->divider();
         }
 
     }

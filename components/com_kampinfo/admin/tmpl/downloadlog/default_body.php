@@ -2,12 +2,8 @@
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 ?>
 
 <tbody>

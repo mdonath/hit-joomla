@@ -47,11 +47,11 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar() {
+        $canDo = ContentHelper::getActions('com_kampinfo', 'site');
+        $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITSITES_DOCTITLE'), 'kampinfo');
-
-        $canDo = ContentHelper::getActions('com_kampinfo', 'site');
 
         if ($canDo->get('hitsite.create')) {
             $toolbar->addNew('site.add');
@@ -98,7 +98,7 @@ class HtmlView extends BaseHtmlView {
 
         }
 
-        if ($canDo->get('core.admin', 'com_kampinfo') || $canDo->get('core.options', 'com_kampinfo')) {
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
 

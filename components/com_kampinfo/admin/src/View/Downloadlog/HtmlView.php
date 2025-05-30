@@ -24,17 +24,21 @@ class HtmlView extends BaseHtmlView {
     private $isEmptyState = false;
 
     function display($tpl = null): void {
-        $this->items         = $this->get('Items');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->pagination    = $this->get('Pagination');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->pagination    = $model->getPagination();
+        $this->activeFilters = $model->getActiveFilters();
 
         if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
             $this->setLayout('emptystate');
         }
 
-        $this->canDo = ContentHelper::getActions('com_kampinfo');
+        // Check for errors.
+        if (\count($errors = $model->getErrors())) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         $this->addToolbar();
 
@@ -42,13 +46,14 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar() {
-        $canDo   = $this->canDo;
-        $user    = Factory::getApplication()->getIdentity();
-        $toolbar    = $this->getDocument()->getToolbar();
+        $canDo   = ContentHelper::getActions('com_kampinfo');
+        $user    = $this->getCurrentUser();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_DOWNLOADS_DOCTITLE'), 'kampinfo');
 
-        if ($canDo->get('core.admin')) {
+        // Button - Options
+        if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
     }

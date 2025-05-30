@@ -18,7 +18,7 @@ class OverzichtplaatsModel extends AbstractKampInfoModel {
 
 
     public function getPlaats() {
-        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->getInput();
         $hitsiteId = $input->getString('hitsite_id', '');
 
         $plaats = $this->getHitPlaats($hitsiteId);

@@ -14,11 +14,18 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView {
 
-    public function display($tpl = null) {
-        $this->plaats = $this->get('Plaats');
+    protected $plaats;
 
-        $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->useStyle('com_kampinfo-overzicht');
+    public function display($tpl = null) {
+        $model      = $this->getModel();
+        $app        = Factory::getApplication();
+        $document   = $app->getDocument();
+
+        $this->plaats = $model->getPlaats();
+
+        $document->getWebAssetManager()->useStyle('com_kampinfo-overzicht');
+
+        $document->setTitle('Alle activiteiten in HIT ' . $this->plaats->naam);
 
         return parent::display($tpl);
     }

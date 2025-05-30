@@ -11,11 +11,9 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
 
 <thead>
     <tr>
-        <?php if ($this->canDo->get('hiticon.edit') || $this->canDo->get('hiticon.delete')) { ?>
-            <td class="w-1 text-center">
-                <?php echo HTMLHelper::_('grid.checkall'); ?>
-            </td>
-        <?php } ?>
+        <td class="w-1 text-center">
+            <?php echo HTMLHelper::_('grid.checkall'); ?>
+        </td>
         <th scope="col">
             <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITICONS_HEADING_VOLGORDE', 'volgorde', $listDirn, $listOrder); ?>
         </th>
