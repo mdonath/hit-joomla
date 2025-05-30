@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, HIT Scouting Nederland */
 
 .ifJavascriptAvailable {
-	display: none;
+    display: none;
 }
 
 .ifNoJavascriptAvailable {
-	display: block;	
+    display: block;    
 }
 
 form#filter ul li {
-	border: none !important;
-	margin-left: 15px;
+    border: none !important;
+    margin-left: 15px;
 }
 
 div#pictos {
-	margin-top: 1em;
-	margin-bottom: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 div#pictos img {
@@ -24,37 +24,37 @@ div#pictos img {
 }
 
 div#kampen {
-	text-align: left;
-	margin-left: 2em;
+    text-align: left;
+    margin-left: 2em;
 }
 
 div#kampen li {
-	list-style: decimal;
-	background-image: none !important;
+    list-style: decimal;
+    background-image: none !important;
 }
 
 div#kampen li .score {
-	float: right;
-	font-size: x-small;
-	width: 2em;
+    float: right;
+    font-size: x-small;
+    width: 2em;
 }
 
 fieldset {
-	border: 2px groove #aaa !important;
-	padding: 1em !important;
-	margin-bottom: 1em !important;
+    border: 2px groove #aaa !important;
+    padding: 1em !important;
+    margin-bottom: 1em !important;
 }
 
 form#filter legend {
-	font-weight: bold;
-	width: auto !important;
-	border: none !important;
-	margin: 0px !important;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	padding-bottom: 0px !important;
+    font-weight: bold;
+    width: auto !important;
+    border: none !important;
+    margin: 0px !important;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0px !important;
 }
 
 select.kiezerinput {
-	width: auto !important;
+    width: auto !important;
 }

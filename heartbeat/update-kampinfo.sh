@@ -16,5 +16,5 @@ echo $DATUM $CONTENT  >> log.txt
 
 if [ "$CONTENT" != "OK" ];
 then
-	cat log.txt | mail -s "KampInfo update gefaald op $DATUM" $SENDTO
+    cat log.txt | mail -s "KampInfo update gefaald op $DATUM" $SENDTO
 fi

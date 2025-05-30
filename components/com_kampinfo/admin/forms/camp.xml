@@ -31,10 +31,10 @@
         />
     </fieldset>
 
-    <fieldset	name="algemeen"
+    <fieldset   name="algemeen"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="startDatumTijd"
+        <field  name="startDatumTijd"
                 type="calendar"
                 label="Start datum/tijd"
                 description="De dag en tijdstip dat het kamp begint (dd-mm-jjjj hh:mm)."
@@ -44,7 +44,7 @@
                 format="%d-%m-%Y %H:%M"
                 filter="SERVER_UTC"
         />
-        <field	name="eindDatumTijd"
+        <field  name="eindDatumTijd"
                 type="calendar"
                 label="Eind datum/tijd"
                 description="De dag en tijdstip dat het kamp eindigt (dd-mm-jjjj hh:mm)."
@@ -53,7 +53,7 @@
                 format="%d-%m-%Y %H:%M"
                 filter="SERVER_UTC"
         />
-        <field	name="deelnamekosten"
+        <field  name="deelnamekosten"
                 type="rangenum"
                 label="Deelnamekosten"
                 description="De prijs die een deelnemer moet betalen."
@@ -63,7 +63,7 @@
                 step="1"
                 default="20"
         />
-        <field	name="isouderkind"
+        <field  name="isouderkind"
                 type="radio"
                 label="Ouder-Kind kamp"
                 description="Is dit een Ouder-Kind kamp? Dat heeft gevolgen voor de inschrijfformulieren en de tekst op de site."
@@ -72,7 +72,7 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
-        <field	name="optieAlleenOuderLid"
+        <field  name="optieAlleenOuderLid"
                 type="radio"
                 label="Alleen ouder lid ok?"
                 description="Bij dit Ouder-Kind kamp mag ook de ouder lid zijn en het kind niet."
@@ -81,7 +81,7 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
-        <field	name="startElders"
+        <field  name="startElders"
                 type="radio"
                 label="Afwijkende startlokatie"
                 description="Start het kamp niet op de hoofdlokatie? Er komt dan ergens een indicatie zodat het beter opvalt dat men ergens anders begint. Let op: als de plaats geen hoofdlokatie heeft, gewoon op 'NEE' zetten, dan verschijnt er ook geen mededeling."
@@ -90,7 +90,7 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
-        <field	name="sublocatie"
+        <field  name="sublocatie"
                 type="text"
                 label="Sublocatie"
                 description="Vul hier hier in waar het kamp draait als het niet op de hoofdlocatie van de HIT plaats plaatsvindt. Het Stookkamp draait niet in Mook, maar op St Walrick in Overasselt. Vul zelf nog 'in' of 'op' in."
@@ -101,10 +101,10 @@
         />
     </fieldset>
 
-    <fieldset	name="leeftijd"
+    <fieldset   name="leeftijd"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="minimumLeeftijd"
+        <field  name="minimumLeeftijd"
                 type="number"
                 label="Minimum leeftijd"
                 description="De minimale leeftijd van een deelnemer om mee te mogen doen."
@@ -113,7 +113,7 @@
                 required="true"
                 default="8"
                 filter="integer"/>
-        <field	name="maximumLeeftijd"
+        <field  name="maximumLeeftijd"
                 type="number"
                 label="Maximum leeftijd"
                 description="De maximale leeftijd van een deelnemer om mee te mogen doen."
@@ -122,7 +122,7 @@
                 required="true"
                 default="88"
                 filter="integer"/>
-        <field	name="margeAantalDagenTeJong"
+        <field  name="margeAantalDagenTeJong"
                 type="number"
                 label="Marge te jong (in dagen)"
                 description="Hoeveel dagen mag een deelnemer te jong zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
@@ -132,7 +132,7 @@
                 max="255"
                 default="90"
                 filter="integer"/>
-        <field	name="margeAantalDagenTeOud"
+        <field  name="margeAantalDagenTeOud"
                 type="number"
                 label="Marge te oud (in dagen)"
                 description="Hoeveel dagen mag een deelnemer te oud zijn om zich toch nog gewoon in te kunnen schrijven (standaard 90 dagen)."
@@ -142,17 +142,17 @@
                 max="255"
                 default="90"
                 filter="integer"/>
-        <field	name="redenAfwijkingMarge"
+        <field  name="redenAfwijkingMarge"
                 type="text"
                 label="Reden afwijking marge"
                 description="Wat is de reden om af te wijken van de standaard 90 dagen (bijvoorbeeld alcohol leeftijd, etc.)."
                 size="30"
                 maxlength="255"/>
     </fieldset>
-    <fieldset	name="leeftijd-ouder"
+    <fieldset   name="leeftijd-ouder"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="minimumLeeftijdOuder"
+        <field  name="minimumLeeftijdOuder"
                 type="number"
                 label="Minimum leeftijd"
                 description="De minimale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
@@ -162,7 +162,7 @@
                 default="21"
                 filter="integer"
                 showon="isouderkind:1"/>
-        <field	name="maximumLeeftijdOuder"
+        <field  name="maximumLeeftijdOuder"
                 type="number"
                 label="Maximum leeftijd"
                 description="De maximale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
@@ -174,16 +174,16 @@
                 showon="isouderkind:1"/>
     </fieldset>
 
-    <fieldset	name="hitcourant"
+    <fieldset   name="hitcourant"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="noteCourantTekst"
+        <field  name="noteCourantTekst"
                 type="note" 
                 label="De volledige tekst hieronder wordt gepubliceerd in de HIT-courant."
                 description="- Schrijf niet meer dan 600 tekens; uitgebreidere info kan in het tabblad 'website'.&lt;br&gt;- Wees origineel; vermijd clichés zoals 'schrijf je snel in, want vol = vol'."
                 class="alert alert-info"
         />
-        <field	name="hitCourantTekst"
+        <field  name="hitCourantTekst"
                 type="textarea"
                 label="HIT Couranttekst"
                 description="De tekst die in de HIT Courant wordt gepubliceerd. Maak in enkele zinnen op een wervende manier je toekomstige deelnemers enthousiast."
@@ -193,10 +193,10 @@
         />
     </fieldset>
 
-    <fieldset	name="subgroep"
+    <fieldset   name="subgroep"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="minimumAantalSubgroepjes"
+        <field  name="minimumAantalSubgroepjes"
                 type="number"
                 label="Minimum aantal"
                 description="Met dit aantal kan je aangeven hoeveel subgroepjes je minimaal in je HIT-Kamp wilt hebben. Geef 0 is als het niet uitmaakt."
@@ -206,7 +206,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="maximumAantalSubgroepjes"
+        <field  name="maximumAantalSubgroepjes"
                 type="number"
                 label="Maximum aantal"
                 description="Met dit aantal kan je aangeven hoeveel subgroepjes je maximaal in je HIT-Kamp wilt hebben. De HIT-HelpDesk zal niet uit zichzelf hiervan afwijken. Geef 0 is als het niet uitmaakt."
@@ -217,7 +217,7 @@
                 filter="integer"
         />
 
-        <field	name="subgroepsamenstellingMinimum"
+        <field  name="subgroepsamenstellingMinimum"
                 type="number"
                 label="Minimum grootte"
                 description="Minimale groepsgrootte waarmee ingeschreven kan worden (individueel: 1, koppel: 2, troppel: 3, etc)."
@@ -227,7 +227,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="subgroepsamenstellingMaximum"
+        <field  name="subgroepsamenstellingMaximum"
                 type="number"
                 label="Maximum grootte"
                 description="Maximale groepsgrootte waarmee ingeschreven kan worden."
@@ -237,7 +237,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="subgroepsamenstellingExtra"
+        <field  name="subgroepsamenstellingExtra"
                 type="number"
                 label="Aantal deelbaar door"
                 description="Getal waardoor de groepsgrootte te delen moet zijn (bijv '2' betekent alleen koppels, dus geen 1, 3, 5, etc.)."
@@ -249,10 +249,10 @@
         />
     </fieldset>
 
-    <fieldset	name="aantallen"
+    <fieldset   name="aantallen"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="minimumAantalDeelnemers"
+        <field  name="minimumAantalDeelnemers"
                 type="number"
                 label="Minimum aantal"
                 description="Het minimale aantal deelnemers om het HIT Kamp door te kunnen laten gaan."
@@ -262,7 +262,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="maximumAantalDeelnemers"
+        <field  name="maximumAantalDeelnemers"
                 type="number"
                 label="Maximum aantal"
                 description="De huidige maximale hoeveelheid deelnemers die zich kunnen inschrijven. Dit kan door de helpdesk via SOL worden opgehoogd met het aantal dat op het eerste tabblad is aangegeven."
@@ -272,7 +272,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="maximumAantalDeelnemersOrigineel"
+        <field  name="maximumAantalDeelnemersOrigineel"
                 type="number"
                 label="Maximum aantal(origineel)"
                 description="De maximale hoeveelheid deelnemers die zich kunnen inschrijven zoals opgegeven door het kamponderdeel."
@@ -282,7 +282,7 @@
                 required="true"
                 filter="integer"
         />
-        <field	name="maximumAantalUitEenGroep"
+        <field  name="maximumAantalUitEenGroep"
                 type="number"
                 label="Max. aantal uit één groep"
                 description="Met dit aantal kan je het aantal deelnemers die zich aanmelden uit 1 Scoutinggroep beperken. Geef 0 op als het niet uitmaakt. LET OP: Landelijke Plusscouts worden ook als 1 groep gezien."
@@ -294,10 +294,10 @@
         />
     </fieldset>
 
-    <fieldset	name="hitwebsite"
+    <fieldset   name="hitwebsite"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="titeltekst"
+        <field  name="titeltekst"
                 type="text"
                 label="Titeltekst"
                 description="Deze tekst wordt als kopje boven de tekst afgedrukt."
@@ -306,14 +306,14 @@
                 required="true"
                 default=""
         />
-        <field	name="noteWebsiteTekst"
+        <field  name="noteWebsiteTekst"
                 type="moreinfo"
                 expand="Klik hier voor extra aanwijzingen voor de tekst"
                 label="De tekst hieronder wordt gepubliceerd op de HIT-website."
                 description="Verzin een pakkende titel; deze komt als subkopje bovenaan het artikel te staan.&lt;br&gt;Geef in het artikel alle informatie die de lezer nodig heeft om een goede keuze voor dit HIT-onderdeel te maken. Denk bijvoorbeeld aan: &lt;ul&gt;&lt;li&gt;Wat gaan de deelnemers doen?&lt;li&gt;Wat wordt er van ze verwacht?&lt;li&gt;Wat moeten ze al kunnen?&lt;li&gt;Moeten ze een goede conditie hebben, handig zijn of juist heel creatief?&lt;li&gt;Wat gaan ze leren?&lt;li&gt;Waarom is het leuk?&lt;li&gt;Welke zaken moeten ze nu al weten, en niet pas als ze twee a drie weken vóór de HIT de deelnemersinformatie krijgen?&lt;/ul&gt;"
                 class="alert alert-info"
             />
-        <field	name="websiteTekst"
+        <field  name="websiteTekst"
                 type="editor"
                 label="Websitetekst"
                 description="Dit is de tekst die op de site verschijnt. PROBEER ZO ZUINIG MOGELIJK OM TE GAAN MET OPMAAK. Ga dus NIET helemaal los met kleurtjes en lettertypes."
@@ -322,31 +322,31 @@
         />
     </fieldset>
 
-    <fieldset	name="contact"
+    <fieldset   name="contact"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="websiteAdres"
+        <field  name="websiteAdres"
                 type="URL"
                 label="Eigen website adres"
                 description="Een link naar je eigen website."
                 size="50"
                 maxlength="255"
         />
-        <field	name="websiteContactpersoon"
+        <field  name="websiteContactpersoon"
                 type="text"
                 label="Naam contactpersoon"
                 description="De naam van de contactpersoon waar deelnemers contact mee op kunnen nemen."
                 size="30"
                 maxlength="255"
         />
-        <field	name="websiteContactTelefoonnummer"
+        <field  name="websiteContactTelefoonnummer"
                 type="tel"
                 label="Website contact Tel."
                 description="Een telefoonnummer waar deelnemers naar toe kunnen bellen. LET OP: dit wordt dus op internet gepubliceerd!"
                 size="30"
                 maxlength="255"
         />
-        <field	name="websiteContactEmailadres"
+        <field  name="websiteContactEmailadres"
                 type="email"
                 label="Website contact Email"
                 description="Een (geldig!) e-mailadres waar deelnemers naar toe kunnen mailen. LET OP: dit wordt dus op internet gepubliceerd!"
@@ -356,16 +356,16 @@
         />
     </fieldset>
 
-    <fieldset	name="fotos"
+    <fieldset   name="fotos"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="fotoNote"
+        <field  name="fotoNote"
                 type="note"
                 label="Graag foto's uploaden in de juist map"
                 description="Afbeeldingen moeten in de map kampinfo/«jaar»/«jouw HIT plaats»."
                 class="alert alert-info"
         />
-        <field	name="webadresFoto1"
+        <field  name="webadresFoto1"
                 type="media"
                 directory="kampinfo/2024"
                 label="Foto 1"
@@ -373,7 +373,7 @@
                 size="50"
                 maxlength="255"
         />
-        <field	name="webadresFoto2"
+        <field  name="webadresFoto2"
                 type="media"
                 directory="kampinfo/2024"
                 label="Foto 2"
@@ -381,7 +381,7 @@
                 size="50"
                 maxlength="255"
         />
-        <field	name="webadresFoto3"
+        <field  name="webadresFoto3"
                 type="media"
                 directory="kampinfo/2024"
                 label="Foto 3"
@@ -389,7 +389,7 @@
                 size="50"
                 maxlength="255"
         />
-        <field	name="youtube"
+        <field  name="youtube"
                 type="text"
                 directory="text"
                 label="Youtube code"
@@ -397,16 +397,16 @@
                 size="15"
                 maxlength="11"
         />
-        <field	name="YoutubeNote"
+        <field  name="YoutubeNote"
                 type="note"
                 description="De code is het laatste gedeelte van de url, het gedeelte na de 'https://www.youtube.com/watch?v=«code»' of https://youtu.be/«code»"
         />
     </fieldset>
 
-    <fieldset	name="iconen"
+    <fieldset   name="iconen"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="icoontjes"
+        <field  name="icoontjes"
                 type="Icon"
                 label="Icoontjes"
                 hiddenLabel="true"
@@ -414,10 +414,10 @@
         />
     </fieldset>
 
-    <fieldset	name="helpdesk"
+    <fieldset   name="helpdesk"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="helpdeskContactpersoon"
+        <field  name="helpdeskContactpersoon"
                 type="text"
                 label="Contactpersoon voor helpdesk"
                 description="De persoon die als contactpersoon optreedt naar o.a. de HIT-Helpdesk. Wordt alleen intern gebruikt."
@@ -426,7 +426,7 @@
                 required="true"
                 default=""
         />
-        <field	name="helpdeskContactEmailadres"
+        <field  name="helpdeskContactEmailadres"
                 type="email"
                 label="Helpdesk contact e-mail"
                 description="Hier het e-mailadres van de contactpersoon. Wordt alleen intern gebruikt."
@@ -436,7 +436,7 @@
                 required="true"
                 default=""
         />
-        <field	name="helpdeskContactTelefoonnummer"
+        <field  name="helpdeskContactTelefoonnummer"
                 type="tel"
                 label="Helpdesk contact tel."
                 description="Hier het telefoonnummer van de contactpersoon. Wordt alleen intern gebruikt."
@@ -445,7 +445,7 @@
                 required="true"
                 default=""
         />
-        <field	name="helpdeskOverschrijdingAantal"
+        <field  name="helpdeskOverschrijdingAantal"
                 type="number"
                 label="Overschrijding aantal"
                 description="Hoeveel extra deelnemers mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
@@ -453,7 +453,7 @@
                 maxlength="3"
                 default="0"
         />
-        <field	name="helpdeskOverschrijdingLeeftijd"
+        <field  name="helpdeskOverschrijdingLeeftijd"
                 type="radio"
                 label="Afwijkende leeftijden mogelijk"
                 description="Als deelnemers met een groepje mee willen, maar te jonger/ouder dan de marge zijn, mag de helpdesk deze dan toch inschrijven?"
@@ -463,7 +463,7 @@
             <option value="0">JNO</option>
             <option value="1">JYES</option>
         </field>
-        <field	name="helpdeskTeJongMagAantal"
+        <field  name="helpdeskTeJongMagAantal"
                 type="number"
                 label="Aantal te jong"
                 description="Hoeveel deelnemers die te jong zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
@@ -471,7 +471,7 @@
                 maxlength="3"
                 default="0"
         />
-        <field	name="helpdeskTeOudMagAantal"
+        <field  name="helpdeskTeOudMagAantal"
                 type="number"
                 label="Aantal te oud"
                 description="Hoeveel deelnemers die te oud zijn mag de Helpdesk laten inschrijven voordat er contact wordt opgenomen"
@@ -489,7 +489,7 @@
         />
     </fieldset>
 
-    <fieldset	name="akkoordkamp"
+    <fieldset   name="akkoordkamp"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
         <field
@@ -505,10 +505,10 @@
         </field>
     </fieldset>
 
-    <fieldset	name="akkoordplaats"
+    <fieldset   name="akkoordplaats"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="akkoordHitPlaats"
+        <field  name="akkoordHitPlaats"
                 fieldName="akkoordHitPlaats"
                 type="radio"
                 label="COM_KAMPINFO_HITCAMP_AKKOORDPLAATS_LABEL"
@@ -521,10 +521,10 @@
         </field>
     </fieldset>
 
-    <fieldset	name="publish"
+    <fieldset   name="publish"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="published"
+        <field  name="published"
                 type="radio"
                 label="Gepubliceerd"
                 description="Publiceren op site"
@@ -536,10 +536,10 @@
         </field>
     </fieldset>
 
-    <fieldset	name="activiteitengebieden"
+    <fieldset   name="activiteitengebieden"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="activiteitengebieden"
+        <field  name="activiteitengebieden"
                 label="Activiteitengebieden"
                 hiddenLabel="true"
                 type="Activityarea"
@@ -547,10 +547,10 @@
         />
     </fieldset>
 
-    <fieldset	name="doelstelling"
+    <fieldset   name="doelstelling"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="doelstelling"
+        <field  name="doelstelling"
                 type="editor"
                 label="Globale omschrijving en doelstelling"
                 description="Globale beschrijving en doelstellingen van het kamp om in de opstartfase kampen met elkaar te kunnen vergelijken."
@@ -558,10 +558,10 @@
         />
     </fieldset>
 
-    <fieldset	name="shanti"
+    <fieldset   name="shanti"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="shantiFormuliernummer"
+        <field  name="shantiFormuliernummer"
                 fieldName="shantiFormuliernummer"
                 type="number"
                 label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
@@ -570,7 +570,7 @@
                 size="6"
                 default="0"
         />
-        <field	name="ouderShantiFormuliernummer"
+        <field  name="ouderShantiFormuliernummer"
                 fieldName="ouderShantiFormuliernummer"
                 type="number"
                 label="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_LABEL"
@@ -579,7 +579,7 @@
                 size="6"
                 default="0"
         />
-        <field	name="extraShantiFormuliernummer"
+        <field  name="extraShantiFormuliernummer"
                 fieldName="extraShantiFormuliernummer"
                 type="number"
                 label="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_LABEL"
@@ -590,10 +590,10 @@
         />
     </fieldset>
 
-    <fieldset	name="inschrijvingen"
+    <fieldset   name="inschrijvingen"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="aantalDeelnemers"
+        <field  name="aantalDeelnemers"
                 type="number"
                 label="Ingeschreven deelnemers"
                 description="COM_KAMPINFO_HITCAMP_PARTICIPANTCOUNT_DESC"
@@ -601,7 +601,7 @@
                 size="3"
                 default="0"
         />
-        <field	name="gereserveerd"
+        <field  name="gereserveerd"
                 type="number"
                 label="COM_KAMPINFO_HITCAMP_RESERVED_LABEL"
                 description="COM_KAMPINFO_HITCAMP_RESERVED_DESC"
@@ -609,7 +609,7 @@
                 size="3"
                 default="0"
         />
-        <field	name="aantalSubgroepen"
+        <field  name="aantalSubgroepen"
                 type="number"
                 label="Ingeschreven subgroepen"
                 description="Het huidige aantal ingeschreven subgroepen"

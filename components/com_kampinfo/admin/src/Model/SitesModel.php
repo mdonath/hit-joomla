@@ -35,10 +35,10 @@ class SitesModel extends ListModel {
         
         // $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
         // if ($state === '') {
-        // 	// gebruik huidige actieve jaar
-        // 	$state = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
-        // 	// update filter op het scherm
-        // 	$app->setUserState($this->context . '.filter.jaar', $state);
+        //   // gebruik huidige actieve jaar
+        //   $state = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
+        //   // update filter op het scherm
+        //   $app->setUserState($this->context . '.filter.jaar', $state);
         // }
         // $this->setState('filter.jaar', $jaar);
 

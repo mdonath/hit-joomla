@@ -20,12 +20,15 @@ class InschrijvingenModel extends AbstractKampInfoModel {
         $input = Factory::getApplication()->getInput();
         $projectId = $input->getInt('hitproject_id', 0);
 
+        if ($projectId == 0) {
+            throw new GenericDataException('Project niet gevonden?!', 404);
+        }
+
         $project = $this->getHitProject($projectId);
         $project->plaatsen = $this->getHitPlaatsen($projectId);
 
-        $iconenLijst = $this->getIconenLijst(); // FIXME: nodig voor inschrijvingen?
         foreach ($project->plaatsen as $plaats) {
-            $plaats->kampen = $this->getHitKampen($plaats->id, $iconenLijst);
+            $plaats->kampen = $this->getHitKampen($plaats->id, []);
         }
         $project->laatstBijgewerktOp = $this->getLaatstBijgewerktOp($project->jaar);
 

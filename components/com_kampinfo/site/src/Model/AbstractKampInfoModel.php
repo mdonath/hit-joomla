@@ -98,8 +98,10 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
             $db->setQuery($query);
             $kampenInPlaats = $db->loadObjectList();
 
-            foreach ($kampenInPlaats as $kamp) {
-                $kamp->icoontjes = $this->explodeIcoontjes($kamp, $iconenLijst);
+            if (!empty($iconenLijst)) {
+                foreach ($kampenInPlaats as $kamp) {
+                    $kamp->icoontjes = $this->explodeIcoontjes($kamp, $iconenLijst);
+                }
             }
             return $kampenInPlaats;
         } catch (\Exception $e) {

@@ -12,13 +12,13 @@ $manifest = $this->getModel()->getItems();
         <div id="j-main-container" class="j-main-container">
             <table class="table table-striped">
             <tbody>
-                <tr><th>Versie:</th><td><?php echo($manifest['version']);?></td></tr>
-                <tr><th>Naam:</th><td><?php echo(JText::_($manifest['name']));?></td></tr>
-                <tr><th>Omschrijving:</th><td><?php echo(JText::_($manifest['description']));?></td></tr>
-                <tr><th>Copyright:</th><td><?php echo($manifest['copyright']);?></td></tr>
-                <tr><th>Auteur:</th><td><?php echo($manifest['author']);?> (<?php echo($manifest['authorEmail']);?>)</td></tr>
-                <tr><th>Code url:</th><td><a href="<?php echo($manifest['authorUrl']);?>"><?php echo($manifest['authorUrl']);?></a></td></tr>
-                <tr><th>Start ontwikkeling:</th><td><?php echo($manifest['creationDate']);?></td></tr>
+                <tr><th>Versie:</th><td><?= $manifest['version'] ?></td></tr>
+                <tr><th>Naam:</th><td><?= JText::_($manifest['name']) ?></td></tr>
+                <tr><th>Omschrijving:</th><td><?= JText::_($manifest['description']) ?></td></tr>
+                <tr><th>Copyright:</th><td><?= $manifest['copyright'] ?></td></tr>
+                <tr><th>Auteur:</th><td><?= $manifest['author'] ?> (<?= $manifest['authorEmail'] ?>)</td></tr>
+                <tr><th>Code url:</th><td><a href="<?= $manifest['authorUrl'] ?>"><?= $manifest['authorUrl'] ?></a></td></tr>
+                <tr><th>Start ontwikkeling:</th><td><?= $manifest['creationDate'] ?></td></tr>
             </tbody>
             </table>
         </div>

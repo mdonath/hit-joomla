@@ -99,7 +99,7 @@ class ActiviteitModel extends AbstractKampInfoModel {
                 }
             }
         }
-        return $result;		
+        return $result;
     }
 
 }

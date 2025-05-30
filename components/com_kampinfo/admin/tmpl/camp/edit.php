@@ -161,7 +161,7 @@ $wa ->useScript('keepalive')
         <div class="row">
                 <div class="col-lg-12">
                     <fieldset id="fieldset-rules" class="options-form">
-                        <legend><?php echo(Text::_('JCONFIG_PERMISSIONS_LABEL')); ?></legend>
+                        <legend><?php echo Text::_('JCONFIG_PERMISSIONS_LABEL'); ?></legend>
                         <div>
                             <?php echo $this->form->renderFieldset('permissions'); ?>
                         </div>

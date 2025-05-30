@@ -53,15 +53,15 @@ function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0
     }
     $resplaats = ($res-$aantal);
     $volOfIng = $aantal == max($max,$res) ? "vol" : "ing";
-    echo("<div class=\"progressbar\" style=\"width: $percentageVol%\">$percentageVolText% $volOfIng</div>");
-    echo("<div class=\"progressbar\" style=\"width: $percentageRes%\" title=\"$resplaats\">&nbsp;</div>");
+    echo "<div class=\"progressbar\" style=\"width: $percentageVol%\">$percentageVolText% $volOfIng</div>";
+    echo "<div class=\"progressbar\" style=\"width: $percentageRes%\" title=\"$resplaats\">&nbsp;</div>";
     if ($res < $min) {
         $tekort = $min - $res;
         $percTekort = round(100 * $tekort / max($max,$res));
-        echo("<div class=\"progressbar remain\" style=\"width: $percTekort%\" title=\"$tekort\"><small>nog $tekort</small></div>");
+        echo "<div class=\"progressbar remain\" style=\"width: $percTekort%\" title=\"$tekort\"><small>nog $tekort</small></div>";
     }
     if ($percentageGroep > 0) {
-        echo("<div class=\"progressbar\" style=\"width: $percentageGroep%\" title=\"Maximum aantal groepen bereikt\">vol</div>");
+        echo "<div class=\"progressbar\" style=\"width: $percentageGroep%\" title=\"Maximum aantal groepen bereikt\">vol</div>";
     }
 }
 
@@ -108,10 +108,10 @@ function factorAantal($project, $kamp) {
         $maximumAantal = 0;
         $hitRest = 0;
     ?>
-    <?php foreach ($project->plaatsen as $plaats) { ?>
+    <?php foreach ($project->plaatsen as $plaats) : ?>
     <thead>
         <tr>
-            <th class="kolom1"><a name="<?php echo(strtolower($plaats->naam));?>"></a><?php echo($plaats->naam);?></th>
+            <th class="kolom1"><a name="<?= strtolower($plaats->naam) ?>"></a><?= $plaats->naam ?></th>
             <th class="kolom2" title="Minimum aantal deelnemers">Min.</th>
             <th class="kolom3" title="Aantal daadwerkelijk ingeschreven deelnemers">Ing.</th>
             <th class="kolom4" title="Aantal gereserveerde plekken">Res.</th>
@@ -129,7 +129,7 @@ function factorAantal($project, $kamp) {
             $plaatsMaximumAantal = 0;
             $plaatsRest = 0;
             ?>
-        <?php foreach ($plaats->kampen as $kamp) { ?>
+        <?php foreach ($plaats->kampen as $kamp) : ?>
             <?php
             $status = bepaalStatus($kamp);
             $factor = factorAantal($project, $kamp);
@@ -140,18 +140,18 @@ function factorAantal($project, $kamp) {
             ?>
         <tr>
             <td class="kolom1 <?php echo $status?>"
-                title="<?php echo(printInfo($kamp)); ?>"
+                title="<?= printInfo($kamp) ?>"
             >
-                <?php echo($kamp->naam); ?>
+                <?= $kamp->naam ?>
             </td>
-            <td class="kolom2"><?php echo($kampMinimumAantal); ?></td>
-            <td class="kolom3"><?php echo($kampAantalIngeschreven); ?></td>
-            <td class="kolom4"><?php echo($kampAantalGereserveerd); ?></td>
-            <td class="kolom5"><?php echo($kampMaximumAantal); ?></td>
-            <td class="kolom7"><?php echo($kamp->aantalSubgroepen . ($kamp->maximumAantalSubgroepjes == 0 ? '' : ('/'.$kamp->maximumAantalSubgroepjes))); ?></td>
+            <td class="kolom2"><?= $kampMinimumAantal ?></td>
+            <td class="kolom3"><?= $kampAantalIngeschreven ?></td>
+            <td class="kolom4"><?= $kampAantalGereserveerd ?></td>
+            <td class="kolom5"><?= $kampMaximumAantal ?></td>
+            <td class="kolom7"><?php echo $kamp->aantalSubgroepen . ($kamp->maximumAantalSubgroepjes == 0 ? '' : ('/'.$kamp->maximumAantalSubgroepjes)); ?></td>
             <?php $rest = berekenRestCapaciteit($project, $kamp); ?>
-            <td class="kolom9"><?php echo($rest); ?></td>
-            <td class="kolom6"><?php printProgressbarKamp($kamp); ?></td>
+            <td class="kolom9"><?= $rest ?></td>
+            <td class="kolom6"><?= printProgressbarKamp($kamp) ?></td>
         </tr>
         <?php
             $plaatsMinimumAantal += $kampMinimumAantal;
@@ -160,7 +160,7 @@ function factorAantal($project, $kamp) {
             $plaatsMaximumAantal += $kampMaximumAantal;
             $plaatsRest += $rest;
         ?>
-        <?php } // foreach.kamp ?>
+        <?php endforeach; // kamp ?>
         <?php
             $minimumAantal += $plaatsMinimumAantal;
             $aantalIngeschreven += $plaatsAantalIngeschreven;
@@ -169,36 +169,36 @@ function factorAantal($project, $kamp) {
             $hitRest += $plaatsRest;
         ?>
         <tr>
-            <th class="kolom1">TOTAAL <?php echo($plaats->naam);?>:</th>
-            <th class="kolom2"><?php echo($plaatsMinimumAantal); ?></th>
-            <th class="kolom3"><?php echo($plaatsAantalIngeschreven); ?></th>
-            <th class="kolom4"><?php echo($plaatsAantalGereserveerd); ?></th>
-            <th class="kolom5"><?php echo($plaatsMaximumAantal); ?></th>
+            <th class="kolom1">TOTAAL <?= $plaats->naam ?>:</th>
+            <th class="kolom2"><?= $plaatsMinimumAantal ?></th>
+            <th class="kolom3"><?= $plaatsAantalIngeschreven ?></th>
+            <th class="kolom4"><?= $plaatsAantalGereserveerd ?></th>
+            <th class="kolom5"><?= $plaatsMaximumAantal ?></th>
             <th class="kolom7">&nbsp;</th>
-            <th class="kolom9"><?php echo ($plaatsRest);?></th>
-            <th class="kolom6"><?php printProgressbar($plaatsMinimumAantal, $plaatsAantalIngeschreven, $plaatsAantalGereserveerd, $plaatsMaximumAantal); ?></th>
+            <th class="kolom9"><?= $plaatsRest ?></th>
+            <th class="kolom6"><?= printProgressbar($plaatsMinimumAantal, $plaatsAantalIngeschreven, $plaatsAantalGereserveerd, $plaatsMaximumAantal) ?></th>
         </tr>
         <tr>
             <td colspan="7">&nbsp;</td>
         </tr>
     </tbody>
-    <?php } // foreach.plaats ?>
+    <?php endforeach; // plaats ?>
     <tfoot>
         <tr>
             <th class="kolom1">TOTAAL HIT:</th>
-            <th class="kolom2"><?php echo($minimumAantal); ?></th>
-            <th class="kolom3"><?php echo($aantalIngeschreven); ?></th>
-            <th class="kolom4"><?php echo($aantalGereserveerd); ?></th>
-            <th class="kolom5"><?php echo($maximumAantal); ?></th>
+            <th class="kolom2"><?= $minimumAantal ?></th>
+            <th class="kolom3"><?= $aantalIngeschreven ?></th>
+            <th class="kolom4"><?= $aantalGereserveerd ?></th>
+            <th class="kolom5"><?= $maximumAantal ?></th>
             <th class="kolom7">&nbsp;</th>
-            <th class="kolom9"><?php echo ($hitRest);?></th>
-            <th class="kolom6"><?php printProgressbar($minimumAantal, $aantalIngeschreven, $aantalGereserveerd, $maximumAantal); ?></th>
+            <th class="kolom9"><?= $hitRest ?></th>
+            <th class="kolom6"><?= printProgressbar($minimumAantal, $aantalIngeschreven, $aantalGereserveerd, $maximumAantal) ?></th>
         </tr>
-        <?php if (!empty($project->laatstBijgewerktOp)) { ?>
+        <?php if (!empty($project->laatstBijgewerktOp)) : ?>
         <tr>
-            <th colspan="8">Laatst bijgewerkt op: <?php echo($project->laatstBijgewerktOp); ?></th>
+            <th colspan="8">Laatst bijgewerkt op: <?= $project->laatstBijgewerktOp ?></th>
         </tr>
-        <?php } ?>
+        <?php endif; ?>
         <tr>
             <th>Legenda</th>
             <th colspan="7">

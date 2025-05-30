@@ -58,49 +58,49 @@ $plaats = $this->plaats;
         ?>
         <tr>
             <td class="kolom1">
-                <a	href="<?php echo(KampInfoUrlHelper::activiteitURL($plaats, $kamp, $plaats->jaar, $useComponentUrls)); ?>"
-                    title="<?php echo(KampInfoUrlHelper::fuzzyIndicatieVol($kamp)); ?>"
+                <a  href="<?php echo KampInfoUrlHelper::activiteitURL($plaats, $kamp, $plaats->jaar, $useComponentUrls); ?>"
+                    title="<?php echo KampInfoUrlHelper::fuzzyIndicatieVol($kamp); ?>"
                 >
-                    <?php echo($kamp->naam); ?>
+                    <?= $kamp->naam ?>
                 </a>
             </td>
-            <td class="kolom2"><?php echo($kamp->minimumLeeftijd); ?>&nbsp;-&nbsp;<?php echo($kamp->maximumLeeftijd); ?></td>
+            <td class="kolom2"><?= $kamp->minimumLeeftijd; ?>&nbsp;-&nbsp;<?= $kamp->maximumLeeftijd; ?></td>
             <td class="kolom3">
                 <?php
                     $subgroepMin = $kamp->subgroepsamenstellingMinimum;
                     $subgroepMax = $kamp->subgroepsamenstellingMaximum;
                     if ($subgroepMin == 0 || $subgroepMax == 0) {
-                        echo('&nbsp;');						
+                        echo '&nbsp;';
                     } elseif ($subgroepMin == $subgroepMax) {
-                        echo("$subgroepMin pers.");
+                        echo "$subgroepMin pers.";
                     } else {
-                        echo("$subgroepMin - $subgroepMax pers.");
+                        echo "$subgroepMin - $subgroepMax pers.";
                     }
                 ?>
             </td>
             <td class="kolom4">
                 <?php
                     if (KampInfoUrlHelper::isVol($kamp)) {
-                        echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), ''));
+                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), '');
                     }
                     foreach ($kamp->icoontjes as $icoon) {
-                        echo(KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, ''));
+                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, '');
                     }
                 ?>
             </td>
         </tr>
         <?php } ?>
     </tbody>
-    <?php if ($aantalIngeschreven > 75) { ?>
+    <?php if ($aantalIngeschreven > 75) : ?>
     <tfoot>
         <tr>
-            <th colspan="4">Totaal aantal gereserveerd: <?php echo($aantalGereserveerd); ?>, waarvan al ingeschreven: <?php echo ($aantalIngeschreven); ?>.</th>
+            <th colspan="4">Totaal aantal gereserveerd: <?= $aantalGereserveerd ?>, waarvan al ingeschreven: <?= $aantalIngeschreven ?>.</th>
         </tr>
     </tfoot>
-    <?php } ?>
+    <?php endif; ?>
 </table>
 <br />
-<p>Zit er wat voor je bij? Schrijf je snel in en kom met Pasen naar <?php echo($plaats->naam); ?>!</p>
+<p>Zit er wat voor je bij? Schrijf je snel in en kom met Pasen naar <?= $plaats->naam ?>!</p>
 
                         </div>
                     </div>

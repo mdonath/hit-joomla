@@ -52,5 +52,6 @@ class SitesController extends AdminController {
         }
 
         $this->setRedirect('index.php?option=com_kampinfo&view=sites');
-	}
+    }
+
 }

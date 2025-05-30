@@ -1,49 +1,49 @@
 h1.title {
-	max-width: 480px !important;
-	line-height:30px !important;
-	padding-bottom: 0px !important;
+    max-width: 480px !important;
+    line-height:30px !important;
+    padding-bottom: 0px !important;
 }
 .rt-article h2 {
-	font-size: 18px !important;
-	color: rgb(26, 54, 141) !important;
+    font-size: 18px !important;
+    color: rgb(26, 54, 141) !important;
 }
 
 .iconlist {
-	float: right;
+    float: right;
 }
 
 .activiteitengebiedenlist img,
 .iconlist img {
-	margin-right: 0px !important;
+    margin-right: 0px !important;
 }
 
 .activiteitengebiedenlist {
-	float: left;
-	padding-top: 1em;
+    float: left;
+    padding-top: 1em;
 }
 .kampdata {
-	float:right;
-	padding-top: 1em;
+    float:right;
+    padding-top: 1em;
 }
 .kampdata table {
-	width: 190px;	
+    width: 190px;    
 }
 
 td.articleTekst {
-	vertical-align: top;
-	width: 480px;
-	padding-right: 15px;
+    vertical-align: top;
+    width: 480px;
+    padding-right: 15px;
 }
 .articleTekst p {
-	padding-bottom: .5em;
+    padding-bottom: .5em;
 }
 
 td.articleFotos {
-	vertical-align: top;
-	width: 190px;
-	text-align: right;
+    vertical-align: top;
+    width: 190px;
+    text-align: right;
 }
 
 td.articleFotos img {
-	margin-right: 0px !important;
+    margin-right: 0px !important;
 }

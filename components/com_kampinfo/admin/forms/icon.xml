@@ -3,7 +3,7 @@
     <fieldset   name="hiticon"
                 addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
     >
-        <field	name="id"
+        <field  name="id"
                 type="hidden"
                 default="0"
                 readonly="true"

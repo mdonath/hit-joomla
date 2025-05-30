@@ -44,14 +44,14 @@ class KampInfoHelper {
             }
         }
 
-        echo("<h1>Entity: $entity</h1><ul>");
+        echo "<h1>Entity: $entity</h1><ul>";
         foreach ($result as $k=>$v) {
-            echo ("<li>Action: $k: $v</li>");
+            echo "<li>Action: $k: $v</li>";
         }
-        echo('</ul>');
-        echo("<pre>Entity-ids: ");
+        echo '</ul>';
+        echo "<pre>Entity-ids: ";
         print_r($entityIds);
-        echo("</pre>");
+        echo "</pre>";
 
         return $result;
     }

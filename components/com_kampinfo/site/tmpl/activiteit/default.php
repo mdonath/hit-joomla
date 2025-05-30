@@ -122,7 +122,7 @@ function createInschrijfFormulierLink($template, $id) {
             
             <!-- Een eventueel Youtube filmpje -->
             <?php if ($heeftEenYoutubeFilmpje) : ?>
-                <iframe width="100%" height="435" src="https://www.youtube.com/embed/<?php echo($activiteit->youtube); ?>" frameborder="0" allowfullscreen></iframe>
+                <iframe width="100%" height="435" src="https://www.youtube.com/embed/<?= $activiteit->youtube ?>" frameborder="0" allowfullscreen></iframe>
             <?php endif; ?>
             
             <!-- Meer weten-blok met contactinformatie -->

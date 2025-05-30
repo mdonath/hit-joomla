@@ -64,7 +64,7 @@
                         <menu view="import">COM_KAMPINFO_SUBMENU_IMPORT</menu>
                         <menu view="downloadlog">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
                         <!-- <menu view="reports">COM_KAMPINFO_SUBMENU_REPORTS</menu> -->
-                </submenu>	
+                </submenu>
 
                 <!-- Administration Main File Copy Section -->
                 <!-- Note the folder attribute: This attribute describes the folder

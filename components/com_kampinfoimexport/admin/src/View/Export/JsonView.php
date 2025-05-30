@@ -19,7 +19,7 @@ class JsonView extends BaseJsonView {
 
         parent::display($tpl);
 
-        echo($this->document->getBuffer());
+        echo $this->document->getBuffer();
     }
 
 }

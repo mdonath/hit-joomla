@@ -1,8 +1,8 @@
 // Copyright (c) 2012, HIT Scouting Nederland
 
 var kampinfoConfig = {
-		"iconFolderLarge" : null,
-		"iconExtension" : null
+    "iconFolderLarge" : null,
+    "iconExtension" : null
 };
 
 /**
@@ -10,10 +10,10 @@ var kampinfoConfig = {
  * @returns {String}
  */
 function laatstBijgewerktOp() {
-	if (window.inschrijvingen) {
-		return "Laatst bijgewerkt op: " + toDateTime(parseDateTime(inschrijvingen.timestamp));
-	}
-	return "";
+    if (window.inschrijvingen) {
+        return "Laatst bijgewerkt op: " + toDateTime(parseDateTime(inschrijvingen.timestamp));
+    }
+    return "";
 }
 
 /**
@@ -23,34 +23,34 @@ function laatstBijgewerktOp() {
  * @return {String} Met een mooie tekst over hoe vol het kamp is.
  */
 function fuzzyIndicatieVol(kamp) {
-	var result;
-	if (isVol(kamp)) {
-		if (kamp.aantalDeelnemers < kamp.gereserveerd) {
-			var eenAantal = kamp.gereserveerd - kamp.aantalDeelnemers;
-			result = "Vol: alleen nog inschrijven op "+ eenAantal +" gereserveerde " + meervoudPlaats(eenAantal) + ".";
-		} else {
-			result = "Vol: inschrijven is niet meer mogelijk.";
-		}
-	} else {
-		var watMaaktHetKampVol = Math.max(kamp.maximumAantalDeelnemers/10, kamp.subgroepsamenstellingMinimum);
-		var over = kamp.maximumAantalDeelnemers - kamp.gereserveerd;
-		if (watMaaktHetKampVol < over) {
-			if (kamp.gereserveerd == 0) {
-				result = "Nog ruim voldoende plaatsen beschikbaar.";
-			} else {
-				result = "Nog voldoende plaatsen beschikbaar.";
-			}
-		} else {
-			result = "Bijna vol: Nog "+ over +" "+ meervoudPlaats(over) +" beschikbaar.";
-		}
-	}
-	return result
-	// + " ["+kamp.minimumAantalDeelnemers + " (" + kamp.aantalDeelnemers + " | " + kamp.gereserveerd + ") " + kamp.maximumAantalDeelnemers + "]";
-	;
+    var result;
+    if (isVol(kamp)) {
+        if (kamp.aantalDeelnemers < kamp.gereserveerd) {
+            var eenAantal = kamp.gereserveerd - kamp.aantalDeelnemers;
+            result = "Vol: alleen nog inschrijven op "+ eenAantal +" gereserveerde " + meervoudPlaats(eenAantal) + ".";
+        } else {
+            result = "Vol: inschrijven is niet meer mogelijk.";
+        }
+    } else {
+        var watMaaktHetKampVol = Math.max(kamp.maximumAantalDeelnemers/10, kamp.subgroepsamenstellingMinimum);
+        var over = kamp.maximumAantalDeelnemers - kamp.gereserveerd;
+        if (watMaaktHetKampVol < over) {
+            if (kamp.gereserveerd == 0) {
+                result = "Nog ruim voldoende plaatsen beschikbaar.";
+            } else {
+                result = "Nog voldoende plaatsen beschikbaar.";
+            }
+        } else {
+            result = "Bijna vol: Nog "+ over +" "+ meervoudPlaats(over) +" beschikbaar.";
+        }
+    }
+    return result
+    // + " ["+kamp.minimumAantalDeelnemers + " (" + kamp.aantalDeelnemers + " | " + kamp.gereserveerd + ") " + kamp.maximumAantalDeelnemers + "]";
+    ;
 }
 
 function meervoudPlaats(eenAantal) {
-	return "plaats" + ((eenAantal!=1) ? "en" : "");
+    return "plaats" + ((eenAantal!=1) ? "en" : "");
 }
 
 /**
@@ -60,11 +60,11 @@ function meervoudPlaats(eenAantal) {
  * @returns {Boolean} Of een kamp al volgereserveerd is.
  */
 function isVol(kamp) {
-	return kamp.gereserveerd >= kamp.maximumAantalDeelnemers || isVolQuaGroepjes(kamp); 
+    return kamp.gereserveerd >= kamp.maximumAantalDeelnemers || isVolQuaGroepjes(kamp); 
 }
 
 function isVolQuaGroepjes(kamp) {
-	return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
+    return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
 }
 /**
  * Past de naam aan op de manier waarop Joomla dat ook gedaan heeft.
@@ -73,16 +73,16 @@ function isVolQuaGroepjes(kamp) {
  * @returns {String} De gestripte naam waarmee de directe url gevormd is.
  */
 function urlified(naam) {
-	return naam
-		.replace(/ - /g, "-")
-		.replace(/ /g, "-")
-		.replace(/°/g, "")
-		.replace(/º/g, "o")
-		.replace(/&/g, "")
-		.toLowerCase()
-		.replace(/[^a-z0-9\-]/g, "")
-		.replace(/-+/g, "-")
-		;
+    return naam
+        .replace(/ - /g, "-")
+        .replace(/ /g, "-")
+        .replace(/°/g, "")
+        .replace(/º/g, "o")
+        .replace(/&/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9\-]/g, "")
+        .replace(/-+/g, "-")
+        ;
 }
 
 
@@ -92,7 +92,7 @@ function urlified(naam) {
  * @returns {String}
  */
 function toDateTime(datum) {
- 	return datum.toLocaleDateString() + " " + datum.toLocaleTimeString();
+    return datum.toLocaleDateString() + " " + datum.toLocaleTimeString();
 }
 
 
@@ -102,7 +102,7 @@ function toDateTime(datum) {
  * @returns {Date}
  */
 function parseDate(s) {
-	return createDate(s.substring(0,4), s.substring(5,7), s.substring(8,10));
+    return createDate(s.substring(0,4), s.substring(5,7), s.substring(8,10));
 }
 
 /**
@@ -112,12 +112,12 @@ function parseDate(s) {
  * @returns {Date}
  */
 function parseDateTime(s) {
-	var regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]+):([0-9]+):([0-9]+)/;
-	var match = regex.exec(s);
-	return createDateTime(
-			match[1], match[2], match[3],
-			match[4], match[5], match[6]
-	);
+    var regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]+):([0-9]+):([0-9]+)/;
+    var match = regex.exec(s);
+    return createDateTime(
+            match[1], match[2], match[3],
+            match[4], match[5], match[6]
+    );
 }
 
 /**
@@ -128,7 +128,7 @@ function parseDateTime(s) {
  * @returns {Date}
  */
 function createDate(year, month, day) {
-	return createDateTime(year, month, day, 0,0,0);
+    return createDateTime(year, month, day, 0,0,0);
 }
 
 /**
@@ -142,12 +142,12 @@ function createDate(year, month, day) {
  * @returns {Date}
  */
 function createDateTime(year, month, day, hour, min, sec) {
-	var result = new Date();
-	result.setYear(year);
-	result.setMonth(month - 1);
-	result.setDate(day);
-	result.setHours(hour, min, sec, 0);
-	return result;
+    var result = new Date();
+    result.setYear(year);
+    result.setMonth(month - 1);
+    result.setDate(day);
+    result.setHours(hour, min, sec, 0);
+    return result;
 }
 
 
@@ -157,19 +157,19 @@ function createDateTime(year, month, day, hour, min, sec) {
  * http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
  */
 function extend() {
-	$.extend({
-		getUrlVars: function() {
-			var vars = [], hash;
-			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-			for(var i = 0; i < hashes.length; i++) {
-				hash = hashes[i].split('=');
-				vars.push(hash[0]);
-				vars[hash[0]] = hash[1];
-			}
-			return vars;
-		},
-		getUrlVar: function(name) {
-			return $.getUrlVars()[name];
-		}
-	});
+    $.extend({
+        getUrlVars: function() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function(name) {
+            return $.getUrlVars()[name];
+        }
+    });
 }

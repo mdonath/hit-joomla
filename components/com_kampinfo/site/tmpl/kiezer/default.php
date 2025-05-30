@@ -8,7 +8,8 @@
     </hgroup>
 
     <div itemprop="articleBody">
-    <p>	Met de HIT-kiezer kun je kijken welke HIT er bij jou past, op basis van je leeftijd
+    <p>
+        Met de HIT-kiezer kun je kijken welke HIT er bij jou past, op basis van je leeftijd
         tijdens de HIT, je budget, en de dingen die je absoluut wel of absoluut niet leuk vindt.
         Kampen die al vol zijn, zie je niet meer in de lijst.
         Je gebruikt hem zo:
