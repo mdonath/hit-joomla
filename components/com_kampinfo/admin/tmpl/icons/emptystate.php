@@ -10,7 +10,7 @@ $displayData = [
     'formURL'    => 'index.php?option=com_kampinfo',
 ];
 
-$user = Factory::getApplication()->getIdentity();
+$this->getCurrentUser();
 
 if ($user->authorise('core.create', 'com_kampinfo') || count($user->getAuthorisedCategories('com_kampinfo', 'core.create')) > 0) {
     $displayData['createURL'] = 'index.php?option=com_kampinfo&task=icon.add';

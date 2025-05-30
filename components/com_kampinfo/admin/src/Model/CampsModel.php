@@ -36,11 +36,12 @@ class CampsModel extends ListModel {
         $this->setState('filter.search', $search);
         
         $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
-        if ($state === '') {
+        if ($jaar === '') {
             // gebruik huidige actieve jaar
-            $state = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
+            $jaar = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
             // update filter op het scherm
-            $app->setUserState($this->context . '.filter.jaar', $state);
+            $app = Factory::getApplication();
+            $app->setUserState($this->context . '.filter.jaar', $jaar);
         }
         $this->setState('filter.jaar', $jaar);
 

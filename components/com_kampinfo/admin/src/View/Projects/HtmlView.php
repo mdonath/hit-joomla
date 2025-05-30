@@ -14,38 +14,43 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 class HtmlView extends BaseHtmlView {
 
+    public $filterForm;
+    public $activeFilters = [];
+
     protected $items = [];
     protected $state;
-
-    public $filterForm;
-
-    public $pagination;
+    protected $pagination;
 
     private $isEmptyState = false;
 
     function display($tpl = null): void {
-        $this->items         = $this->get('Items');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->pagination    = $this->get('Pagination');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->pagination    = $model->getPagination();
+        $this->activeFilters = $model->getActiveFilters();
 
         if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
             $this->setLayout('emptystate');
         }
 
-        $this->canDo = ContentHelper::getActions('com_kampinfo');
+        // Check for errors.
+        if (\count($errors = $model->getErrors())) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         $this->addToolbar();
 
         parent::display($tpl);
     }
 
-    protected function addToolbar() {
-        $canDo   = $this->canDo;
-        $toolbar = Toolbar::getInstance();
+    protected function addToolbar(): void {
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'), 'kampinfo');
+
+        $canDo = ContentHelper::getActions('com_kampinfo', 'project');
 
         if ($canDo->get('hitproject.create')) {
             $toolbar->addNew('project.add');

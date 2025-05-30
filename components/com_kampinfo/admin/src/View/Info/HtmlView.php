@@ -24,7 +24,7 @@ class HtmlView extends BaseHtmlView {
         ToolbarHelper::title(Text::_('COM_KAMPINFO_INFO_DOCTITLE'), 'kampinfo');
 
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar = Toolbar::getInstance();
+            $toolbar    = $this->getDocument()->getToolbar();
             $toolbar->preferences('com_kampinfo');
         }
     }

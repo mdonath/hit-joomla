@@ -7,25 +7,26 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-$canDo = ContentHelper::getActions('com_kampinfo');
+$user = $this->getCurrentUser();
+
+$canEdit    = $user->authorise('hitproject.edit', 'com_kampinfo');
+$canDelete  = $user->authorise('hitproject.delete', 'com_kampinfo');
 ?>
 
 <tbody>
     <?php foreach($this->items as $i => $item) : ?>
         <tr>
-            <?php if ($this->canDo->get('hitproject.edit') || $this->canDo->get('hitproject.delete')) { ?>
-                <td>
-                    <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                </td>
-            <?php } ?>
             <td>
-                <?php if ($canDo->get('hitproject.edit')) { ?>
+                <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+            </td>
+            <td>
+                <?php if ($canEdit) : ?>
                     <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=project.edit&id=' . (int)$item->id); ?>">
                         <?= $item->jaar ?>
                     </a>
-                    <?php } else { ?>
+                    <?php else : ?>
                         <?= $item->jaar ?>
-                    <?php } ?>
+                    <?php endif; ?>
             </td>
             <td>
                 <?php echo HTMLHelper::date($item->inschrijvingStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>

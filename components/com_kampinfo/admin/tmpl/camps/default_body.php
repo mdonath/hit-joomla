@@ -5,26 +5,26 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+
+$user = $this->getCurrentUser();
 ?>
 
 <tbody>
     <?php foreach($this->items as $i => $item) : ?>
+        <?php
+            $canEdit        = $user->authorise('hitcamp.edit', 'com_kampinfo.camp.' . (int)$item->id);
+            $canEditPlaats  = $user->authorise('hitsite.edit', 'com_kampinfo.site.' . (int)$item->hitsite_id);
+            $canPublish     = $user->authorise('hitcamp.edit.state', 'com_kampinfo.camp.' . (int)$item->id);
+        ?>
         <tr>
             <td>
                 <?= HTMLHelper::_('grid.id', $i, $item->id) ?>
             </td>
             <td>
-                <?php $canPublish = $this->canDo->get('hitcamp.edit.state'); ?>
                 <?= HTMLHelper::_('jgrid.published', $item->published, $i, 'camps.', $canPublish, 'cb') ?>
             </td>
             <td>
-                <?php 
-                    $toonLink = $this->canDo->get('hitcamp.edit.'.(int)$item->id);
-                    // if ($item->akkoordHitPlaats) {
-                    //     $toonLink = $this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id);
-                    // }
-                ?>
-                <?php if ($toonLink) { ?>
+                <?php if ($canEdit) { ?>
                     <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=camp.edit&id='.(int)$item->id); ?>">
                         <?= $item->naam ?>
                     </a>
@@ -33,15 +33,13 @@ use Joomla\CMS\Router\Route;
                 <?php } ?>
             </td>
             <td>
-                <?php $canEdit = ($this->canDo->get('hitcamp.edit.'.(int)$item->id)); ?>
                 <?= HTMLHelper::_('akkoord.akkoordkamp', $item->akkoordHitKamp, $i, 'camps.', $canEdit) ?>
             </td>
             <td>
                 <?= $item->plaats ?>
             </td>
             <td>
-                <?php $canEdit = ($this->canDo->get('hitsite.edit.'.(int)$item->hitsite_id)); ?>
-                <?= HTMLHelper::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, 'camps.', $canEdit) ?>
+                <?= HTMLHelper::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, 'camps.', $canEditPlaats) ?>
             </td>
             <td>
                 <?= $item->jaar ?>

@@ -59,7 +59,7 @@
                 description="De prijs die een deelnemer moet betalen."
                 required="true"
                 min="10"
-                max="200"
+                max="250"
                 step="1"
                 default="20"
         />

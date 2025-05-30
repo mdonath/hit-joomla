@@ -20,20 +20,18 @@ class HtmlView extends BaseHtmlView {
     protected $form;
     protected $item;
     protected $state;
+    protected $canDo;
 
     public function display($tpl = null): void {
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $model       = $this->getModel();
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
         // Check for errors.
         if (\count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-
-        $ids = array();
-        $ids[] = $item->id;
-        $this->canDo = KampInfoHelper::getActions('camp', $ids);
 
         $this->addToolbar();
 
@@ -42,15 +40,19 @@ class HtmlView extends BaseHtmlView {
 
     protected function addToolbar(): void {
         $isNew      = ($this->item->id == 0);
-        $toolbar    = Toolbar::getInstance();
+        $toolbar    = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title($isNew ?
             Text::_('COM_KAMPINFO_HITCAMP_MANAGER_NEW') :
             Text::_('COM_KAMPINFO_HITCAMP_MANAGER_EDIT'), 'kampinfo');
 
+        // Button: Save
         $toolbar->apply('camp.apply');
+        // Button: Save & Close
         $toolbar->save('camp.save');
+        // Button: Preview
         $toolbar->preview("../index.php?option=com_kampinfo&view=activiteit&hitcamp_id={$this->item->id}", 'JGLOBAL_PREVIEW', true);
+        // Button: Close
         $toolbar->cancel('camp.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
     }
 

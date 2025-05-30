@@ -9,6 +9,8 @@ use Joomla\CMS\Router\Route;
 $wa = $this->document->getWebAssetManager();
 $wa ->useScript('keepalive')
     ->useScript('form.validate');
+
+$user = $this->getCurrentUser();
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_kampinfo&layout=edit&id=' . (int) $this->item->id); ?>"
@@ -50,7 +52,7 @@ $wa ->useScript('keepalive')
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php if ($this->canDo->get('core.admin')) { ?>
+        <?php if ($user->authorise('core.admin', 'com_kampinfo')) { ?>
             <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'financien', 'Financiën'); ?>
             <div class="row">
                 <div class="col-lg-12">

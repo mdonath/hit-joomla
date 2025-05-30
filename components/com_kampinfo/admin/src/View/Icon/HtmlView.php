@@ -36,7 +36,7 @@ class HtmlView extends BaseHtmlView {
 
     protected function addToolbar(): void {
         $isNew      = ($this->item->id == 0);
-        $toolbar    = Toolbar::getInstance();
+        $toolbar    = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title($isNew ?
             Text::_('COM_KAMPINFO_HITICON_MANAGER_NEW') :

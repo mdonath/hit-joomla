@@ -29,7 +29,7 @@ class HtmlView extends BaseHtmlView {
 
         $canDo = ContentHelper::getActions('com_kampinfo');
         if ($canDo->get('core.admin') || $canDo->get('core.options')) {
-            $toolbar = Toolbar::getInstance();
+            $toolbar    = $this->getDocument()->getToolbar();
             $toolbar->preferences('com_kampinfo');
         }
     }

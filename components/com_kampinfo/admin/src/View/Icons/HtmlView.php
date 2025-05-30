@@ -44,7 +44,7 @@ class HtmlView extends BaseHtmlView {
     protected function addToolbar() {
         $canDo   = $this->canDo;
         $user    = Factory::getApplication()->getIdentity();
-        $toolbar = Toolbar::getInstance();
+        $toolbar    = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITICONS_DOCTITLE'), 'kampinfo');
 

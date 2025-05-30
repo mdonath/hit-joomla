@@ -57,3 +57,6 @@ Bij de eerste keer opstarten wordt er ook een user `admin` gemaakt. Deze heeft a
 Hoofdmenu
 ---------
 Hoofdmenu -> Modules -> Position: J4Scouting, navbar
+
+Om de toolbar te laten zien:
+Users > Access Levels > Special: +KampInfo

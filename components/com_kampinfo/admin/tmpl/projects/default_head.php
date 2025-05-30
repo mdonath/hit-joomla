@@ -11,11 +11,9 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
 
 <thead>
     <tr>
-        <?php if ($this->canDo->get('hitproject.edit') || $this->canDo->get('hitproject.delete')) { ?>
-            <td class="w-1 text-center">
-                <?php echo HTMLHelper::_('grid.checkall'); ?>
-            </td>
-        <?php } ?>
+        <td class="w-1 text-center">
+            <?php echo HTMLHelper::_('grid.checkall'); ?>
+        </td>
         <th scope="col">
             <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'p.jaar', $listDirn, $listOrder); ?>
         </th>

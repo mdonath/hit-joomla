@@ -15,68 +15,62 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 
 class HtmlView extends BaseHtmlView {
 
+    public $filterForm;
+    public $activeFilters = [];
+
     protected $items = [];
     protected $state;
-
-    public $filterForm;
-
-    public $pagination;
+    protected $pagination;
 
     private $isEmptyState = false;
 
     function display($tpl = null): void {
-        $this->items         = $this->get('Items');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->pagination    = $this->get('Pagination');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model               = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->pagination    = $model->getPagination();
+        $this->activeFilters = $model->getActiveFilters();
 
         if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
             $this->setLayout('emptystate');
         }
 
-        $this->authoriseItems($this->items);
+        // Check for errors.
+        if (\count($errors = $model->getErrors())) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         $this->addToolbar();
 
         parent::display($tpl);
     }
 
-    protected function authoriseItems($items) {
-        $ids = [];
-        if ($items) {
-            foreach ($items as $row) {
-                $ids[] = $row->id;
-            }
-        }
-        // What Access Permissions does this user have? What can (s)he do?
-        $this->canDo = KampInfoHelper::getActions('site', $ids);
-    }
-
     protected function addToolbar() {
-        $user = Factory::getApplication()->getIdentity();
-        $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_KAMPINFO_HITSITES_DOCTITLE'), 'kampinfo');
 
-        if ($this->canDo->get('hitsite.create')) {
+        $canDo = ContentHelper::getActions('com_kampinfo', 'site');
+
+        if ($canDo->get('hitsite.create')) {
             $toolbar->addNew('site.add');
         }
 
-        if ($this->canDo->get('hitsite.edit')) {
+        if ($canDo->get('hitsite.edit')) {
             $toolbar
                 ->edit('site.edit')
                 ->listCheck(true);
         }
 
-        if ($this->canDo->get('hitsite.delete')) {
+        if ($canDo->get('hitsite.delete')) {
             $toolbar
                 ->delete('sites.delete')
                 ->message('JGLOBAL_CONFIRM_DELETE')
                 ->listCheck(true);
         }
 
-        if (!$this->isEmptyState && ($this->canDo->get('hitsite.edit') || $this->canDo->get('hitsite.edit.state') )) {
+        if (!$this->isEmptyState && ($canDo->get('hitsite.edit') || $canDo->get('hitsite.edit.state') )) {
             $dropdown = $toolbar
                 ->dropdownButton('status-group', 'JTOOLBAR_CHANGE_STATUS')
                 ->toggleSplit(false)
@@ -86,14 +80,14 @@ class HtmlView extends BaseHtmlView {
             
             $childBar = $dropdown->getChildToolbar();
 
-            if ($this->canDo->get('hitsite.edit')) {
+            if ($canDo->get('hitsite.edit')) {
                 $childBar->standardButton('publish', 'Akkoord', 'sites.akkoordPlaats')
                     ->listCheck(true);
                 $childBar->standardButton('unpublish', 'Niet akkoord', 'sites.nietAkkoordPlaats')
                     ->listCheck(true);
             }
 
-            if ($this->canDo->get('hitsite.edit.state')) {
+            if ($canDo->get('hitsite.edit.state')) {
                 $childBar
                     ->publish('sites.publish')
                     ->listCheck(true);
@@ -104,7 +98,7 @@ class HtmlView extends BaseHtmlView {
 
         }
 
-        if ($this->canDo->get('core.admin') || $this->canDo->get('core.options')) {
+        if ($canDo->get('core.admin', 'com_kampinfo') || $canDo->get('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
 

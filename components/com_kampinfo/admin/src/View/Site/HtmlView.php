@@ -21,18 +21,15 @@ class HtmlView extends BaseHtmlView {
     protected $state;
 
     public function display($tpl = null): void {
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $model       = $this->getModel();
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
         // Check for errors.
         if (\count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-
-        $ids = array();
-        $ids[] = $item->id;
-        $this->canDo = KampInfoHelper::getActions('site', $ids);
 
         $this->addToolbar();
 
@@ -40,16 +37,18 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar(): void {
-
         $isNew      = ($this->item->id == 0);
-        $toolbar    = Toolbar::getInstance();
+        $toolbar    = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title($isNew ? 
             Text::_('COM_KAMPINFO_HITSITE_MANAGER_NEW') :
             Text::_('COM_KAMPINFO_HITSITE_MANAGER_EDIT'), 'kampinfo');
 
+        // Button: Save
         $toolbar->apply('site.apply');
+        // Button: Save & Close
         $toolbar->save('site.save');
+        // Button: Close
         $toolbar->cancel('site.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
     }
 

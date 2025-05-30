@@ -13,8 +13,7 @@ class SiteController extends FormController {
     protected function allowEdit($data = array(), $key = 'id') {
         $id = isset( $data[ $key ] ) ? $data[ $key ] : 0;
         if( !empty( $id ) ) {
-            $user = Factory::getUser();
-            return $user->authorise("hitsite.edit", "com_kampinfo.site." . $id );
+            return $this->app->getIdentity()->authorise("hitsite.edit", "com_kampinfo.site." . $id );
         }
     }
 
