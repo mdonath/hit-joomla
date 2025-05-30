@@ -15,7 +15,7 @@ use Joomla\CMS\Object\CMSObject;
 /**
  * KampInfo component helper.
  */
-class KampInfoHelper {
+abstract class KampInfoHelper {
 
     /**
      * Get the actions

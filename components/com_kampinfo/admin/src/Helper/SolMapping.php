@@ -13,7 +13,7 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\Mapper\Veld\IgnoredVel
 /**
  * Mapt velden uit SOL naar het eigen model.
  */
-class SolMapping {
+abstract class SolMapping {
 
     /**
      * Geeft de mapping voor de inschrijf aantallen per kamp voor het opgegeven jaar.

@@ -28,6 +28,10 @@ class CampModel extends AdminModel {
         return $form;
     }
 
+    protected function canDelete($record) {
+        return $this->getCurrentUser()->authorise('hitcamp.delete', 'com_kampinfo.camp.' . (int) $record->id);
+    }
+
     protected function canEditState($record) {
         return $this->getCurrentUser()->authorise('hitcamp.edit.state', 'com_kampinfo.camp.' . (int) $record->id);
     }
