@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView {
         parent::display($tpl);
     }
 
-    protected function addToolbar() {
+    protected function addToolbar():void {
         $canDo   = ContentHelper::getActions('com_kampinfo');
         $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();

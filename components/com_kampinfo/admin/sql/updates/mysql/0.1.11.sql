@@ -1,1 +1,0 @@
-DELETE FROM `#__kampinfo_downloads` where jaar = 2013;

@@ -31,7 +31,7 @@ class HtmlView extends BaseHtmlView {
         $this->pagination    = $model->getPagination();
         $this->activeFilters = $model->getActiveFilters();
 
-        if (!\count($this->items) && $this->isEmptyState = $this->get('IsEmptyState')) {
+        if (!\count($this->items) && $this->isEmptyState = $model->getIsEmptyState()) {
             $this->setLayout('emptystate');
         }
 

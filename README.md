@@ -60,3 +60,5 @@ Hoofdmenu -> Modules -> Position: J4Scouting, navbar
 
 Om de toolbar te laten zien in admin:
 Users > Access Levels > Special: +KampInfo
+
+Group 'KampInfo' heeft als parent 'Author' (en niet 'Registered')

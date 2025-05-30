@@ -146,7 +146,7 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
 
         $aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
         if ($aantalNachten > 0) {
-            $overnachtingKey = "aantalnacht.$aantalNachten";
+            $overnachtingKey = "aantalnacht$aantalNachten";
             $nieuweIcoontjes[] = $iconenLijst[$overnachtingKey];
         }
         if (!empty($kamp->icoontjes)) {
