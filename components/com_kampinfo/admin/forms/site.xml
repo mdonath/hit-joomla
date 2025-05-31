@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
-    <fieldset
-            name="hitsite"
-            addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
-    >
-        <field
-                name="id"
+<form
+        addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+>
+    <fieldset name="hitsite">
+        <field  name="id"
                 type="hidden"
                 default="0"
                 readonly="true"
                 class="readonly"
         />
-        <field
-                name="title"
+        <field  name="title"
                 type="hidden"
                 default="Een HIT Plaats"
         />
 
-        <field
-                name="naam"
+        <field  name="naam"
                 type="text"
                 label="COM_KAMPINFO_HITSITE_NAAM_LABEL"
                 description="COM_KAMPINFO_HITSITE_NAAM_DESC"
-                maxlength="50"
                 required="true"
+                maxlength="50"
                 default=""
         />
-        <field
-                name="hitproject_id"
+        <field  name="hitproject_id"
                 type="Project"
                 label="COM_KAMPINFO_HITSITE_JAAR_LABEL"
                 description="COM_KAMPINFO_HITSITE_JAAR_DESC"
@@ -37,9 +32,13 @@
         </field>
     </fieldset>
 
-    <fieldset
-            name="helpdesk"
-    >
+    <fieldset name="helpdesk">
+        <field  name="noteHelpdesk"
+                type="note" 
+                label="Met wie kan de HIT Helpdesk contact opnemen?"
+                description="Bijvoorbeeld in het geval van vragen van deelnemers die bij de Helpdesk terecht komen."
+                class="alert alert-info"
+        />
         <field
                 name="contactPersoonNaam"
                 type="text"
@@ -47,36 +46,23 @@
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
                 maxlength="50"
         />
-        <field
-                name="contactPersoonEmail"
+        <field  name="contactPersoonEmail"
                 type="email"
                 label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
                 maxlength="50"
                 validate="email"
         />
-        <field
-                name="contactPersoonTelefoon"
+        <field  name="contactPersoonTelefoon"
                 type="tel"
                 label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
                 maxlength="50"
         />
-        <field  name="noteHelpdesk"
-                type="note" 
-                label="Met wie kan de HIT Helpdesk contact opnemen?"
-                description="Bijvoorbeeld in het geval van vragen van deelnemers die bij de Helpdesk terecht komen."
-                class="alert alert-info"
-        />
     </fieldset>
 
-    <!--  -->
-    <fieldset
-            name="financien"
-            addfieldpath="/administrator/components/com_kampinfo/models/fields"
-    >
-        <field
-                name="projectcode"
+    <fieldset name="financien">
+        <field  name="projectcode"
                 type="text"
                 label="Projectcode"
                 description="De projectcode voor de financiële administratie van Scouting Nederland (in te vullen door PT)"
@@ -84,26 +70,17 @@
         />
     </fieldset>
 
-    <!--  -->
-    <fieldset
-            name="hitcourant"
-    >
-        <field
-                name="hitCourantTekst"
+    <fieldset name="hitcourant">
+        <field  name="hitCourantTekst"
                 type="textarea"
                 label="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_LABEL"
                 description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
                 rows="6"
-                class="input-xxlarge"
         />
     </fieldset>
 
-    <fieldset
-                name="akkoorden"
-                label="Akkoorden"
-    >
-        <field
-                name="akkoordHitPlaats"
+    <fieldset   name="akkoorden">
+        <field  name="akkoordHitPlaats"
                 type="radio"
                 label="COM_KAMPINFO_HITSITE_AKKOORD_LABEL"
                 description="COM_KAMPINFO_HITSITE_AKKOORD_DESC"
@@ -115,13 +92,12 @@
         </field>
     </fieldset>
 
-    <fieldset
-            name="permissions"
-            label="JCONFIG_PERMISSIONS_LABEL"
-    >
-        <field name="asset_id" type="hidden" filter="unset" />
-        <field
-                name="rules"
+    <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
+        <field  name="asset_id"
+                type="hidden"
+                filter="unset"
+        />
+        <field  name="rules"
                 type="rules"
                 label="JCONFIG_PERMISSIONS_LABEL"
                 hiddenLabel="true"
