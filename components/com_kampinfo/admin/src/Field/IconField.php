@@ -41,12 +41,10 @@ class IconField extends FormField {
 
             $html[] = '<div class="control-group">';
             $html[] = '  <div class="controls">';
+            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', Text::_($option->text)) . '</label>';
             $html[] = '    <input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
-                . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . "/>";
-            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>';
-            $html[] = KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', Text::_($option->text));
-            $html[] = Text::_($option->text);
-            $html[] =  '   </label>';
+                . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '>';
+            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . Text::_($option->text) . '</label>';
             if (!empty($uitleg)) {
                 $html[] = '    <div>';
                 $html[] = '      <small>' . $uitleg . '</small>';

@@ -46,7 +46,6 @@
                 label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_LABEL"
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_NAAM_DESC"
                 maxlength="50"
-                required="true"
         />
         <field
                 name="contactPersoonEmail"
@@ -54,7 +53,6 @@
                 label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_LABEL"
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_EMAIL_DESC"
                 maxlength="50"
-                required="true"
                 validate="email"
         />
         <field
@@ -63,7 +61,12 @@
                 label="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_LABEL"
                 description="COM_KAMPINFO_HITSITE_CONTACTPERSOON_TELEFOON_DESC"
                 maxlength="50"
-                required="true"
+        />
+        <field  name="noteHelpdesk"
+                type="note" 
+                label="Met wie kan de HIT Helpdesk contact opnemen?"
+                description="Bijvoorbeeld in het geval van vragen van deelnemers die bij de Helpdesk terecht komen."
+                class="alert alert-info"
         />
     </fieldset>
 
@@ -92,7 +95,6 @@
                 description="COM_KAMPINFO_HITSITE_HITCOURANTTEKST_DESC"
                 rows="6"
                 class="input-xxlarge"
-                required="true"
         />
     </fieldset>
 

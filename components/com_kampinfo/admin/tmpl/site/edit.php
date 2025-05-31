@@ -40,14 +40,15 @@ $user = $this->getCurrentUser();
                 <?php echo $this->form->renderFieldset('hitcourant'); ?>
             </div>
             <div class="col-lg-4">
-            <fieldset id="akkoorden" class="options-form">
-                    <legend>Akkoorden</legend>
-                    <div><?php echo $this->form->renderFieldset('akkoorden'); ?></div>
-                </fieldset>
-                <fieldset id="helpdesk" class="options-form">
-                    <legend>Contactgegevens voor Helpdesk</legend>
-                    <div><?php echo $this->form->renderFieldset('helpdesk'); ?></div>
-                </fieldset>
+                <?php echo $this->form->renderFieldset('akkoorden'); ?>
+            </div>
+        </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'helpdesk', 'Helpdesk'); ?>
+        <div class="row">
+            <div class="col-lg-6">
+                <div><?php echo $this->form->renderFieldset('helpdesk'); ?></div>
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -55,7 +56,7 @@ $user = $this->getCurrentUser();
         <?php if ($user->authorise('core.admin', 'com_kampinfo')) { ?>
             <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'financien', 'Financiën'); ?>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <?php echo $this->form->renderFieldset('financien'); ?>
                 </div>
             </div>

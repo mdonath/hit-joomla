@@ -65,10 +65,8 @@ $wa ->useScript('keepalive')
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'website', 'Website'); ?>
         <div class="row">
             <div class="col-md-8">
-                <fieldset id="hitwebsite" class="options-form">
-                    <legend>Tekst</legend>
-                    <div><?php echo $this->form->renderFieldset('hitwebsite'); ?></div>
-                </fieldset>
+                <?php echo $this->form->renderFieldset('hitwebsite'); ?>
+
                 <fieldset id="contact" class="options-form">
                     <legend>Contactgegevens</legend>
                     <div><?php echo $this->form->renderFieldset('contact'); ?></div>
@@ -107,17 +105,25 @@ $wa ->useScript('keepalive')
                     <legend>Leeftijdsgrenzen deelnemer</legend>
                     <div><?php echo $this->form->renderFieldset('leeftijd'); ?></div>
                 </fieldset>
-                <fieldset id="leeftijd-ouder" class="options-form">
-                    <legend>Leeftijdsgrenzen ouder</legend>
-                    <div><?php echo $this->form->renderFieldset('leeftijd-ouder'); ?></div>
-                </fieldset>
-                
             </div>
+            <div class="col-md-6">
+                <fieldset id="leeftijdOuder" class="options-form">
+                    <legend>Leeftijdsgrenzen ouder</legend>
+                    <div><?php echo $this->form->renderFieldset('leeftijdOuder'); ?></div>
+                </fieldset>
+            </div>
+        </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'aantallen', 'Aantallen'); ?>
+        <div class="row">
             <div class="col-md-6">
                 <fieldset id="aantallen" class="options-form">
                     <legend>Aantal deelnemers</legend>
                     <div><?php echo $this->form->renderFieldset('aantallen'); ?></div>
                 </fieldset>
+            </div>
+            <div class="col-md-6">
                 <fieldset id="subgroep" class="options-form">
                     <legend>Subgroep</legend>
                     <div><?php echo $this->form->renderFieldset('subgroep'); ?></div>
