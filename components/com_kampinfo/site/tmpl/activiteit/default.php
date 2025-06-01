@@ -107,7 +107,7 @@ function createInschrijfFormulierLink($template, $id) {
             <!--  Header / kopjes -->
             <hgroup>
                 <!-- Hoofd header -->
-                <h1><?= $activiteit->naam ?></h1>
+                <h1><?= HTMLHelper::_('kamp.naam', $activiteit) ?></h1>
                 
                 <!-- Subtitel -->
                 <?php if (strtolower($activiteit->titeltekst) === strtolower($activiteit->naam)) : ?>

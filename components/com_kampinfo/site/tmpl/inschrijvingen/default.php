@@ -142,7 +142,7 @@ function factorAantal($project, $kamp) {
             <td class="kolom1 <?php echo $status?>"
                 title="<?= printInfo($kamp) ?>"
             >
-                <?= $kamp->naam ?>
+                <?= HTMLHelper::_('kamp.naam', $kamp)  ?>
             </td>
             <td class="kolom2"><?= $kampMinimumAantal ?></td>
             <td class="kolom3"><?= $kampAantalIngeschreven ?></td>

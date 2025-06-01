@@ -2,6 +2,7 @@
 
 \defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 
@@ -66,7 +67,7 @@ $project = $this->project;
                 <a  href="<?php echo KampInfoUrlHelper::activiteitURL($plaats, $kamp, $project->jaar, $useComponentUrls); ?>"
                     title="<?php echo KampInfoUrlHelper::fuzzyIndicatieVol($kamp); ?>"
                 >
-                    <?php echo $kamp->naam; ?>
+                    <?= HTMLHelper::_('kamp.naam', $kamp) ?>
                 </a>
             </td>
             <td class="kolom2"><?php echo $kamp->minimumLeeftijd; ?>&nbsp;-&nbsp;<?php echo $kamp->maximumLeeftijd; ?></td>

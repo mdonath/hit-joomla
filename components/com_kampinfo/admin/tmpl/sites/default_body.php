@@ -17,46 +17,34 @@ $user = $this->getCurrentUser();
         ?>
         <tr>
             <td>
-                <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                <?= HTMLHelper::_('grid.id', $i, $item->id) ?>
             </td>
             <td>
-                <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'sites.', $canPublish, 'cb');?>
+                <?= HTMLHelper::_('jgrid.published', $item->published, $i, 'sites.', $canPublish, 'cb') ?>
             </td>
             <td>
-                <?php if ($canEdit) { ?>
-                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=site.edit&id=' . (int)$item->id); ?>">
-                        <?= $item->naam ?>
-                    </a>
-                <?php } else { ?>
-                    <?= $item->naam ?>
-                <?php } ?>
+                <?= HTMLHelper::_('plaats.naam', $item, $canEdit) ?>
             </td>
             <td>
-                <?php echo $item->jaar; ?>
+                <?= $item->jaar ?>
             </td>
             <td>
-                <?php echo HTMLHelper::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, 'sites.', $canEdit); ?>
+                <?= HTMLHelper::_('akkoord.akkoordplaats', $item->akkoordHitPlaats, $i, 'sites.', $canEdit) ?>
             </td>
             <td>
-                <?php echo $item->contactPersoonNaam; ?>
+                <?= $item->contactPersoonNaam ?>
             </td>
             <td>
-                <?php echo $item->contactPersoonEmail; ?>
+                <?= $item->contactPersoonEmail ?>
             </td>
             <td>
-                <?php echo $item->contactPersoonTelefoon; ?>
+                <?= $item->contactPersoonTelefoon ?>
             </td>
             <td>
-                <?php if ($canEdit) { ?>
-                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&view=site&format=pdf&id='.(int)$item->id); ?>">
-                        download
-                    </a>
-                <?php } else { ?>
-                    nvt
-                <?php } ?>
+                <?= HTMLHelper::_('plaats.downloadPdf', $item, $canEdit) ?>
             </td>
             <td>
-                <?php echo $item->id; ?>
+                <?= $item->id ?>
             </td>
         </tr>
     <?php endforeach; ?>

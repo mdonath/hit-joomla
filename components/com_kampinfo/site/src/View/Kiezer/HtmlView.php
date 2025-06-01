@@ -71,7 +71,7 @@ class HtmlView extends BaseHtmlView {
             'margeAantalDagenTeOud',
             'aantalSubgroepen',
             'maximumAantalSubgroepjes',
-            'isouderkind'
+            'isouderkind',
         ];
 
         $project->jaar = intval($project->jaar);

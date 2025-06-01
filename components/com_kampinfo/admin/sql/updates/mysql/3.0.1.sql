@@ -1,0 +1,1 @@
+ALTER TABLE `#__kampinfo_hitcamp` ADD COLUMN `geannuleerd` BOOLEAN DEFAULT 0 AFTER `naam`;

@@ -12,6 +12,8 @@ use Joomla\CMS\Extension\MVCComponent;
 use Psr\Container\ContainerInterface;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Akkoord;
+use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Kamp;
+use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Plaats;
 
 
 class KampInfoComponent extends MVCComponent implements
@@ -21,6 +23,8 @@ class KampInfoComponent extends MVCComponent implements
 
     public function boot(ContainerInterface $container) {
         $this->getRegistry()->register('akkoord', new Akkoord());
+        $this->getRegistry()->register('kamp', new Kamp());
+        $this->getRegistry()->register('plaats', new Plaats());
     }
 
 }

@@ -10,7 +10,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 
 /**
- * HTML View class voor het overzicht van alle activiteiten.
+ * HTML View class voor het tonen van een activiteit.
  */
 class HtmlView extends BaseHtmlView {
 

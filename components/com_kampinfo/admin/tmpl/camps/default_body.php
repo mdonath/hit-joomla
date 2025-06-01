@@ -24,13 +24,7 @@ $user = $this->getCurrentUser();
                 <?= HTMLHelper::_('jgrid.published', $item->published, $i, 'camps.', $canPublish, 'cb') ?>
             </td>
             <td>
-                <?php if ($canEdit) { ?>
-                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=camp.edit&id='.(int)$item->id); ?>">
-                        <?= $item->naam ?>
-                    </a>
-                <?php } else { ?>
-                    <?= $item->naam ?>
-                <?php } ?>
+                <?= HTMLHelper::_('kamp.naam', $item, $canEdit) ?>
             </td>
             <td>
                 <?= HTMLHelper::_('akkoord.akkoordkamp', $item->akkoordHitKamp, $i, 'camps.', $canEdit) ?>

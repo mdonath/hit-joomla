@@ -84,6 +84,7 @@ class KiezerModel extends AbstractKampInfoModel {
             -> where('c.published = 1')
             -> where('c.akkoordHitKamp = 1')
             -> where('c.akkoordHitPlaats = 1')
+            -> where('c.geannuleerd <> 1')
             -> order('c.naam')
         ;
 

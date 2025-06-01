@@ -48,6 +48,7 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,   `ouderShantiFormuliernummer`            INT(10)
 ,   `extraShantiFormuliernummer`            INT(10)
 ,   `naam`                                  VARCHAR(255)    NOT NULL
+,   `geannuleerd`                           BOOLEAN                     DEFAULT 0
 ,   `isouderkind`                           BOOLEAN
 ,   `optieAlleenOuderLid`                   BOOLEAN         NULL        DEFAULT 0
 ,   `startElders`                           BOOLEAN
