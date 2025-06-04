@@ -3,15 +3,14 @@
 \defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');
-$useComponentUrls = $params->get('useComponentUrls') == 1;
-$iconFolderSmall = $params->get('iconFolderSmall');
-$iconExtension = $params->get('iconExtension');
+$useComponentUrls = $params->get('useComponentUrls') === 1;
 
 $project = $this->project;
 
@@ -41,6 +40,7 @@ function printProgressbarKamp($kamp) {
 }
 
 function printProgressbar($min, $aantal, $res, $max, $aantalGroep=0, $maxGroep=0) {
+    $max = max(1, $max); // voorkom delen-door-nul
     $percentageVol = round(100 * $aantal / max($max,$res));
     $percentageVolText = round(100 * $aantal / $max);
     $percentageRes = round(100 * ($res - $aantal) / max($max,$res));
@@ -139,11 +139,7 @@ function factorAantal($project, $kamp) {
             $kampMaximumAantal = $factor * $kamp->maximumAantalDeelnemers;
             ?>
         <tr>
-            <td class="kolom1 <?php echo $status?>"
-                title="<?= printInfo($kamp) ?>"
-            >
-                <?= HTMLHelper::_('kamp.naam', $kamp)  ?>
-            </td>
+            <td class="kolom1 <?= $status ?>" title="<?= printInfo($kamp) ?>"><?= HTMLHelper::_('kamp.naam', $kamp)  ?></td>
             <td class="kolom2"><?= $kampMinimumAantal ?></td>
             <td class="kolom3"><?= $kampAantalIngeschreven ?></td>
             <td class="kolom4"><?= $kampAantalGereserveerd ?></td>

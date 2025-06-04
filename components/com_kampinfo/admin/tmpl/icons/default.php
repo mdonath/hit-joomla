@@ -21,7 +21,7 @@ use Joomla\CMS\Router\Route;
         </div>
     </div>
 
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="task" value="">
+    <input type="hidden" name="boxchecked" value="0">
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

@@ -1,27 +1,53 @@
 <?php
+namespace HITScoutingNL\Plugin\Content\KampInfo\Extension;
+
 // No direct access
 defined('_JEXEC') or die ('Restricted access');
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
+use Joomla\CMS\Extension\BootableExtensionInterface;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+use Joomla\Event\SubscriberInterface;
+use Psr\Container\ContainerInterface;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Icoon;
+use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Kamp;
 
+final class Kampinfo extends CMSPlugin implements
+    SubscriberInterface,
+    BootableExtensionInterface
+{
+    use DatabaseAwareTrait;
+    use HTMLRegistryAwareTrait;
 
-class PlgContentKampinfo extends CMSPlugin {
+    public static function getSubscribedEvents(): array {
+        return [
+            'onContentPrepare' => 'onContentPrepare',
+        ];
+    }
 
-    protected $db;
-
-    protected $autoloadLanguage = true;
+    public function boot(ContainerInterface $container) {
+        $this->getRegistry()->register('kamp', new Kamp());
+        $this->getRegistry()->register('icoon', new Icoon());
+    }
 
     /*
      * Usage:
      * 
-     * {kampinfo [type="landelijk|plaats"] [plaats="$PLAATS"] [kopje=0|1] [volgorde="naam|leeftijd"] [delim="|"]} 
+     * {kampinfo jaar="<jaartal>" type="landelijk|plaats" [plaats="$PLAATS"] [kopje=0|1] [volgorde="naam|leeftijd"] [delim="|"] [icons="0|1"] } 
      */
-    public function onContentPrepare($context, &$row, &$params, $page = 0) {
+    public function onContentPrepare(ContentPrepareEvent $event) {
+        $context = $event->getContext();
+        $row     = $event->getItem();
+        $params  = $event->getParams();
+
         if ($context === 'com_finder.indexer') {
             return;
         }
@@ -40,22 +66,23 @@ class PlgContentKampinfo extends CMSPlugin {
         }
 
         $plugincode = 'kampinfo';
-        $regex = "/{". $plugincode ."\ ([^}]+)\}|{". $plugincode ."\}/m";
+        $regex = "/{". $plugincode ."\ ([^}]+)\s*\}|{". $plugincode ."\s*\}/m";
         if (preg_match_all($regex, $row->text, $matches)) {
 
-            $params = ComponentHelper::getParams('com_kampinfo');
+            $kampInfoConfig = ComponentHelper::getParams('com_kampinfo');
+            $useComponentUrls = $kampInfoConfig->get('useComponentUrls') == 1;
 
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $configs = explode(' ', $matches[1][$i]);
                 $config = [];
-                $config['useComponentUrls'] = $params->get('useComponentUrls') == 1;
-                $config['iconFolderSmall'] = $params->get('iconFolderSmall');
-                $config['iconExtension'] = $params->get('iconExtension');
+                $config['useComponentUrls'] = $useComponentUrls;
                 
                 // collect parameters
-                foreach ($configs as $item) {
-                    list($key, $value) = explode("=", $item);
-                    $config[$key] = str_replace(array("'",'"'), '', $value);
+                $pluginParameters = explode(' ', $matches[1][$i]);
+                foreach ($pluginParameters as $item) {
+                    if ($item !== '') {
+                        list($key, $value) = explode("=", $item);
+                        $config[$key] = str_replace(["'",'"'], '', $value);
+                    }
                 }
 
                 $type = '';
@@ -82,7 +109,7 @@ class PlgContentKampinfo extends CMSPlugin {
     }
 
     private function loadLandelijkOverzicht($config) {
-        if ($this->getParamIfExists($config, 'kopje') == "1") {
+        if ($this->getParamIfExists($config, 'kopje') == '1') {
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
 
@@ -106,11 +133,10 @@ class PlgContentKampinfo extends CMSPlugin {
     private function loadPlaatsOverzicht($config) {
         $output = "";
         
-        if ($this->getParamIfExists($config, 'kopje') == "1") {
+        if ($this->getParamIfExists($config, 'kopje') == '1') {
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
 
-        $db = $this->db;
         $query = $this->createBaseQuery($config);
         $query
             -> where('s.naam = :plaats')
@@ -124,13 +150,9 @@ class PlgContentKampinfo extends CMSPlugin {
             $output .= $this->span('naam', $this->kampLink($row, $config));
             $output .= $this->outputDelimiter($row, $config);
             $output .= $this->span('leeftijd', $row->minl ."-". $row->maxl . " jaar");
-            if ($this->getParamIfExists($config, 'icons')) { 
+            if ($this->getParamIfExists($config, 'icons') == 1) { 
                 $output .= $this->outputDelimiter($row, $config);
-                $output .= "<span class='icons'>";
-                foreach ($row->iconen as $icoon) {
-                    $output .= (KampInfoUrlHelper::imgUrl($config['iconFolderSmall'], $icoon->naam, $config['iconExtension'], $icoon->tekst));
-                }
-                $output .= "</span>";
+                $output .= "<span class='icons'>" . HtmlHelper::_('kamp.icoontjes', $row, 'small') . "</span>";
             }
             if ($this->getParamIfExists($config, 'hitcourant')) { 
                 $output .= $this->outputDelimiter($row, $config);
@@ -162,7 +184,7 @@ class PlgContentKampinfo extends CMSPlugin {
     private function loadObjectList($query) {
         $iconList = $this->getIconenLijst();
 
-        $db = $this->db;
+        $db = $this->getDatabase();
         $db->setQuery($query);
         $result = $db->loadObjectList();
         foreach ($result as $row) {
@@ -180,13 +202,13 @@ class PlgContentKampinfo extends CMSPlugin {
                     $ics[] = $iconList[$icon];
                 }
             }
-            $row->iconen = $ics;
+            $row->icoontjes = $ics;
         }
         return $result;
     }
      
     private function createBaseQuery($config) {
-        $db = $this->db;
+        $db    = $this->getDatabase();
         $query = $db->getQuery(true)
             -> select('p.jaar')
             -> select('s.id as plaatsId')
@@ -197,6 +219,12 @@ class PlgContentKampinfo extends CMSPlugin {
             -> select('c.icoontjes')
             -> select('c.hitCourantTekst as hitcourant')
             -> select('c.webadresFoto1 as foto')
+
+            -> select('c.gereserveerd')
+            -> select('c.maximumAantalDeelnemers')
+            -> select('c.aantalDeelnemers')
+            -> select('c.maximumAantalSubgroepjes')
+
             -> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
             -> join('LEFT', $db->quoteName('#__kampinfo_hitsite', 's').' ON s.id = c.hitsite_id')
             -> join('LEFT', $db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id = s.hitproject_id')
@@ -205,6 +233,7 @@ class PlgContentKampinfo extends CMSPlugin {
             $query
                 -> where('c.akkoordHitKamp = 1')
                 -> where('c.akkoordHitPlaats = 1')
+                -> where('c.geannuleerd <> 1')
             ;
         }
 
@@ -243,10 +272,9 @@ class PlgContentKampinfo extends CMSPlugin {
     }
 
     private function getIconenLijst() {
-        $db = $this->db;
-
+        $db = $this->getDatabase();
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort')
+            -> select('i.bestandsnaam, i.tekst, i.volgorde, i.soort')
             -> from('#__kampinfo_hiticon i')
             -> order('i.bestandsnaam');
 
@@ -256,8 +284,8 @@ class PlgContentKampinfo extends CMSPlugin {
             
             $result = [];
             foreach ($icons as $icon) {
-                $result[$icon->naam] = (object) [
-                    'naam' => $icon->naam,
+                $result[$icon->bestandsnaam] = (object) [
+                    'bestandsnaam' => $icon->bestandsnaam,
                     'tekst' => $icon->tekst,
                     'volgorde' => $icon->volgorde,
                     'soort' => $icon->soort

@@ -4,6 +4,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Helper;
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -12,7 +13,7 @@ use Joomla\CMS\Uri\Uri;
 abstract class KampInfoUrlHelper {
 
     public static function imgUrl($folder, $naam, $ext, $title, $alt = '') {
-        return '<img src="' . URI::root() . $folder . '/' . $naam . $ext . '" title="' . $title . '" alt="' . $alt . '"/>';
+        return HTMLHelper::_('image', $folder .'/'. $naam . $ext, $alt, ['title' => $title]);
     }
 
     public static function isYoutubeFilmpje($url) {

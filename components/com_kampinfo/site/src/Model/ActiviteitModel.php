@@ -73,7 +73,7 @@ class ActiviteitModel extends AbstractKampInfoModel {
         $values = explode(',', $namen);
 
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam as naam, i.tekst, i.volgorde')
+            -> select('i.bestandsnaam, i.tekst, i.volgorde')
             -> from($db->quoteName('#__kampinfo_hiticon', 'i'))
             -> where($db->quoteName('i.bestandsnaam') .' IN (' . implode(',', array_map(fn($n) => $db->quote($n), $values)) . ')')
             -> order('i.volgorde')

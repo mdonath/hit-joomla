@@ -23,7 +23,7 @@
             destfile="dist/${str.destfilename}"
             basedir="."
             update="false"
-            excludes="build.*, **/doc/**"
+            excludes="build.*, **/doc/**, dist"
         />
     </target>
 

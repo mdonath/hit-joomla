@@ -35,7 +35,7 @@ class RangenumField extends NumberField {
         $html[] = '  <input type="range" name="' . $this->name . '" id="' . $this->id . '"';
         $html[] = '    value="'. $value . '" ' . implode(' ', $attributes);
         $html[] = '    oninput="this.form.' . $this->id . '_display.value=this.form.' . $this->id . '.value;"';
-        $html[] = '/>&nbsp;<output id="' . $this->id . '_display" for="'.$this->name.'">' . $value . '</output>';
+        $html[] = '>&nbsp;<output id="' . $this->id . '_display" for="'.$this->name.'">' . $value . '</output>';
         $html[] = ' </div>';
         $html[] = '</div>';
 

@@ -8,7 +8,7 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');
-$useComponentUrls = $params->get('useComponentUrls') == 1;
+$useComponentUrls = $params->get('useComponentUrls') === 1;
 $iconFolderSmall = $params->get('iconFolderSmall');
 $iconExtension = $params->get('iconExtension');
 
@@ -85,14 +85,7 @@ $project = $this->project;
                 ?>
             </td>
             <td class="kolom4">
-                <?php
-                    if (KampInfoUrlHelper::isVol($kamp)) {
-                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, KampInfoUrlHelper::volOfLoterij(), $iconExtension, KampInfoUrlHelper::fuzzyIndicatieVol($kamp), '');
-                    }
-                    foreach ($kamp->icoontjes as $icoon) {
-                        echo KampInfoUrlHelper::imgUrl($iconFolderSmall, $icoon->naam, $iconExtension, $icoon->tekst, '');
-                    }
-                    ?>
+                <?= HTMLHelper::_('kamp.icoontjes', $kamp) ?>
             </td>
         </tr>
         <?php } ?>

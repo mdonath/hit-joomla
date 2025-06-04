@@ -4,7 +4,6 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
 \defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -21,11 +20,6 @@ class IconField extends FormField {
     protected $forceMultiple = true;
 
     protected function getInput() {
-        $params = ComponentHelper::getParams('com_kampinfo');
-        $iconFolderSmall = $params->get('iconFolderSmall');
-        $iconFolderLarge = $params->get('iconFolderLarge');
-        $iconExtension = $params->get('iconExtension');
-        
         $html = [];
         $class = $this->element['class'] ? ' class="checkboxes ' . (string) $this->element['class'] . '"' : ' class="checkboxes"';
 
@@ -37,11 +31,15 @@ class IconField extends FormField {
             $disabled = !empty($option->disable) ? ' disabled="disabled"' : '';
             $onclick = !empty($option->onclick) ? ' onclick="' . $option->onclick . '"' : '';
 
+            $icoon = new \stdClass();
+            $icoon->bestandsnaam = $option->value;
+            $icoon->tekst = $option->text;
+
             $uitleg = !empty($option->uitleg) ? htmlspecialchars($option->uitleg, ENT_COMPAT, 'UTF-8') : '';
 
             $html[] = '<div class="control-group">';
             $html[] = '  <div class="controls">';
-            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . KampInfoUrlHelper::imgUrl($iconFolderLarge, $option->value, $iconExtension, '', Text::_($option->text)) . '</label>';
+            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . HTMLHelper::_('icoon.image', $icoon, 'large') . '</label>';
             $html[] = '    <input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
                 . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '>';
             $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . Text::_($option->text) . '</label>';

@@ -4,17 +4,16 @@
     <description>Toont het overzicht van de kamponderdelen in een Joomla article</description>
 
     <name>Content - KampInfo</name>
-    <version>1.0</version>
+    <version>3.0</version>
 
     <creationDate>November 2019</creationDate>
     <copyright>2019</copyright>
     <author>Martijn Donath</author>
-
     <namespace path="src">HITScoutingNL\Plugin\Content\KampInfo</namespace>
 
     <files>
-        <filename plugin="kampinfo">kampinfo.php</filename>
-        <filename>index.html</filename>
+        <folder plugin="kampinfo">services</folder>
+        <folder>src</folder>
     </files>
 
 </extension>

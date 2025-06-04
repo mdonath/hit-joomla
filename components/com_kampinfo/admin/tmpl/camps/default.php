@@ -7,7 +7,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 ?>
 
-<form   action="<?php echo Route::_('index.php?option=com_kampinfo&controller=camps'); ?>"
+<form   action="<?= Route::_('index.php?option=com_kampinfo&controller=camps') ?>"
         method="post"
         name="adminForm"
         id="adminForm"
@@ -15,13 +15,13 @@ use Joomla\CMS\Router\Route;
     <div class="row">
         <div class="col-md-12">
             <div id="j-main-container" class="j-main-container">
-                <?php echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]); ?>
-                <?php echo $this->loadTemplate('list'); ?>
+                <?= LayoutHelper::render('joomla.searchtools.default', ['view' => $this]) ?>
+                <?= $this->loadTemplate('list') ?>
             </div>
         </div>
     </div>
 
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="boxchecked" value="0" />
-    <?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="">
+    <input type="hidden" name="boxchecked" value="0">
+    <?= HTMLHelper::_('form.token') ?>
 </form>

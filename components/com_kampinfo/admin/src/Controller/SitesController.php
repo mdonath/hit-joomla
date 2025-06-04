@@ -41,7 +41,7 @@ class SitesController extends AdminController {
             if (!$model->akkoordPlaats($ids, $value)) {
                 $this->app->enqueueMessage($model->getError(), 'warning');
             } else {
-                if ($value == 1) {
+                if ($value === 1) {
                     $ntext = '%d plaats(en) akkoord';
                 } else {
                     $ntext = '%d plaats(en) niet akkoord';

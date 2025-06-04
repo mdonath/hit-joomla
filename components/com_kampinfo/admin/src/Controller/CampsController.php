@@ -50,7 +50,7 @@ class CampsController extends AdminController {
                 if ($errors) {
                     $this->app->enqueueMessage($model->getError(), 'warning');
                 } else {
-                    if ($value == 1) {
+                    if ($value === 1) {
                         $ntext = '%d plaats(en) akkoord';
                     } else {
                         $ntext = '%d plaats(en) niet akkoord';
@@ -93,7 +93,7 @@ class CampsController extends AdminController {
                 if ($errors) {
                     $this->app->enqueueMessage($model->getError(), 'warning');
                 } else {
-                    if ($value == 1) {
+                    if ($value === 1) {
                         $ntext = '%d kamp(en) akkoord';
                     } else {
                         $ntext = '%d kamp(en) niet akkoord';

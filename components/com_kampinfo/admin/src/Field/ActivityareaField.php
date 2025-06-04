@@ -4,12 +4,10 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
 \defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
 
 
 /**
@@ -21,10 +19,6 @@ class ActivityareaField extends FormField {
     protected $forceMultiple = true;
 
     protected function getInput() {
-        $params = ComponentHelper::getParams('com_kampinfo');
-        $activiteitengebiedenFolder = $params->get('activiteitengebiedenFolder');
-        $activiteitengebiedenExtension = $params->get('activiteitengebiedenExtension');
-
         $html = [];
         $class = $this->element['class'] ? ' class="checkboxes '. (string) $this->element['class'] .'"' : ' class="checkboxes"';
 
@@ -38,7 +32,7 @@ class ActivityareaField extends FormField {
 
             $html[] = '<div class="control-group">';
             $html[] = '  <div class="controls">';
-            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . KampInfoUrlHelper::imgUrl($activiteitengebiedenFolder, $option->value, $activiteitengebiedenExtension, Text::_($option->text), '') . '</label>';
+            $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>' . HTMLHelper::_('icoon.activiteitengebied', $option->value, $option->text) . '</label>';
             $html[] = '    <input type="checkbox" id="' . $this->id . $i . '" name="' . $this->name . '"' . ' value="'
                 . htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8') . '"' . $checked . $class . $onclick . $disabled . '>';
             $html[] = '    <label for="' . $this->id . $i . '"' . $class . '>'. Text::_($option->text) . '</label>';

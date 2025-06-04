@@ -5,6 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Site\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
@@ -113,7 +114,7 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         $db = Factory::getDBO();
 
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam as naam, i.tekst, i.volgorde, i.soort')
+            -> select('i.bestandsnaam, i.tekst, i.volgorde, i.soort')
             -> from($db->quoteName('#__kampinfo_hiticon', 'i'))
         ;
 
@@ -124,11 +125,11 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
             $result = [];
             foreach ($icons as $icon) {
                 $i = new \stdClass();
-                $i->naam = $icon->naam;
+                $i->bestandsnaam = $icon->bestandsnaam;
                 $i->tekst = $icon->tekst;
                 $i->volgorde = $icon->volgorde;
                 $i->soort = $icon->soort;
-                $result[$icon->naam] = $i;
+                $result[$icon->bestandsnaam] = $i;
             }
 
             return $result;
@@ -161,25 +162,27 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getLaatstBijgewerktOp($jaar) {
-        $soort = 'INSC';
+        $date = new Date('now', new \DateTimeZone('UTC'));
+        return $date;
+        // $soort = 'INSC';
 
-        $db = Factory::getDBO();
+        // $db = Factory::getDBO();
         
-        $query = $db->getQuery(true)
-            -> select('max(bijgewerktOp) as bijgewerktOp')
-            -> from($db->quoteName('#__kampinfo_downloads', 'd'))
-            -> where('d.jaar = :jaar')
-            -> bind(':jaar', $jaar)
-            -> where('d.soort = :soort')
-            -> bind(':soort', $soort)
-        ;
+        // $query = $db->getQuery(true)
+        //     -> select('max(bijgewerktOp) as bijgewerktOp')
+        //     -> from($db->quoteName('#__kampinfo_downloads', 'd'))
+        //     -> where('d.jaar = :jaar')
+        //     -> bind(':jaar', $jaar)
+        //     -> where('d.soort = :soort')
+        //     -> bind(':soort', $soort)
+        // ;
 
-        try {
-            $db->setQuery($query);
-            return $db->loadResult();
-        } catch (\Exception $e) {
-            throw new GenericDataException($e->getMessage(), 500);
-        }
+        // try {
+        //     $db->setQuery($query);
+        //     return $db->loadResult();
+        // } catch (\Exception $e) {
+        //     throw new GenericDataException($e->getMessage(), 500);
+        // }
     }
 
 }
