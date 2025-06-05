@@ -52,7 +52,7 @@ class KampInfoImporterExporter {
 
     private function importEnkelePlaats($hit) {
         // welk jaar?
-        $project = $hit->projects[0];
+        $project = $hit->projecten[0];
         $jaar = $project->jaar;
 
         $projectTable = $this->getTable('HitProject');
@@ -69,7 +69,7 @@ class KampInfoImporterExporter {
     }
 
     private function importProjecten($hit) {
-        foreach ($hit->projects as $project) {
+        foreach ($hit->projecten as $project) {
             $this->importProject($project);
         }
     }

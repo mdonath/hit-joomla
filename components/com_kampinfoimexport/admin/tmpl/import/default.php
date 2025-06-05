@@ -9,7 +9,7 @@ defined('_JEXEC') or die('Restricted Access');
 <div class="main-card">
     <div class="row">
         <div class="col-md-6">
-            <form   action="<?php echo Route::_('index.php?option=com_kampinfoimexport&view=import'); ?>"
+            <form   action="<?= Route::_('index.php?option=com_kampinfoimexport&view=import') ?>"
                     enctype="multipart/form-data" 
                     method="post"
                     name="adminForm"
@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Restricted Access');
                     class="form-validate"
             >
                 <fieldset class="options-form">
-                    <legend><?php echo Text::_('Importeer totale json-export'); ?></legend>
+                    <legend><?= Text::_('Importeer totale json-export') ?></legend>
                     <div>
                         <div class="control-group">
                             <div class="control-label">
@@ -29,16 +29,16 @@ defined('_JEXEC') or die('Restricted Access');
                                 <input id="import_file" class="form-control required" type="file" name="import_file">
                             </div>
                         </div>
-                        <input class="btn btn-primary" type="submit" value="<?php echo Text::_('Importeer alles'); ?>" />
+                        <input class="btn btn-primary" type="submit" value="<?= Text::_('Importeer alles') ?>" />
                     </div>
                 </fieldset>
                 <input type="hidden" name="task" value="import.importAlles" />
-                <?php echo HTMLHelper::_('form.token'); ?>
+                <?= HTMLHelper::_('form.token') ?>
             </form>
         </div>
 
         <div class="col-md-6">
-            <form   action="<?php echo Route::_('index.php?option=com_kampinfoimexport&view=import'); ?>"
+            <form   action="<?= Route::_('index.php?option=com_kampinfoimexport&view=import') ?>"
                     enctype="multipart/form-data" 
                     method="post"
                     name="adminForm"
@@ -46,7 +46,7 @@ defined('_JEXEC') or die('Restricted Access');
                     class="form-validate"
             >
                 <fieldset class="options-form">
-                    <legend><?php echo Text::_('Importeer enkele plaats'); ?></legend>
+                    <legend><?= Text::_('Importeer enkele plaats') ?></legend>
                     <div>
                     <div class="control-group">
                             <div class="control-label">
@@ -59,11 +59,11 @@ defined('_JEXEC') or die('Restricted Access');
                             </div>
                         </div>
 
-                        <input class="btn btn-primary" type="submit" value="<?php echo Text::_('Importeer plaats'); ?>" />
+                        <input class="btn btn-primary" type="submit" value="<?= Text::_('Importeer plaats') ?>" />
                     </div>
                 </fieldset>
                 <input type="hidden" name="task" value="import.importEenPlaats" />
-                <?php echo HTMLHelper::_('form.token'); ?>
+                <?= HTMLHelper::_('form.token') ?>
             </form>
         </div>
 

@@ -21,27 +21,27 @@ $projecten = $this->getModel()->getItems();
                 <tbody>
                     <tr class="row1">
                         <td>Alles</td>
-                        <td><a href="<?php echo Route::_('index.php?option=com_kampinfoimexport&view=export&format=json'); ?>">Export JSON</a></td>
+                        <td><a href="<?= Route::_('index.php?option=com_kampinfoimexport&view=export&format=json') ?>">Export JSON</a></td>
                         <td>&nbsp;</td>
                     </tr>
-                    <?php foreach ($projecten as $project) { ?>
+                    <?php foreach ($projecten as $project) : ?>
                         <tr>
-                            <td><?php echo $project->jaar;?></td>
+                            <td><?= $project->jaar ?></td>
                             <td>
-                                <a href="<?php echo Route::_('index.php?option=com_kampinfoimexport&view=export&format=json&jaar='.$project->jaar); ?>">Export JSON</a>
+                                <a href="<?= Route::_('index.php?option=com_kampinfoimexport&view=export&format=json&jaar='.$project->jaar) ?>">Export JSON</a>
                             </td>
                             <td>
                                 <table>
-                                    <?php foreach ($project->plaatsen as $plaats) { ?>
+                                    <?php foreach ($project->plaatsen as $plaats) : ?>
                                         <tr>
-                                            <td><?php echo $plaats->naam;?></td>
-                                            <td>Aantal kampen: <?=count($plaats->kampen)?></td>
+                                            <td><?= $plaats->naam ?></td>
+                                            <td>Aantal kampen: <?= count($plaats->kampen) ?></td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php endforeach; ?>
                                 </table>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

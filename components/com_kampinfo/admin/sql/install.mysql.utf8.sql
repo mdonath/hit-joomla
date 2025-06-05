@@ -87,7 +87,6 @@ CREATE TABLE `#__kampinfo_hitcamp` (
 ,   `margeAantalDagenTeJong`                SMALLINT(3)
 ,   `margeAantalDagenTeOud`                 SMALLINT(3)
 ,   `redenAfwijkingMarge`                   VARCHAR(255)
-,   `doelgroepen`                           TEXT
 ,   `doelstelling`                          TEXT
 ,   `hitCourantTekst`                       TEXT
 ,   `helpdeskOpmerkingen`                   TEXT
