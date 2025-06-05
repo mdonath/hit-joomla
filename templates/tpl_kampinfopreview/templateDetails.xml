@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="template" client="site">
+    <name>tpl_kampinfopreview</name>
+    <version>1.0.0</version>
+    <creationDate>2013-11-03</creationDate>
+    <author>Martijn Donath</author>
+    <authorEmail>martijn.donath@gmail.com</authorEmail>
+    <copyright>Martijn Donath / HIT Scouting Nederland 2013</copyright>
+    <license>GNU/GPL</license>
+    <description>KampInfo Preview Template</description>
+    <namespace>HITScoutingNL\Templates\KampInfoPreview</namespace>
+    <inheritable>1</inheritable>
+    <files>
+        <filename>index.php</filename>
+        <filename>templateDetails.xml</filename>
+        <folder>images</folder>
+        <folder>css</folder>
+    </files>
+    <positions>
+        <position>breadcrumb</position>
+        <position>left</position>
+        <position>right</position>
+        <position>top</position>
+        <position>user1</position>
+        <position>user2</position>
+        <position>user3</position>
+        <position>user4</position>
+        <position>footer</position>
+    </positions>
+</extension>
+

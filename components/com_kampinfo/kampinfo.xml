@@ -1,89 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
  
-        <name>KampInfo</name>
+    <name>KampInfo</name>
 
-        <author>Martijn Donath</author>
-        <creationDate>October 2012</creationDate>
-        <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
-        <license>LGPL</license>
-        <authorEmail>martijn.donath@scouting.nl</authorEmail>
-        <authorUrl>https://github.com/mdonath/hit-joomla</authorUrl>
-        <version>3.0.1</version>
-        <description>COM_KAMPINFO_DESCRIPTION</description>
+    <author>Martijn Donath</author>
+    <creationDate>October 2012</creationDate>
+    <copyright>(C) Martijn Donath / HIT Scouting Nederland</copyright>
+    <license>LGPL</license>
+    <authorEmail>martijn.donath@scouting.nl</authorEmail>
+    <authorUrl>https://github.com/mdonath/hit-joomla</authorUrl>
+    <version>3.0.1</version>
+    <description>COM_KAMPINFO_DESCRIPTION</description>
 
-        <namespace path="src">HITScoutingNL\Component\KampInfo</namespace>
+    <namespace path="src">HITScoutingNL\Component\KampInfo</namespace>
 
-        
-        <install> <!-- Runs on install -->
-                <sql>
-                        <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-                </sql>
-        </install>
-        <uninstall> <!-- Runs on uninstall -->
-                <sql>
-                        <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
-                </sql>
-        </uninstall>
-        <update> <!-- Runs on update -->
-                <schemas>
-                        <schemapath type="mysql">sql/updates/mysql</schemapath>
-                </schemas>
-        </update>
- 
-        <!-- Site Main File Copy Section -->
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <update> <!-- Runs on update -->
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- Site Main File Copy Section -->
+    <!-- Note the folder attribute: This attribute describes the folder
+         to copy FROM in the package to install therefore files copied
+         in this section are copied from /site/ in the package -->
+    <files folder="site">
+        <filename>index.html</filename>
+        <folder>language</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <media folder="media" destination="com_kampinfo">
+        <filename>index.html</filename>
+        <filename>joomla.asset.json</filename>
+        <folder>images</folder>
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <administration>
+        <!-- Administration Menu Section -->
+        <menu img="../media/com_kampinfo/images/kampinfo-16x16.png">COM_KAMPINFO_MENU</menu>
+        <submenu>
+            <menu view="info">com_kampinfo_submenu_info</menu>
+
+            <menu view="projects">
+                COM_KAMPINFO_SUBMENU_HITPROJECTS
+                <params>
+                    <menu-quicktask>index.php?option=com_kampinfo&amp;view=project&amp;layout=edit</menu-quicktask>
+                    <menu-quicktask-title>Project toevoegen</menu-quicktask-title>
+                    <menu-quicktask-permission>hitproject.edit</menu-quicktask-permission>
+                </params>
+            </menu>
+            <menu view="sites">
+                COM_KAMPINFO_SUBMENU_HITSITES
+                <params>
+                    <menu-quicktask>index.php?option=com_kampinfo&amp;view=site&amp;layout=edit</menu-quicktask>
+                    <menu-quicktask-title>Plaats toevoegen</menu-quicktask-title>
+                    <menu-quicktask-permission>hitsite.edit</menu-quicktask-permission>
+                </params>
+            </menu>
+            <menu view="camps">
+                COM_KAMPINFO_SUBMENU_HITCAMPS
+                <params>
+                    <menu-quicktask>index.php?option=com_kampinfo&amp;view=camp&amp;layout=edit</menu-quicktask>
+                    <menu-quicktask-title>Kamp toevoegen</menu-quicktask-title>
+                    <menu-quicktask-permission>hitcamp.edit</menu-quicktask-permission>
+                </params>
+            </menu>
+            <menu view="icons">
+                COM_KAMPINFO_SUBMENU_HITICONS
+                <params>
+                    <menu-quicktask>index.php?option=com_kampinfo&amp;view=icon&amp;layout=edit</menu-quicktask>
+                    <menu-quicktask-title>Icoon toevoegen</menu-quicktask-title>
+                    <menu-quicktask-permission>hiticon.edit</menu-quicktask-permission>
+                </params>
+            </menu>
+        </submenu>
+
+        <!-- Administration Main File Copy Section -->
         <!-- Note the folder attribute: This attribute describes the folder
                 to copy FROM in the package to install therefore files copied
-                in this section are copied from /site/ in the package -->
-        <files folder="site">
+                in this section are copied from /admin/ in the package -->
+        <files folder="admin">
+                <!-- Admin Main File Copy Section -->
+                <filename>access.xml</filename>
+                <filename>config.xml</filename>
                 <filename>index.html</filename>
-                <folder>language</folder>
+                <folder>forms</folder>
+                <folder>services</folder>
+                <folder>sql</folder>
                 <folder>src</folder>
                 <folder>tmpl</folder>
         </files>
- 
-        <media folder="media" destination="com_kampinfo">
-                <filename>index.html</filename>
-                <filename>joomla.asset.json</filename>
-                <folder>images</folder>
-                <folder>css</folder>
-                <folder>js</folder>
-        </media>
- 
-        <administration>
-                <!-- Administration Menu Section -->
-                <menu img="../media/com_kampinfo/images/kampinfo-16x16.png">COM_KAMPINFO_MENU</menu>
-                <submenu>
-                        <menu view="info">com_kampinfo_submenu_info</menu>
 
-                        <menu view="projects">COM_KAMPINFO_SUBMENU_HITPROJECTS</menu>
-                        <menu view="sites">COM_KAMPINFO_SUBMENU_HITSITES</menu>
-                        <menu view="camps">COM_KAMPINFO_SUBMENU_HITCAMPS</menu>
-                        <menu view="icons">COM_KAMPINFO_SUBMENU_HITICONS</menu>
-                </submenu>
-
-                <!-- Administration Main File Copy Section -->
-                <!-- Note the folder attribute: This attribute describes the folder
-                        to copy FROM in the package to install therefore files copied
-                        in this section are copied from /admin/ in the package -->
-                <files folder="admin">
-                        <!-- Admin Main File Copy Section -->
-                        <filename>access.xml</filename>
-                        <filename>config.xml</filename>
-                        <filename>index.html</filename>
-                        <folder>forms</folder>
-                        <folder>services</folder>
-                        <folder>sql</folder>
-                        <folder>src</folder>
-                        <folder>tmpl</folder>
-                </files>
- 
-                <languages folder="admin">
-                        <language tag="en-GB">language/en-GB/en-GB.com_kampinfo.ini</language>
-                        <language tag="en-GB">language/en-GB/en-GB.com_kampinfo.sys.ini</language>
-                        <language tag="nl-NL">language/nl-NL/nl-NL.com_kampinfo.ini</language>
-                        <language tag="nl-NL">language/nl-NL/nl-NL.com_kampinfo.sys.ini</language>
-                </languages>
-        </administration>
+        <languages folder="admin">
+                <language tag="en-GB">language/en-GB/en-GB.com_kampinfo.ini</language>
+                <language tag="en-GB">language/en-GB/en-GB.com_kampinfo.sys.ini</language>
+                <language tag="nl-NL">language/nl-NL/nl-NL.com_kampinfo.ini</language>
+                <language tag="nl-NL">language/nl-NL/nl-NL.com_kampinfo.sys.ini</language>
+        </languages>
+    </administration>
  
 </extension>

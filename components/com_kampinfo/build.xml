@@ -5,6 +5,7 @@
 
     <property name="cfg.prefix" value="com_" />
     <property name="cfg.name" value="kampinfo" />
+    <property name="cfg.metadata.xml" value="${cfg.name}.xml" />
 
     <import file="../../common/build.xml" />
 

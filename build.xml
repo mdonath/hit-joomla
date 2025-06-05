@@ -14,13 +14,16 @@
         <delete dir="${cfg.docker}" />
     </target>
 
-    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_kampinfo, plg_group_cli, plg_kampinfo_cli">
+    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_kampinfo, plg_group_cli, plg_kampinfo_cli, tpl_kampinfopreview">
         <copy todir="${cfg.docker}" flatten="true" verbose="true">
             <fileset dir=".">
                 <filename name="components/**/dist/*.zip" />
             </fileset>
             <fileset dir=".">
                 <filename name="plugins/**/dist/*.zip" />
+            </fileset>
+            <fileset dir=".">
+                <filename name="templates/**/dist/*.zip" />
             </fileset>
         </copy>
     </target>
@@ -57,6 +60,13 @@
          <antcall target="buildAndCopy">
             <param name="cmp.dir" value="plugins/cli" />
             <param name="cmp.name" value="plg_kampinfo_cli" />
+         </antcall>
+    </target>
+
+    <target name="tpl_kampinfopreview" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="templates" />
+            <param name="cmp.name" value="tpl_kampinfopreview" />
          </antcall>
     </target>
 

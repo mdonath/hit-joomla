@@ -6,7 +6,7 @@
     <target name="init">
         <property name="cfg.fullname" value="${cfg.prefix}${cfg.name}" />
 
-        <xmlproperty file="${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+        <xmlproperty file="${cfg.metadata.xml}" collapseAttributes="true" prefix="xml" keepRoot="false" />
         <buildnumber />
         <tstamp>
             <format property="TODAY" pattern="yyyyMMdd" />

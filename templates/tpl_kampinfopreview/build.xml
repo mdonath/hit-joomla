@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="KampInfo Template" default="dist" basedir=".">
+
+    <property name="cfg.prefix" value="tpl_" />
+    <property name="cfg.name" value="kampinfopreview" />
+    <property name="cfg.metadata.xml" value="templateDetails.xml" />
+
+    <import file="../../common/build.xml" />
+
+</project>
