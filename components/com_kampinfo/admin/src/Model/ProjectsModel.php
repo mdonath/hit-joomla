@@ -5,6 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
@@ -13,7 +14,7 @@ use Joomla\Registry\Registry;
 
 class ProjectsModel extends ListModel {
 
-    public function __construct($config = array ()) {
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null) {
         if (empty ($config['filter_fields'])) {
             $config['filter_fields'] = array (
                 'jaar', 'p.jaar',
@@ -21,7 +22,7 @@ class ProjectsModel extends ListModel {
             );
         }
 
-        parent::__construct($config);
+        parent::__construct($config, $factory);
     }
 
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {

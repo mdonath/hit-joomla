@@ -6,6 +6,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
@@ -14,7 +15,7 @@ use Joomla\Registry\Registry;
 
 class SitesModel extends ListModel {
 
-    public function __construct($config = []) {
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null) {
         if (empty ($config['filter_fields'])) {
             $config['filter_fields'] = [
                 'jaar', 'p.jaar',
@@ -24,7 +25,7 @@ class SitesModel extends ListModel {
             ];
         }
 
-        parent::__construct($config);
+        parent::__construct($config, $factory);
     }
 
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {

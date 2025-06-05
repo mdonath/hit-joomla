@@ -29,7 +29,6 @@ class Kamp {
         foreach ($kamp->icoontjes as $icoon) {
             $result .= HTMLHelper::_('icoon.image', $icoon, $size);
         }
-        $result .= 'X';
         return $result;
     }
 
@@ -38,7 +37,7 @@ class Kamp {
         foreach ($kamp->activiteitengebieden as $gebied) {
             $result .= HTMLHelper::_('icoon.activiteitengebied', $gebied->value, $gebied->text);
         }
-        $result .= 'Y';
         return $result;
     }
+
 }

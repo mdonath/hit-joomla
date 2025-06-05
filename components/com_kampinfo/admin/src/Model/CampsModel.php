@@ -6,6 +6,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
@@ -14,9 +15,9 @@ use Joomla\Registry\Registry;
 
 class CampsModel extends ListModel {
 
-    public function __construct($config = array ()) {
-        if (empty ($config['filter_fields'])) {
-            $config['filter_fields'] = array (
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null) {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = [
                 'published',
                 'naam',
                 'plaats',
@@ -25,10 +26,10 @@ class CampsModel extends ListModel {
                 'aantalDeelnemers',
                 'deelnamekosten',
                 'id',
-            );
+            ];
         }
 
-        parent::__construct($config);
+        parent::__construct($config, $factory);
     }
 
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {

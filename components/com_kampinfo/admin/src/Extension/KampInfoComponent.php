@@ -23,10 +23,10 @@ class KampInfoComponent extends MVCComponent implements
     use HTMLRegistryAwareTrait;
 
     public function boot(ContainerInterface $container) {
-        $this->getRegistry()->register('akkoord', new Akkoord());
-        $this->getRegistry()->register('kamp', new Kamp());
-        $this->getRegistry()->register('plaats', new Plaats());
-        $this->getRegistry()->register('icoon', new Icoon());
+        $this->getRegistry()->register('akkoord', new Akkoord(), true);
+        $this->getRegistry()->register('kamp', new Kamp(), true);
+        $this->getRegistry()->register('plaats', new Plaats(), true);
+        $this->getRegistry()->register('icoon', new Icoon(), true);
     }
 
 }

@@ -5,6 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\Registry\Registry;
@@ -12,7 +13,7 @@ use Joomla\Registry\Registry;
 
 class IconsModel extends ListModel {
 
-    public function __construct($config = []) {
+    public function __construct($config = [], ?MVCFactoryInterface $factory = null) {
         if (empty ($config['filter_fields'])) {
             $config['filter_fields'] = [
                 'id',
@@ -21,7 +22,7 @@ class IconsModel extends ListModel {
             ];
         }
 
-        parent::__construct($config);
+        parent::__construct($config, $factory);
     }
 
     protected function populateState($ordering = 'volgorde', $direction = 'asc') {

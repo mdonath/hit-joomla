@@ -34,8 +34,8 @@ final class Kampinfo extends CMSPlugin implements
     }
 
     public function boot(ContainerInterface $container) {
-        $this->getRegistry()->register('kamp', new Kamp());
-        $this->getRegistry()->register('icoon', new Icoon());
+        $this->getRegistry()->register('kamp', new Kamp(), true);
+        $this->getRegistry()->register('icoon', new Icoon(), true);
     }
 
     /*
