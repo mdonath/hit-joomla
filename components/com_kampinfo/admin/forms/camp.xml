@@ -229,7 +229,6 @@
                 label="Subtitel"
                 description="Deze tekst wordt als extra kopje boven de tekst afgedrukt ONDER de naam van het kamp."
                 maxlength="255"
-                required="true"
                 default=""
         />
         <field  name="noteWebsiteTekst"
