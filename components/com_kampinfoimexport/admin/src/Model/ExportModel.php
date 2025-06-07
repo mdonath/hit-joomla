@@ -9,30 +9,22 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 
-class ExportModel extends ListModel {
+use HITScoutingNL\Library\KampInfo\ImportExport\KampInfoExporter;
 
-    const TABLE_PREFIX = 'HITScoutingNL\\Component\\KampInfoImExport\\Administrator\\Table\\';
+
+class ExportModel extends ListModel {
 
     public function getItems() {
         $input = Factory::getApplication()->getInput();
         $jaar = $input->getInt('jaar', 0);
 
         $items = [];
+        try {
+            $exporter = new KampInfoExporter();
 
-        $projectTable = Table::getInstance('HitProjectTable', self::TABLE_PREFIX);
-        if ($jaar == 0) {
-            $items = $projectTable->find([]);
-        } else {
-            $items = $projectTable->find(['jaar' => $jaar]);
-        }
-
-        foreach ($items as $project) {
-            $plaatsTable = Table::getInstance('HitPlaatsTable', self::TABLE_PREFIX);
-            $project->plaatsen = $plaatsTable->find(['hitproject_id' => $project->id]);
-            foreach ($project->plaatsen as $plaats) {
-                $kampTable = Table::getInstance('HitKampTable', self::TABLE_PREFIX);
-                $plaats->kampen = $kampTable->find(['hitsite_id' => $plaats->id]);
-            }
+            $items = $exporter->exportAlles($jaar);
+        } catch (GenericDataException $e) {
+            $app->enqueueMessage("Error {$e}");
         }
 
         return $items;

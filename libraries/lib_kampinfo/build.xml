@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="KampInfo Library" default="dist" basedir=".">
+
+    <property name="cfg.prefix" value="lib_" />
+    <property name="cfg.name" value="kampinfo" />
+    <property name="cfg.metadata.xml" value="lib_kampinfo.xml" />
+
+    <import file="../../common/build.xml" />
+
+</project>

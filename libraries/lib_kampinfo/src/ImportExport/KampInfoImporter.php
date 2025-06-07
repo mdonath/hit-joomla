@@ -1,36 +1,12 @@
 <?php
-namespace HITScoutingNL\Component\KampInfoImExport\Administrator\Common;
+namespace HITScoutingNL\Library\KampInfo\ImportExport;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\GenericDataException;
-use Joomla\CMS\Table\Table;
+use HITScoutingNL\Library\KampInfo\ImportExport\Util;
 
 
-class KampInfoImporterExporter {
-
-    const TABLE_PREFIX = 'HITScoutingNL\\Component\\KampInfoImExport\\Administrator\\Table\\';
-
-    public function exportAll($year = 0) {
-        $items = [];
-
-        $projectTable = Table::getInstance('HitProjectTable', self::TABLE_PREFIX);
-        if ($year == 0) {
-            $items = $projectTable->find([]);
-        } else {
-            $items = $projectTable->find(['jaar' => $year]);
-        }
-
-        foreach ($items as $project) {
-            $plaatsTable = Table::getInstance('HitPlaatsTable', self::TABLE_PREFIX);
-            $project->plaatsen = $plaatsTable->find(['hitproject_id' => $project->id]);
-            foreach ($project->plaatsen as $plaats) {
-                $kampTable = Table::getInstance('HitKampTable', self::TABLE_PREFIX);
-                $plaats->kampen = $kampTable->find(['hitsite_id' => $plaats->id]);
-            }
-        }
-        return $items;
-    }
+class KampInfoImporter {
 
     public function importAlles($fileName) {
         if (!file_exists($fileName)) {
@@ -75,7 +51,7 @@ class KampInfoImporterExporter {
     }
 
     private function importProject($project) {
-        $table = $this->getHitTable('HitProject');
+        $table = Util::getHitTable('Project');
 
         foreach ($project as $key => $value) {
             $table->$key = $value;
@@ -99,7 +75,7 @@ class KampInfoImporterExporter {
     }
 
     private function importPlaats($plaats) {
-        $table = $this->getHitTable('HitPlaats');
+        $table = Util::getHitTable('Plaats');
         foreach ($plaats as $key => $value) {
             $table->$key = $value;
         }
@@ -123,7 +99,7 @@ class KampInfoImporterExporter {
     }
 
     private function importKamp($kamp) {
-        $table = $this->getHitTable('HitKamp');
+        $table = Util::getHitTable('Kamp');
 
         foreach ($kamp as $key => $value) {
             $table->$key = $value;
@@ -137,13 +113,4 @@ class KampInfoImporterExporter {
         unset($kamp);
     }
 
-    private function getHitTable($entity) {
-        $table = Table::getInstance($entity . 'Table', self::TABLE_PREFIX);
-        if (!$table) {
-            throw new GenericDataException("Table '{$entity}' not found!", 500);
-        }
-        return $table;
-    }
-
 }
-?>

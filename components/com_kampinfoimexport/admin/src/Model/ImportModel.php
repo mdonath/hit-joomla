@@ -8,9 +8,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 
-use HITScoutingNL\Component\KampInfoImExport\Administrator\Common\KampInfoImporterExporter;
+use HITScoutingNL\Library\KampInfo\ImportExport\KampInfoImporter;
 
 
 class ImportModel extends AdminModel {
@@ -37,7 +36,7 @@ class ImportModel extends AdminModel {
         $app->enqueueMessage('File: ' . $file);
 
         try {
-            $importer = new KampInfoImporterExporter();
+            $importer = new KampInfoImporter();
 
             $importer->importAlles($file);
             $app->enqueueMessage('Alles geïmporteerd');
@@ -63,87 +62,6 @@ class ImportModel extends AdminModel {
         } catch (GenericDataException $e) {
             $app->enqueueMessage("Error {$e}");
         }
-    }
-
-    private function importProjecten($hit) {
-        foreach ($hit->projects as $project) {
-            $this->importProject($project);
-        }
-    }
-
-    private function importProject($project) {
-        $table = $this->getTable('HitProject');
-        if ($table) {
-            foreach ($project as $key => $value) {
-                $table->$key = $value;
-            }
-            
-            $table->id = null;
-            $table->store();
-            $project->id = $table->id;
-            
-            $this->importPlaatsen($project);
-            unset($table);
-            unset($project);
-        }
-    }
-
-    private function importPlaatsen($project) {
-        foreach ($project->plaatsen as $plaats) {
-            $plaats->hitproject_id = $project->id;
-            $this->importPlaats($plaats);
-        }
-    }
-
-    private function importPlaats($plaats) {
-        $table = $this->getHitTable('HitPlaats');
-        if ($table) {
-            foreach ($plaats as $key => $value) {
-                $table->$key = $value;
-            }
-
-            $table->id = null;
-            $table->asset_id = null;
-            $table->store();
-            $plaats->id = $table->id;
-            
-            $this->importKampen($plaats);
-            unset($table);
-            unset($plaats);
-        }
-    }
-
-    private function importKampen($plaats) {
-        foreach ($plaats->kampen as $kamp) {
-            $kamp->hitsite_id = $plaats->id;
-            $this->importKamp($kamp);
-        }
-    }
-
-    private function importKamp($kamp) {
-        $table = $this->getHitTable('HitKamp');
-        if ($table) {
-            foreach ($kamp as $key => $value) {
-                $table->$key = $value;
-            }
-
-            $table->id = null;
-            $table->asset_id = null;
-            $table->store();
-            $kamp->id = $table->id;
-            unset($table);
-            unset($kamp);
-        }
-    }
-
-    private function getHitTable($entity) {
-        $table = Table::getInstance($entity . 'Table', self::TABLE_PREFIX);
-        if (!$table) {
-            $app = Factory::getApplication();
-            $app->enqueueMessage('Geen Table voor '. $entity. ' gevonden!');
-            return false;
-        }
-        return $table;
     }
 
     private function getUploadedFile($fieldname) {

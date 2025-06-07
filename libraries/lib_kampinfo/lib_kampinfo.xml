@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="library" method="upgrade">
+    <name>KampInfo Library</name>
+    <libraryname>KampInfo</libraryname>
+    <author>Martijn Donath</author>
+    <creationDate>2025-06-06</creationDate>
+    <license>GNU General Public License version 2 or later</license>
+    <version>1.0.0</version>
+    <description>Gemeenschappelijke code tussen alle KampInfo componenten</description>
+    <namespace path="src">HITScoutingNL\Library\KampInfo</namespace>
+    <files>
+        <folder>src</folder>
+    </files>
+</extension>

@@ -1,6 +1,6 @@
 <?php
 
-namespace HITScoutingNL\Component\KampInfoImExport\Administrator\Table;
+namespace HITScoutingNL\Library\KampInfo\ImportExport\Table;
 
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
