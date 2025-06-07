@@ -14,8 +14,18 @@ use Joomla\CMS\Language\Text;
  */
 class MoreinfoField extends NoteField {
 
+    /**
+     * The form field type.
+     * 
+     * @var    string
+     */
     protected $type = 'Moreinfo';
 
+    /**
+     * Method to get the field label markup.
+     *
+     * @return  string  The field label markup.
+     */
     protected function getLabel() {
         if (empty($this->element['label']) && empty($this->element['description'])) {
             return '';
@@ -48,14 +58,5 @@ class MoreinfoField extends NoteField {
 
         return implode('', $html);
     }
-
-    public function getOptions() {
-        $options = KampInfoHelper::getHitIconOptions();
-
-        // Merge any additional options in the XML definition.
-        $options = array_merge($this->getOptionsFromFormDefinition(), $options);
-
-        return $options;
-   }
 
 }

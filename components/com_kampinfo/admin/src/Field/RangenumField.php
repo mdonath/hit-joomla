@@ -11,6 +11,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 class RangenumField extends NumberField {
 
+    /**
+     * The form field type.
+     * 
+     * @var    string
+     */
     protected $type = 'Rangenum';
 
     protected function getInput() {

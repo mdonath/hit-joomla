@@ -15,9 +15,25 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
  */
 class ActivityareaField extends FormField {
 
+    /**
+     * The form field type.
+     * 
+     * @var    string
+     */
     protected $type = 'Activityarea';
+
+    /**
+     * Flag to tell the field to always be in multiple values mode.
+     * 
+     * @var    boolean
+     */
     protected $forceMultiple = true;
 
+    /**
+     * Method to get the field options.
+     *
+     * @return  object[]  The field option objects.
+     */
     protected function getInput() {
         $html = [];
         $class = $this->element['class'] ? ' class="checkboxes '. (string) $this->element['class'] .'"' : ' class="checkboxes"';
@@ -44,16 +60,15 @@ class ActivityareaField extends FormField {
     }
 
     public function getOptions() {
-        $options = KampInfoHelper::getActivityAreaOptions();
-        
         // Merge any additional options in the XML definition.
-        $options = array_merge($this->getOptionsFromFormDefinition(), $options);
-        
-        return $options;
+        return array_merge(
+            $this->getOptionsFromFormDefinition(),
+            KampInfoHelper::getActivityAreaOptions()
+        );
     }
 
-    protected function getOptionsFromFormDefinition() {
-        $options = array();
+    private function getOptionsFromFormDefinition() {
+        $options = [];
 
         foreach ($this->element->children() as $option) {
             // Only add <option /> elements.
@@ -63,8 +78,12 @@ class ActivityareaField extends FormField {
 
             // Create a new option object based on the <option /> element.
             $tmp = HTMLHelper::_(
-                'select.option', (string) $option['value'], trim((string) $option), 'value', 'text',
-                ((string) $option['disabled'] == 'true')
+                'select.option',
+                (string) $option['value'],
+                trim((string) $option),
+                'value',
+                'text',
+                (string) $option['disabled'] == 'true'
             );
 
             // Set some option attributes.
@@ -81,4 +100,5 @@ class ActivityareaField extends FormField {
 
         return $options;
     }
+
 }

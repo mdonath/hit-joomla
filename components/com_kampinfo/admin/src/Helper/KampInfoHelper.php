@@ -5,12 +5,9 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Helper;
 \defined('_JEXEC') or die('Restricted access');
 
 use DateTimeZone;
-use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Object\CMSObject;
+
 
 /**
  * KampInfo component helper.
@@ -18,50 +15,12 @@ use Joomla\CMS\Object\CMSObject;
 abstract class KampInfoHelper {
 
     /**
-     * Get the actions
-     */
-    public static function getActions($entity = 'component', $entityIds = null) {
-        $user = Factory::getUser();
-        $actions = Access::getActionsFromFile(JPATH_ADMINISTRATOR . '/components/com_kampinfo/access.xml', "/access/section[@name='" . $entity . "']/");
-        
-        $result = new CMSObject();
-        if (empty($entityIds)) {
-            foreach ($actions as $action) {
-                $result->set($action->name, $user->authorise($action->name, 'com_kampinfo'));
-            }
-        } else {
-            foreach ($actions as $action) {
-                $result->set($action->name, $user->authorise($action->name, 'com_kampinfo'));
-                if (self::startsWith($action->name, "hit$entity") && !self::endsWith($action->name, 'create')) {
-                    foreach ($entityIds as $entityId) {
-                        $isAuth = $user->authorise($action->name, "com_kampinfo.$entity.$entityId");
-                        $result->set("$action->name.$entityId", $isAuth);
-                        if (!empty($isAuth)) {
-                            $result->set($action->name, $isAuth);
-                        }
-                    }
-                }
-            }
-        }
-
-        echo "<h1>Entity: $entity</h1><ul>";
-        foreach ($result as $k=>$v) {
-            echo "<li>Action: $k: $v</li>";
-        }
-        echo '</ul>';
-        echo "<pre>Entity-ids: ";
-        print_r($entityIds);
-        echo "</pre>";
-
-        return $result;
-    }
-
-    /**
+     * Levert de datum van de eerste HIT dag.
      * 
-     * @param unknown $jaar
-     * @return De dat
+     * @param int $jaar Het jaar waarvan je de eerste HIT dag wil hebben
+     * @return De datum van de eerste HIT dag.
      */
-    public static function eersteHitDag($jaar) { // VRIJDAG DUS
+    public static function eersteHitDag(int $jaar) { // VRIJDAG DUS
         $paasKalender = array(
                     2004 => '09-04-2004'
                 , 2005 => '25-03-2005'
@@ -97,198 +56,45 @@ abstract class KampInfoHelper {
         return DateTime::createFromFormat('d-m-Y', $paasKalender[$jaar]);
     }
 
-    // TODO: WEGGOOIEN?
-    public static function addSubmenu($submenu) {
-        // set some global property
-        $document = Factory::getDocument();
-        $document->addStyleDeclaration('.icon-48-kampinfo ' . '{background-image: url(../media/com_kampinfo/images/kampinfo-48x48.png);}');
-
-        // Show submenu items
-        JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_INFO'), 'index.php?option=com_kampinfo&view=info', $submenu == 'info');
-        
-        if (Factory::getUser()->authorise('hitproject.menu', 'com_kampinfo')) {
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_HITPROJECTS'), 'index.php?option=com_kampinfo&view=hitprojects', $submenu == 'hitprojects');
-        }
-        if (Factory::getUser()->authorise('hitsite.menu', 'com_kampinfo')) {
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_HITSITES'), 'index.php?option=com_kampinfo&view=hitsites', $submenu == 'hitsites');
-        }
-        if (Factory::getUser()->authorise('hitcamp.menu', 'com_kampinfo')) {
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_HITCAMPS'), 'index.php?option=com_kampinfo&view=hitcamps', $submenu == 'hitcamps');
-        }
-        if (Factory::getUser()->authorise('core.admin', 'com_kampinfo')) {
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_HITICONS'), 'index.php?option=com_kampinfo&view=hiticons', $submenu == 'hiticons');
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_IMPORT'), 'index.php?option=com_kampinfo&view=import', $submenu == 'import');
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_DOWNLOADS'), 'index.php?option=com_kampinfo&view=downloads', $submenu == 'downloads');
-            JHtmlSidebar::addEntry(Text::_('COM_KAMPINFO_SUBMENU_REPORTS'), 'index.php?option=com_kampinfo&view=reports', $submenu == 'reports');
-        }
-                
-        // Set the title
-        if ($submenu == 'hitprojects') {
-            $document->setTitle(Text::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'));
-        }
-        elseif ($submenu == 'hitsites') {
-            $document->setTitle(Text::_('COM_KAMPINFO_HITSITES_DOCTITLE'));
-        }
-        elseif ($submenu == 'hitcamps') {
-            $document->setTitle(Text::_('COM_KAMPINFO_HITCAMPS_DOCTITLE'));
-        }
-        elseif ($submenu == 'hiticons') {
-            $document->setTitle(Text::_('COM_KAMPINFO_HITICONS_DOCTITLE'));
-        }
-        elseif ($submenu == 'import') {
-            $document->setTitle(Text::_('COM_KAMPINFO_IMPORT_DOCTITLE'));
-        }
-        elseif ($submenu == 'downloads') {
-            $document->setTitle(Text::_('COM_KAMPINFO_DOWNLOADS_DOCTITLE'));
-        }
-        elseif ($submenu == 'reports') {
-            $document->setTitle("Overzichten");
-        }
-        elseif ($submenu == 'info') {
-            $document->setTitle(Text::_('COM_KAMPINFO_INFO_DOCTITLE'));
-        }
-    }
-
-    public static function getHitActiviteitOptions() {
-        $options = array ();
-
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('c.id As value, concat(c.naam, " (", s.naam, " - ", p.jaar, ")") As text');
-        $query->from('#__kampinfo_hitcamp c');
-
-        $query->select('s.naam as plaats, s.id as hitsite_id');
-        $query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
-        $query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
-        
-        $query->order('p.jaar, s.naam, c.naam');
-
-        // Get the options.
-        $db->setQuery($query);
-
-        $options = $db->loadObjectList();
-
-        return $options;
-    }
-
-
-    public static function getHitProjectOptions() {
-        $options = array ();
-
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('id As value, jaar As text');
-        $query->from('#__kampinfo_hitproject');
-        $query->order('jaar desc');
-
-        // Get the options.
-        $db->setQuery($query);
-
-        $options = $db->loadObjectList();
-
-        return $options;
-    }
-
-    public static function getHitJaarOptions() {
-        $options = array ();
-
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('jaar As value, jaar As text');
-        $query->from('#__kampinfo_hitproject');
-        $query->order('jaar desc');
-
-        // Get the options.
-        $db->setQuery($query);
-
-        $options = $db->loadObjectList();
-
-        return $options;
-    }
-
-    public static function getHitSiteOptions($hitproject_id = null) {
-        $options = array ();
-
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('s.id As value, concat(s.naam, " (", p.jaar,")") As text');
-        $query->from('#__kampinfo_hitsite s');
-        $query->join('LEFT', '#__kampinfo_hitproject AS p ON p.id=s.hitproject_id');
-        if ($hitproject_id != null) {
-            $query->where('s.hitproject_id = ' . (int)($db->escape($hitproject_id)));
-        }
-        $query->order('p.jaar desc, s.naam');
-
-        // Get the options.
-        $db->setQuery($query);
-
-        $options = $db->loadObjectList();
-
-        return $options;
-    }
-
-    public static function getHitIconOptions() {
-        $options = array ();
-
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
-
-        $query->select('bestandsnaam As value, tekst As text, uitleg');
-        $query->from('#__kampinfo_hiticon');
-        $query->where('soort <> "S"');
-        $query->order('volgorde');
-
-        // Get the options.
-        $db->setQuery($query);
-
-        $options = $db->loadObjectList();
-
-        return $options;
-    }
-
     public static function getActivityAreaOptions() {
-        return array (
-            (object) array (
+        return [
+            (object) [
                 "value" => "buitenleven",
                 "text" => "Buitenleven"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "expressie",
                 "text" => "Expressie"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "identiteit",
                 "text" => "Identiteit"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "internationaal",
                 "text" => "Internationaal"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "samenleving",
                 "text" => "Samenleving"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "sportenspel",
                 "text" => "Sport en Spel"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "uitdagend",
                 "text" => "Uitdagende Scoutingtechnieken"
-            ),
-            (object) array (
+            ],
+            (object) [
                 "value" => "veiligengezond",
                 "text" => "Veilig en Gezond"
-            )
-        );
+            ]
+        ];
     }
 
     public static function getHitIconSoortOptions() {
-        return array (
+        return [
                 "?" => "Gewoon",
                 "B" => "Beweging",
                 "I" => "Inschrijven",
@@ -296,7 +102,7 @@ abstract class KampInfoHelper {
                 "A" => "Afstand",
                 "K" => "Koken",
                 "S" => "Systeem"
-        );
+        ];
     }
 
     public static function reverse($date, $metTijd=false) {

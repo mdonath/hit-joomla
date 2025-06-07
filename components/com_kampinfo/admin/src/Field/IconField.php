@@ -4,6 +4,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
 \defined('_JEXEC') or die('Restricted access');
 
+use Joomla\Database\ParameterType;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -16,9 +17,25 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
  */
 class IconField extends FormField {
 
+    /**
+     * The form field type.
+     * 
+     * @var    string
+     */
     protected $type = 'Icon';
+
+    /**
+     * Flag to tell the field to always be in multiple values mode.
+     * 
+     * @var    boolean
+     */
     protected $forceMultiple = true;
 
+    /**
+     * Method to get the field options.
+     *
+     * @return  object[]  The field option objects.
+     */
     protected function getInput() {
         $html = [];
         $class = $this->element['class'] ? ' class="checkboxes ' . (string) $this->element['class'] . '"' : ' class="checkboxes"';
@@ -55,33 +72,30 @@ class IconField extends FormField {
         return implode($html);
     }
 
-
     public function getOptions() {
-        $options = KampInfoHelper::getHitIconOptions();
-        
         // Merge any additional options in the XML definition.
-        $options = array_merge($this->getOptionsFromFormDefinition(), $options);
-        
-        return $options;
+        return array_merge(
+            $this->getOptionsFromFormDefinition(),
+            $this->getHitIconFieldOptions()
+        );
     }
 
-    protected function getOptionsFromFormDefinition()
-    {
-        // Initialize variables.
-        $options = array();
+    private function getOptionsFromFormDefinition() {
+        $options = [];
 
-        foreach ($this->element->children() as $option)
-        {
-
+        foreach ($this->element->children() as $option) {
             // Only add <option /> elements.
-            if ($option->getName() != 'option')
-            {
+            if ($option->getName() != 'option') {
                 continue;
             }
 
             // Create a new option object based on the <option /> element.
             $tmp = HtmlHelper::_(
-                'select.option', (string) $option['value'], trim((string) $option), 'value', 'text',
+                'select.option',
+                (string) $option['value'],
+                trim((string) $option),
+                'value',
+                'text',
                 ((string) $option['disabled'] == 'true')
             );
 
@@ -99,4 +113,30 @@ class IconField extends FormField {
 
         return $options;
     }
+
+    private function getHitIconFieldOptions() {
+        $systeemType = 'S';
+        $db     = $this->getDatabase();
+        $query  = $db->getQuery(true)
+            ->select([
+                $db->quoteName('i.bestandsnaam', 'value'),
+                $db->quoteName('i.tekst', 'text'),
+                $db->quoteName('i.uitleg')
+            ])
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
+            ->where($db->quoteName('i.soort') .' <> :systeem')
+            ->bind(':systeem', $systeemType, ParameterType::STRING)
+            ->order($db->quoteName('i.volgorde'));
+
+        $db->setQuery($query);
+
+        $options = [];
+        try {
+            $options = $db->loadObjectList();
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+        return $options;
+    }
+
 }
