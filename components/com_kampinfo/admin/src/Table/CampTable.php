@@ -7,15 +7,15 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Table;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Table\Table;
-use Joomla\Database\DatabaseDriver;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Event\DispatcherInterface;
 use Joomla\Utilities\ArrayHelper;
 
 
 class CampTable extends Table {
 
-    public function __construct(DatabaseDriver $db) {
-        parent::__construct('#__kampinfo_hitcamp', 'id', $db);
+    public function __construct(DatabaseInterface $db, ?DispatcherInterface $dispatcher = null) {
+        parent::__construct('#__kampinfo_hitcamp', 'id', $db, $dispatcher);
     }
 
     public function bind($array, $ignore = '') {
