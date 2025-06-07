@@ -3,20 +3,17 @@ namespace HITScoutingNL\Plugin\Console\KampInfo\CliCommand;
 
 \defined('_JEXEC') or die;
 
-use Joomla\Console\Command\AbstractCommand;
-use Joomla\Database\DatabaseAwareTrait;
-use Joomla\Database\DatabaseInterface;
-use Joomla\Filter\InputFilter;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-use HITScoutingNL\Component\KampInfoImExport\Administrator\Common\KampInfoImporterExporter;
+use HITScoutingNL\Library\KampInfo\ImportExport\KampInfoImporter;
 
 
 class ImportAllCommand extends AbstractKampInfoCommand {
+
+    public const IMPORT_SUCCESSFUL = 0;
+    public const IMPORT_FAILED = 1;
 
     protected static $defaultName = 'kampinfo:import:all';
 
@@ -25,19 +22,16 @@ class ImportAllCommand extends AbstractKampInfoCommand {
 
         $this->ioStyle->title('Import All');
 
-        $fileName = $this->getStringFromOption('file', 'Please enter the name of the file to import');
+        $fileName = $this->cliInput->getArgument('file');
         
-        $filter = new InputFilter();
-        // TODO: sanitize input
-
         try {
-            $importer = new KampInfoImporterExporter();
+            $importer = new KampInfoImporter();
             $importer->importAlles($fileName);
             $this->ioStyle->success('Imported '. $fileName . '.');
-            return 0;
+            return self::IMPORT_SUCCESSFUL;
         } catch (GenericDataException $e) {
             $this->ioStyle->error($e);
-            return 1;
+            return self::IMPORT_FAILED;
         }
     }
 
@@ -47,7 +41,7 @@ class ImportAllCommand extends AbstractKampInfoCommand {
         <info>php %command.full_name%</info>
         EOF;
         
-        $this->addOption('file', null, InputOption::VALUE_REQUIRED, 'Name of data file');
+        $this->addArgument('file', InputArgument::REQUIRED, 'Name of data file');
 
         $this->setDescription('Imports data into KampInfo');
         $this->setHelp($help);
