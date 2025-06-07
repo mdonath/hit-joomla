@@ -7,6 +7,8 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Table;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Asset;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\Utilities\ArrayHelper;
@@ -39,7 +41,7 @@ class CampTable extends Table {
 
     protected function _getAssetParentId(Table $table = NULL, $id = NULL) {
         // We will retrieve the parent-asset from the Asset-table
-        $assetParent = Table::getInstance('Asset');
+        $assetParent = new Asset($this->getDbo());
         // Default: if no asset-parent can be found we take the global asset
         $assetParentId = $assetParent->getRootId();
 
@@ -101,7 +103,7 @@ class CampTable extends Table {
         }
 
         // Get an instance of the table
-        $table = Table::getInstance('CampTable', __NAMESPACE__ . '\\', ['dbo' => $this->_db]);
+        $table = new CampTable($this->getDbo());
 
         // For all keys
         foreach ($pks as $pk) {
@@ -140,7 +142,7 @@ class CampTable extends Table {
         }
 
         // Get an instance of the table
-        $table = Table::getInstance('CampTable', __NAMESPACE__ . '\\', ['dbo' => $this->_db]);
+        $table = new CampTable($this->getDbo());
 
         // For all keys
         foreach ($pks as $pk) {

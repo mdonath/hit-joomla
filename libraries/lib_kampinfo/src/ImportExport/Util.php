@@ -3,18 +3,19 @@ namespace HITScoutingNL\Library\KampInfo\ImportExport;
 
 \defined('_JEXEC') or die;
 
+
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 
 
 class Util {
 
-    public static function getHitTable($entity) {
-        $table = Table::getInstance("Hit{$entity}Table", 'HITScoutingNL\\Library\\KampInfo\\ImportExport\\Table\\');
-        if (!$table) {
-            throw new GenericDataException("Table '{$entity}' not found!", 500);
-        }
-        return $table;
+    public static function getHitTable(string $entity) {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tableName = "HITScoutingNL\\Library\\KampInfo\\ImportExport\\Table\\Hit{$entity}Table";
+        return new $tableName($db);
     }
 
 }
