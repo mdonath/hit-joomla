@@ -26,11 +26,9 @@ class ProjectsModel extends ListModel {
     }
 
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {
+        // Filter op jaar/project
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
-        
-        $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
-        $this->setState('filter.jaar', $jaar);
         
         parent::populateState($ordering, $direction);
     }
@@ -42,23 +40,24 @@ class ProjectsModel extends ListModel {
     }
 
     protected function getListQuery() {
-        $db = Factory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('p.*');
-        $query->from('#__kampinfo_hitproject p');
+        $db = $this->getDatabase();
+        $query = $db->getQuery(true)
+            ->select('p.*')
+            ->from($db->quoteName('#__kampinfo_hitproject', 'p'));
 
+        // Filter op jaar
         $jaar = $this->getState('filter.search');
         if (is_numeric($jaar)) {
             $jaar = (int) $jaar;
             $query
-                -> where('p.jaar = :jaar')
-                -> bind(':jaar', $jaar, ParameterType::INTEGER);
+                ->where($db->quoteName('p.jaar') . ' = :jaar')
+                ->bind(':jaar', $jaar, ParameterType::INTEGER);
         }
         
-        // ordering clause
-        $listOrder = $this->state->get('list.ordering', 'p.jaar');
-        $listDirn = $this->state->get('list.direction', 'desc');
-        $query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
+        // Sortering
+        $orderCol = $this->state->get('list.ordering', 'p.jaar');
+        $orderDirn = $this->state->get('list.direction', 'DESC');
+        $query->order($db->quoteName($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }

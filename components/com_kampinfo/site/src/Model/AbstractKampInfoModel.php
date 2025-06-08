@@ -18,13 +18,13 @@ use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 abstract class AbstractKampInfoModel extends BaseDatabaseModel {
 
     protected function getHitProject($projectId) {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('*')
-            -> from($db->quoteName('#__kampinfo_hitproject', 'p'))
-            -> where('(p.id = :projectId)')
-            -> bind(':projectId', $projectId, ParameterType::INTEGER)
+            ->select('*')
+            ->from($db->quoteName('#__kampinfo_hitproject', 'p'))
+            ->where($db->quoteName('p.id') .' = :projectId')
+            ->bind(':projectId', $projectId, ParameterType::INTEGER)
         ;
 
         try {
@@ -37,16 +37,18 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getHitPlaatsen($projectId) {
-        $db = Factory::getDBO();
+        $db = $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('*')
-            -> from($db->quoteName('#__kampinfo_hitsite', 's'))
-            -> where('s.hitproject_id = :projectId')
-            -> bind(':projectId', $projectId, ParameterType::INTEGER)
-            -> where('s.published = 1')
-            -> where('s.akkoordHitPlaats = 1')
-            -> order('s.naam')
+            ->select('*')
+            ->from($db->quoteName('#__kampinfo_hitsite', 's'))
+            ->where([
+                $db->quoteName('s.published'). ' = 1',
+                $db->quoteName('s.akkoordHitPlaats') .' = 1',
+                $db->quoteName('s.hitproject_id') . ' = :projectId',
+            ])
+            ->bind(':projectId', $projectId, ParameterType::INTEGER)
+            ->order($db->quoteName('s.naam'))
         ;
 
         try {
@@ -58,18 +60,18 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getHitPlaats($hitsiteId) {
-        $db = Factory::getDBO();
+        $db = $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('s.*, p.jaar')
-            -> from($db->quoteName('#__kampinfo_hitsite', 's'))
-            -> join(
+            ->select('s.*, p.jaar')
+            ->from($db->quoteName('#__kampinfo_hitsite', 's'))
+            ->join(
                 'LEFT',
                 $db->quoteName('#__kampinfo_hitproject', 'p'),
                 $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id')
             )
-            -> where('s.id = :hitsiteId')
-            -> bind(':hitsiteId', $hitsiteId)
+            ->where($db->quoteName('s.id') .' = :hitsiteId')
+            ->bind(':hitsiteId', $hitsiteId, ParameterType::INTEGER)
         ;
 
         try {
@@ -82,17 +84,23 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getHitKampen($hitsiteId, $iconenLijst) {
-        $db = Factory::getDBO();
+        $db = $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('*')
-            -> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
-            -> where('c.hitsite_id = :hitsiteId')
-            -> bind(':hitsiteId', $hitsiteId, ParameterType::INTEGER)
-            -> where('c.published = 1')
-            -> where('c.akkoordHitKamp = 1')
-            -> where('c.akkoordHitPlaats = 1')
-            -> order('c.minimumLeeftijd, c.maximumLeeftijd, c.naam')
+            ->select('*')
+            ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            ->where([
+                $db->quoteName('c.published') . ' = 1',
+                $db->quoteName('c.akkoordHitKamp') . ' = 1',
+                $db->quoteName('c.akkoordHitPlaats') . ' = 1',
+                $db->quoteName('c.hitsite_id') . ' = :hitsiteId',
+            ])
+            ->bind(':hitsiteId', $hitsiteId, ParameterType::INTEGER)
+            ->order([
+                $db->quoteName('c.minimumLeeftijd'),
+                $db->quoteName('c.maximumLeeftijd'),
+                $db->quoteName('c.naam'),
+            ])
         ;
 
         try {
@@ -111,11 +119,16 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getIconenLijst() {
-        $db = Factory::getDBO();
+        $db = $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam, i.tekst, i.volgorde, i.soort')
-            -> from($db->quoteName('#__kampinfo_hiticon', 'i'))
+            ->select([
+                $db->quoteName('i.bestandsnaam'),
+                $db->quoteName('i.tekst'),
+                $db->quoteName('i.volgorde'),
+                $db->quoteName('i.soort'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
         ;
 
         try {
@@ -166,15 +179,15 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         return $date;
         // $soort = 'INSC';
 
-        // $db = Factory::getDBO();
+        // $db = $db = $this->getDatabase();
         
         // $query = $db->getQuery(true)
-        //     -> select('max(bijgewerktOp) as bijgewerktOp')
-        //     -> from($db->quoteName('#__kampinfo_downloads', 'd'))
-        //     -> where('d.jaar = :jaar')
-        //     -> bind(':jaar', $jaar)
-        //     -> where('d.soort = :soort')
-        //     -> bind(':soort', $soort)
+        //     ->select('max(bijgewerktOp) as bijgewerktOp')
+        //     ->from($db->quoteName('#__kampinfo_downloads', 'd'))
+        //     ->where('d.jaar = :jaar')
+        //     ->bind(':jaar', $jaar)
+        //     ->where('d.soort = :soort')
+        //     ->bind(':soort', $soort)
         // ;
 
         // try {

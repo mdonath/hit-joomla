@@ -33,13 +33,13 @@ class HtmlView extends BaseHtmlView {
         $json = json_encode($this->project);
 
         $document->getWebAssetManager()
-            -> useStyle('com_kampinfo-hitkiezer')
-            -> useScript('com_kampinfo-jquery-cookies')
-            -> addInlineScript("var hit = $json")
-            -> useScript('com_kampinfo-common')
-            -> useScript('com_kampinfo-hitkiezer')
-            -> addInlineScript('kampinfoConfig.iconFolderLarge = "'.URI::root().$iconFolderLarge . '";')
-            -> addInlineScript('kampinfoConfig.iconExtension="'. $iconExtension .'";')
+            ->useStyle('com_kampinfo-hitkiezer')
+            ->useScript('com_kampinfo-jquery-cookies')
+            ->addInlineScript("var hit = $json")
+            ->useScript('com_kampinfo-common')
+            ->useScript('com_kampinfo-hitkiezer')
+            ->addInlineScript('kampinfoConfig.iconFolderLarge = "'.URI::root().$iconFolderLarge . '";')
+            ->addInlineScript('kampinfoConfig.iconExtension="'. $iconExtension .'";')
         ;
 
         return parent::display($tpl);

@@ -28,20 +28,40 @@ class ActiviteitModel extends AbstractKampInfoModel {
     }
 
     private function getHitKampById($hitcampId) {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('c.*')
-            -> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
-            -> where('c.id = :hitcampId')
-            -> bind(':hitcampId', $hitcampId)
+            ->select('c.*')
+            ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            ->where($db->quoteName('c.id') . ' = :hitcampId')
+            ->bind(':hitcampId', $hitcampId)
 
-            -> select($db->quoteName('s.naam', 'plaats'))
-            -> select($db->quoteName('s.id', 'hitsite_id'))
-            -> join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id = s.id')
+            ->select([
+                $db->quoteName('s.naam', 'plaats'),
+                $db->quoteName('s.id', 'hitsite_id')
+            ])
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitsite', 's'),
+                $db->quoteName('c.hitsite_id') .' = '. $db->quoteName('s.id')
+            )
 
-            -> select("p.jaar as jaar, p.id as hitproject_id, p.inschrijvingStartdatum as startInschrijving, p.inschrijvingEinddatum as eindInschrijving, IF(c.isouderkind,p.ouderkind,'') AS ouderkind ")
-            -> join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id = p.id')
+            ->select([
+                $db->quoteName('p.jaar', 'jaar'),
+                $db->quoteName('p.id', 'hitproject_id'),
+                $db->quoteName('p.inschrijvingStartdatum', 'startInschrijving'),
+                $db->quoteName('p.inschrijvingEinddatum', 'eindInschrijving'),
+                'IF('.
+                    $db->quoteName('c.isouderkind') .
+                    ',' .
+                    $db->quoteName('p.ouderkind') .
+                    ',' .
+                    $db->quote('') .
+                ') AS ouderkind'
+            ])
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id')
+            )
         ;
 
         try {
@@ -68,15 +88,25 @@ class ActiviteitModel extends AbstractKampInfoModel {
      * @param $namen - comma separated string
      */
     public function createIcons($namen) {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
-        $values = explode(',', $namen);
+        $values = implode(
+            ',',
+            array_map(
+                fn($n) => $db->quote($n),
+                explode(',', $namen)
+            )
+        );
 
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam, i.tekst, i.volgorde')
-            -> from($db->quoteName('#__kampinfo_hiticon', 'i'))
-            -> where($db->quoteName('i.bestandsnaam') .' IN (' . implode(',', array_map(fn($n) => $db->quote($n), $values)) . ')')
-            -> order('i.volgorde')
+            ->select([
+                $db->quoteName('i.bestandsnaam'),
+                $db->quoteName('i.tekst'),
+                $db->quoteName('i.volgorde'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
+            ->where($db->quoteName('i.bestandsnaam') .' IN (' . $values . ')')
+            ->order('i.volgorde')
         ;
         
         try {

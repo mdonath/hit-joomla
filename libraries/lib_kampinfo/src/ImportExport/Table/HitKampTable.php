@@ -2,14 +2,16 @@
 
 namespace HITScoutingNL\Library\KampInfo\ImportExport\Table;
 
-use Joomla\Database\DatabaseDriver;
-
 defined('_JEXEC') or die('Restricted access');
+
+use Joomla\Database\DatabaseInterface;
+use Joomla\Event\DispatcherInterface;
+
 
 class HitKampTable extends AbstractHitTable {
 
-    function __construct(DatabaseDriver $db) {
-        parent::__construct('#__kampinfo_hitcamp', $db);
+    function __construct(DatabaseInterface $db, ?DispatcherInterface $dispatcher = null) {
+        parent::__construct('#__kampinfo_hitcamp', $db, $dispatcher);
         $this->setColumnAlias('title', 'naam');
     }
 

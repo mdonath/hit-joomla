@@ -33,9 +33,11 @@ class CampsModel extends ListModel {
     }
 
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {
+        // Filter op naam van kamp
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
         
+        // Filter op jaar/project
         $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
         if ($jaar === '') {
             // gebruik huidige actieve jaar
@@ -46,77 +48,93 @@ class CampsModel extends ListModel {
         }
         $this->setState('filter.jaar', $jaar);
 
+        // Filter op plaats
         $plaats = $this->getUserStateFromRequest($this->context . '.filter.plaats', 'filter_plaats', '', 'string');
         if ($plaats == '-1') {
-            $plaats == "";
+            $plaats = '';
         }
         $this->setState('filter.plaats', $plaats);
 
+        // Filter op published
         $state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
         $this->setState('filter.published', $state);
         
+        // Sortering
         parent::populateState($ordering, $direction);
     }
 
     protected function getStoreId($id = '') {
         $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.jaar');
+        $id .= ':' . $this->getState('filter.plaats');
+        $id .= ':' . $this->getState('filter.published');
 
         return parent::getStoreId($id);
     }
 
     protected function getListQuery() {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
-        $query = $db->getQuery(true);
-        $query->select('c.*');
-        $query->from('#__kampinfo_hitcamp c');
+        $query = $db->getQuery(true)
+            ->select('c.*')
+            ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
 
-        $query->select('s.naam as plaats');
-        $query->join('LEFT', '#__kampinfo_hitsite AS s ON c.hitsite_id=s.id');
+            ->select($db->quoteName('s.naam', 'plaats'))
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitsite', 's'),
+                $db->quoteName('c.hitsite_id') .' = '. $db->quoteName('s.id')
+            )
+            ->select($db->quoteName('p.jaar', 'jaar'))
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id')
+            );
 
-        $query->select('p.jaar as jaar');
-        $query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
-
+        // Filter op naam van kamp
         $filterSearch = $this->getState('filter.search');
         if (!empty ($filterSearch)) {
             $filterSearch = '%' . $filterSearch . '%';
             $query
-                -> where('(c.naam LIKE :naam)')
-                -> bind(':naam', $filterSearch);
+                ->where($db->quoteName('c.naam') . ' LIKE :naam')
+                ->bind(':naam', $filterSearch);
         }
+        
+        // Filter op jaar/project
         $filterJaar = $this->getState('filter.jaar');
-        if (!empty ($filterJaar) and $filterJaar != "-1") {
+        if (!empty ($filterJaar) && $filterJaar != '-1') {
             $filterJaar = (int) $filterJaar;
             $query
-                -> where('(p.id = :jaar)')
-                -> bind(':jaar', $filterJaar, ParameterType::INTEGER);
+                ->where($db->quoteName('p.id') . ' = :jaar')
+                ->bind(':jaar', $filterJaar, ParameterType::INTEGER);
         }
 
-        // Alleen als filterPlaats en filterJaar kloppen met elkaar
+        // Filter  op plaats (alleen als filterPlaats en filterJaar kloppen met elkaar)
         $filterPlaats = $this->getState('filter.plaats');
-        if (!empty ($filterPlaats) and ($filterPlaats != "-1")) {
+        if (!empty ($filterPlaats) && ($filterPlaats != '-1')) {
             $filterPlaats = (int) $filterPlaats;
             $query
-                ->where('(c.hitsite_id = :plaats_id)')
+                ->where($db->quoteName('c.hitsite_id') . ' = :plaats_id')
                 ->bind(':plaats_id', $filterPlaats, ParameterType::INTEGER);
         }
 
+        // Filter op published
         $filterPublished = $this->getState('filter.published');
         if (is_numeric($filterPublished)) {
             $filterPublished = (int) $filterPublished;
             $query
-                -> where('(c.published = :published)')
-                -> bind(':published', $filterPublished, ParameterType::INTEGER);
+                ->where($db->quoteName('c.published') . ' = :published')
+                ->bind(':published', $filterPublished, ParameterType::INTEGER);
         } elseif ($filterPublished === '') {
-            $query->where('(c.published IN (0,1))');
+            $query->where($db->quoteName('c.published') .' IN (0,1)');
         }
 
-        $listOrder = $this->getState('list.ordering', 'jaar');
-        $listDirn = $this->getState('list.direction', 'asc');
-        if ($listOrder === 'plaats') {
-            $listOrder = 's.naam';
+        // Sortering
+        $orderCol = $this->getState('list.ordering', 'jaar');
+        $orderDirn = $this->getState('list.direction', 'ASC');
+        if ($orderCol === 'plaats') {
+            $orderCol = 's.naam';
         }
-        $query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
+        $query->order($db->quoteName($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }

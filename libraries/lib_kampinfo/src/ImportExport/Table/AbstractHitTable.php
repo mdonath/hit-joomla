@@ -2,34 +2,37 @@
 
 namespace HITScoutingNL\Library\KampInfo\ImportExport\Table;
 
-use Joomla\CMS\Table\Table;
-use Joomla\Database\DatabaseDriver;
-
 defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Event\DispatcherInterface;
+
 
 abstract class AbstractHitTable extends Table {
 
-    function __construct($table, DatabaseDriver $db) {
-        parent::__construct($table, 'id', $db);
+    function __construct($table, DatabaseInterface $db, ?DispatcherInterface $dispatcher = null) {
+        parent::__construct($table, 'id', $db, $dispatcher);
     }
 
     public function find($options = [], $sortOrder = 'naam') {
+        $db = $this->getDbo();
         $where = ['1=1'];
 
         foreach ($options as $col => $val) {
-            $where[] = $col . ' = ' . $this->getDbo()->quote($val);
+            $where[] = $db->quoteName($col) . ' = ' . $db->quote($val);
         }
 
-        $query = $this->getDbo()->getQuery(true)
-            -> select('*')
-            -> from($this->getDbo()->quoteName($this->getTableName()))
-            -> where(implode(' AND ', $where))
-            -> order($sortOrder . ' ASC')
+        $query = $db->getQuery(true)
+            ->select('*')
+            ->from($db->quoteName($this->getTableName()))
+            ->where(implode(' AND ', $where))
+            ->order($db->quoteName($sortOrder) . ' ASC')
         ;
 
-        $this->getDbo()->setQuery($query);
+        $db->setQuery($query);
 
-        return $this->getDbo()->loadObjectList();
+        return $db->loadObjectList();
     }
 
 }

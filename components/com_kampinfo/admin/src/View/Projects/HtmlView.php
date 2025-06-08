@@ -58,20 +58,20 @@ class HtmlView extends BaseHtmlView {
 
         if ($canDo->get('hitproject.edit')) {
             $toolbar
-                -> edit('project.edit')
-                -> listCheck(true);
+                ->edit('project.edit')
+                ->listCheck(true);
         }
 
         if ($canDo->get('hitproject.delete')) {
             $toolbar
-                -> delete('projects.delete')
-                -> message('JGLOBAL_CONFIRM_DELETE')
-                -> listCheck(true);
+                ->delete('projects.delete')
+                ->message('JGLOBAL_CONFIRM_DELETE')
+                ->listCheck(true);
         }
 
         if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
-
     }
+
 }

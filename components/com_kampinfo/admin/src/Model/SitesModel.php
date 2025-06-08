@@ -31,21 +31,26 @@ class SitesModel extends ListModel {
     protected function populateState($ordering = 'p.jaar', $direction = 'desc') {
         $this->setState('params', ComponentHelper::getParams('com_kampinfo'));
 
-        // $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-        // $this->setState('filter.search', $search);
-        
-        // $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
-        // if ($state === '') {
-        //   // gebruik huidige actieve jaar
-        //   $state = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
-        //   // update filter op het scherm
-        //   $app->setUserState($this->context . '.filter.jaar', $state);
-        // }
-        // $this->setState('filter.jaar', $jaar);
+        // Filter op naam van plaats
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-        // $state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
-        // $this->setState('filter.published', $state);
-        
+        // Filter op jaar/project
+        $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
+        if ($jaar === '') {
+          // gebruik huidige actieve jaar
+          $jaar = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
+          // update filter op het scherm
+          $app = Factory::getApplication();
+          $app->setUserState($this->context . '.filter.jaar', $jaar);
+        }
+        $this->setState('filter.jaar', $jaar);
+
+        // Filter op published
+        $state = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '', 'string');
+        $this->setState('filter.published', $state);
+
+        // Sortering
         parent::populateState($ordering, $direction);
     }
 
@@ -58,44 +63,57 @@ class SitesModel extends ListModel {
     }
 
     protected function getListQuery() {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
-        $query = $db->getQuery(true);
-        $query->select('s.id,s.hitproject_id,s.naam,s.published,s.akkoordHitPlaats,s.hitCourantTekst,s.contactPersoonNaam,s.contactPersoonEmail,s.contactPersoonTelefoon,s.projectcode');
-        $query->from('#__kampinfo_hitsite s');
-
-        $query->select('p.jaar as jaar');
-        $query->join('LEFT', '#__kampinfo_hitproject AS p ON s.hitproject_id=p.id');
+        $query = $db->getQuery(true)
+            ->select([
+                $db->quoteName('s.id'),
+                $db->quoteName('s.hitproject_id'),
+                $db->quoteName('s.naam'),
+                $db->quoteName('s.published'),
+                $db->quoteName('s.akkoordHitPlaats'),
+                $db->quoteName('s.hitCourantTekst'),
+                $db->quoteName('s.contactPersoonNaam'),
+                $db->quoteName('s.contactPersoonEmail'),
+                $db->quoteName('s.contactPersoonTelefoon'),
+                $db->quoteName('s.projectcode'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hitsite', 's'))
+            ->select($db->quoteName('p.jaar', 'jaar'))
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id'))
+        ;
 
         $filterSearch = $this->getState('filter.search');
         if (!empty ($filterSearch)) {
             $filterSearch = '%' . $filterSearch . '%';
             $query
-                -> where('(s.naam LIKE :naam)')
-                -> bind(':naam', $filterSearch);
+                ->where($db->quoteName('s.naam') . ' LIKE :naam')
+                ->bind(':naam', $filterSearch);
         }
 
         $filterJaar = $this->getState('filter.jaar');
-        if (!empty ($filterJaar) and ($filterJaar != "-1")) {
+        if (is_numeric($filterJaar) && ($filterJaar !== '-1')) {
             $filterJaar = (int) $filterJaar;
             $query
-                -> where('(p.id = :jaar)')
-                -> bind(':jaar', $filterJaar, ParameterType::INTEGER);
+                ->where($db->quoteName('p.id') . ' = :jaar')
+                ->bind(':jaar', $filterJaar, ParameterType::INTEGER);
         }
 
         $filterPublished = $this->getState('filter.published');
         if (is_numeric($filterPublished)) {
             $filterPublished = (int) $filterPublished;
             $query
-                -> where('(s.published = :published)')
-                -> bind(':published', $filterPublished, ParameterType::INTEGER);
-        } elseif ($filterPublished === '') {
-            $query->where('(s.published IN (0,1))');
+                ->where($db->quoteName('s.published') . ' = :published')
+                ->bind(':published', $filterPublished, ParameterType::INTEGER);
+        } elseif ($filterPublished == '') {
+            $query->where($db->quoteName('s.published') . ' IN (0,1)');
         }
 
-        $listOrder = $this->state->get('list.ordering', 'p.jaar');
-        $listDirn = $this->state->get('list.direction', 'desc');
-        $query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
+        $orderCol = $this->state->get('list.ordering', 'p.jaar');
+        $orderDirn = $this->state->get('list.direction', 'desc');
+        $query->order($db->quoteName($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }

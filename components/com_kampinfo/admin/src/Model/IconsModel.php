@@ -26,12 +26,15 @@ class IconsModel extends ListModel {
     }
 
     protected function populateState($ordering = 'volgorde', $direction = 'asc') {
+        // Filter op (deel van) bestandsnaam en/of uitleg
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
         
-        $jaar = $this->getUserStateFromRequest($this->context . '.filter.jaar', 'filter_jaar', '', 'string');
+        // Filter op soort
+        $jaar = $this->getUserStateFromRequest($this->context . '.filter.soort', 'filter_soort', '', 'string');
         $this->setState('filter.soort', $jaar);
         
+        // Sortering
         parent::populateState($ordering, $direction);
     }
 
@@ -42,31 +45,33 @@ class IconsModel extends ListModel {
     }
 
     protected function getListQuery() {
-        $db = Factory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('i.*');
-        $query->from('#__kampinfo_hiticon i');
+        $db = $this->getDatabase();
+        $query = $db->getQuery(true)
+            ->select('i.*')
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'));
 
+        // Filter op (deel van) bestandsnaam en/of uitleg
         $filterSearch = $this->getState('filter.search');
         if (!empty ($filterSearch)) {
             $term = '%' . $filterSearch . '%';
             $query
-                -> where('(i.bestandsnaam LIKE :term1) OR (i.tekst LIKE :term2)')
-                -> bind(':term1', $term)
-                -> bind(':term2', $term);
+                ->where('('. $db->quoteName('i.bestandsnaam') .' LIKE :term1) OR ('. $db->quoteName('i.tekst'). ' LIKE :term2)')
+                ->bind(':term1', $term)
+                ->bind(':term2', $term);
         }
 
+        // Filter op soort
         $filterSoort = $this->getState('filter.soort');
         if (!empty ($filterSoort) && $filterSoort != '-1') {
             $query
-                -> where('(i.soort = :soort)')
-                -> bind(':soort', $filterSoort);
+                ->where($db->quoteName('i.soort') .' = :soort')
+                ->bind(':soort', $filterSoort);
         }
 
-        // ordering clause
-        $listOrder = $this->state->get('list.ordering', 'p.jaar');
-        $listDirn = $this->state->get('list.direction', 'desc');
-        $query->order($db->escape($listOrder) . ' ' . $db->escape($listDirn));
+        // Sortering
+        $orderCol = $this->state->get('list.ordering', 'p.jaar');
+        $orderDirn = $this->state->get('list.direction', 'desc');
+        $query->order($db->quoteName($orderCol) . ' ' . $db->escape($orderDirn));
 
         return $query;
     }

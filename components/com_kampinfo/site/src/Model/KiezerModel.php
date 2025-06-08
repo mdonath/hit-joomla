@@ -37,11 +37,15 @@ class KiezerModel extends AbstractKampInfoModel {
     }
 
     private function getIconenLijstJSON() {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select('i.volgorde, i.bestandsnaam, i.tekst')
-            -> from('#__kampinfo_hiticon i')
+            ->select([
+                $db->quoteName('i.volgorde'),
+                $db->quoteName('i.bestandsnaam'),
+                $db->quoteName('i.tekst'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
         ;
 
         try {
@@ -53,39 +57,39 @@ class KiezerModel extends AbstractKampInfoModel {
     }
 
     private function getHitKampenJSON($hitsiteId, $iconenLookup) {
-        $db = Factory::getDBO();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            -> select([
-                'c.naam',
-                'c.shantiFormuliernummer',
-                'c.minimumLeeftijd',
-                'c.maximumLeeftijd',
-                'c.deelnamekosten',
-                'c.minimumAantalDeelnemers',
-                'c.maximumAantalDeelnemers',
-                'c.aantalDeelnemers',
-                'c.gereserveerd',
-                'c.subgroepsamenstellingMinimum',
-                'c.aantalSubgroepen',
-                'c.maximumAantalSubgroepjes',
-                'c.icoontjes',
-                'c.margeAantalDagenTeJong',
-                'c.margeAantalDagenTeOud',
-                'c.startDatumTijd',
-                'c.eindDatumTijd',
-                'c.isouderkind',
-                'c.minimumLeeftijdOuder',
-                'c.maximumLeeftijdOuder'
+            ->select([
+                $db->quoteName('c.naam'),
+                $db->quoteName('c.shantiFormuliernummer'),
+                $db->quoteName('c.minimumLeeftijd'),
+                $db->quoteName('c.maximumLeeftijd'),
+                $db->quoteName('c.deelnamekosten'),
+                $db->quoteName('c.minimumAantalDeelnemers'),
+                $db->quoteName('c.maximumAantalDeelnemers'),
+                $db->quoteName('c.aantalDeelnemers'),
+                $db->quoteName('c.gereserveerd'),
+                $db->quoteName('c.subgroepsamenstellingMinimum'),
+                $db->quoteName('c.aantalSubgroepen'),
+                $db->quoteName('c.maximumAantalSubgroepjes'),
+                $db->quoteName('c.icoontjes'),
+                $db->quoteName('c.margeAantalDagenTeJong'),
+                $db->quoteName('c.margeAantalDagenTeOud'),
+                $db->quoteName('c.startDatumTijd'),
+                $db->quoteName('c.eindDatumTijd'),
+                $db->quoteName('c.isouderkind'),
+                $db->quoteName('c.minimumLeeftijdOuder'),
+                $db->quoteName('c.maximumLeeftijdOuder'),
             ])
-            -> from('#__kampinfo_hitcamp c')
-            -> where('c.hitsite_id = :hitsiteId')
-            -> bind(':hitsiteId', $hitsiteId)
-            -> where('c.published = 1')
-            -> where('c.akkoordHitKamp = 1')
-            -> where('c.akkoordHitPlaats = 1')
-            -> where('c.geannuleerd <> 1')
-            -> order('c.naam')
+            ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            ->where($db->quoteName('c.hitsite_id'). ' = :hitsiteId')
+            ->bind(':hitsiteId', $hitsiteId)
+            ->where($db->quoteName('c.published') . ' = 1')
+            ->where($db->quoteName('c.akkoordHitKamp') . ' = 1')
+            ->where($db->quoteName('c.akkoordHitPlaats') . ' = 1')
+            ->where($db->quoteName('c.geannuleerd') . ' <> 1')
+            ->order($db->quoteName('c.naam'))
         ;
 
         try {

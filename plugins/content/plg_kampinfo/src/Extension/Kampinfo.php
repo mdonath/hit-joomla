@@ -11,8 +11,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Database\DatabaseAwareTrait;
-use Joomla\Registry\Registry;
+use Joomla\Database\ParameterType;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Registry\Registry;
 use Psr\Container\ContainerInterface;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
@@ -137,10 +138,11 @@ final class Kampinfo extends CMSPlugin implements
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
 
+        $db = $this->getDatabase();
         $query = $this->createBaseQuery($config);
         $query
-            -> where('s.naam = :plaats')
-            -> bind(':plaats', $config['plaats'])
+            ->where($db->quoteName('s.naam') . ' = :plaats')
+            ->bind(':plaats', $config['plaats'])
         ;
         $this->zetOpVolgorde($query, $config);
 
@@ -210,61 +212,70 @@ final class Kampinfo extends CMSPlugin implements
     private function createBaseQuery($config) {
         $db    = $this->getDatabase();
         $query = $db->getQuery(true)
-            -> select('p.jaar')
-            -> select('s.id as plaatsId')
-            -> select('s.naam as plaats')
-            -> select('c.id as kampId')
-            -> select('c.naam as kamp')
-            -> select('c.minimumLeeftijd as minl, c.maximumLeeftijd as maxl')
-            -> select('c.icoontjes')
-            -> select('c.hitCourantTekst as hitcourant')
-            -> select('c.webadresFoto1 as foto')
+            ->select([
+                $db->quoteName('p.jaar'),
+                $db->quoteName('s.id', 'plaatsId'),
+                $db->quoteName('s.naam', 'plaats'),
+                $db->quoteName('c.id', 'kampId'),
+                $db->quoteName('c.naam', 'kamp'),
+                $db->quoteName('c.minimumLeeftijd', 'minl'),
+                $db->quoteName('c.maximumLeeftijd', 'maxl'),
+                $db->quoteName('c.icoontjes'),
+                $db->quoteName('c.hitCourantTekst', 'hitcourant'),
+                $db->quoteName('c.webadresFoto1', 'foto'),
 
-            -> select('c.gereserveerd')
-            -> select('c.maximumAantalDeelnemers')
-            -> select('c.aantalDeelnemers')
-            -> select('c.maximumAantalSubgroepjes')
-
-            -> from($db->quoteName('#__kampinfo_hitcamp', 'c'))
-            -> join('LEFT', $db->quoteName('#__kampinfo_hitsite', 's').' ON s.id = c.hitsite_id')
-            -> join('LEFT', $db->quoteName('#__kampinfo_hitproject', 'p').' ON p.id = s.hitproject_id')
+                $db->quoteName('c.gereserveerd'),
+                $db->quoteName('c.maximumAantalDeelnemers'),
+                $db->quoteName('c.aantalDeelnemers'),
+                $db->quoteName('c.maximumAantalSubgroepjes'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitsite', 's'),
+                $db->quoteName('s.id') . ' = '. $db->quoteName('c.hitsite_id')
+            )
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('p.id') .' = '. $db->quoteName('s.hitproject_id')
+            )
         ;
+
         if ($this->getParamIfExists($config, 'skipAkkoord') == null) {
             $query
-                -> where('c.akkoordHitKamp = 1')
-                -> where('c.akkoordHitPlaats = 1')
-                -> where('c.geannuleerd <> 1')
+                ->where([
+                    $db->quoteName('c.akkoordHitKamp') . ' = 1',
+                    $db->quoteName('c.akkoordHitPlaats') . ' = 1',
+                    $db->quoteName('c.geannuleerd') . ' <> 1',
+                ])
             ;
         }
 
         $jaar = $this->getParamIfExists($config, 'jaar');
         if ($jaar != null) {
+            $jaar = (int) $jaar;
             $query
-                -> where('p.jaar = :jaar')
-                -> bind(':jaar', $jaar)
+                ->where($db->quoteName('p.jaar') . ' = :jaar')
+                ->bind(':jaar', $jaar, ParameterType::INTEGER)
             ;
         }
         return $query; 
     }
 
     private function zetOpVolgorde(&$query, $config) {
+        $db = $this->getDatabase();
         if (array_key_exists('volgorde', $config)) {
             $volgordes = explode(',', $config['volgorde']);
             foreach ($volgordes as $volgorde) {
-                if ($volgorde == 'naam') {
-                    $query
-                        -> order('c.naam ASC')
-                    ;
+                if ($volgorde === 'naam') {
+                    $query->order($db->quoteName('c.naam') . ' ASC');
                 } elseif ($volgorde == 'leeftijd') {
                     $query
-                        -> order('c.minimumLeeftijd ASC')
-                        -> order('c.maximumLeeftijd ASC')
-                        -> order('c.naam ASC')
+                        ->order($db->quoteName('c.minimumLeeftijd') . ' ASC')
+                        ->order($db->quoteName('c.maximumLeeftijd') . ' ASC')
+                        ->order($db->quoteName('c.naam') . ' ASC')
                     ;
                 } elseif ($volgorde == 'plaats') {
-                    $query
-                        -> order('s.naam ASC')
-                    ;
+                    $query->order($db->quoteName('s.naam') . ' ASC');
                 }
             }
         }
@@ -274,9 +285,15 @@ final class Kampinfo extends CMSPlugin implements
     private function getIconenLijst() {
         $db = $this->getDatabase();
         $query = $db->getQuery(true)
-            -> select('i.bestandsnaam, i.tekst, i.volgorde, i.soort')
-            -> from('#__kampinfo_hiticon i')
-            -> order('i.bestandsnaam');
+            ->select([
+                $db->quoteName('i.bestandsnaam'),
+                $db->quoteName('i.tekst'),
+                $db->quoteName('i.volgorde'),
+                $db->quoteName('i.soort'),
+            ])
+            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
+            ->order($db->quoteName('i.bestandsnaam'))
+        ;
 
         try {
             $db->setQuery($query);
@@ -298,4 +315,3 @@ final class Kampinfo extends CMSPlugin implements
     }
 
 }
-?>
