@@ -7,6 +7,9 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF;
 require_once dirname(__FILE__).'/../../../libraries/fpdf/fpdf.php';
 
 
+/**
+ * Schrijft een fragment HTML naar de PDF.
+ */
 class PdfHtml extends \FPDF {
 
     private $skipFirstP;
@@ -33,33 +36,33 @@ class PdfHtml extends \FPDF {
     protected function WriteHTML($html) {
         $this->skipFirstP = true;
         // HTML parser
-        $html = strip_tags($html,"<b><u><i><a><img><p><br><strong><em><font><tr><blockquote>");
-        $html = str_replace("\n",' ', $html);
-        $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $html = strip_tags($html, '<b><u><i><a><img><p><br><strong><em><font><tr><blockquote>');
+        $html = str_replace('\n', ' ', $html);
+        $tags = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-        foreach ($a as $i => $e) {
-            if ($i % 2 == 0) {
+        foreach ($tags as $index => $tag) {
+            if ($index % 2 == 0) {
                 // Text
                 if ($this->HREF) {
-                    $this->PutLink($this->HREF, $e);
+                    $this->PutLink($tag, $this->HREF);
                 } else {
-                    $this->Write(5, stripslashes(self::txtentities($e)));
+                    $this->Write(5, stripslashes(self::txtentities($tag)));
                 }
             } else {
-                //Tag
-                if ($e[0] == '/') {
-                    $this->CloseTag(strtoupper(substr($e, 1)));
+                // Tag
+                if ($tag[0] == '/') {
+                    $this->CloseTag(strtoupper(substr($tag, 1)));
                 } else {
-                    //Extract attributes
-                    $a2 = explode(' ', $e);
-                    $tag = strtoupper(array_shift($a2));
+                    // Extract attributes
+                    $attributes = explode(' ', $tag);
+                    $tagName = strtoupper(array_shift($attributes));
                     $attr = [];
-                    foreach ($a2 as $v) {
-                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
-                            $attr[strtoupper($a3[1])] = $a3[2];
+                    foreach ($attributes as $v) {
+                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $matches)) {
+                            $attr[strtoupper($matches[1])] = $matches[2];
                         }
                     }
-                    $this->OpenTag($tag, $attr);
+                    $this->OpenTag($tagName, $attr);
                 }
             }
         }
@@ -71,10 +74,10 @@ class PdfHtml extends \FPDF {
     private function OpenTag($tag, $attr) {
         switch($tag) {
             case 'STRONG':
-                $this->SetStyle('B',true);
+                $this->SetStyle('B', true);
                 break;
             case 'EM':
-                $this->SetStyle('I',true);
+                $this->SetStyle('I', true);
                 break;
             case 'B':
             case 'I':
@@ -109,8 +112,8 @@ class PdfHtml extends \FPDF {
                 break;
             case 'FONT':
                 if (isset($attr['COLOR']) && $attr['COLOR'] != '') {
-                    $coul = self::hex2dec($attr['COLOR']);
-                    $this->SetTextColor($coul['R'], $coul['G'], $coul['B']);
+                    $color = self::hex2dec($attr['COLOR']);
+                    $this->SetTextColor($color['R'], $color['G'], $color['B']);
                     $this->issetcolor = true;
                 }
                 if (isset($attr['FACE']) && in_array(strtolower($attr['FACE']), $this->fontlist)) {
@@ -137,7 +140,7 @@ class PdfHtml extends \FPDF {
         if ($tag == 'A') {
             $this->HREF = '';
         }
-        if ($tag=='FONT') {
+        if ($tag == 'FONT') {
             if ($this->issetcolor == true) {
                 $this->SetTextColor(0);
             }
@@ -154,7 +157,7 @@ class PdfHtml extends \FPDF {
     private function SetStyle($tag, $enable) {
         $this->$tag += ($enable ? 1 : -1);
         $style = '';
-        foreach (['B','I','U'] as $s) {
+        foreach (['B', 'I', 'U'] as $s) {
             if ($this->$s > 0) {
                 $style .= $s;
             }
@@ -165,19 +168,19 @@ class PdfHtml extends \FPDF {
     /**
      * Put a hyperlink.
      */
-    private function PutLink($URL, $txt) {
+    private function PutLink(string $txt, string $link) {
         $this->SetTextColor(0, 0, 255);
         $this->SetStyle('U', true);
-        $this->Write(5, $txt, $URL);
+        $this->Write(5, $txt, $link);
         $this->SetStyle('U', false);
         $this->SetTextColor(0);
     }
 
     /**
-     * returns an associative array (keys: R,G,B) from
+     * Returns an associative array (keys: R,G,B) from
      * a hex html code (e.g. #3FE5AA)
      */
-    private static function hex2dec($color = "#000000") {
+    private static function hex2dec(string $color = '#000000') {
         return [
             'R' => hexdec(substr($color, 1, 2)),
             'G' => hexdec(substr($color, 3, 2)),
@@ -192,7 +195,10 @@ class PdfHtml extends \FPDF {
         return $px * 25.4 / 72;
     }
 
-    private static function txtentities($html){
+    /**
+     * Converteert HTML-entities weer terug naar normale karakters.
+     */
+    private static function txtentities(string $html){
         $trans = get_html_translation_table(HTML_ENTITIES);
         $trans = array_flip($trans);
         return strtr($html, $trans);

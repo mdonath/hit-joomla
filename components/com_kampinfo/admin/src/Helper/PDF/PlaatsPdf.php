@@ -159,7 +159,6 @@ class PlaatsPdf extends KampInfoPdf {
         $icoontjes =  $kamp->icoontjes;
         $even = false;
         foreach ($icoontjes as $icon) {
-            // FIXME: er zal vast een modernere manier zijn om een pad samen te stellen
             $img = JPATH_ROOT .DIRECTORY_SEPARATOR. $this->iconFolder .DIRECTORY_SEPARATOR. $icon->naam . $this->iconExtension;
             $this->Image($img, $this->getX(), $this->GetY());
             $this->x += 12;
