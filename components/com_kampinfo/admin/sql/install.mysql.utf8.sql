@@ -131,6 +131,7 @@ INSERT INTO `#__kampinfo_hiticon` (
 ,    (10, 'aantalnacht2', 'Je overnacht 2 keer', 'S')
 ,    (10, 'aantalnacht3', 'Je overnacht 3 keer', 'S')
 ,    (10, 'aantalnacht4', 'Je overnacht 4 keer', 'S')
+,    (20, 'ouderkind', 'Dit is een ouder-kind kamp', 'S')
 ,    (0, 'vol', 'Het kamp is vol!', 'S')
 ,    (0, 'loterij', 'Het kamp is vol en er moet geloot worden!', 'S')
 

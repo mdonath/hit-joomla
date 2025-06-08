@@ -37,7 +37,7 @@ class Icoon {
             $folder = $params->get('iconFolderSmall');
         }
 
-        return HTMLHelper::_('image', $folder .'/'. $naam . $iconExtension, $titel, ['title' => $titel]);
+        return HTMLHelper::_('image', $folder .'/'. $naam . $iconExtension, $titel, ['title' => $titel, 'class' => 'hiticon']);
     }
 
     public static function activiteitengebied($naam, $titel) {
@@ -45,7 +45,7 @@ class Icoon {
         $folder = $params->get('activiteitengebiedenFolder');
         $ext = $params->get('activiteitengebiedenExtension');
 
-        return HTMLHelper::_('image', $folder .'/'. $naam . $ext, $titel, ['title' => $titel]);
+        return HTMLHelper::_('image', $folder .'/'. $naam . $ext, $titel, ['title' => $titel, 'class' => 'activiteitengebied']);
     }
 
 }

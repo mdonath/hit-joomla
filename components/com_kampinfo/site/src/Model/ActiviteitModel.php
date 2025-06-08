@@ -74,9 +74,20 @@ class ActiviteitModel extends AbstractKampInfoModel {
 
             $activiteit = $activiteiten[0];
     
+            $automagischeIcoontjes = '';
+            // voeg icoontje toe met aantal overnachtingen
             $aantalNachten = KampInfoHelper::aantalOvernachtingen($activiteit);
-            $activiteit->icoontjes = "aantalnacht{$aantalNachten},". $activiteit->icoontjes;
-            $activiteit->icoontjes =  $this->createIcons($activiteit->icoontjes);
+            if ($aantalNachten > 0) {
+                $automagischeIcoontjes .= "aantalnacht{$aantalNachten},";
+            }
+            // voeg icoontje toe met ouderkind
+            if ($activiteit->isouderkind == 1) {
+                $automagischeIcoontjes .= 'ouderkind,';
+            }
+
+            $activiteit->icoontjes = $automagischeIcoontjes . $activiteit->icoontjes;
+
+            $activiteit->icoontjes = $this->createIcons($activiteit->icoontjes);
             $activiteit->activiteitengebieden = $this->createActiviteitengebieden($activiteit->activiteitengebieden);
             return $activiteit;
         } catch (\Exception $e) {

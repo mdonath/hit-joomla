@@ -99,10 +99,15 @@ class KiezerModel extends AbstractKampInfoModel {
             foreach ($kampenInPlaats as $kamp) {
                 $nieuweIcoontjes = [];
                 if (!empty($kamp->icoontjes)) {
+                    $automagischToegevoegd = '';
                     $aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
-                    if  ($aantalNachten > 0) {
-                        $kamp->icoontjes = "aantalnacht{$aantalNachten},". $kamp->icoontjes;
+                    if ($aantalNachten > 0) {
+                        $automagischToegevoegd .= "aantalnacht{$aantalNachten},";
                     }
+                    if ($kamp->isouderkind == 1) {
+                        $automagischToegevoegd .= 'ouderkind,';
+                    }
+                    $kamp->icoontjes = $automagischToegevoegd . $kamp->icoontjes;
                     $icoontjes = explode(',', $kamp->icoontjes);
                     foreach ($icoontjes as $icoon) {
                         $lookedUp = $iconenLookup[$icoon];
