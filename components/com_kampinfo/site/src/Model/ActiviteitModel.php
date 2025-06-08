@@ -123,7 +123,7 @@ class ActiviteitModel extends AbstractKampInfoModel {
         $options = KampInfoHelper::getActivityAreaOptions();
         $result = array();
         foreach ($activiteitengebieden as $gebied) {
-            foreach($options as $option) {
+            foreach ($options as $option) {
                 if ($option->value == $gebied) {
                     $result[] = $option;
                 }

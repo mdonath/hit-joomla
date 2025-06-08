@@ -14,7 +14,7 @@ $canEdit = $user->authorise('hiticon.edit', 'com_kampinfo');
 ?>
 
 <tbody>
-    <?php foreach($this->items as $i => $item) : ?>
+    <?php foreach ($this->items as $i => $item) : ?>
         <tr>
             <td>
                 <?= HTMLHelper::_('grid.id', $i, $item->id) ?>

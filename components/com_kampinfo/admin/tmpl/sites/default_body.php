@@ -10,7 +10,7 @@ $user = $this->getCurrentUser();
 ?>
 
 <tbody>
-    <?php foreach($this->items as $i => $item) : ?>
+    <?php foreach ($this->items as $i => $item) : ?>
         <?php
             $canEdit    = $user->authorise('hitsite.edit', 'com_kampinfo.site.' . (int)$item->id);
             $canPublish = $user->authorise('hitsite.edit.state', 'com_kampinfo.site.' . (int)$item->id);

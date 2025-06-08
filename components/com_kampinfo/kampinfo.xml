@@ -100,6 +100,7 @@
                 <filename>config.xml</filename>
                 <filename>index.html</filename>
                 <folder>forms</folder>
+                <folder>libraries</folder>
                 <folder>services</folder>
                 <folder>sql</folder>
                 <folder>src</folder>

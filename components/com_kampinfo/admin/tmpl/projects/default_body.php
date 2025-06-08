@@ -14,7 +14,7 @@ $canDelete  = $user->authorise('hitproject.delete', 'com_kampinfo');
 ?>
 
 <tbody>
-    <?php foreach($this->items as $i => $item) : ?>
+    <?php foreach ($this->items as $i => $item) : ?>
         <tr>
             <td>
                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
