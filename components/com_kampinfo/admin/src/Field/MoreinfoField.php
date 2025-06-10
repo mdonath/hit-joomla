@@ -38,23 +38,23 @@ class MoreinfoField extends NoteField {
         }
 
         $class       = $class ? ' class="' . implode(' ', $class) . '"' : '';
-        $title       = $this->element['label'] ? (string) $this->element['label'] : ($this->element['title'] ? (string) $this->element['title'] : '');
-        $heading     = $this->element['heading'] ? (string) $this->element['heading'] : 'h4';
+        $title       = (string) $this->element['label'] ?: ($this->element['title'] ?: '');
+        $heading     = (string) $this->element['heading'] ?: 'h4';
         $description = (string) $this->element['description'];
-        $expand      = $this->element['expand'] ? (string) $this->element['expand'] : 'Expand';
+        $expand      = (String) $this->element['expand'] ?: 'Expand';
 
         $html = [];
         $html[] = '</div>';
         $html[] = '<div>';
-        $html[] = '<details>';
-        $html[] = '<summary>' . $expand . '</summary>';
-        $html[] = '<div>';
-        $html[] = '<div ' . $class . '>';
+        $html[] = '  <details>';
+        $html[] = '    <summary class="rule-notes">' . $expand . '</summary>';
+        $html[] = '    <div>';
+        $html[] = '      <div ' . $class . '>';
         $html[] = !empty($title) ? '<' . $heading . '>' . Text::_($title) . '</' . $heading . '>' : '';
         $html[] = !empty($description) ? Text::_($description) : '';
-        $html[] = '</div>';
-        $html[] = '</div>';
-        $html[] = '</details>';
+        $html[] = '      </div>';
+        $html[] = '    </div>';
+        $html[] = '  </details>';
 
         return implode('', $html);
     }
