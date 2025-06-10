@@ -16,10 +16,12 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 use Psr\Container\ContainerInterface;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Icoon;
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Kamp;
+use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
+
 
 final class Kampinfo extends CMSPlugin implements
     SubscriberInterface,
@@ -117,7 +119,7 @@ final class Kampinfo extends CMSPlugin implements
         $query = $this->createBaseQuery($config);
         $this->zetOpVolgorde($query, $config);
 
-        $result = $this->loadObjectList($query);
+        $result = $this->haalHitKampen($query);
         $output = "";
         foreach ($result as $row) {
             $output .= "<div class='kamp'>";
@@ -146,7 +148,7 @@ final class Kampinfo extends CMSPlugin implements
         ;
         $this->zetOpVolgorde($query, $config);
 
-        $result = $this->loadObjectList($query);
+        $result = $this->haalHitKampen($query);
         foreach ($result as $row) {
             $output .= "<div class='kamp'>";
             $output .= $this->span('naam', $this->kampLink($row, $config));
@@ -183,10 +185,12 @@ final class Kampinfo extends CMSPlugin implements
         return "<span class='". $clazz . "'>" . $contents . "</span>";
     }
 
-    private function loadObjectList($query) {
-        $iconList = $this->getIconenLijst();
-
+    private function haalHitKampen($query) {
         $db = $this->getDatabase();
+
+        // Het is efficiënter om de lijst 1x op te halen en te cachen, dan voor elk kamp een nieuwe query te doen.
+        $iconenMap = IcoonUtil::getIconenMap($db);
+
         $db->setQuery($query);
         $result = $db->loadObjectList();
         foreach ($result as $row) {
@@ -198,13 +202,7 @@ final class Kampinfo extends CMSPlugin implements
                 'id' => $row->kampId,
                 'naam' => $row->kamp,
             ];
-            $ics = [];
-            foreach (explode(',', $row->icoontjes) as $icon) {
-                if (array_key_exists($icon, $iconList)) {
-                    $ics[] = $iconList[$icon];
-                }
-            }
-            $row->icoontjes = $ics;
+            $row->icoontjes = IcoonUtil::explodeIcoontjes($row, $iconenMap);
         }
         return $result;
     }
@@ -228,6 +226,11 @@ final class Kampinfo extends CMSPlugin implements
                 $db->quoteName('c.maximumAantalDeelnemers'),
                 $db->quoteName('c.aantalDeelnemers'),
                 $db->quoteName('c.maximumAantalSubgroepjes'),
+                $db->quoteName('c.aantalSubgroepen'),
+                // Nodig voor automagische icoontjes
+                $db->quoteName('c.startDatumTijd'),
+                $db->quoteName('c.eindDatumTijd'),
+                $db->quoteName('c.isouderkind'),
             ])
             ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
             ->join('LEFT',
@@ -280,38 +283,6 @@ final class Kampinfo extends CMSPlugin implements
             }
         }
         return $query;
-    }
-
-    private function getIconenLijst() {
-        $db = $this->getDatabase();
-        $query = $db->getQuery(true)
-            ->select([
-                $db->quoteName('i.bestandsnaam'),
-                $db->quoteName('i.tekst'),
-                $db->quoteName('i.volgorde'),
-                $db->quoteName('i.soort'),
-            ])
-            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
-            ->order($db->quoteName('i.bestandsnaam'))
-        ;
-
-        try {
-            $db->setQuery($query);
-            $icons = $db->loadObjectList();
-            
-            $result = [];
-            foreach ($icons as $icon) {
-                $result[$icon->bestandsnaam] = (object) [
-                    'bestandsnaam' => $icon->bestandsnaam,
-                    'tekst' => $icon->tekst,
-                    'volgorde' => $icon->volgorde,
-                    'soort' => $icon->soort
-                    ];
-            }
-            return $result;
-        } catch (\RuntimeException $e) {
-            throw new GenericDataException($e->getMessage(), 500);
-        }
     }
 
 }

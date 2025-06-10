@@ -9,7 +9,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 /**
  * KampInfo Inschrijvingen Model

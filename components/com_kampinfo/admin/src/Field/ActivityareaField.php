@@ -7,7 +7,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 
 /**

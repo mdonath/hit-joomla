@@ -9,7 +9,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 /**
  * KampInfo Overzicht Model
@@ -23,9 +23,9 @@ class OverzichtModel extends AbstractKampInfoModel {
         $project = $this->getHitProject($projectId);
         $project->plaatsen = $this->getHitPlaatsen($projectId);
 
-        $iconenLijst = $this->getIconenLijst();
+        $iconenMap = $this->getIconenMap();
         foreach ($project->plaatsen as $plaats) {
-            $plaats->kampen = $this->getHitKampen($plaats->id, $iconenLijst);
+            $plaats->kampen = $this->getHitKampen($plaats->id, $iconenMap);
         }
         $project->laatstBijgewerktOp = $this->getLaatstBijgewerktOp($project->jaar);
 

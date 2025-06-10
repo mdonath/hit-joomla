@@ -60,31 +60,9 @@ class SiteModel extends AdminModel {
         $result = $db->loadObjectList();
 
         // expand icons
+        $iconenMap = IcoonUtil::getIconenMap($db);
         foreach ($result as $kamp) {
-            $values = implode(
-                ',',
-                array_map(
-                    fn($n) => $db->quote($db->escape($n)),
-                    explode(',', $kamp->icoontjes)
-                )
-            );
-
-            $query = $db->getQuery(true)
-                ->select([
-                    $db->quoteName('i.bestandsnaam', 'naam'),
-                    $db->quoteName('i.tekst'),
-                    $db->quoteName('i.volgorde'),
-                ])
-                ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
-                ->where($db->quoteName('i.bestandsnaam') . ' IN (' . $values . ')')
-                ->order($db->quoteName('i.volgorde'))
-            ;
-            
-            $db->setQuery($query);
-
-            $icons = $db->loadObjectList();
-
-            $kamp->icoontjes = $icons;
+            $kamp->icoontjes = IcoonUtil::explodeIcoontjes($kamp, $iconenMap);
         }
         
         return $result;

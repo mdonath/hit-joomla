@@ -1,6 +1,6 @@
 <?php
 
-namespace HITScoutingNL\Component\KampInfo\Administrator\Helper;
+namespace HITScoutingNL\Library\KampInfo\Helper;
 
 \defined('_JEXEC') or die('Restricted Access');
 

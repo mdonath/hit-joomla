@@ -8,8 +8,8 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 
 /**

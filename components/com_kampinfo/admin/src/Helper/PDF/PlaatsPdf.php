@@ -9,8 +9,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\KampInfoPdf;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+
 
 class PlaatsPdf extends KampInfoPdf {
 
@@ -158,6 +159,7 @@ class PlaatsPdf extends KampInfoPdf {
         $this->Ln(1);
         $icoontjes =  $kamp->icoontjes;
         $even = false;
+        // TODO: ICOON
         foreach ($icoontjes as $icon) {
             $img = JPATH_ROOT .DIRECTORY_SEPARATOR. $this->iconFolder .DIRECTORY_SEPARATOR. $icon->naam . $this->iconExtension;
             $this->Image($img, $this->getX(), $this->GetY());

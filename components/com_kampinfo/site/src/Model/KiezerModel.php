@@ -9,7 +9,9 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
+
 
 /**
  * KampInfo HIT Kiezer Model
@@ -22,41 +24,22 @@ class KiezerModel extends AbstractKampInfoModel {
 
         $project = $this->getHitProject($projectId);
         $project->hitPlaatsen = $this->getHitPlaatsen($projectId);
-        $project->gebruikteIconen = $this->getIconenLijstJSON();
 
-        $iconenLookup = [];
-        foreach ($project->gebruikteIconen as $icon) {
-            $iconenLookup[$icon->bestandsnaam] = $icon;
-        }
+        $iconenMap = $this->getIconenMap();
+        $project->gebruikteIconen = array_map(
+            fn($value) => $value,
+            $iconenMap
+        );
+
 
         foreach ($project->hitPlaatsen as $plaats) {
-            $plaats->kampen = $this->getHitKampenJSON($plaats->id, $iconenLookup);
+            $plaats->kampen = $this->getHitKampenJSON($plaats->id, $iconenMap);
         }
 
         return $project;
     }
 
-    private function getIconenLijstJSON() {
-        $db = $this->getDatabase();
-
-        $query = $db->getQuery(true)
-            ->select([
-                $db->quoteName('i.volgorde'),
-                $db->quoteName('i.bestandsnaam'),
-                $db->quoteName('i.tekst'),
-            ])
-            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
-        ;
-
-        try {
-            $db->setQuery($query);
-            return $db->loadObjectList();
-        } catch (\Exception $e) {
-            throw new GenericDataException($e->getMessage(), 500);
-        }
-    }
-
-    private function getHitKampenJSON($hitsiteId, $iconenLookup) {
+    private function getHitKampenJSON($hitsiteId, $iconenMap) {
         $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
@@ -97,26 +80,7 @@ class KiezerModel extends AbstractKampInfoModel {
             $kampenInPlaats = $db->loadObjectList();
 
             foreach ($kampenInPlaats as $kamp) {
-                $nieuweIcoontjes = [];
-                if (!empty($kamp->icoontjes)) {
-                    $automagischToegevoegd = '';
-                    $aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
-                    if ($aantalNachten > 0) {
-                        $automagischToegevoegd .= "aantalnacht{$aantalNachten},";
-                    }
-                    if ($kamp->isouderkind == 1) {
-                        $automagischToegevoegd .= 'ouderkind,';
-                    }
-                    $kamp->icoontjes = $automagischToegevoegd . $kamp->icoontjes;
-                    $icoontjes = explode(',', $kamp->icoontjes);
-                    foreach ($icoontjes as $icoon) {
-                        $lookedUp = $iconenLookup[$icoon];
-                        if ($lookedUp != null) {
-                            $nieuweIcoontjes[] = $lookedUp;
-                        }
-                    }
-                }
-                $kamp->iconen = $nieuweIcoontjes;
+                $kamp->iconen = IcoonUtil::explodeIcoontjes($kamp, $iconenMap);
                 unset($kamp->icoontjes);
             }
             return $kampenInPlaats;

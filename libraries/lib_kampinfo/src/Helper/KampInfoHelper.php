@@ -1,6 +1,6 @@
 <?php
 
-namespace HITScoutingNL\Component\KampInfo\Administrator\Helper;
+namespace HITScoutingNL\Library\KampInfo\Helper;
 
 \defined('_JEXEC') or die('Restricted access');
 
@@ -144,13 +144,6 @@ abstract class KampInfoHelper {
         $datum->setTimezone(self::getTimezone());
         $datum->setTime(0,0,0);
         return $datum;
-    }
-
-    public static function startsWith($haystack, $needle) {
-        return $needle === "" || strpos($haystack, $needle) === 0;
-    }
-    public static function endsWith($haystack, $needle) {
-        return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
     }
 
 }

@@ -10,7 +10,9 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
+
 
 /**
  * KampInfo Overzicht Model
@@ -37,7 +39,7 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getHitPlaatsen($projectId) {
-        $db = $db = $this->getDatabase();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
             ->select('*')
@@ -60,7 +62,7 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getHitPlaats($hitsiteId) {
-        $db = $db = $this->getDatabase();
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
             ->select('s.*, p.jaar')
@@ -83,8 +85,8 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         }
     }
 
-    protected function getHitKampen($hitsiteId, $iconenLijst) {
-        $db = $db = $this->getDatabase();
+    protected function getHitKampen($hitsiteId, $iconenMap) {
+        $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
             ->select('*')
@@ -103,13 +105,14 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
             ])
         ;
 
+        $iconenMap = $this->getIconenMap();
         try {
             $db->setQuery($query);
             $kampenInPlaats = $db->loadObjectList();
 
-            if (!empty($iconenLijst)) {
+            if (!empty($iconenMap)) {
                 foreach ($kampenInPlaats as $kamp) {
-                    $kamp->icoontjes = $this->explodeIcoontjes($kamp, $iconenLijst);
+                    $kamp->icoontjes = IcoonUtil::explodeIcoontjes($kamp, $iconenMap);
                 }
             }
             return $kampenInPlaats;
@@ -118,63 +121,8 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         }
     }
 
-    protected function getIconenLijst() {
-        $db = $db = $this->getDatabase();
-
-        $query = $db->getQuery(true)
-            ->select([
-                $db->quoteName('i.bestandsnaam'),
-                $db->quoteName('i.tekst'),
-                $db->quoteName('i.volgorde'),
-                $db->quoteName('i.soort'),
-            ])
-            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
-        ;
-
-        try {
-            $db->setQuery($query);
-            $icons = $db->loadObjectList();
-
-            $result = [];
-            foreach ($icons as $icon) {
-                $i = new \stdClass();
-                $i->bestandsnaam = $icon->bestandsnaam;
-                $i->tekst = $icon->tekst;
-                $i->volgorde = $icon->volgorde;
-                $i->soort = $icon->soort;
-                $result[$icon->bestandsnaam] = $i;
-            }
-
-            return $result;
-        } catch (\Exception $e) {
-            throw new GenericDataException($e->getMessage(), 500);
-        }
-    }
-
-    protected function explodeIcoontjes($kamp, $iconenLijst) {
-        if (empty($iconenLijst)) {
-            $iconenLijst = $this->getIconenLijst();
-        }
-
-        $nieuweIcoontjes = [];
-
-        $aantalNachten = KampInfoHelper::aantalOvernachtingen($kamp);
-        if ($aantalNachten > 0) {
-            $overnachtingKey = "aantalnacht$aantalNachten";
-            $nieuweIcoontjes[] = $iconenLijst[$overnachtingKey];
-        }
-        if ($kamp->isouderkind == 1) {
-            $nieuweIcoontjes[] = $iconenLijst['ouderkind'];
-        }
-        if (!empty($kamp->icoontjes)) {
-            $icoontjes = explode(',', $kamp->icoontjes);
-            foreach ($icoontjes as $icoon) {
-                if (array_key_exists($icoon, $iconenLijst)) {
-                    $nieuweIcoontjes[] = $iconenLijst[$icoon];
-                }
-            }
-        }
-        return $nieuweIcoontjes;
+    protected function getIconenMap() {
+        return IcoonUtil::getIconenMap($this->getDatabase());
     }
 
     protected function getLaatstBijgewerktOp($jaar) {

@@ -7,8 +7,8 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF;
 use DateTime;
 use Joomla\CMS\Component\ComponentHelper;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\PdfHtml;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 
 class KampInfoPdf extends PdfHtml {

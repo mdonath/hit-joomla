@@ -3,7 +3,6 @@ namespace HITScoutingNL\Library\KampInfo\ImportExport;
 
 \defined('_JEXEC') or die;
 
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Table\Table;

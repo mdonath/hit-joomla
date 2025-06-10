@@ -9,7 +9,9 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
+
 
 /**
  * KampInfo Activiteit Model
@@ -74,56 +76,11 @@ class ActiviteitModel extends AbstractKampInfoModel {
 
             $activiteit = $activiteiten[0];
     
-            $automagischeIcoontjes = '';
-            // voeg icoontje toe met aantal overnachtingen
-            $aantalNachten = KampInfoHelper::aantalOvernachtingen($activiteit);
-            if ($aantalNachten > 0) {
-                $automagischeIcoontjes .= "aantalnacht{$aantalNachten},";
-            }
-            // voeg icoontje toe met ouderkind
-            if ($activiteit->isouderkind == 1) {
-                $automagischeIcoontjes .= 'ouderkind,';
-            }
+            $iconenMap = $this->getIconenMap();
+            $activiteit->icoontjes = IcoonUtil::explodeIcoontjes($activiteit, $iconenMap);
 
-            $activiteit->icoontjes = $automagischeIcoontjes . $activiteit->icoontjes;
-
-            $activiteit->icoontjes = $this->createIcons($activiteit->icoontjes);
             $activiteit->activiteitengebieden = $this->createActiviteitengebieden($activiteit->activiteitengebieden);
             return $activiteit;
-        } catch (\Exception $e) {
-            throw new GenericDataException($e->getMessage(), 500);
-        }
-    }
-
-    /**
-     * @param $namen - comma separated string
-     */
-    public function createIcons($namen) {
-        $db = $this->getDatabase();
-
-        $values = implode(
-            ',',
-            array_map(
-                fn($n) => $db->quote($n),
-                explode(',', $namen)
-            )
-        );
-
-        $query = $db->getQuery(true)
-            ->select([
-                $db->quoteName('i.bestandsnaam'),
-                $db->quoteName('i.tekst'),
-                $db->quoteName('i.volgorde'),
-            ])
-            ->from($db->quoteName('#__kampinfo_hiticon', 'i'))
-            ->where($db->quoteName('i.bestandsnaam') .' IN (' . $values . ')')
-            ->order('i.volgorde')
-        ;
-        
-        try {
-            $db->setQuery($query);
-            $icons = $db->loadObjectList();
-            return $icons;
         } catch (\Exception $e) {
             throw new GenericDataException($e->getMessage(), 500);
         }

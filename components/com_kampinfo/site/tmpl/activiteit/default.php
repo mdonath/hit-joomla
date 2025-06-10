@@ -6,8 +6,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\HTML\HTMLHelper;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');

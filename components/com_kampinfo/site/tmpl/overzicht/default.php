@@ -2,9 +2,11 @@
 
 \defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Component\ComponentHelper;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
+
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');

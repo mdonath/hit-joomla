@@ -4,7 +4,7 @@
 
 use Joomla\CMS\HTML\HTMLHelper;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 
 $options = KampInfoHelper::getHitIconSoortOptions();

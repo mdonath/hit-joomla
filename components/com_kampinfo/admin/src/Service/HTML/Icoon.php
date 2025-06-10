@@ -8,7 +8,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\KampInfoUrlHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 
 class Icoon {
