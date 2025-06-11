@@ -7,7 +7,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 ?>
 
-<form   action="<?= Route::_('index.php?option=com_kampinfo&controller=camps') ?>"
+<form   action="<?= Route::_('index.php?option=com_kampinfo&view=camps') ?>"
         method="post"
         name="adminForm"
         id="adminForm"

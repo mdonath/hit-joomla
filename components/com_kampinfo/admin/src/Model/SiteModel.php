@@ -93,6 +93,31 @@ class SiteModel extends AdminModel {
         return $data;
     }
 
+    public function copyKampen(&$pks) {
+        $table = $this->getTable();
+        $pks   = (array) $pks;
+
+        // Access checks.
+        foreach ($pks as $i => $pk) {
+            if ($table->load($pk)) {
+                if (!$this->canEdit($table)) {
+                    // Prune items that you can't change.
+                    $key = $pks[$i];
+                    unset($pks[$i]);
+                    Factory::getApplication()->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED') . ' ' . $key, 'error');
+                }
+            }
+        }
+
+        // Attempt to change the state of the records.
+        if (\count($pks) == 0) {
+            Factory::getApplication()->enqueueMessage('Er bleef niets over', 'error');
+            return 0;
+        }
+
+        return $table->copyKampen($pks);
+    }
+
     public function akkoordPlaats(&$pks, $value = 1) {
         $table = $this->getTable();
         $pks   = (array) $pks;

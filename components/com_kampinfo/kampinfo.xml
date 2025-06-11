@@ -54,7 +54,7 @@
         <!-- Administration Menu Section -->
         <menu img="../media/com_kampinfo/images/kampinfo-16x16.png">COM_KAMPINFO_MENU</menu>
         <submenu>
-            <menu view="info">com_kampinfo_submenu_info</menu>
+            <menu view="info">COM_KAMPINFO_SUBMENU_INFO</menu>
 
             <menu view="projects">
                 COM_KAMPINFO_SUBMENU_HITPROJECTS

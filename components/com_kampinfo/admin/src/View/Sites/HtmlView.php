@@ -97,6 +97,10 @@ class HtmlView extends BaseHtmlView {
                     ->listCheck(true);
             }
 
+            if ($canDo->get('hitsite.edit')) {
+                $childBar->standardButton('copy', 'Kopieer van vorig jaar', 'sites.copyKampen')
+                    ->listCheck(true);
+            }
         }
 
         if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {

@@ -14,11 +14,33 @@ class SitesController extends AdminController {
 
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null) {
         parent::__construct($config, $factory, $app, $input);
-       $this->registerTask('nietAkkoordPlaats', 'akkoordPlaats');
+        $this->registerTask('nietAkkoordPlaats', 'akkoordPlaats');
     }
 
     public function getModel($name = 'Site', $prefix = 'Administrator', $config = array('ignore_request' => true)) {
         return parent::getModel($name, $prefix, $config);
+    }
+
+    public function copyKampen() {
+        $this->checkToken();
+
+        $cids = (array) $this->input->get('cid', [], 'int');
+        $cids = array_filter($cids);
+
+        if (empty($cids)) {
+            $this->app->enqueueMessage('Geen plaatsen geselecteerd', 'warning');
+        } else {
+            $model = $this->getModel();
+
+            // Kopieer de kampen van vorig jaar
+            $aantalPlaatsen = $model->copyKampen($cids);
+            if ($aantalPlaatsen != 0) {
+                $ntext = 'Van %d plaats(en) zijn kampen van vorig jaar gekopieerd';
+                $this->setMessage(Text::plural($ntext, $aantalPlaatsen));
+            }
+        }
+
+        $this->setRedirect('index.php?option=com_kampinfo&view=sites');
     }
 
     public function akkoordPlaats() {
