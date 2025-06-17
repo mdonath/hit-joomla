@@ -21,6 +21,23 @@ class SitesController extends AdminController {
         return parent::getModel($name, $prefix, $config);
     }
 
+    public function createMenu() {
+        $this->checkToken();
+
+        $cids = (array) $this->input->get('cid', [], 'int');
+        $cids = array_filter($cids);
+
+        if (empty($cids)) {
+            $this->app->enqueueMessage('Geen plaatsen geselecteerd', 'warning');
+        } else {
+            $model = $this->getModel();
+
+            $model->createMenu($cids);
+        }
+
+        $this->setRedirect('index.php?option=com_kampinfo&view=sites');
+    }
+
     public function copyKampen() {
         $this->checkToken();
 

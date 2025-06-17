@@ -101,6 +101,9 @@ class HtmlView extends BaseHtmlView {
                 $childBar->standardButton('copy', 'Kopieer van vorig jaar', 'sites.copyKampen')
                     ->listCheck(true);
             }
+
+            $childBar->standardButton('menu', '(Re)creeer de menustructuur', 'sites.createMenu')
+                ->listCheck(true);
         }
 
         if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {

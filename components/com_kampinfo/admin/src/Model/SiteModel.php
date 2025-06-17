@@ -10,6 +10,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\ParameterType;
 
+use HITScoutingNL\Component\KampInfo\Administrator\Helper\MenuHelper;
+
 
 class SiteModel extends AdminModel {
 
@@ -92,6 +94,21 @@ class SiteModel extends AdminModel {
 
         return $data;
     }
+
+    public function createMenu(&$pks) {
+        $app = Factory::getApplication();
+        $sitemenu = $app->getMenu('site');
+        $sitemenu->load();
+        $db = $this->getDatabase();
+
+        $component = ComponentHelper::getComponent('com_kampinfo');
+
+        $helper = new MenuHelper($db);
+        foreach ($pks as $siteId) {
+            $helper->createPlaatsMenu($sitemenu, $component, $siteId);
+        }
+    }
+
 
     public function copyKampen(&$pks) {
         $table = $this->getTable();
