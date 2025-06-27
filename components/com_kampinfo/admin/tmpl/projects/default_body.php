@@ -29,22 +29,16 @@ $canDelete  = $user->authorise('hitproject.delete', 'com_kampinfo');
                     <?php endif; ?>
             </td>
             <td>
+                <?php echo $item->loterijStartdatum ? HTMLHelper::date($item->loterijStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
+            </td>
+            <td>
+                <?php echo $item->loterijEinddatum ? HTMLHelper::date($item->loterijEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
+            </td>
+            <td>
                 <?php echo HTMLHelper::date($item->inschrijvingStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
             </td>
             <td>
                 <?php echo HTMLHelper::date($item->inschrijvingEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
-            </td>
-            <td class="hidden-phone">
-                <?php echo HTMLHelper::date($item->inschrijvingWijzigenTotDatum, Text::_('COM_KAMPINFO_DATE_FORMAT')); ?>
-            </td>
-            <td class="hidden-phone">
-                <?php echo HTMLHelper::date($item->inschrijvingKosteloosAnnulerenDatum, Text::_('COM_KAMPINFO_DATE_FORMAT')); ?>
-            </td>
-            <td class="hidden-phone">
-                <?php echo HTMLHelper::date($item->inschrijvingGeenRestitutieDatum, Text::_('COM_KAMPINFO_DATE_FORMAT')); ?>
-            </td>
-            <td class="hidden-phone">
-                <?php echo HTMLHelper::date($item->inningsdatum, Text::_('COM_KAMPINFO_DATE_FORMAT')); ?>
             </td>
             <td class="hidden-phone">
                 <?php echo $item->id; ?>

@@ -9,7 +9,7 @@
     <license>LGPL</license>
     <authorEmail>martijn.donath@scouting.nl</authorEmail>
     <authorUrl>https://github.com/mdonath/hit-joomla</authorUrl>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <description>COM_KAMPINFO_DESCRIPTION</description>
 
     <namespace path="src">HITScoutingNL\Component\KampInfo</namespace>

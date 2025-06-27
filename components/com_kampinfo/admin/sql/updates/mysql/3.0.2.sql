@@ -1,0 +1,2 @@
+ALTER TABLE `#__kampinfo_hitproject` ADD COLUMN `loterijStartdatum` DATETIME AFTER `shantiEvenementId`;
+ALTER TABLE `#__kampinfo_hitproject` ADD COLUMN `loterijEinddatum` DATETIME AFTER `loterijStartdatum`;

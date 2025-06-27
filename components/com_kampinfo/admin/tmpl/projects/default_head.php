@@ -18,22 +18,16 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
             <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'p.jaar', $listDirn, $listOrder); ?>
         </th>
         <th scope="col">
+            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_START'); ?>
+        </th>
+        <th scope="col">
+            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_EIND'); ?>
+        </th>
+        <th scope="col">
             <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_START'); ?>
         </th>
         <th scope="col">
             <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_EIND'); ?>
-        </th>
-        <th scope="col" class="hidden-phone">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_WIJZIGEN_TOT'); ?>
-        </th>
-        <th scope="col" class="hidden-phone">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_KOSTELOOS_ANNULEREN'); ?>
-        </th>
-        <th scope="col" class="hidden-phone">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_GEEN_RESTITIE'); ?>
-        </th>
-        <th scope="col" class="hidden-phone">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INNINGSDATUM'); ?>
         </th>
         <th width="5" class="hidden-phone">
             <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>

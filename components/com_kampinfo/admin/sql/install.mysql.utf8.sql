@@ -7,6 +7,8 @@ CREATE TABLE `#__kampinfo_hitproject` (
     `id`                                    INT(11)         NOT NULL    AUTO_INCREMENT
 ,   `jaar`                                  YEAR(4)         NOT NULL
 ,   `shantiEvenementId`                     INT(5)
+,   `loterijStartdatum`                     DATETIME
+,   `loterijEinddatum`                      DATETIME
 ,   `inschrijvingStartdatum`                DATETIME
 ,   `inschrijvingEinddatum`                 DATETIME
 ,   `inschrijvingWijzigenTotDatum`          DATETIME
