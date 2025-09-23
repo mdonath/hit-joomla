@@ -390,7 +390,7 @@
     <fieldset name="leeftijdOuder">
         <field  name="minimumLeeftijdOuder"
                 type="number"
-                label="Minimum leeftijd"
+                label="Minimum leeftijd ouder"
                 description="De minimale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
                 required="true"
                 min="18"
@@ -402,7 +402,7 @@
         />
         <field  name="maximumLeeftijdOuder"
                 type="number"
-                label="Maximum leeftijd"
+                label="Maximum leeftijd ouder"
                 description="De maximale leeftijd van de ouder om mee te mogen doen aan het Ouder-Kind-kamp."
                 required="true"
                 min="18"
