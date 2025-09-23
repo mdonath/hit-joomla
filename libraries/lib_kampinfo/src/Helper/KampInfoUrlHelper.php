@@ -4,8 +4,8 @@ namespace HITScoutingNL\Library\KampInfo\Helper;
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 
 /**
  * KampInfo url helper.
@@ -70,7 +70,7 @@ abstract class KampInfoUrlHelper {
 
     public static function fuzzyIndicatieVol($kamp) {
         if (KampInfoUrlHelper::isVol($kamp)) {
-            if (KampInfoUrlHelper::volOfLoterij() == 'loterij') {
+            if (KampInfoUrlHelper::volOfLoterij($kamp) == 'loterij') {
                 $result = "Er zijn meer aanmeldingen dan plaatsen, er gaat geloot worden!";
             } else {
                 if (intval($kamp->aantalDeelnemers) < intval($kamp->gereserveerd)) {
@@ -112,8 +112,12 @@ abstract class KampInfoUrlHelper {
         return intval($kamp->maximumAantalSubgroepjes) > 0 && intval($kamp->aantalSubgroepen) >= intval($kamp->maximumAantalSubgroepjes);
     }
 
-    public static function volOfLoterij() {
-        // TODO: afhankelijk van datum moet hier 'loterij' of 'vol' terugkomen.
+    public static function volOfLoterij($kamp) {
+        $nu = (new Date('now'))->getTimestamp();
+        $loterijLoopt = $nu >= (new Date($kamp->startLoterij))->getTimestamp() && $nu <= (new Date($kamp->eindLoterij))->getTimestamp();
+        if ($loterijLoopt) {
+            return 'loterij';
+        }   
         return 'vol';
     }
 

@@ -24,7 +24,7 @@ class Kamp {
     public static function icoontjes($kamp, $size = 'small') {
         $result = '';
         if (KampInfoUrlHelper::isVol($kamp)) {
-            $result .= HTMLHelper::_('icoon.specifiek', KampInfoUrlHelper::volOfLoterij(), $size, KampInfoUrlHelper::fuzzyIndicatieVol($kamp));
+            $result .= HTMLHelper::_('icoon.specifiek', KampInfoUrlHelper::volOfLoterij($kamp), $size, KampInfoUrlHelper::fuzzyIndicatieVol($kamp));
         }
         foreach ($kamp->icoontjes as $icoon) {
             $result .= HTMLHelper::_('icoon.image', $icoon, $size);

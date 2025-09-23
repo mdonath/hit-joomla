@@ -52,6 +52,8 @@ class ActiviteitModel extends AbstractKampInfoModel {
                 $db->quoteName('p.id', 'hitproject_id'),
                 $db->quoteName('p.inschrijvingStartdatum', 'startInschrijving'),
                 $db->quoteName('p.inschrijvingEinddatum', 'eindInschrijving'),
+                $db->quoteName('p.loterijStartdatum', 'startLoterij'),
+                $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
                 'IF('.
                     $db->quoteName('c.isouderkind') .
                     ',' .

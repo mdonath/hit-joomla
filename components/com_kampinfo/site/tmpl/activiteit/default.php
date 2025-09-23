@@ -155,7 +155,7 @@ function createInschrijfFormulierLink($template, $id) {
             <?php else : ?>
                 <p>
                     <?php if (KampInfoUrlHelper::isVol($activiteit)) : ?>
-                        <?= HTMLHelper::_('icoon.specifiek', KampInfoUrlHelper::volOfLoterij(), 'small', KampInfoUrlHelper::fuzzyIndicatieVol($activiteit)) ?>
+                        <?= HTMLHelper::_('icoon.specifiek', KampInfoUrlHelper::volOfLoterij($activiteit), 'small', KampInfoUrlHelper::fuzzyIndicatieVol($activiteit)) ?>
                     <?php endif; ?>
                     <span><?= KampInfoUrlHelper::fuzzyIndicatieVol($activiteit) ?></span>
             

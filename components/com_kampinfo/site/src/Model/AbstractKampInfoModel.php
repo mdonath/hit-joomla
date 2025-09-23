@@ -98,6 +98,20 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
                 $db->quoteName('c.hitsite_id') . ' = :hitsiteId',
             ])
             ->bind(':hitsiteId', $hitsiteId, ParameterType::INTEGER)
+
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitsite', 's'),
+                $db->quoteName('c.hitsite_id') .' = '. $db->quoteName('s.id')
+            )
+
+            ->select([
+                $db->quoteName('p.loterijStartdatum', 'startLoterij'),
+                $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
+            ])
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id')
+            )
             ->order([
                 $db->quoteName('c.minimumLeeftijd'),
                 $db->quoteName('c.maximumLeeftijd'),
