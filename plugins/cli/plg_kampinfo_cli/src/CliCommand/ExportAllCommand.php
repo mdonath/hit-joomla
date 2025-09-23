@@ -46,7 +46,7 @@ class ExportAllCommand extends AbstractKampInfoCommand {
     protected function configure(): void {
         $help = <<<EOF
         The <info>%command.name%</info> exports all data from KampInfo to a file
-        \n<info>php %command.full_name% <output-file></info>
+        <info>php %command.full_name% <output-file></info>
         EOF;
         
         $this->addArgument('file', InputArgument::REQUIRED, 'Name of data file');
