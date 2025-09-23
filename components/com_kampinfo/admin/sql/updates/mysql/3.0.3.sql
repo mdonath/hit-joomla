@@ -1,0 +1,2 @@
+ALTER TABLE `#__kampinfo_hitsite` ADD COLUMN `socialmediaFacebook` VARCHAR(100) AFTER `contactPersoonTelefoon`;
+ALTER TABLE `#__kampinfo_hitsite` ADD COLUMN `socialmediaInstagram` VARCHAR(100) AFTER `socialmediaFacebook`;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+
+    <description>Toont het overzicht van social media kanalen van een HIT plaats in een Joomla article</description>
+
+    <name>Content - SocialMedia</name>
+    <version>3.0</version>
+
+    <creationDate>September 2025</creationDate>
+    <copyright>2025</copyright>
+    <author>Martijn Donath</author>
+    <namespace path="src">HITScoutingNL\Plugin\Content\SocialMedia</namespace>
+
+    <files>
+        <folder plugin="socialmedia">services</folder>
+        <folder>src</folder>
+    </files>
+
+    <media folder="media" destination="plg_socialmedia">
+        <folder>images</folder>
+    </media>
+
+</extension>

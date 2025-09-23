@@ -33,6 +33,8 @@ CREATE TABLE `#__kampinfo_hitsite` (
 ,   `contactPersoonNaam`                    VARCHAR(50)
 ,   `contactPersoonEmail`                   VARCHAR(50)
 ,   `contactPersoonTelefoon`                VARCHAR(50)
+,   `socialmediaFacebook`                   VARCHAR(100)
+,   `socialmediaInstagram`                  VARCHAR(100)
 ,   `akkoordHitPlaats`                      BOOLEAN
 ,   `published`                             SMALLINT(3)     NOT NULL    DEFAULT '0'
 ,    PRIMARY KEY (`id`)

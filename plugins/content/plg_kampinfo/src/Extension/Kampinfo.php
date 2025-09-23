@@ -19,7 +19,6 @@ use Psr\Container\ContainerInterface;
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Icoon;
 use HITScoutingNL\Component\KampInfo\Administrator\Service\HTML\Kamp;
 use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 
@@ -112,6 +111,7 @@ final class Kampinfo extends CMSPlugin implements
     }
 
     private function loadLandelijkOverzicht($config) {
+        $output = "";
         if ($this->getParamIfExists($config, 'kopje') == '1') {
             $output .= "<h3>HIT ". $config['plaats'] .' '. $config['jaar'] ."</h3>";
         }
@@ -120,7 +120,6 @@ final class Kampinfo extends CMSPlugin implements
         $this->zetOpVolgorde($query, $config);
 
         $result = $this->haalHitKampen($query);
-        $output = "";
         foreach ($result as $row) {
             $output .= "<div class='kamp'>";
             $output .= $this->span('plaats', $row->plaats);
@@ -231,6 +230,9 @@ final class Kampinfo extends CMSPlugin implements
                 $db->quoteName('c.startDatumTijd'),
                 $db->quoteName('c.eindDatumTijd'),
                 $db->quoteName('c.isouderkind'),
+                // Nodig voor vol/loterij icoon
+                $db->quoteName('p.loterijStartdatum', 'startLoterij'),
+                $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
             ])
             ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
             ->join('LEFT',

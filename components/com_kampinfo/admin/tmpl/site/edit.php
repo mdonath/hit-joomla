@@ -45,6 +45,14 @@ $user = $this->getCurrentUser();
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'socialmedia', 'Social Media'); ?>
+        <div class="row">
+            <div class="col-lg-6">
+                <div><?php echo $this->form->renderFieldset('socialmedia'); ?></div>
+            </div>
+        </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'helpdesk', 'Helpdesk'); ?>
         <div class="row">
             <div class="col-lg-6">
