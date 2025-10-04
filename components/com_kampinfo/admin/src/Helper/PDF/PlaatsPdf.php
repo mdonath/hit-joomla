@@ -159,9 +159,8 @@ class PlaatsPdf extends KampInfoPdf {
         $this->Ln(1);
         $icoontjes =  $kamp->icoontjes;
         $even = false;
-        // TODO: ICOON
         foreach ($icoontjes as $icon) {
-            $img = JPATH_ROOT .DIRECTORY_SEPARATOR. $this->iconFolder .DIRECTORY_SEPARATOR. $icon->naam . $this->iconExtension;
+            $img = JPATH_ROOT .DIRECTORY_SEPARATOR. $this->iconFolder .DIRECTORY_SEPARATOR. $icon->bestandsnaam . $this->iconExtension;
             $this->Image($img, $this->getX(), $this->GetY());
             $this->x += 12;
             $this->Cell(80, 12, $this->c($icon->tekst));

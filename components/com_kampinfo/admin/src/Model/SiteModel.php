@@ -10,6 +10,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\Database\ParameterType;
 
+use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\MenuHelper;
 
 
