@@ -89,7 +89,7 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         $db = $this->getDatabase();
 
         $query = $db->getQuery(true)
-            ->select('*')
+            ->select('c.*')
             ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
             ->where([
                 $db->quoteName('c.published') . ' = 1',
