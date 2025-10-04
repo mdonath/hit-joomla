@@ -6,8 +6,6 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\View\Site;
 
 use Joomla\CMS\MVC\View\AbstractView;
 
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\PdfHtml;
-use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\KampInfoPdf;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\PlaatsPdf;
 
 class PdfView extends AbstractView {
