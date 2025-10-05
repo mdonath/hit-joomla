@@ -88,6 +88,7 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
         
         $output = "";
         if ($result != null && ($this->isGevuld($result->facebook) || $this->isGevuld($result->instagram))) {
+            $output .= "<p>Volg HIT {$result->plaats} via één van onderstaande sociale media-kanalen:</p>";
             $output .= "<p>";
             if ($this->isGevuld($result->facebook)) {
                 $output .= "<a title='Facebook HIT {$result->plaats}' href='{$result->facebook}' target='_blank' rel='noopener'>";
@@ -95,7 +96,7 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
                 $output .= "</a> ";
             }
             if ($this->isGevuld($result->instagram)) {
-                $output .= "<a title='Instagram HIT {$result->plaats}' href='{$result->facebook}' target='_blank' rel='noopener'>";
+                $output .= "<a title='Instagram HIT {$result->plaats}' href='{$result->instagram}' target='_blank' rel='noopener'>";
                 $output .= "  <img src='/media/plg_socialmedia/images/instagram.jpg' alt='Instagram' width='64' height='64'>";
                 $output .= "</a>";
             }
