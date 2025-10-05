@@ -72,8 +72,8 @@ class ActiviteitModel extends AbstractKampInfoModel {
             $db->setQuery($query);
             $activiteiten = $db->loadObjectList();
 
-            if (count($activiteiten) != 1) {
-                throw new GenericDataException("0 of meer dan 1 gevonden met id $hitcampId in jaar $jaar.", 500);
+            if (\count($activiteiten) != 1) {
+                throw new GenericDataException("0 of meer dan 1 gevonden met id $hitcampId", 500);
             }
 
             $activiteit = $activiteiten[0];

@@ -87,7 +87,7 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
         $result = $this->getData($config);
         
         $output = "";
-        if ($this->isGevuld($result->facebook) || $this->isGevuld($result->instagram)) {
+        if ($result != null && ($this->isGevuld($result->facebook) || $this->isGevuld($result->instagram))) {
             $output .= "<p>";
             if ($this->isGevuld($result->facebook)) {
                 $output .= "<a title='Facebook HIT {$result->plaats}' href='{$result->facebook}' target='_blank' rel='noopener'>";
