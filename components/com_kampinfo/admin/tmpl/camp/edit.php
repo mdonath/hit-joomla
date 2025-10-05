@@ -9,6 +9,8 @@ use Joomla\CMS\Router\Route;
 $wa = $this->document->getWebAssetManager();
 $wa ->useScript('keepalive')
     ->useScript('form.validate');
+
+$user = $this->getCurrentUser();
 ?>
 
 <form action="<?= Route::_('index.php?option=com_kampinfo&layout=edit&id=' . (int) $this->item->id) ?>"
@@ -140,41 +142,41 @@ $wa ->useScript('keepalive')
         </div>
         <?= HTMLHelper::_('uitab.endTab') ?>
 
-        <?= HTMLHelper::_('uitab.addTab', 'myTab', 'admin', 'Admin') ?>
-        <div class="row">
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <fieldset id="shanti" class="options-form">
-                    <legend>SOL</legend>
-                    <div><?= $this->form->renderFieldset('shanti') ?></div>
-                </fieldset>
-                <fieldset id="inschrijvingen" class="options-form">
-                    <legend>Inschrijvingen</legend>
-                    <div><?= $this->form->renderFieldset('inschrijvingen') ?></div>
-                </fieldset>
-            </div>
-            <div class="col-md-6">
-                <fieldset id="publish" class="options-form">
-                    <legend>Publiceren</legend>
-                    <div><?= $this->form->renderFieldset('publish') ?></div>
-                </fieldset>
-            </div>
-        </div>
-        <?= HTMLHelper::_('uitab.endTab') ?>
-
-        <?= HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('JCONFIG_PERMISSIONS_LABEL')) ?>
-        <div class="row">
-                <div class="col-lg-12">
-                    <fieldset id="fieldset-rules" class="options-form">
-                        <legend><?= Text::_('JCONFIG_PERMISSIONS_LABEL') ?></legend>
-                        <div>
-                            <?= $this->form->renderFieldset('permissions') ?>
-                        </div>
+        <?php if ($user->authorise('core.admin', 'com_kampinfo')) { ?>
+            <?= HTMLHelper::_('uitab.addTab', 'myTab', 'admin', 'Admin') ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset id="shanti" class="options-form">
+                        <legend>SOL</legend>
+                        <div><?= $this->form->renderFieldset('shanti') ?></div>
+                    </fieldset>
+                    <fieldset id="inschrijvingen" class="options-form">
+                        <legend>Inschrijvingen</legend>
+                        <div><?= $this->form->renderFieldset('inschrijvingen') ?></div>
+                    </fieldset>
+                </div>
+                <div class="col-md-6">
+                    <fieldset id="publish" class="options-form">
+                        <legend>Publiceren</legend>
+                        <div><?= $this->form->renderFieldset('publish') ?></div>
                     </fieldset>
                 </div>
             </div>
-        <?= HTMLHelper::_('uitab.endTab') ?>
+            <?= HTMLHelper::_('uitab.endTab') ?>
+
+            <?= HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('JCONFIG_PERMISSIONS_LABEL')) ?>
+            <div class="row">
+                    <div class="col-lg-12">
+                        <fieldset id="fieldset-rules" class="options-form">
+                            <legend><?= Text::_('JCONFIG_PERMISSIONS_LABEL') ?></legend>
+                            <div>
+                                <?= $this->form->renderFieldset('permissions') ?>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            <?= HTMLHelper::_('uitab.endTab') ?>
+        <?php } ?>
 
         <?= HTMLHelper::_('uitab.endTabSet') ?>
     </div>
