@@ -56,12 +56,6 @@ class HtmlView extends BaseHtmlView {
             $toolbar->addNew('project.add');
         }
 
-        if ($canDo->get('hitproject.edit')) {
-            $toolbar
-                ->edit('project.edit')
-                ->listCheck(true);
-        }
-
         if ($canDo->get('hitproject.delete')) {
             $toolbar
                 ->delete('projects.delete')

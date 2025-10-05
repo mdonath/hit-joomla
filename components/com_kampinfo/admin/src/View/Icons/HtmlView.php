@@ -56,12 +56,6 @@ class HtmlView extends BaseHtmlView {
             $toolbar->addNew('icon.add');
         }
 
-        if ($canDo->get('hiticon.edit')) {
-            $toolbar
-                ->edit('icon.edit')
-                ->listCheck(true);
-        }
-
         if ($canDo->get('hiticon.delete')) {
             $toolbar
                 ->delete('icons.delete')

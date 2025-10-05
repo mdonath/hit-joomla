@@ -9,8 +9,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
-
 
 class HtmlView extends BaseHtmlView {
 
@@ -45,7 +43,7 @@ class HtmlView extends BaseHtmlView {
         parent::display($tpl);
     }
 
-    protected function addToolbar():void  {
+    protected function addToolbar(): void {
         $canDo = ContentHelper::getActions('com_kampinfo', 'camp', $this->state->get('filter.plaats'));
         $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();
@@ -57,15 +55,8 @@ class HtmlView extends BaseHtmlView {
             $toolbar->addNew('camp.add');
         }
 
-        // Button - Edit
-        if ($canDo->get('hitcamp.edit')) {
-            $toolbar
-                ->edit('camp.edit')
-                ->listCheck(true);
-        }
-
         // Button - Delete
-        if ($canDo->get('hitcamp.delete')) {
+        if ($canDo->get('hitcamp.delete') || $this->hasDeleteableItems($user)) {
             $toolbar
                 ->delete('camps.delete')
                 ->message('JGLOBAL_CONFIRM_DELETE')
@@ -114,6 +105,15 @@ class HtmlView extends BaseHtmlView {
         if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');
         }
+    }
+
+    private function hasDeleteableItems($user): bool {
+        foreach ($this->items as $item) {
+            if ($user->authorise('hitcamp.delete', 'com_kampinfo.camp.' . (int) $item->id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

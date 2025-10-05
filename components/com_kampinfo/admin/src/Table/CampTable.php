@@ -32,7 +32,7 @@ class CampTable extends Table {
     protected function _getAssetName() {
         $k = $this->_tbl_key;
         $id = (int) $this->$k;
-        return 'com_kampinfo.camp.'.$id;
+        return "com_kampinfo.camp.{$id}";
     }
 
     protected function _getAssetTitle() {
