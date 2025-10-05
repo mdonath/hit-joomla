@@ -172,7 +172,8 @@ class SiteTable extends Table {
             }
         }
 
-        $app->enqueueMessage("Bij HIT {$plaatsNaam} zijn  {\count($namen)} kampen overgezet!");
+        $aantalKampenOvergezet = \count($namen);
+        $app->enqueueMessage("Bij HIT {$plaatsNaam} zijn {$aantalKampenOvergezet} kampen overgezet!");
         $app->enqueueMessage("'" . implode("', '", $namen) . "'");
         return true;
     }
