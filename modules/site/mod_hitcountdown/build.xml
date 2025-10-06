@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="Site Module HIT Countdown" default="dist" basedir=".">
+
+    <property name="cfg.prefix" value="mod_" />
+    <property name="cfg.name" value="hitcountdown" />
+    <property name="cfg.metadata.xml" value="${cfg.prefix}${cfg.name}.xml" />
+
+    <import file="../../../common/build.xml" />
+
+</project>

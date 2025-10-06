@@ -1,0 +1,48 @@
+.mhc-countdown-wrapper h2, .mhc-countdown-wrapper p {
+    text-align: center;
+}
+
+ul#mhc-countdown {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    border-width: 1px 0px !important;
+    overflow: hidden;
+    font-weight: bold;
+    /* Override with module parameters */
+    width: 75%;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+ul#mhc-countdown li {
+    margin: 0 0;
+    padding: 0;
+    display: inline-block;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+ul#mhc-countdown.showthree li {
+    width: 31%;
+}
+
+ul#mhc-countdown.showfour li {
+    width: 22%;
+}
+
+ul#mhc-countdown .label {
+    font-size: .5rem;
+    text-transform: uppercase;
+    /* Override with module parameters */
+    color: #000000;
+}
+
+@media only screen and (max-width: 768px) {
+
+    ul#mhc-countdown li {
+        width: 23%;
+        font-size: x-large;
+    }
+
+}

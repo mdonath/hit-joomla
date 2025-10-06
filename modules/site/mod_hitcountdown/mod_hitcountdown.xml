@@ -1,0 +1,145 @@
+<extension type="module" client="site" method="upgrade">
+
+    <description>MOD_HITCOUNTDOWN_XML_DESC</description>
+
+    <name>MOD_HITCOUNTDOWN_XML_NAME</name>
+    <version>1.0.10</version>
+
+    <creationDate>Oktober 2025</creationDate>
+    <copyright>2025</copyright>
+    <author>Martijn Donath</author>
+    <namespace path="src">HITScoutingNL\Module\HitCountdown</namespace>
+
+    <files>
+        <folder module="mod_hitcountdown">services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+        <folder>language</folder>
+    </files>
+
+    <media destination="mod_hitcountdown" folder="media">
+        <filename>joomla.asset.json</filename>
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="endDate"
+                    type="calendar"
+                    default="now +1 month"
+                    label="MOD_HITCOUNTDOWN_ENDDATE_LABEL"
+                    description="MOD_HITCOUNTDOWN_ENDDATE_DESC"
+                    class="input-small"
+                    required="true"
+                    filter="user_utc"
+                    showtime="true"
+                    todaybutton="false"
+                    filltable="false"
+                    translateformat="true"
+                />
+                <field
+                    name="someOffset"
+                    type="number"
+                    default="0"
+                    label="MOD_HITCOUNTDOWN_SOMEOFFSET_LABEL"
+                    description="MOD_HITCOUNTDOWN_SOMEOFFSET_DESC"
+                />
+                <field
+                    name="showTitle"
+                    type="radio"
+                    default="1"
+                    label="MOD_HITCOUNTDOWN_SHOWTITLE_LABEL"
+                    description="MOD_HITCOUNTDOWN_SHOWTITLE_DESC"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field
+                    name="title"
+                    type="text"
+                    default="The Countdown has started..."
+                    showon="showTitle:1"
+                    label="MOD_HITCOUNTDOWN_TITLE_LABEL"
+                    description="MOD_HITCOUNTDOWN_TITLE_DESC"
+                />
+
+                <field
+                    name="showSubTitle"
+                    type="radio"
+                    default="1"
+                    label="MOD_HITCOUNTDOWN_SHOWSUBTITLE_LABEL"
+                    description="MOD_HITCOUNTDOWN_SHOWSUBTITLE_DESC"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field
+                    name="subtitle"
+                    type="text"
+                    default="Let the waiting begin"
+                    showon="showSubTitle:1"
+                    label="MOD_HITCOUNTDOWN_SUBTITLE_LABEL"
+                    description="MOD_HITCOUNTDOWN_SUBTITLE_DESC"
+                />
+
+                <field
+                    name="showSeconds"
+                    type="radio"
+                    default="1"
+                    label="MOD_HITCOUNTDOWN_SHOWSECONDS_LABEL"
+                    description="MOD_HITCOUNTDOWN_SHOWSECONDS_DESC"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
+                <!-- Styling -->
+                <field
+                    name="widthOnDesktop"
+                    type="range"
+                    default="75"
+                    min="0"
+                    max="100"
+                    step="1"
+                    label="MOD_HITCOUNTDOWN_DESKTOPWIDTH_LABEL"
+                    description="MOD_HITCOUNTDOWN_DESKTOPWIDTH_DESC"
+                />
+                <field
+                    name="widthOnMobile"
+                    type="range"
+                    default="100"
+                    min="0"
+                    max="100"
+                    step="1"
+                    label="MOD_HITCOUNTDOWN_MOBILEWIDTH_LABEL"
+                    description="MOD_HITCOUNTDOWN_MOBILEWIDTH_DESC"
+                />
+                <field
+                    name="colorCounters"
+                    type="color"
+                    default="#000000"
+                    label="MOD_HITCOUNTDOWN_COLORCOUNTERS_LABEL"
+                    description="MOD_HITCOUNTDOWN_COLORCOUNTERS_DESC"
+                />
+                <field
+                    name="colorLabels"
+                    type="color"
+                    default="#000000"
+                    label="MOD_HITCOUNTDOWN_COLORLABELS_LABEL"
+                    description="MOD_HITCOUNTDOWN_COLORLABELS_DESC"
+                />
+                <field
+                    name="colorBorders"
+                    type="color"
+                    default="#000000"
+                    label="MOD_HITCOUNTDOWN_COLORBORDERS_LABEL"
+                    description="MOD_HITCOUNTDOWN_COLORBORDERS_DESC"
+                />
+            </fieldset>
+        </fields>
+    </config>
+
+</extension>

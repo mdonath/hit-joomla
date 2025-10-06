@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "mod_hitcountdown",
+  "version": "1.0.0",
+  "description": "Web asset file for mod_hitcountdown",
+  "license": "GPL-2.0-or-later",
+  "assets": [
+    {
+      "name": "jquery-easing",
+      "type": "script",
+      "dependencies": [
+        "jquery"
+      ],
+      "uri": "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
+    },
+    {
+      "name": "mod_hitcountdown.countdown",
+      "type": "script",
+      "uri": "mod_hitcountdown/countdown.js",
+      "dependencies": [
+        "core",
+        "jquery",
+        "jquery-easing"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+
+    {
+      "name": "mod_hitcountdown.countdown",
+      "type": "style",
+      "uri": "mod_hitcountdown/countdown.css",
+      "version": "1.0.0"
+    }
+  ]
+}
