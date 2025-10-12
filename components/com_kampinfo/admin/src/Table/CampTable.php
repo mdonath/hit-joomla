@@ -64,6 +64,10 @@ class CampTable extends Table {
         $result = parent::load($keys, $reset);
         $this->icoontjes = explode(',', $this->icoontjes);
         $this->activiteitengebieden = explode(',', $this->activiteitengebieden);
+        // auto fix old data
+        if ($this->subgroepsamenstellingExtra == '0') {
+            $this->subgroepsamenstellingExtra = '1';
+        }
         return $result;
     }
 
