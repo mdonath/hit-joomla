@@ -397,7 +397,7 @@
                 max="100"
                 default="21"
                 filter="integer"
-                validate="number"
+                validate="NumberIfShown"
                 showon="isouderkind:1"
         />
         <field  name="maximumLeeftijdOuder"
@@ -409,7 +409,7 @@
                 max="100"
                 default="88"
                 filter="integer"
-                validate="number"
+                validate="NumberIfShown"
                 showon="isouderkind:1"
         />
         <field  name="noteGeenOuderKindKamp"
