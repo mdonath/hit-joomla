@@ -27,6 +27,13 @@
         <fields name="params">
             <fieldset name="basic">
                 <field
+                    name="elementId"
+                    type="string"
+                    default="countdown"
+                    label="MOD_HITCOUNTDOWN_ELEMENTID_LABEL"
+                    description="MOD_HITCOUNTDOWN_ELEMENTID_DESC"
+                />
+                <field
                     name="endDate"
                     type="calendar"
                     default="now +1 month"

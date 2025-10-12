@@ -14,9 +14,23 @@
       "uri": "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
     },
     {
-      "name": "mod_hitcountdown.countdown",
+      "name": "mod_hitcountdown.scripts",
       "type": "script",
       "uri": "mod_hitcountdown/countdown.js",
+      "dependencies": [
+        "core",
+        "jquery",
+        "mod_hitcountdown.HitCounter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "mod_hitcountdown.HitCounter",
+      "type": "script",
+      "uri": "mod_hitcountdown/HitCounter.js",
       "dependencies": [
         "core",
         "jquery",
@@ -27,9 +41,8 @@
       },
       "version": "1.0.0"
     },
-
     {
-      "name": "mod_hitcountdown.countdown",
+      "name": "mod_hitcountdown.styles",
       "type": "style",
       "uri": "mod_hitcountdown/countdown.css",
       "version": "1.0.0"

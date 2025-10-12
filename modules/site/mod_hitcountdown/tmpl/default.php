@@ -4,16 +4,11 @@ defined('_JEXEC') or die;
 $document = $app->getDocument();
 $wa = $document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('mod_hitcountdown');
-$wa->useScript('mod_hitcountdown.countdown');
-$wa->useStyle('mod_hitcountdown.countdown');
+$wa->useScript('mod_hitcountdown.scripts');
+$wa->useStyle('mod_hitcountdown.styles');
 
-$endDate = $params->get('endDate');
-$someOffset = $params->get('someOffset', 0);
 
-$document->addScriptOptions('mod_hitcountdown.vars', [
-    'endDate' => $endDate,
-    'someOffset' => $someOffset,
-]);
+$elementId = $params->get('elementId', 'countdown');
 
 $widthOnDesktop = $params->get('widthOnDesktop', 75);
 $widthOnMobile = $params->get('widthOnMobile', 100);
@@ -22,27 +17,36 @@ $colorLabels = $params->get('colorLabels', '#000000');
 $colorBorders = $params->get('colorBorders', '#000000');
 
 $wa->addInlineStyle("
-    ul#mhc-countdown {
+    #{$elementId} ul#mhc-countdown {
         width: {$widthOnDesktop}%;
         color: {$colorCounters};
         border: 1px solid {$colorBorders};
     }
 
-    ul#mhc-countdown .label {
+    #{$elementId} ul#mhc-countdown .label {
         color: {$colorLabels};
     }
 
     @media only screen and (max-width: 768px) {
-        ul#mhc-countdown {
+        #{$elementId} ul#mhc-countdown {
             width: {$widthOnMobile}%;
         }
     }
 ");
 
+$endDate = $params->get('endDate');
+$someOffset = $params->get('someOffset', 0);
+
+$wa->addInlineScript(
+    "window.startTimer('{$endDate}', {$someOffset}, '{$elementId}');",
+    ['name' => "mod_hitcountdown.init{$elementId}"],
+    ['type' => 'module']
+);
+
 $showSeconds = $params->get('showSeconds', 1);
 ?>
 
-<div class="mhc-countdown-wrapper">
+<div id='<?="{$elementId}"?>' class="mhc-countdown-wrapper">
 
     <?php if ($params->get('showTitle', 1)) { ?>
         <h2><?= $params->get('title', '') ?></h2>
