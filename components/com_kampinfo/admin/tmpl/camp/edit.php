@@ -11,6 +11,8 @@ $wa ->useScript('keepalive')
     ->useScript('form.validate');
 
 $user = $this->getCurrentUser();
+
+$canEditPlaats  = $user->authorise('hitsite.edit', 'com_kampinfo.site.' . (int)$this->item->hitsite_id);
 ?>
 
 <form action="<?= Route::_('index.php?option=com_kampinfo&layout=edit&id=' . (int) $this->item->id) ?>"
@@ -44,7 +46,9 @@ $user = $this->getCurrentUser();
                 <fieldset id="akkoord" class="options-form">
                     <legend>Akkoord</legend>
                     <div><?= $this->form->renderFieldset('akkoordkamp') ?><div>
-                    <div><?= $this->form->renderFieldset('akkoordplaats') ?><div>
+                    <?php if ($canEditPlaats) : ?>
+                        <div><?= $this->form->renderFieldset('akkoordplaats') ?><div>
+                    <?php endif; ?>
                 </fieldset>
             </div>
             <div class="col-md-6">

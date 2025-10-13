@@ -26,8 +26,7 @@ $manifest = $this->getModel()->getItems();
 
             <h2>Handleidingen:</h2>
             <ul>
-                <li><a href="https://hit.scouting.nl/meehelpen-promotie/medewerker-downloads/2-handleiding-kampinfo-voor-kampen">Handleiding voor kampen</a></li>
-                <li><a href="https://hit.scouting.nl/meehelpen-promotie/medewerker-downloads/1-handleiding-kampinfo-voor-plaatsen">Handleiding voor plaatsen</a></li>
+                <li><a href="https://hit.scouting.nl/meehelpen/medewerker-handleidingen/handleiding-kampinfo">Handleiding voor plaatsen en kampen</a></li>
             </ul>
 
             <hr>

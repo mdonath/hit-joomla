@@ -279,7 +279,7 @@
         <field  name="fotoNote"
                 type="note"
                 label="Graag foto's uploaden in de juist map"
-                description="Afbeeldingen moeten in de map kampinfo/«jaar»/«jouw HIT plaats»."
+                description="Afbeeldingen moeten in de map 'images/«jouw HIT plaats»/«jaar»/kampinfo/'."
                 class="alert alert-info"
         />
         <field  name="webadresFoto1"
