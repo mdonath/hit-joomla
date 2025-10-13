@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_hitdownloads">
+
+    <section name="component">
+        <!-- Wie mag de component level permissions via de 'Options' toolbar button bewerken? -->
+        <action name="core.admin"           title="JACTION_ADMIN" />
+        <!-- Kun je de instellingen van KampInfo wijzigen? -->
+        <action name="core.options"         title="JACTION_OPTIONS"/>
+        <!-- Kun je gebruik maken van HIT Downloads? -->
+        <action name="core.manage"          title="JACTION_MANAGE" />
+    </section>
+
+</access>

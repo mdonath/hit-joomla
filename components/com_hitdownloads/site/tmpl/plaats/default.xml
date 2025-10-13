@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="Downloads van een HIT Plaats">
+        <message>Overzicht van alle downloads van een HIT Plaats</message>
+    </layout>
+    <fields 
+            name="request"
+            addfieldprefix="HITScoutingNL\Component\HitDownloads\Administrator\Field"
+    >
+        <fieldset
+                name="request"
+        >
+            <field
+                    name="plaats"
+                    type="text"
+                    label="Naam HIT Plaats"
+                    description="Voor welke plaats wil je de HIT downloads tonen?"
+            />
+        </fieldset>
+    </fields>
+</metadata>
