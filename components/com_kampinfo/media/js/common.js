@@ -23,34 +23,28 @@ function laatstBijgewerktOp() {
  * @return {String} Met een mooie tekst over hoe vol het kamp is.
  */
 function fuzzyIndicatieVol(kamp) {
-    var result;
-    if (isVol(kamp)) {
-        if (kamp.aantalDeelnemers < kamp.gereserveerd) {
-            var eenAantal = kamp.gereserveerd - kamp.aantalDeelnemers;
-            result = "Vol: alleen nog inschrijven op "+ eenAantal +" gereserveerde " + meervoudPlaats(eenAantal) + ".";
-        } else {
-            result = "Vol: inschrijven is niet meer mogelijk.";
-        }
-    } else {
-        var watMaaktHetKampVol = Math.max(kamp.maximumAantalDeelnemers/10, kamp.subgroepsamenstellingMinimum);
-        var over = kamp.maximumAantalDeelnemers - kamp.gereserveerd;
-        if (watMaaktHetKampVol < over) {
-            if (kamp.gereserveerd == 0) {
-                result = "Nog ruim voldoende plaatsen beschikbaar.";
-            } else {
-                result = "Nog voldoende plaatsen beschikbaar.";
-            }
-        } else {
-            result = "Bijna vol: Nog "+ over +" "+ meervoudPlaats(over) +" beschikbaar.";
-        }
+    if (isInschrijvingActief(kamp) && !isLoterijActief(kamp)) {
+        return kamp.fuzzyIndicatieVol;
     }
-    return result
-    // + " ["+kamp.minimumAantalDeelnemers + " (" + kamp.aantalDeelnemers + " | " + kamp.gereserveerd + ") " + kamp.maximumAantalDeelnemers + "]";
-    ;
+    return '';
+}
+
+function isInschrijvingActief(activiteit) {
+    var nu = (new Date()).getTime();
+    var startMoment = parseDateTime(activiteit.startInschrijving).getTime();
+    var stopMoment = parseDateTime(activiteit.eindInschrijving).getTime();
+    return (nu >= startMoment) && (nu <= stopMoment);
+}
+
+function isLoterijActief(activiteit) {
+    var nu = (new Date()).getTime();
+    var startMoment = parseDateTime(activiteit.startLoterij).getTime();
+    var stopMoment = parseDateTime(activiteit.eindLoterij).getTime();
+    return (nu >= startMoment) && (nu <= stopMoment);
 }
 
 function meervoudPlaats(eenAantal) {
-    return "plaats" + ((eenAantal!=1) ? "en" : "");
+    return "plaats" + ((eenAantal != 1) ? "en" : "");
 }
 
 /**
@@ -112,7 +106,7 @@ function parseDate(s) {
  * @returns {Date}
  */
 function parseDateTime(s) {
-    var regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]+):([0-9]+):([0-9]+)/;
+    var regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})[T\s]?([0-9]+):([0-9]+):([0-9]+)/;
     var match = regex.exec(s);
     return createDateTime(
             match[1], match[2], match[3],

@@ -5,11 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Site\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\View\GenericDataException;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\Database\ParameterType;
 
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 /**
  * KampInfo Overzichtplaats Model

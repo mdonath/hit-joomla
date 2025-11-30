@@ -5,7 +5,6 @@ namespace HITScoutingNL\Component\KampInfo\Site\View\Inschrijvingen;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 

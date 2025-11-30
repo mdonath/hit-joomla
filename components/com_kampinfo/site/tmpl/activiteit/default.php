@@ -26,6 +26,27 @@ $eind->setTimezone($timezone);
 $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 $isGeannuleerd = $activiteit->geannuleerd === 1;
 
+function isInschrijvingActief($activiteit) {
+    return isActief(
+        $activiteit,
+        $activiteit->startInschrijving,
+        $activiteit->eindInschrijving
+    );
+}
+
+function isLoterijActief($activiteit) {
+    return isActief(
+        $activiteit,
+        $activiteit->startLoterij,
+        $activiteit->eindLoterij
+    );
+}
+
+function isActief($activiteit, $beginMoment, $eindMoment) {
+    $nu = (new Date('now'))->getTimestamp();
+    return  $nu >= ((new Date($beginMoment))->getTimestamp()) 
+            && $nu <= ((new Date($eindMoment))->getTimestamp());
+}
 function replaceVariables($text, $act) {
     foreach ($act as $key => $value) {
         if (!\is_array($value) && isset($value)) {
@@ -188,15 +209,7 @@ function createInschrijfFormulierLink($template, $id) {
                 <?php endif; ?>
                 
                 <!-- Inschrijfknoppen -->
-                <?php
-                    $nu = (new Date('now'))->getTimestamp();
-                    $isInschrijvingGestart = $nu >= ((new Date($activiteit->startInschrijving))->getTimestamp());
-                    $stopMoment = (new Date($activiteit->eindInschrijving))->getTimestamp();
-                    $isInschrijvingNogNietGestopt = ($nu <= $stopMoment);
-                ?>
-                
-                <?php if ($activiteit->shantiFormuliernummer > 0 && $isInschrijvingGestart && $isInschrijvingNogNietGestopt) : ?>
-                    <p><b>Let op! Doe de HIT inschrijving bij voorkeur op een laptop of desktop computer. De inschrijving kan op een tablet fout gaan!</b></p>
+                <?php if (isInschrijvingActief($activiteit) && !isLoterijActief($activiteit)) : ?>
                     <div>
                     <?php if ($activiteit->ouderShantiFormuliernummer > 0) : ?>
                         <span>Inschrijven met: </span>

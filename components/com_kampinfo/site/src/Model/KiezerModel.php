@@ -10,6 +10,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\ParameterType;
 
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
 
 
@@ -44,6 +45,10 @@ class KiezerModel extends AbstractKampInfoModel {
 
         $query = $db->getQuery(true)
             ->select([
+                $db->quoteName('p.inschrijvingStartdatum', 'startInschrijving'),
+                $db->quoteName('p.inschrijvingEinddatum', 'eindInschrijving'),
+                $db->quoteName('p.loterijStartdatum', 'startLoterij'),
+                $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
                 $db->quoteName('c.naam'),
                 $db->quoteName('c.shantiFormuliernummer'),
                 $db->quoteName('c.minimumLeeftijd'),
@@ -66,6 +71,14 @@ class KiezerModel extends AbstractKampInfoModel {
                 $db->quoteName('c.maximumLeeftijdOuder'),
             ])
             ->from($db->quoteName('#__kampinfo_hitcamp', 'c'))
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitsite', 's'),
+                $db->quoteName('c.hitsite_id') .' = '. $db->quoteName('s.id')
+            )
+            ->join('LEFT',
+                $db->quoteName('#__kampinfo_hitproject', 'p'),
+                $db->quoteName('s.hitproject_id') .' = '. $db->quoteName('p.id')
+            )
             ->where($db->quoteName('c.hitsite_id'). ' = :hitsiteId')
             ->bind(':hitsiteId', $hitsiteId)
             ->where($db->quoteName('c.published') . ' = 1')
@@ -82,6 +95,7 @@ class KiezerModel extends AbstractKampInfoModel {
             foreach ($kampenInPlaats as $kamp) {
                 $kamp->iconen = IcoonUtil::explodeIcoontjes($kamp, $iconenMap);
                 unset($kamp->icoontjes);
+                $kamp->fuzzyIndicatieVol = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
             }
             return $kampenInPlaats;
         } catch (\Exception $e) {
