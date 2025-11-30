@@ -18,20 +18,20 @@
     <form id="filter" name="filter">
         <p><strong>Stap 1:</strong> Vul eerst je geboortedatum in. Je ziet nu alle HITs voor jouw leeftijd.</p>
         <p>
-            <select name="geboortedag" id="geboortedag" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
+            <select name="filter_geboortedag" id="filter_geboortedag" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
                 <option value=""></option>
             </select>
-                <select name="geboortemaand" id="geboortemaand" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
+                <select name="filter_geboortemaand" id="filter_geboortemaand" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
                 <option value=""></option>
             </select>
-                <select name="geboortejaar" id="geboortejaar" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
+                <select name="filter_geboortejaar" id="filter_geboortejaar" onchange="updateGeboorteDatumEvent();" class="cookiestore kiezerinput">
                 <option value=""></option>
             </select>
             <span id="leeftijd"></span>
         </p>
     
         <p><strong>Stap 2:</strong> Geef het bedrag aan dat je voor de HIT wilt betalen. Ongeveer
-            <select name="budget" id="budget" onchange="updateBudgetEvent();" class="cookiestore kiezerinput">
+            <select name="filter_budget" id="filter_budget" onchange="updateBudgetEvent(this);" class="cookiestore kiezerinput">
                 <option value="-1"></option>
             </select>
             euro.
@@ -45,16 +45,16 @@
         </ul>
 
         <!-- Placeholder voor de pictogrammen / icoontjes -->
-        <div id="pictos"></div>
+        <div id="filter_pictos"></div>
 
         <p><strong>Stap 4:</strong> Kies eventueel een plaats uit:
-            <select name="plaats" id="plaats" onchange="updatePlaatsEvent();" class="cookiestore kiezerinput">
+            <select name="filter_plaats" id="filter_plaats" onchange="updatePlaatsEvent(this);" class="cookiestore kiezerinput">
                 <option value="-1"></option>
             </select>
         </p>
         
         <p><strong>Stap 5:</strong> Samen met ouder en kind:
-            <select name="ouderkind" id="ouderkind" onchange="updateOuderKindEvent();" class="cookiestore kiezerinput">
+            <select name="filter_ouderkind" id="filter_ouderkind" onchange="updateOuderKindEvent(this);" class="cookiestore kiezerinput">
                 <option value="-1"></option>
                 <option value="1">Ja</option>
                 <option value="0">Nee</option>

@@ -1,6 +1,7 @@
 // Copyright (c) 2012, HIT Scouting Nederland
+"use strict";
 
-var kampinfoConfig = {
+const kampinfoConfig = {
     "iconFolderLarge" : null,
     "iconExtension" : null
 };
@@ -30,16 +31,16 @@ function fuzzyIndicatieVol(kamp) {
 }
 
 function isInschrijvingActief(activiteit) {
-    var nu = (new Date()).getTime();
-    var startMoment = parseDateTime(activiteit.startInschrijving).getTime();
-    var stopMoment = parseDateTime(activiteit.eindInschrijving).getTime();
+    const nu = (new Date()).getTime();
+    const startMoment = parseDateTime(activiteit.startInschrijving).getTime();
+    const stopMoment = parseDateTime(activiteit.eindInschrijving).getTime();
     return (nu >= startMoment) && (nu <= stopMoment);
 }
 
 function isLoterijActief(activiteit) {
-    var nu = (new Date()).getTime();
-    var startMoment = parseDateTime(activiteit.startLoterij).getTime();
-    var stopMoment = parseDateTime(activiteit.eindLoterij).getTime();
+    const nu = (new Date()).getTime();
+    const startMoment = parseDateTime(activiteit.startLoterij).getTime();
+    const stopMoment = parseDateTime(activiteit.eindLoterij).getTime();
     return (nu >= startMoment) && (nu <= stopMoment);
 }
 
@@ -60,6 +61,7 @@ function isVol(kamp) {
 function isVolQuaGroepjes(kamp) {
     return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
 }
+
 /**
  * Past de naam aan op de manier waarop Joomla dat ook gedaan heeft.
  *
@@ -82,6 +84,7 @@ function urlified(naam) {
 
 /**
  * Geeft een datum met z'n tijd terug in leesbaar formaat.
+ * 
  * @param datum De datum.
  * @returns {String}
  */
@@ -92,11 +95,16 @@ function toDateTime(datum) {
 
 /** 
  * Maakt een Date van een string in het formaat: "yyyy-mm-dd".
- * @param datum De datum.
+ * 
+ * @param s De datum.
  * @returns {Date}
  */
 function parseDate(s) {
-    return createDate(s.substring(0,4), s.substring(5,7), s.substring(8,10));
+    return createDate(
+        s.substring(0,  4),
+        s.substring(5,  7),
+        s.substring(8, 10)
+    );
 }
 
 /**
@@ -106,8 +114,12 @@ function parseDate(s) {
  * @returns {Date}
  */
 function parseDateTime(s) {
-    var regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})[T\s]?([0-9]+):([0-9]+):([0-9]+)/;
-    var match = regex.exec(s);
+    const regex = /([0-9]{4})-([0-9]{2})-([0-9]{2})[T\s]?([0-9]+):([0-9]+):([0-9]+)/;
+    const match = regex.exec(s);
+    if (!match) {
+        return '';
+    }
+
     return createDateTime(
             match[1], match[2], match[3],
             match[4], match[5], match[6]
@@ -116,6 +128,7 @@ function parseDateTime(s) {
 
 /**
  * Maakt een Date met tijd 0,0,0 van opgegeven parameters.
+ * 
  * @param year
  * @param month
  * @param day
@@ -127,6 +140,7 @@ function createDate(year, month, day) {
 
 /**
  * Maakt een Date van opgegeven parameters.
+ * 
  * @param year
  * @param month
  * @param day
@@ -136,7 +150,7 @@ function createDate(year, month, day) {
  * @returns {Date}
  */
 function createDateTime(year, month, day, hour, min, sec) {
-    var result = new Date();
+    const result = new Date();
     result.setYear(year);
     result.setMonth(month - 1);
     result.setDate(day);
@@ -153,14 +167,14 @@ function createDateTime(year, month, day, hour, min, sec) {
 function extend() {
     $.extend({
         getUrlVars: function() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
+            const result = [];
+            const hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (let i = 0; i < hashes.length; i++) {
+                const hash = hashes[i].split('=');
+                result.push(hash[0]);
+                result[hash[0]] = hash[1];
             }
-            return vars;
+            return result;
         },
         getUrlVar: function(name) {
             return $.getUrlVars()[name];
