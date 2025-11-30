@@ -169,6 +169,17 @@ class PlaatsPdf extends KampInfoPdf {
             }
             $even = !$even;
         }
+
+        // Afbeeldingen
+        $this->subheader('Afbeeldingen');
+        $this->improvedTable(
+            ['Nr' => 15, 'Afbeeldingpad' => 0],
+             [
+                ['1', $kamp->webadresFoto1],
+                ['2', $kamp->webadresFoto2],
+                ['3', $kamp->webadresFoto3],
+                ['youtube', $kamp->youtube]
+             ]);
     }
 
 }
