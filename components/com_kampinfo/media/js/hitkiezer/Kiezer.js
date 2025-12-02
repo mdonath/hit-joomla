@@ -1,4 +1,5 @@
 import { urlified, fuzzyIndicatieVol } from './util.js';
+import { parseDate } from "./date_util.js";
 import { BudgetFilter } from './filters/BudgetFilter.js';
 import { IcoonFilter } from './filters/IcoonFilter.js';
 import { LeeftijdFilter } from './filters/LeeftijdFilter.js';   
@@ -23,6 +24,7 @@ export default class Kiezer {
     constructor(hit) {
         // Bewaar de data over de kamponderdelen
         this.#hit = hit;
+        this.preprocessData();
         
         // Maak de filters aan
         this.#volFilter = new VolFilter(this);
@@ -39,6 +41,17 @@ export default class Kiezer {
 
         // Initialiseer de weergave
         this.updateEvent();
+    }
+
+    preprocessData() {
+        this.hit.hitPlaatsen.forEach(plaats =>
+            plaats.kampen.forEach(kamp => {
+                kamp.score = 0;
+                kamp.plaats = plaats.naam;
+                kamp.startDatumTijd = parseDate(kamp.startDatumTijd);
+                kamp.eindDatumTijd = parseDate(kamp.eindDatumTijd);
+            })
+        );
     }
 
     get hit() {

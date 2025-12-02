@@ -1,4 +1,3 @@
-import { parseDate } from "../date_util.js";
 import { Filter } from "./Filter.js";
 
 const SELECTOR = '#filter_budget';
@@ -19,17 +18,9 @@ export class BudgetFilter extends Filter {
         const prijzen = [];
         this.hit.hitPlaatsen.forEach(plaats =>
             plaats.kampen.forEach(kamp => {
-                let found = false;
-                prijzen.forEach(prijs =>
-                    found = found || (prijs === kamp.deelnamekosten)
-                );
-                if (!found) {
+                if (prijzen.indexOf(kamp.deelnamekosten) === -1) {
                     prijzen.push(kamp.deelnamekosten);
                 }
-                kamp.score = 0;
-                kamp.plaats = plaats.naam;
-                kamp.startDatumTijd = parseDate(kamp.startDatumTijd);
-                kamp.eindDatumTijd = parseDate(kamp.eindDatumTijd);
             })
         );
 
@@ -38,10 +29,16 @@ export class BudgetFilter extends Filter {
         const lowest = (Math.round(prijzen[0] / 10) * 10) + 10;
         const highest = (Math.round(prijzen[prijzen.length - 1] / 10) * 10) + 10;
         for (let prijs = lowest; prijs < highest; prijs += 10) {
-            $("<option>")
-                .attr("value", prijs)
-                .text((prijs - 10) + " tot " + (prijs + 10))
-                .appendTo(SELECTOR);
+            let found = false;
+            for (let p = prijs - 10; !found && p <= prijs + 10; p++) {
+                found = prijzen.indexOf(p) != -1;
+            }
+            if (found) {
+                $("<option>")
+                    .attr("value", prijs)
+                    .text((prijs - 10) + " tot " + (prijs + 10))
+                    .appendTo(SELECTOR);
+            }
         };
 
         $(SELECTOR).change(() => this.update());
