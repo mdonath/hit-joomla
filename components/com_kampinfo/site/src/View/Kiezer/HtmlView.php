@@ -21,24 +21,25 @@ class HtmlView extends BaseHtmlView {
         $model      = $this->getModel();
         $app        = Factory::getApplication();
         $document   = $app->getDocument();
+        $wa         = $document->getWebAssetManager();
 
         $this->project = $model->getProject();
+        self::integerifyFields($this->project);
 
         $params = ComponentHelper::getParams('com_kampinfo');
-        $iconFolderLarge = $params->get('iconFolderLarge');
-        $iconExtension = $params->get('iconExtension');
 
-        self::integerifyFields($this->project);
-        $json = json_encode($this->project);
+        $document->addScriptOptions(
+            'com_kampinfo-hitkiezer.vars',
+            [
+                'iconFolderLarge' => URI::root() . $params->get('iconFolderLarge'),
+                'iconExtension' => $params->get('iconExtension'),
+                'hit' => $this->project,
+            ]
+        );
 
-        $document->getWebAssetManager()
-            ->useStyle('com_kampinfo-hitkiezer')
+        $wa ->useStyle('com_kampinfo-hitkiezer')
             ->useScript('com_kampinfo-jquery-cookies')
-            ->addInlineScript("var hit = $json")
-            ->useScript('com_kampinfo-common')
             ->useScript('com_kampinfo-hitkiezer')
-            ->addInlineScript('kampinfoConfig.iconFolderLarge = "'.URI::root().$iconFolderLarge . '";')
-            ->addInlineScript('kampinfoConfig.iconExtension="'. $iconExtension .'";')
         ;
 
         return parent::display($tpl);
@@ -73,12 +74,12 @@ class HtmlView extends BaseHtmlView {
             'isouderkind',
         ];
 
-        $project->jaar = intval($project->jaar);
+        $project->jaar = \intval($project->jaar);
         foreach ($project->hitPlaatsen as $plaats) {
             foreach ($plaats->kampen as $kamp) {
                 foreach ($kampFields as $field) {
                     if (property_exists($kamp, $field)) {
-                        $kamp->$field = intval($kamp->$field);
+                        $kamp->$field = \intval($kamp->$field);
                     }
                 }
             }
