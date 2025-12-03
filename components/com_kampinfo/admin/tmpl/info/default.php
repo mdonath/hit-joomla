@@ -2,6 +2,9 @@
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Language\Text;
+
+
 $manifest = $this->getModel()->getItems();
 ?>
 
@@ -13,8 +16,8 @@ $manifest = $this->getModel()->getItems();
             <table class="table table-striped">
             <tbody>
                 <tr><th>Versie:</th><td><?= $manifest['version'] ?></td></tr>
-                <tr><th>Naam:</th><td><?= JText::_($manifest['name']) ?></td></tr>
-                <tr><th>Omschrijving:</th><td><?= JText::_($manifest['description']) ?></td></tr>
+                <tr><th>Naam:</th><td><?= Text::_($manifest['name']) ?></td></tr>
+                <tr><th>Omschrijving:</th><td><?= Text::_($manifest['description']) ?></td></tr>
                 <tr><th>Copyright:</th><td><?= $manifest['copyright'] ?></td></tr>
                 <tr><th>Auteur:</th><td><?= $manifest['author'] ?> (<?= $manifest['authorEmail'] ?>)</td></tr>
                 <tr><th>Code url:</th><td><a href="<?= $manifest['authorUrl'] ?>"><?= $manifest['authorUrl'] ?></a></td></tr>
