@@ -96,6 +96,7 @@ class KiezerModel extends AbstractKampInfoModel {
                 $kamp->iconen = IcoonUtil::explodeIcoontjes($kamp, $iconenMap);
                 unset($kamp->icoontjes);
                 $kamp->fuzzyIndicatieVol = KampInfoUrlHelper::fuzzyIndicatieVol($kamp);
+                $kamp->alias = KampInfoUrlHelper::aliassify($kamp);
             }
             return $kampenInPlaats;
         } catch (\Exception $e) {

@@ -60,22 +60,3 @@ export function isVol(kamp) {
 export function isVolQuaGroepjes(kamp) {
     return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
 }
-
-/**
- * Past de naam aan op de manier waarop Joomla dat ook gedaan heeft.
- *
- * @param naam De naam van het kamp.
- * @returns {String} De gestripte naam waarmee de directe url gevormd is.
- */
-export function urlified(naam) {
-    return naam
-        .replace(/ - /g, "-")
-        .replace(/ /g, "-")
-        .replace(/°/g, "")
-        .replace(/º/g, "o")
-        .replace(/&/g, "")
-        .toLowerCase()
-        .replace(/[^a-z0-9\-]/g, "")
-        .replace(/-+/g, "-")
-        ;
-}

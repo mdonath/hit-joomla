@@ -1,4 +1,4 @@
-import { urlified, fuzzyIndicatieVol } from './util.js';
+import { fuzzyIndicatieVol } from './util.js';
 import { parseDate } from "./date_util.js";
 import { BudgetFilter } from './filters/BudgetFilter.js';
 import { IcoonFilter } from './filters/IcoonFilter.js';
@@ -132,7 +132,7 @@ export default class Kiezer {
     }
 
     #kampUrl(kamp) {
-        return "../hits-in-" + kamp.plaats.toLowerCase() + "-" + this.#hit.jaar + "/" + urlified(kamp.naam);
+        return "../hits-in-" + kamp.plaats.toLowerCase() + "-" + this.#hit.jaar + "/" + kamp.alias;
     }
 
     score(kamp) {

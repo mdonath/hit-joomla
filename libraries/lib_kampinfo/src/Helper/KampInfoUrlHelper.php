@@ -5,6 +5,7 @@ namespace HITScoutingNL\Library\KampInfo\Helper;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Date\Date;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
@@ -53,19 +54,7 @@ abstract class KampInfoUrlHelper {
     }
 
     public static function aliassify($kamp) {
-        $pat = array ();
-        $rep = array ();
-
-        $pat[] = '/ - /';
-        $rep[] = '-';
-        $pat[] = '/ /';
-        $rep[] = '-';
-        $pat[] = '/[^a-z0-9\-]/';
-        $rep[] = '';
-        $pat[] = '/-+/';
-        $rep[] = '-';
-
-        return preg_replace($pat, $rep, strtolower($kamp->naam));
+        return OutputFilter::stringURLSafe($kamp->naam);
     }
 
     public static function fuzzyIndicatieVol($kamp) {
