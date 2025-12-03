@@ -4,7 +4,7 @@ import { BudgetFilter } from './filters/BudgetFilter.js';
 import { IcoonFilter } from './filters/IcoonFilter.js';
 import { LeeftijdFilter } from './filters/LeeftijdFilter.js';   
 import { OuderKindFilter } from './filters/OuderKindFilter.js';
-import { PlaatsFilter } from './filters/PlaatsFilter.js';
+import { LocatieFilter } from './filters/LocatieFilter.js';
 import { VolFilter } from './filters/VolFilter.js';
 
 /**
@@ -18,7 +18,7 @@ export default class Kiezer {
     #leeftijdFilter;
     #budgetFilter;
     #icoonFilter;
-    #plaatsFilter;
+    #locatieFilter;
     #ouderkindFilter;
 
     constructor(hit) {
@@ -31,7 +31,7 @@ export default class Kiezer {
         this.#leeftijdFilter = new LeeftijdFilter(this);
         this.#budgetFilter = new BudgetFilter(this);
         this.#icoonFilter = new IcoonFilter(this);
-        this.#plaatsFilter = new PlaatsFilter(this);
+        this.#locatieFilter = new LocatieFilter(this);
         this.#ouderkindFilter = new OuderKindFilter(this);
 
         // Koppel cookie opslag aan de velden
@@ -61,7 +61,7 @@ export default class Kiezer {
     updateAll() {
         this.#leeftijdFilter.update();
         this.#budgetFilter.update();
-        this.#plaatsFilter.update();
+        this.#locatieFilter.update();
         this.#ouderkindFilter.update();
         this.#icoonFilter.loadIconFiltersFromCookie();
     }
@@ -139,10 +139,10 @@ export default class Kiezer {
         const filter_leeftijd = this.#leeftijdFilter.filter(kamp, this.#ouderkindFilter.isFilterActief(kamp));
         const filter_budget = this.#budgetFilter.filter(kamp)
         const filter_vol = this.#volFilter.filter(kamp);
-        const filter_plaats = this.#plaatsFilter.filter(kamp);
+        const filter_locatie = this.#locatieFilter.filter(kamp);
         const filter_ouderkind = this.#ouderkindFilter.filter(kamp);
 
-        if (filter_leeftijd && filter_budget && filter_vol && filter_plaats && filter_ouderkind) {
+        if (filter_leeftijd && filter_budget && filter_vol && filter_locatie && filter_ouderkind) {
             let score = 0.0;
             score = this.#budgetFilter.score(kamp, score);
             score = this.#icoonFilter.score(kamp, score);

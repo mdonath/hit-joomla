@@ -48,7 +48,7 @@
         <div id="filter_pictos"></div>
 
         <p><strong>Stap 4:</strong> Kies eventueel een plaats uit:
-            <select name="filter_plaats" id="filter_plaats" class="cookiestore kiezerinput">
+            <select name="filter_locatie" id="filter_locatie" class="cookiestore kiezerinput">
                 <option value="-1"></option>
             </select>
         </p>

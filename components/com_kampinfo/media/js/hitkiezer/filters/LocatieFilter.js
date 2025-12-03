@@ -1,11 +1,11 @@
 import { Filter } from "./Filter.js";
 
-const SELECTOR = '#filter_plaats';
+const SELECTOR = '#filter_locatie';
 
 /**
- * Filter om kampen uit een plaats door te laten.
+ * Filter om kampen binnen een HIT plaats door te laten.
  */
-export class PlaatsFilter extends Filter {
+export class LocatieFilter extends Filter {
 
     #value = null;
 
