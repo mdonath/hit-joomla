@@ -10,8 +10,17 @@
             name="huidigeActieveJaar"
             type="project"
             default=""
-            label="Huidige actieve jaar"
-            description="Voor welk HIT jaar zijn we nu bezig?"
+            label="COM_KAMPINFO_PREFS_CURRENTYEAR_LABEL"
+            description="COM_KAMPINFO_PREFS_CURRENTYEAR_DESC"
+        />
+
+        <field
+            name="inschrijfLink"
+            type="text"
+            size="120"
+            default="https://hit.scoutingportal.nl/inschrijven/?event_year=2026&amp;event_slug={0}"
+            label="COM_KAMPINFO_PREFS_INSCHRIJFLINK_LABEL"
+            description="COM_KAMPINFO_PREFS_INSCHRIJFLINK_DESC"
         />
 
         <field

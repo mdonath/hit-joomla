@@ -11,7 +11,7 @@ use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');
-$shantiUrl = $params->get('shantiUrl');
+$inschrijfLink = $params->get('inschrijfLink', 'https://hit.scoutingportal.nl/inschrijven/?event_year=2026&event_slug={0}');
 
 // model
 $timezone = KampInfoHelper::getTimezone();
@@ -28,7 +28,6 @@ $isGeannuleerd = $activiteit->geannuleerd === 1;
 
 function isInschrijvingActief($activiteit) {
     return isActief(
-        $activiteit,
         $activiteit->startInschrijving,
         $activiteit->eindInschrijving
     );
@@ -36,13 +35,12 @@ function isInschrijvingActief($activiteit) {
 
 function isLoterijActief($activiteit) {
     return isActief(
-        $activiteit,
         $activiteit->startLoterij,
         $activiteit->eindLoterij
     );
 }
 
-function isActief($activiteit, $beginMoment, $eindMoment) {
+function isActief($beginMoment, $eindMoment) {
     $nu = (new Date('now'))->getTimestamp();
     return  $nu >= ((new Date($beginMoment))->getTimestamp()) 
             && $nu <= ((new Date($eindMoment))->getTimestamp());
@@ -208,26 +206,11 @@ function createInschrijfFormulierLink($template, $id) {
                     <?= replaceVariables($activiteit->ouderkind, $activiteit) ?>
                 <?php endif; ?>
                 
-                <!-- Inschrijfknoppen -->
+                <!-- Inschrijfknop(pen) -->
                 <?php if (isInschrijvingActief($activiteit) && !isLoterijActief($activiteit)) : ?>
-                    <div>
-                    <?php if ($activiteit->ouderShantiFormuliernummer > 0) : ?>
-                        <span>Inschrijven met: </span>
-                        <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer) ?>" target="_self">kind is lid</a>
-                        <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->ouderShantiFormuliernummer) ?>" target="_self">ouder is lid</a>
-                        <?php  if ($activiteit->extraShantiFormuliernummer > 0) : ?>
-                                <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer) ?>" target="_self">extra kind</a>
-                        <?php endif; ?>
-                    <?php else : ?>
-                        <?php if ($activiteit->extraShantiFormuliernummer > 0) : ?>
-                            <span>Inschrijven met: </span>
-                            <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer) ?>" target="_self">kind is lid</a>
-                            <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->extraShantiFormuliernummer) ?>" target="_self">extra kind</a>
-                        <?php else: ?>
-                            <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($shantiUrl, $activiteit->shantiFormuliernummer) ?>" target="_self">Inschrijven</a>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                    </div>
+                    <p>
+                        <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($inschrijfLink, $activiteit->id) ?>" target="_self">Inschrijven</a>
+                    </p>
                 <?php endif; ?>
             <?php endif; ?>
         </div>

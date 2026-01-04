@@ -18,23 +18,6 @@
                 default="2000"
                 class="validate-numeric"
         />
-        <field  name="shantiEvenementId"
-                type="number"
-                label="Shanti EventId"
-                description="Evenement Id in Shanti"
-                size="5"
-                default="0"
-                class="validate-numeric"
-        />
-        <field
-                name="thema"
-                type="text"
-                label="Thema"
-                description="Het motto/thema/leus/spreuk op het naambandje"
-                maxlength="255"
-                size="30"
-                default=""
-        />
     </fieldset>
     <fieldset
             name="inschrijving"
@@ -148,6 +131,15 @@
             name="teksten"
             label="Teksten"
     >
+        <field
+                name="thema"
+                type="text"
+                label="Thema"
+                description="Het motto/thema/leus/spreuk op het naambandje"
+                maxlength="255"
+                size="30"
+                default=""
+        />
         <field  name="ouderkind"
                 type="editor"
                 label="Ouder kind kamp"

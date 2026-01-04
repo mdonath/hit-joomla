@@ -535,23 +535,7 @@
         />
     </fieldset>
 
-    <fieldset name="shanti">
-        <field  name="shantiFormuliernummer"
-                type="number"
-                label="COM_KAMPINFO_HITCAMP_SHANTI_ID_LABEL"
-                description="COM_KAMPINFO_HITCAMP_SHANTI_ID_DESC"
-                default="0"
-                filter="integer"
-                validate="number"
-        />
-        <field  name="ouderShantiFormuliernummer"
-                type="number"
-                label="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_LABEL"
-                description="COM_KAMPINFO_HITCAMP_OUDERSHANTI_ID_DESC"
-                default="0"
-                filter="integer"
-                validate="number"
-        />
+    <fieldset name="inschrijfsysteem">
         <field  name="extraShantiFormuliernummer"
                 type="number"
                 label="COM_KAMPINFO_HITCAMP_EXTRASHANTI_ID_LABEL"
