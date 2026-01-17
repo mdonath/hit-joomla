@@ -6,3 +6,5 @@ API-KEY
 **/dist
 **/build.number
 **/venv/
+
+/vendor/

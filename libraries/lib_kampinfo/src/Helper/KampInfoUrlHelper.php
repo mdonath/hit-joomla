@@ -4,9 +4,11 @@ namespace HITScoutingNL\Library\KampInfo\Helper;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Date\Date;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
+
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+
 
 /**
  * KampInfo url helper.
@@ -102,11 +104,11 @@ abstract class KampInfoUrlHelper {
     }
 
     public static function volOfLoterij($kamp) {
-        $nu = (new Date('now'))->getTimestamp();
-        $loterijLoopt = $nu >= (new Date($kamp->startLoterij))->getTimestamp() && $nu <= (new Date($kamp->eindLoterij))->getTimestamp();
-        if ($loterijLoopt) {
+        if (KampInfoHelper::isWachtlijstActief($kamp)) {
+            // Als het in de eerste fase vol is, dan moet het loterij-icoontje getoond worden
             return 'loterij';
-        }   
+        }
+        // En anders het vol-icoontje
         return 'vol';
     }
 

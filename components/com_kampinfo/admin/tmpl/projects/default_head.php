@@ -12,25 +12,25 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
 <thead>
     <tr>
         <td class="w-1 text-center">
-            <?php echo HTMLHelper::_('grid.checkall'); ?>
+            <?= HTMLHelper::_('grid.checkall'); ?>
         </td>
         <th scope="col">
-            <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'p.jaar', $listDirn, $listOrder); ?>
+            <?= HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_YEAR', 'p.jaar', $listDirn, $listOrder); ?>
         </th>
         <th scope="col">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_START'); ?>
+            <?= Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_START'); ?>
         </th>
         <th scope="col">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_EIND'); ?>
+            <?= Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_START'); ?>
         </th>
         <th scope="col">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_START'); ?>
+            <?= Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_LOTERIJ_EIND'); ?>
         </th>
         <th scope="col">
-            <?php echo Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_EIND'); ?>
+            <?= Text::_('COM_KAMPINFO_HITPROJECTS_HEADING_INSCHRIJVING_EIND'); ?>
         </th>
         <th width="5" class="hidden-phone">
-            <?php echo HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>
+            <?= HTMLHelper::_('searchtools.sort', 'COM_KAMPINFO_HITPROJECTS_HEADING_ID', 'p.id', $listDirn, $listOrder); ?>
         </th>
     </tr>
 </thead>

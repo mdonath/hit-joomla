@@ -26,25 +26,6 @@ $eind->setTimezone($timezone);
 $heeftEenYoutubeFilmpje = !empty($activiteit->youtube);
 $isGeannuleerd = $activiteit->geannuleerd === 1;
 
-function isInschrijvingActief($activiteit) {
-    return isActief(
-        $activiteit->startInschrijving,
-        $activiteit->eindInschrijving
-    );
-}
-
-function isLoterijActief($activiteit) {
-    return isActief(
-        $activiteit->startLoterij,
-        $activiteit->eindLoterij
-    );
-}
-
-function isActief($beginMoment, $eindMoment) {
-    $nu = (new Date('now'))->getTimestamp();
-    return  $nu >= ((new Date($beginMoment))->getTimestamp()) 
-            && $nu <= ((new Date($eindMoment))->getTimestamp());
-}
 function replaceVariables($text, $act) {
     foreach ($act as $key => $value) {
         if (!\is_array($value) && isset($value)) {
@@ -207,7 +188,7 @@ function createInschrijfFormulierLink($template, $id) {
                 <?php endif; ?>
                 
                 <!-- Inschrijfknop(pen) -->
-                <?php if (isInschrijvingActief($activiteit) && !isLoterijActief($activiteit)) : ?>
+                <?php if (KampInfoHelper::isInschrijvingActief($activiteit) && !KampInfoHelper::isLoterijActief($activiteit)) : ?>
                     <p>
                         <a class="btn btn-primary" href="<?= createInschrijfFormulierLink($inschrijfLink, $activiteit->id) ?>" target="_self">Inschrijven</a>
                     </p>

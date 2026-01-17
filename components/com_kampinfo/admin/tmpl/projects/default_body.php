@@ -2,7 +2,6 @@
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -17,11 +16,11 @@ $canDelete  = $user->authorise('hitproject.delete', 'com_kampinfo');
     <?php foreach ($this->items as $i => $item) : ?>
         <tr>
             <td>
-                <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                <?= HTMLHelper::_('grid.id', $i, $item->id); ?>
             </td>
             <td>
                 <?php if ($canEdit) : ?>
-                    <a href="<?php echo Route::_('index.php?option=com_kampinfo&task=project.edit&id=' . (int)$item->id); ?>">
+                    <a href="<?= Route::_('index.php?option=com_kampinfo&task=project.edit&id=' . (int)$item->id); ?>">
                         <?= $item->jaar ?>
                     </a>
                     <?php else : ?>
@@ -29,19 +28,19 @@ $canDelete  = $user->authorise('hitproject.delete', 'com_kampinfo');
                     <?php endif; ?>
             </td>
             <td>
-                <?php echo $item->loterijStartdatum ? HTMLHelper::date($item->loterijStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
+                <?=  HTMLHelper::date($item->inschrijvingStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
             </td>
             <td>
-                <?php echo $item->loterijEinddatum ? HTMLHelper::date($item->loterijEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
+                <?= $item->loterijStartdatum ? HTMLHelper::date($item->loterijStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
             </td>
             <td>
-                <?php echo HTMLHelper::date($item->inschrijvingStartdatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
+                <?= $item->loterijEinddatum ? HTMLHelper::date($item->loterijEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')) : '-'; ?>
             </td>
             <td>
-                <?php echo HTMLHelper::date($item->inschrijvingEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
+                <?= HTMLHelper::date($item->inschrijvingEinddatum, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
             </td>
             <td class="hidden-phone">
-                <?php echo $item->id; ?>
+                <?= $item->id; ?>
             </td>
         </tr>
     <?php endforeach; ?>

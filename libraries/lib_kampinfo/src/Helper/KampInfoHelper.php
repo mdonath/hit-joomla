@@ -161,4 +161,31 @@ abstract class KampInfoHelper {
         return \DateTime::createFromFormat('d-m-Y|', $goedeVrijdag[$jaar]);
     }
 
+    public static function isInschrijvingActief($activiteit) {
+        return KampInfoHelper::isActief(
+            $activiteit->startInschrijving,
+            $activiteit->eindInschrijving
+        );
+    }
+
+    public static function isLoterijActief($activiteit) {
+        return KampInfoHelper::isActief(
+            $activiteit->startLoterij,
+            $activiteit->eindLoterij
+        );
+    }
+
+    public static function isWachtlijstActief($activiteit) {
+        return KampInfoHelper::isActief(
+            $activiteit->startInschrijving,
+            $activiteit->startLoterij
+        );
+    }
+
+    private static function isActief($beginMoment, $eindMoment) {
+        $nu = (new Date('now'))->getTimestamp();
+        return  $nu >= ((new Date($beginMoment))->getTimestamp()) 
+                && $nu <= ((new Date($eindMoment))->getTimestamp());
+    }
+
 }

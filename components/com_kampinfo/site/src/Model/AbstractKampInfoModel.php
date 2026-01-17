@@ -104,6 +104,8 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
             )
 
             ->select([
+                $db->quoteName('p.inschrijvingStartdatum', 'startInschrijving'),
+                $db->quoteName('p.inschrijvingEinddatum', 'eindInschrijving'),
                 $db->quoteName('p.loterijStartdatum', 'startLoterij'),
                 $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
             ])
