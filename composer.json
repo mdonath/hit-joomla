@@ -1,0 +1,55 @@
+{
+    "name": "mdonath/hit-joomla-j5",
+    "description": "HIT KampInfo voor Joomla 5",
+    "type": "project",
+    "keywords": [
+        "joomla",
+        "scouting",
+        "hit"
+    ],
+    "homepage": "https://hit.scouting.nl",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Martijn Donath",
+            "email": "martijn.donath@gmail.com"
+        }
+    ],
+
+
+    "require": {
+        "php": "^8.1.0"
+    },
+    "require-dev": {
+        "joomla/test": "~3.0",
+        "joomla/application": "^3.0.3",
+        "joomla/archive": "^3.0.2",
+        "joomla/authentication": "^3.0.1",
+        "joomla/console": "^3.0.1",
+        "joomla/crypt": "^3.0.1",
+        "joomla/data": "^3.0.1",
+        "joomla/database": "^3.4",
+        "joomla/di": "^3.0.1",
+        "joomla/event": "^3.0.1",
+        "joomla/filter": "^3.0.2",
+        "joomla/filesystem": "^3.1.0",
+        "joomla/http": "^3.1.0",
+        "joomla/input": "~3.0",
+        "joomla/language": "~3.0",
+        "joomla/oauth1": "~3.0",
+        "joomla/oauth2": "~3.0",
+        "joomla/registry": "~3.0",
+        "joomla/router": "~3.0",
+        "joomla/session": "^3.0.1",
+        "joomla/string": "^3.0.1",
+        "joomla/uri": "~3.0",
+        "joomla/utilities": "~3.0",
+
+        "joomla/compat":"^1.2",
+        "joomla/controller":"^3.0.2",
+        "joomla/model":"^3.0.2",
+        "joomla/renderer":"^3.0.1",
+        "joomla/view":"^3.0.2"
+    }
+
+}

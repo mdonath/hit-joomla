@@ -5,7 +5,6 @@
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 
@@ -145,7 +144,7 @@ function factorAantal($project, $kamp) {
             <td class="kolom3"><?= $kampAantalIngeschreven ?></td>
             <td class="kolom4"><?= $kampAantalGereserveerd ?></td>
             <td class="kolom5"><?= $kampMaximumAantal ?></td>
-            <td class="kolom7"><?php echo $kamp->aantalSubgroepen . ($kamp->maximumAantalSubgroepjes == 0 ? '' : ('/'.$kamp->maximumAantalSubgroepjes)); ?></td>
+            <td class="kolom7"><?php echo $kamp->aantalSubgroepen . ($kamp->maximumAantalSubgroepjes == 0 ? '' : ("/$kamp->maximumAantalSubgroepjes")); ?></td>
             <?php $rest = berekenRestCapaciteit($project, $kamp); ?>
             <td class="kolom9"><?= $rest ?></td>
             <td class="kolom6"><?= printProgressbarKamp($kamp) ?></td>

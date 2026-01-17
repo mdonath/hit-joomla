@@ -4,28 +4,25 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
-use Joomla\Registry\Registry;
 
 
-class ProjectsModel extends ListModel {
+class DownloadsModel extends ListModel {
 
     public function __construct($config = [], ?MVCFactoryInterface $factory = null) {
         if (empty ($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'jaar', 'p.jaar',
-                'id', 'p.id'
+                'jaar', 'd.jaar',
+                'id', 'd.id'
             ];
         }
 
         parent::__construct($config, $factory);
     }
 
-    protected function populateState($ordering = 'p.jaar', $direction = 'desc') {
+    protected function populateState($ordering = 'd.jaar', $direction = 'desc') {
         // Filter op jaar/project
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
         $this->setState('filter.search', $search);
@@ -42,20 +39,20 @@ class ProjectsModel extends ListModel {
     protected function getListQuery() {
         $db = $this->getDatabase();
         $query = $db->getQuery(true)
-            ->select('p.*')
-            ->from($db->quoteName('#__kampinfo_hitproject', 'p'));
+            ->select('d.*')
+            ->from($db->quoteName('#__kampinfo_downloads', 'd'));
 
         // Filter op jaar
         $jaar = $this->getState('filter.search');
         if (is_numeric($jaar)) {
             $jaar = (int) $jaar;
             $query
-                ->where($db->quoteName('p.jaar') . ' = :jaar')
+                ->where($db->quoteName('d.jaar') . ' = :jaar')
                 ->bind(':jaar', $jaar, ParameterType::INTEGER);
         }
         
         // Sortering
-        $orderCol = $this->state->get('list.ordering', 'p.jaar');
+        $orderCol = $this->state->get('list.ordering', 'd.jaar');
         $orderDirn = $this->state->get('list.direction', 'DESC');
         $query->order($db->quoteName($orderCol) . ' ' . $db->escape($orderDirn));
 

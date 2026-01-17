@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `#__kampinfo_hitproject`;
 DROP TABLE IF EXISTS `#__kampinfo_hitsite`;
 DROP TABLE IF EXISTS `#__kampinfo_hitcamp`;
 DROP TABLE IF EXISTS `#__kampinfo_hiticon`;
+DROP TABLE IF EXISTS `#__kampinfo_downloads`;
 
 CREATE TABLE `#__kampinfo_hitproject` (
     `id`                                    INT(11)         NOT NULL    AUTO_INCREMENT
@@ -217,3 +218,12 @@ INSERT INTO `#__kampinfo_hiticon` (
 ,    (700, 'geenalcohol', 'Er mag geen alcohol worden gedronken', '?')
 ,    (701, 'nietroken', 'Rookvrije HIT ', '?')
 ;
+
+CREATE TABLE `#__kampinfo_downloads` (
+    `id`                                    INT(11)     NOT NULL    AUTO_INCREMENT
+,   `jaar`                                  YEAR(4)     NOT NULL
+,   `soort`                                 VARCHAR(4)  NOT NULL
+,   `bijgewerktOp`                          TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP
+,   `melding`                               TEXT
+,	PRIMARY KEY (`id`)
+);

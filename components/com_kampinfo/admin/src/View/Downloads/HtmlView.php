@@ -1,6 +1,6 @@
 <?php
 
-namespace HITScoutingNL\Component\KampInfo\Administrator\View\Projects;
+namespace HITScoutingNL\Component\KampInfo\Administrator\View\Downloads;
 
 \defined('_JEXEC') or die('Restricted Access');
 
@@ -44,22 +44,11 @@ class HtmlView extends BaseHtmlView {
     }
 
     protected function addToolbar(): void {
-        $canDo   = ContentHelper::getActions('com_kampinfo', 'project');
+        $canDo   = ContentHelper::getActions('com_kampinfo', 'download');
         $user    = $this->getCurrentUser();
         $toolbar = $this->getDocument()->getToolbar();
 
-        ToolbarHelper::title(Text::_('COM_KAMPINFO_HITPROJECTS_DOCTITLE'), 'kampinfo');
-
-        if ($canDo->get('hitproject.create')) {
-            $toolbar->addNew('project.add');
-        }
-
-        if ($canDo->get('hitproject.delete')) {
-            $toolbar
-                ->delete('projects.delete')
-                ->message('JGLOBAL_CONFIRM_DELETE')
-                ->listCheck(true);
-        }
+        ToolbarHelper::title(Text::_('COM_KAMPINFO_DOWNLOADS_DOCTITLE'), 'kampinfo');
 
         if ($user->authorise('core.admin', 'com_kampinfo') || $user->authorise('core.options', 'com_kampinfo')) {
             $toolbar->preferences('com_kampinfo');

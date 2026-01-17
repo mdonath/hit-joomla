@@ -9,7 +9,7 @@
     <license>LGPL</license>
     <authorEmail>martijn.donath@scouting.nl</authorEmail>
     <authorUrl>https://github.com/mdonath/hit-joomla</authorUrl>
-    <version>3.0.3</version>
+    <version>3.1.0</version>
     <description>COM_KAMPINFO_DESCRIPTION</description>
 
     <namespace path="src">HITScoutingNL\Component\KampInfo</namespace>
@@ -88,6 +88,7 @@
                     <menu-quicktask-permission>hiticon.edit</menu-quicktask-permission>
                 </params>
             </menu>
+            <menu view="downloads">COM_KAMPINFO_SUBMENU_DOWNLOADS</menu>
         </submenu>
 
         <!-- Administration Main File Copy Section -->

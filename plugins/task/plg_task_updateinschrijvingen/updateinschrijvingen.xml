@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="task" method="upgrade">
+
+    <description>PLG_TASK_UPDATEINSCHRIJVINGEN_XML_DESCRIPTION</description>
+
+    <name>Update HIT Inschrijvingen</name>
+    <version>1.0</version>
+
+    <creationDate>Januari 2026</creationDate>
+    <copyright>2026</copyright>
+    <author>Martijn Donath</author>
+    <namespace path="src">HITScoutingNL\Plugin\Task\UpdateInschrijvingen</namespace>
+
+    <files>
+        <folder>forms</folder>
+        <folder>language</folder>
+        <folder plugin="updateinschrijvingen">services</folder>
+        <folder>src</folder>
+    </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_task_updateinschrijvingen.ini</language>
+        <language tag="en-GB">language/en-GB/plg_task_updateinschrijvingen.sys.ini</language>
+        <language tag="nl-NL">language/nl-NL/plg_task_updateinschrijvingen.ini</language>
+        <language tag="nl-NL">language/nl-NL/plg_task_updateinschrijvingen.sys.ini</language>
+    </languages>
+
+</extension>

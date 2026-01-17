@@ -4,7 +4,6 @@ namespace HITScoutingNL\Component\KampInfo\Site\Model;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -140,27 +139,27 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
     }
 
     protected function getLaatstBijgewerktOp($jaar) {
-        $date = new Date('now', new \DateTimeZone('UTC'));
-        return $date;
-        // $soort = 'INSC';
+        $soort = 'INSC';
 
-        // $db = $db = $this->getDatabase();
+        $db = $this->getDatabase();
         
-        // $query = $db->getQuery(true)
-        //     ->select('max(bijgewerktOp) as bijgewerktOp')
-        //     ->from($db->quoteName('#__kampinfo_downloads', 'd'))
-        //     ->where('d.jaar = :jaar')
-        //     ->bind(':jaar', $jaar)
-        //     ->where('d.soort = :soort')
-        //     ->bind(':soort', $soort)
-        // ;
+        $query = $db->getQuery(true)
+            ->select('max(bijgewerktOp) as bijgewerktOp')
+            ->from($db->quoteName('#__kampinfo_downloads', 'd'))
+            ->where('d.jaar = :jaar')
+            ->bind(':jaar', $jaar)
+            ->where('d.soort = :soort')
+            ->bind(':soort', $soort)
+        ;
 
-        // try {
-        //     $db->setQuery($query);
-        //     return $db->loadResult();
-        // } catch (\Exception $e) {
-        //     throw new GenericDataException($e->getMessage(), 500);
-        // }
+        try {
+            $db->setQuery($query);
+            $result = new Date($db->loadResult());
+            $result->setTimezone(KampInfoHelper::getTimezone());
+            return $result;
+        } catch (\Exception $e) {
+            throw new GenericDataException($e->getMessage(), 500);
+        }
     }
 
 }

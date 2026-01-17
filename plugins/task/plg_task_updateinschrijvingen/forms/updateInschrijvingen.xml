@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="task_params">
+            <field
+                name="url"
+                type="url"
+                label="PLG_TASK_UPDATEINSCHRIJVINGEN_URL_LABEL"
+                required="true"
+                validate="url"
+                filter="url"
+                default="https://hit.scoutingportal.nl/wp-json/hit/v1/events/year/2026"
+            />
+            <field
+                name="timeout"
+                type="number"
+                label="PLG_TASK_UPDATEINSCHRIJVINGEN_TIMEOUT_LABEL"
+                required="true"
+                validate="number"
+                filter="int"
+                min="1"
+                step="1"
+                default="120"
+            />
+        </fieldset>
+    </fields>
+</form>
