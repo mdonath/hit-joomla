@@ -106,8 +106,8 @@ final class UpdateInschrijvingen extends CMSPlugin implements SubscriberInterfac
             $aantalDeelnemers           = (int) $event['deelnemers']['ingeschreven'] ?? 0;
             $maximumAantalDeelnemers    = (int) $event['deelnemers']['maximum'] ?? 0;
             // subgroepjes
-            $aantalSubgroepen               = (int) $event['subgroepjes']['ingeschreven'] ?? 0;
-            $subgroepsamenstellingMaximum   = (int) $event['subgroepjes']['maximum'] ?? 0;
+            $aantalSubgroepen           = (int) $event['subgroepjes']['ingeschreven'] ?? 0;
+            $maximumAantalSubgroepjes   = (int) $event['subgroepjes']['maximum'] ?? 0;
 
             $query  = $db->getQuery(true)
                 -> clear()
@@ -123,9 +123,9 @@ final class UpdateInschrijvingen extends CMSPlugin implements SubscriberInterfac
                 -> bind(':maximumAantalDeelnemers', $maximumAantalDeelnemers, ParameterType::INTEGER)
                 // subgroepjes
                 -> set($db->quoteName('aantalSubgroepen') . ' = :aantalSubgroepen')
-                -> set($db->quoteName('subgroepsamenstellingMaximum') . ' = :subgroepsamenstellingMaximum')
+                -> set($db->quoteName('maximumAantalSubgroepjes') . ' = :maximumAantalSubgroepjes')
                 -> bind(':aantalSubgroepen', $aantalSubgroepen, ParameterType::INTEGER)
-                -> bind(':subgroepsamenstellingMaximum', $subgroepsamenstellingMaximum, ParameterType::INTEGER)
+                -> bind(':maximumAantalSubgroepjes', $maximumAantalSubgroepjes, ParameterType::INTEGER)
                 -> where($db->quoteName('id') . ' = :hitcamp_id')
                 -> bind(':hitcamp_id', $hitcamp_id, ParameterType::INTEGER)
             ;
