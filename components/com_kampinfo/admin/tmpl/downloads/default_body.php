@@ -4,6 +4,7 @@
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+// <?= HTMLHelper::date($item->bijgewerktOp, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
 ?>
 
 <tbody>
@@ -16,7 +17,7 @@ use Joomla\CMS\Language\Text;
                 <?= $item->soort ?>
             </td>
             <td>
-                <?= HTMLHelper::date($item->bijgewerktOp, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
+                <?= $item->bijgewerktOp ?>
             </td>
             <td>
                 <?= $item->melding ?>

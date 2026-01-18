@@ -146,17 +146,18 @@ abstract class AbstractKampInfoModel extends BaseDatabaseModel {
         $db = $this->getDatabase();
         
         $query = $db->getQuery(true)
-            ->select('max(bijgewerktOp) as bijgewerktOp')
-            ->from($db->quoteName('#__kampinfo_downloads', 'd'))
-            ->where('d.jaar = :jaar')
-            ->bind(':jaar', $jaar)
-            ->where('d.soort = :soort')
-            ->bind(':soort', $soort)
+            -> select("max(CONVERT_TZ(`bijgewerktOp`, @@session.time_zone, '+00:00')) as bijgewerktOp")
+            -> from($db->quoteName('#__kampinfo_downloads', 'd'))
+            -> where('d.jaar = :jaar')
+            -> bind(':jaar', $jaar)
+            -> where('d.soort = :soort')
+            -> bind(':soort', $soort)
         ;
 
         try {
             $db->setQuery($query);
-            $result = new Date($db->loadResult());
+            $result = $db->loadResult();
+            $result = new Date($result);
             $result->setTimezone(KampInfoHelper::getTimezone());
             return $result;
         } catch (\Exception $e) {
