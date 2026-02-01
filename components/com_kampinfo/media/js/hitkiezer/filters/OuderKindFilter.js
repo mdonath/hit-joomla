@@ -1,12 +1,11 @@
-import { Filter }  from './Filter.js';
+import { Filter } from "./Filter.js";
 
-const SELECTOR = '#filter_ouderkind';
+export const SELECTOR = "#filter_ouderkind";
 
 /**
  * Filter om ouder-kind kampen door te laten.
  */
 export class OuderKindFilter extends Filter {
-
     #value = -1;
 
     constructor(hitkiezer) {
@@ -16,32 +15,34 @@ export class OuderKindFilter extends Filter {
 
     #initVelden() {
         [
-            {value: '1', text: 'Ja'},
-            {value: '0', text: 'Nee'},
-        ]
-        .forEach(({value, text}) =>
-            $("<option>")
-                .attr("value", value)
-                .text(text)
-                .appendTo(SELECTOR)
+            { value: "1", text: "Ja" },
+            { value: "0", text: "Nee" },
+        ].forEach(({ value, text }) =>
+            $("<option>").attr("value", value).text(text).appendTo(SELECTOR),
         );
         $(SELECTOR).change(() => this.update());
     }
 
-    update() {
+    update(init) {
         let value = $(SELECTOR).val();
         if (value != null) {
             value = parseInt(value);
         }
         this.#value = value;
-        this.updateEvent();
+        this.updateEvent(init);
     }
 
     filter(kamp) {
-        return this.#value == null || this.#value === -1 || (this.#value === kamp.isouderkind);
+        return (
+            this.#value == null ||
+            this.#value === -1 ||
+            this.#value === kamp.isouderkind
+        );
     }
 
     isFilterActief(kamp) {
-        return this.#value != null && this.#value != -1 && kamp.isouderkind === 1;
+        return (
+            this.#value != null && this.#value != -1 && kamp.isouderkind === 1
+        );
     }
 }

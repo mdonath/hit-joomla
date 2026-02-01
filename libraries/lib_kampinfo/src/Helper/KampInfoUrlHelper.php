@@ -64,7 +64,7 @@ abstract class KampInfoUrlHelper {
             if (KampInfoUrlHelper::volOfLoterij($kamp) == 'loterij') {
                 $result = "Er zijn meer aanmeldingen dan plaatsen, er gaat geloot worden!";
             } else {
-                if (intval($kamp->aantalDeelnemers) < intval($kamp->gereserveerd)) {
+                if (\intval($kamp->aantalDeelnemers) < \intval($kamp->gereserveerd)) {
                     $eenAantal = $kamp->gereserveerd - $kamp->aantalDeelnemers;
                     $result = "Vol: alleen nog inschrijven op ". $eenAantal ." gereserveerde ". KampInfoUrlHelper::meervoudPlaats($eenAantal) .".";
                 } else {
@@ -76,16 +76,17 @@ abstract class KampInfoUrlHelper {
                 }
             }
         } else {
-            $watMaaktHetKampVol = max($kamp->maximumAantalDeelnemers/10, $kamp->subgroepsamenstellingMinimum);
-            $over = $kamp->maximumAantalDeelnemers - $kamp->gereserveerd;
-            if ($watMaaktHetKampVol < $over) {
+            $watMaaktHetKampVol = max($kamp->maximumAantalDeelnemers / 10, $kamp->subgroepsamenstellingMinimum);
+            $aantal = $kamp->maximumAantalDeelnemers - $kamp->gereserveerd;
+            if ($watMaaktHetKampVol < $aantal) {
                 if ($kamp->gereserveerd == 0) {
                     $result = "Nog ruim voldoende plaatsen beschikbaar.";
                 } else {
                     $result = "Nog voldoende plaatsen beschikbaar.";
                 }
             } else {
-                $result = "Bijna vol: Nog ". $over ." ". KampInfoUrlHelper::meervoudPlaats($over) ." beschikbaar.";
+                $plaatsOfPlaatsen = KampInfoUrlHelper::meervoudPlaats($aantal);
+                $result = "Bijna vol: Nog {$aantal} {$plaatsOfPlaatsen} beschikbaar.";
             }
         }
         return $result;
@@ -96,11 +97,11 @@ abstract class KampInfoUrlHelper {
     }
 
     public static function isVol($kamp) {
-        return intval($kamp->gereserveerd) >= intval($kamp->maximumAantalDeelnemers) || self::isVolQuaGroepjes($kamp);
+        return \intval($kamp->gereserveerd) >= \intval($kamp->maximumAantalDeelnemers) || self::isVolQuaGroepjes($kamp);
     }
 
     public static function isVolQuaGroepjes($kamp) {
-        return intval($kamp->maximumAantalSubgroepjes) > 0 && intval($kamp->aantalSubgroepen) >= intval($kamp->maximumAantalSubgroepjes);
+        return \intval($kamp->maximumAantalSubgroepjes) > 0 && \intval($kamp->aantalSubgroepen) >= intval($kamp->maximumAantalSubgroepjes);
     }
 
     public static function volOfLoterij($kamp) {

@@ -22,7 +22,7 @@ class HtmlView extends BaseHtmlView {
 
         $this->plaats = $model->getPlaats();
 
-        $document->getWebAssetManager()->useStyle('com_kampinfo-overzicht');
+        $document->getWebAssetManager()->useStyle('com_kampinfo.style.overzicht');
 
         $document->setTitle('Alle activiteiten in HIT ' . $this->plaats->naam);
 

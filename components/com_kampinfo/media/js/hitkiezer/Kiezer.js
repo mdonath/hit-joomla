@@ -1,17 +1,16 @@
-import { fuzzyIndicatieVol } from './util.js';
+import { fuzzyIndicatieVol } from "./util.js";
 import { parseDate } from "./date_util.js";
-import { BudgetFilter } from './filters/BudgetFilter.js';
-import { IcoonFilter } from './filters/IcoonFilter.js';
-import { LeeftijdFilter } from './filters/LeeftijdFilter.js';   
-import { OuderKindFilter } from './filters/OuderKindFilter.js';
-import { LocatieFilter } from './filters/LocatieFilter.js';
-import { VolFilter } from './filters/VolFilter.js';
+import { BudgetFilter } from "./filters/BudgetFilter.js";
+import { IcoonFilter } from "./filters/IcoonFilter.js";
+import { LeeftijdFilter } from "./filters/LeeftijdFilter.js";
+import { OuderKindFilter } from "./filters/OuderKindFilter.js";
+import { LocatieFilter } from "./filters/LocatieFilter.js";
+import { VolFilter } from "./filters/VolFilter.js";
 
 /**
  * De hitkiezer zelf.
  */
 export default class Kiezer {
-
     #hit;
 
     #volFilter;
@@ -21,36 +20,37 @@ export default class Kiezer {
     #locatieFilter;
     #ouderkindFilter;
 
-    constructor(hit) {
+    constructor(hit, cookieWrapper) {
         // Bewaar de data over de kamponderdelen
         this.#hit = hit;
         this.preprocessData();
-        
+
         // Maak de filters aan
         this.#volFilter = new VolFilter(this);
         this.#leeftijdFilter = new LeeftijdFilter(this);
         this.#budgetFilter = new BudgetFilter(this);
-        this.#icoonFilter = new IcoonFilter(this);
+        this.#icoonFilter = new IcoonFilter(this, cookieWrapper);
         this.#locatieFilter = new LocatieFilter(this);
         this.#ouderkindFilter = new OuderKindFilter(this);
 
         // Koppel cookie opslag aan de velden
-        $('.cookiestore').cookieBind();
+        cookieWrapper.cookieBind();
+
         // Trigger een eerste update zodat het filter wordt toegepast met de cookie waarden
-        this.updateAll();
+        this.updateAll(true);
 
         // Initialiseer de weergave
-        this.updateEvent();
+        this.updateEvent(false);
     }
 
     preprocessData() {
-        this.hit.hitPlaatsen.forEach(plaats =>
-            plaats.kampen.forEach(kamp => {
+        this.hit.hitPlaatsen.forEach((plaats) =>
+            plaats.kampen.forEach((kamp) => {
                 kamp.score = 0;
                 kamp.plaats = plaats.naam;
                 kamp.startDatumTijd = parseDate(kamp.startDatumTijd);
                 kamp.eindDatumTijd = parseDate(kamp.eindDatumTijd);
-            })
+            }),
         );
     }
 
@@ -58,11 +58,11 @@ export default class Kiezer {
         return this.#hit;
     }
 
-    updateAll() {
-        this.#leeftijdFilter.update();
-        this.#budgetFilter.update();
-        this.#locatieFilter.update();
-        this.#ouderkindFilter.update();
+    updateAll(init = false) {
+        this.#leeftijdFilter.update(init);
+        this.#budgetFilter.update(init);
+        this.#locatieFilter.update(init);
+        this.#ouderkindFilter.update(init);
         this.#icoonFilter.loadIconFiltersFromCookie();
     }
 
@@ -76,17 +76,17 @@ export default class Kiezer {
 
     #toonGefilterdeKampen() {
         // kieper huidige lijst leeg
-        $('#kampen').empty();
+        $("#kampen").empty();
 
         // verzamel kampen met score >= 0
         const kampen = [];
-        this.hit.hitPlaatsen.forEach(plaats =>
-            plaats.kampen.forEach(kamp => {
+        this.hit.hitPlaatsen.forEach((plaats) =>
+            plaats.kampen.forEach((kamp) => {
                 kamp.score = this.score(kamp);
                 if (kamp.score >= 0) {
                     kampen.push(kamp);
                 }
-            })
+            }),
         );
 
         $("#count").text(kampen.length);
@@ -96,10 +96,10 @@ export default class Kiezer {
 
             // sorteren op score
             kampen.sort((a, b) => b.score - a.score);
-            
+
             const volPatt = /vol:/i;
             // overgebleven kampen tonen
-            kampen.forEach(kamp => {
+            kampen.forEach((kamp) => {
                 const li = $("<li>");
                 const fuzzy = fuzzyIndicatieVol(kamp);
                 const fuzzyInNaam = volPatt.test(fuzzy);
@@ -107,42 +107,72 @@ export default class Kiezer {
                     .text(this.#kampNaam(kamp, fuzzyInNaam, fuzzy))
                     .attr({
                         title: this.#kampTitle(kamp, fuzzy),
-                        href: this.#kampUrl(kamp)
+                        href: this.#kampUrl(kamp),
                     })
                     .appendTo(li);
                 $("<span>")
-                    .text("[" + (Math.round(10 * kamp.score) / 10) + "]")
-                    .attr({title: "score", 'class': "score"})
+                    .text("[" + Math.round(10 * kamp.score) / 10 + "]")
+                    .attr({ title: "score", class: "score" })
                     .appendTo(li);
                 li.appendTo("#kampList");
             });
         } else {
-            $("<p>").text("Helaas, geen activiteiten gevonden!").appendTo("#kampen");
+            $("<p>")
+                .text("Helaas, geen activiteiten gevonden!")
+                .appendTo("#kampen");
         }
     }
 
     #kampNaam(kamp, fuzzyInNaam, fuzzy) {
-        return kamp.naam + " in " + kamp.plaats + (fuzzyInNaam ? " (" + fuzzy + ")" : "");
+        return (
+            kamp.naam +
+            " in " +
+            kamp.plaats +
+            (fuzzyInNaam ? " (" + fuzzy + ")" : "")
+        );
     }
 
     #kampTitle(kamp, fuzzy) {
-        return "leeftijd: " + kamp.minimumLeeftijd + "-" + kamp.maximumLeeftijd 
-            + ", prijs € " + kamp.deelnamekosten
-            + ". " + fuzzy;
+        return (
+            "leeftijd: " +
+            kamp.minimumLeeftijd +
+            "-" +
+            kamp.maximumLeeftijd +
+            ", prijs € " +
+            kamp.deelnamekosten +
+            ". " +
+            fuzzy
+        );
     }
 
     #kampUrl(kamp) {
-        return "../hits-in-" + kamp.plaats.toLowerCase() + "-" + this.#hit.jaar + "/" + kamp.alias;
+        return (
+            "../hits-in-" +
+            kamp.plaats.toLowerCase() +
+            "-" +
+            this.#hit.jaar +
+            "/" +
+            kamp.alias
+        );
     }
 
     score(kamp) {
-        const filter_leeftijd = this.#leeftijdFilter.filter(kamp, this.#ouderkindFilter.isFilterActief(kamp));
-        const filter_budget = this.#budgetFilter.filter(kamp)
+        const filter_leeftijd = this.#leeftijdFilter.filter(
+            kamp,
+            this.#ouderkindFilter.isFilterActief(kamp),
+        );
+        const filter_budget = this.#budgetFilter.filter(kamp);
         const filter_vol = this.#volFilter.filter(kamp);
         const filter_locatie = this.#locatieFilter.filter(kamp);
         const filter_ouderkind = this.#ouderkindFilter.filter(kamp);
 
-        if (filter_leeftijd && filter_budget && filter_vol && filter_locatie && filter_ouderkind) {
+        if (
+            filter_leeftijd &&
+            filter_budget &&
+            filter_vol &&
+            filter_locatie &&
+            filter_ouderkind
+        ) {
             let score = 0.0;
             score = this.#budgetFilter.score(kamp, score);
             score = this.#icoonFilter.score(kamp, score);

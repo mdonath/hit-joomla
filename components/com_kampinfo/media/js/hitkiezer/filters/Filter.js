@@ -17,7 +17,7 @@ export class Filter {
         return this.#hitkiezer.hit;
     }
 
-    updateEvent() {
-        this.#hitkiezer.updateEvent();
+    updateEvent(init) {
+        this.#hitkiezer.updateEvent(!init);
     }
 }

@@ -1,40 +1,42 @@
 import { Filter } from "./Filter.js";
 
-const SELECTOR = '#filter_locatie';
+export const SELECTOR = "#filter_locatie";
 
 /**
  * Filter om kampen binnen een HIT plaats door te laten.
  */
 export class LocatieFilter extends Filter {
-
     #value = null;
 
     constructor(hitkiezer) {
         super(hitkiezer);
         this.#initVelden();
     }
-    
+
     #initVelden() {
-        this.hit.hitPlaatsen.forEach(plaats =>
+        this.hit.hitPlaatsen.forEach((plaats) =>
             $("<option>")
                 .attr("value", plaats.naam)
                 .text("HIT " + plaats.naam)
-                .appendTo(SELECTOR)
+                .appendTo(SELECTOR),
         );
         $(SELECTOR).change(() => this.update());
     }
 
-    update() {
+    update(init) {
         let value = $(SELECTOR).val();
         if (value == -1) {
             value = null;
         }
         this.#value = value;
-        this.updateEvent()
+        this.updateEvent(init);
     }
 
     filter(kamp) {
-        return this.#value == null || this.#value == -1 || (this.#value.toLowerCase() === kamp.plaats.toLowerCase());
+        return (
+            this.#value == null ||
+            this.#value == -1 ||
+            this.#value.toLowerCase() === kamp.plaats.toLowerCase()
+        );
     }
-
 }

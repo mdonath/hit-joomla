@@ -38,9 +38,10 @@ $endDate = $params->get('endDate');
 $someOffset = $params->get('someOffset', 0);
 
 $wa->addInlineScript(
-    "window.startTimer('{$endDate}', {$someOffset}, '{$elementId}');",
+    "$( () => window.startTimer('{$endDate}', {$someOffset}, '{$elementId}') );",
     ['name' => "mod_hitcountdown.init{$elementId}"],
-    ['type' => 'module']
+    ['type' => 'module'],
+    ['jquery']
 );
 
 $showSeconds = $params->get('showSeconds', 1);

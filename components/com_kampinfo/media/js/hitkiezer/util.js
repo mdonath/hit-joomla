@@ -1,8 +1,8 @@
-import { parseDateTime, toDateTime } from './date_util.js';
+import { parseDateTime, toDateTime } from "./date_util.js";
 
 export const kampinfoConfig = {
-    "iconFolderLarge" : null,
-    "iconExtension" : null
+    iconFolderLarge: null,
+    iconExtension: null,
 };
 
 /**
@@ -11,7 +11,10 @@ export const kampinfoConfig = {
  */
 export function laatstBijgewerktOp() {
     if (window.inschrijvingen) {
-        return "Laatst bijgewerkt op: " + toDateTime(parseDateTime(inschrijvingen.timestamp));
+        return (
+            "Laatst bijgewerkt op: " +
+            toDateTime(parseDateTime(inschrijvingen.timestamp))
+        );
     }
     return "";
 }
@@ -26,37 +29,40 @@ export function fuzzyIndicatieVol(kamp) {
     if (isInschrijvingActief(kamp) && !isLoterijActief(kamp)) {
         return kamp.fuzzyIndicatieVol;
     }
-    return '';
+    return "";
 }
 
-export function isInschrijvingActief(activiteit) {
-    const nu = (new Date()).getTime();
-    const startMoment = parseDateTime(activiteit.startInschrijving).getTime();
-    const stopMoment = parseDateTime(activiteit.eindInschrijving).getTime();
-    return (nu >= startMoment) && (nu <= stopMoment);
+function isInschrijvingActief(activiteit) {
+    return isActief(activiteit.startInschrijving, activiteit.eindInschrijving);
 }
 
-export function isLoterijActief(activiteit) {
-    const nu = (new Date()).getTime();
-    const startMoment = parseDateTime(activiteit.startLoterij).getTime();
-    const stopMoment = parseDateTime(activiteit.eindLoterij).getTime();
-    return (nu >= startMoment) && (nu <= stopMoment);
+function isLoterijActief(activiteit) {
+    return isActief(activiteit.startLoterij, activiteit.eindLoterij);
 }
 
-export function meervoudPlaats(eenAantal) {
-    return "plaats" + ((eenAantal != 1) ? "en" : "");
+function isActief(start, eind) {
+    const nu = new Date().getTime();
+    const startMoment = parseDateTime(start).getTime();
+    const stopMoment = parseDateTime(eind).getTime();
+    return nu >= startMoment && nu <= stopMoment;
 }
 
 /**
  * Is een kamp vol?
- * 
+ *
  * @param kamp Het kamp.
  * @returns {Boolean} Of een kamp al volgereserveerd is.
  */
 export function isVol(kamp) {
-    return kamp.gereserveerd >= kamp.maximumAantalDeelnemers || isVolQuaGroepjes(kamp); 
+    return (
+        kamp.gereserveerd >= kamp.maximumAantalDeelnemers ||
+        isVolQuaGroepjes(kamp)
+    );
 }
 
-export function isVolQuaGroepjes(kamp) {
-    return kamp.maximumAantalSubgroepjes > 0 && kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes;
+function isVolQuaGroepjes(kamp) {
+    return (
+        kamp.maximumAantalSubgroepjes > 0 &&
+        kamp.aantalSubgroepen >= kamp.maximumAantalSubgroepjes
+    );
 }

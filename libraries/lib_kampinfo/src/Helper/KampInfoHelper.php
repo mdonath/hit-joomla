@@ -14,6 +14,11 @@ use Joomla\CMS\Date\Date;
  */
 abstract class KampInfoHelper {
 
+    /**
+     * Geeft alle mogelijke activiteit-gebieden als objecten met een value en een text.
+     * 
+     * @return object[]
+     */
     public static function getActivityAreaOptions() {
         return [
             (object) [
@@ -51,6 +56,11 @@ abstract class KampInfoHelper {
         ];
     }
 
+    /**
+     * Geeft alle mogelijke categorieën van icoontjes in een Map met de code als key en de omschrijving als value.
+
+     * @return array{?: string, A: string, B: string, I: string, K: string, O: string, S: string}
+     */
     public static function getHitIconSoortOptions() {
         return [
                 "?" => "Gewoon",
@@ -63,6 +73,13 @@ abstract class KampInfoHelper {
         ];
     }
 
+    /**
+     * Formatteert een datum in yyyy-mm-dd formaat naar het dd-mm-yyyy formaat.
+
+     * @param mixed $date
+     * @param mixed $metTijd Of de tijd ook meegenomen moet worden
+     * @return mixed
+     */
     public static function reverse($date, $metTijd=false) {
         if ($date != '0000-00-00') {
             $date = new Date($date);
@@ -78,6 +95,7 @@ abstract class KampInfoHelper {
 
     /**
      * Returns the userTime zone if the user has set one, or the global config one
+     * 
      * @return mixed
      */
     public static function getTimeZone() {
@@ -91,6 +109,11 @@ abstract class KampInfoHelper {
         return new DateTimeZone($timeZone);
     }
 
+    /**
+     * Berekent hoeveel overnachtingen een deelnemer zal hebben bij een kamponderdeel op basis van de start- en einddatum van het kamp.
+
+     * @param mixed $kamp
+     */
     public static function aantalOvernachtingen($kamp) {
         $start = self::clearTime($kamp->startDatumTijd);
         $eind = self::clearTime($kamp->eindDatumTijd);
@@ -104,6 +127,12 @@ abstract class KampInfoHelper {
         return $datum;
     }
 
+    /**
+     * Berekent de startdag van een kamp in het volgende HIT jaar op basis van wanneer het startte in het afgelopen jaar.
+     * 
+     * @param mixed $datum
+     * @return string
+     */
     public static function herberekenDatum($datum) {
         $DATABASE_DATETIMEFORMAT = 'Y-m-d H:i:s';
         $origineel = new Date($datum);
@@ -119,7 +148,7 @@ abstract class KampInfoHelper {
      * Er is een functie \easter_date(), maar die vereist de calendar-library in PHP.
      * 
      * @param int $jaar Het jaar waarvan je de eerste HIT dag wil hebben
-     * @return De datum van de eerste HIT dag.
+     * @return \DateTime|bool De datum van de eerste HIT dag en in theorie null als het mislukt.
      */
     public static function eersteHitDag(int $jaar) {
         $goedeVrijdag = [
@@ -161,6 +190,12 @@ abstract class KampInfoHelper {
         return \DateTime::createFromFormat('d-m-Y|', $goedeVrijdag[$jaar]);
     }
 
+    /**
+     * Geeft terug of we in de gehele inschrijfperiode zitten, maar houdt geen rekening met de loterij-fase die binnen deze periode valt.
+     * 
+     * @param mixed $activiteit
+     * @return bool
+     */
     public static function isInschrijvingActief($activiteit) {
         return KampInfoHelper::isActief(
             $activiteit->startInschrijving,
@@ -168,6 +203,12 @@ abstract class KampInfoHelper {
         );
     }
 
+    /**
+     * Geeft terug of we nu in de fase loterij zitten op het moment 'now'.
+     * 
+     * @param mixed $activiteit
+     * @return bool
+     */
     public static function isLoterijActief($activiteit) {
         return KampInfoHelper::isActief(
             $activiteit->startLoterij,
@@ -175,6 +216,12 @@ abstract class KampInfoHelper {
         );
     }
 
+    /**
+     * Je komt op de wachtlijst vanaf het begin van de inschrijving tot aan het begin van de loterij.
+     * 
+     * @param mixed $activiteit
+     * @return bool
+     */
     public static function isWachtlijstActief($activiteit) {
         return KampInfoHelper::isActief(
             $activiteit->startInschrijving,
@@ -182,6 +229,13 @@ abstract class KampInfoHelper {
         );
     }
 
+    /**
+     * Valt het moment 'nu' in de opgegeven range tussen $beginMoment en $eindMoment.
+     * 
+     * @param mixed $beginMoment
+     * @param mixed $eindMoment
+     * @return bool
+     */
     private static function isActief($beginMoment, $eindMoment) {
         $nu = (new Date('now'))->getTimestamp();
         return  $nu >= ((new Date($beginMoment))->getTimestamp()) 

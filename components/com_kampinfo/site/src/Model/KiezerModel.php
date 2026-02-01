@@ -32,9 +32,33 @@ class KiezerModel extends AbstractKampInfoModel {
             $iconenMap
         );
 
+        unset($project->shantiEvenementId);
+        unset($project->loterijStartdatum);
+        unset($project->loterijEinddatum);
+        unset($project->inschrijvingStartdatum);
+        unset($project->inschrijvingEinddatum);
+        unset($project->inschrijvingWijzigenTotDatum);
+        unset($project->inschrijvingKosteloosAnnulerenDatum);
+        unset($project->inschrijvingGeenRestitutieDatum);
+        unset($project->inningsdatum);
+        unset($project->ouderkind);
 
         foreach ($project->hitPlaatsen as $plaats) {
+
             $plaats->kampen = $this->getHitKampenJSON($plaats->id, $iconenMap);
+
+            unset($plaats->id);
+            unset($plaats->asset_id);
+            unset($plaats->hitproject_id);
+            unset($plaats->projectcode);
+            unset($plaats->hitCourantTekst);
+            unset($plaats->contactPersoonNaam);
+            unset($plaats->contactPersoonEmail);
+            unset($plaats->contactPersoonTelefoon);
+            unset($plaats->socialmediaFacebook);
+            unset($plaats->socialmediaInstagram);
+            unset($plaats->akkoordHitPlaats);
+            unset($plaats->published);
         }
 
         return $project;
@@ -50,7 +74,6 @@ class KiezerModel extends AbstractKampInfoModel {
                 $db->quoteName('p.loterijStartdatum', 'startLoterij'),
                 $db->quoteName('p.loterijEinddatum', 'eindLoterij'),
                 $db->quoteName('c.naam'),
-                $db->quoteName('c.shantiFormuliernummer'),
                 $db->quoteName('c.minimumLeeftijd'),
                 $db->quoteName('c.maximumLeeftijd'),
                 $db->quoteName('c.deelnamekosten'),

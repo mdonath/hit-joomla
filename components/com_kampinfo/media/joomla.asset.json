@@ -1,43 +1,189 @@
 {
-    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-    "name": "com_kampinfo",
-    "version": "1.0.0",
-    "description": "HIT KampInfo",
-    "license": "GPL-2.0+",
-    "assets": [
-      {
-        "name": "com_kampinfo-overzicht",
-        "type": "style",
-        "uri": "com_kampinfo/overzicht.css"
-      },
-      {
-        "name": "com_kampinfo-activiteit",
-        "type": "style",
-        "uri": "com_kampinfo/activiteit.css"
-      },
-      {
-        "name": "com_kampinfo-inschrijvingen",
-        "type": "style",
-        "uri": "com_kampinfo/inschrijvingen.css"
-      },
-      {
-        "name": "com_kampinfo-hitkiezer",
-        "type": "style",
-        "uri": "com_kampinfo/hitkiezer.css"
-      },
-      {
-        "name": "com_kampinfo-hitkiezer",
-        "type": "script",
-        "uri": "com_kampinfo/hitkiezer.js",
-        "attributes": {
-          "type": "module"
-        }
-      },
-      {
-        "name": "com_kampinfo-jquery-cookies",
-        "type": "script",
-        "uri": "com_kampinfo/jquery.cookies.2.2.0.min.js",
-        "dependencies": ["jquery"]
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_kampinfo",
+  "version": "1.0.0",
+  "description": "HIT KampInfo",
+  "license": "GPL-2.0+",
+  "assets": [
+    {
+      "name": "com_kampinfo.style.overzicht",
+      "type": "style",
+      "uri": "com_kampinfo/overzicht.css"
+    },
+    {
+      "name": "com_kampinfo.style.activiteit",
+      "type": "style",
+      "uri": "com_kampinfo/activiteit.css"
+    },
+    {
+      "name": "com_kampinfo.style.inschrijvingen",
+      "type": "style",
+      "uri": "com_kampinfo/inschrijvingen.css"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.styles",
+      "type": "style",
+      "uri": "com_kampinfo/hitkiezer.css"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.scripts",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer.js",
+      "dependencies": [
+        "core",
+        "com_kampinfo-hitkiezer.script.util",
+        "com_kampinfo-hitkiezer.script.Kiezer",
+        "com_kampinfo-hitkiezer.script.filter.CookieWrapper"
+      ],
+      "attributes": {
+        "type": "module"
       }
-    ]
-  }
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.util",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/util.js",
+      "dependencies": [
+        "com_kampinfo-hitkiezer.script.date_util"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.date_util",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/date_util.js",
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.Kiezer",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/Kiezer.js",
+      "dependencies": [
+        "com_kampinfo-jquery-cookies",
+        "com_kampinfo-hitkiezer.script.util",
+        "com_kampinfo-hitkiezer.script.date_util",
+        "com_kampinfo-hitkiezer.script.filter.BudgetFilter",
+        "com_kampinfo-hitkiezer.script.filter.IcoonFilter",
+        "com_kampinfo-hitkiezer.script.filter.LeeftijdFilter",
+        "com_kampinfo-hitkiezer.script.filter.OuderKindFilter",
+        "com_kampinfo-hitkiezer.script.filter.LocatieFilter",
+        "com_kampinfo-hitkiezer.script.filter.VolFilter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.Filter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/Filter.js",
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.BudgetFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/BudgetFilter.js",
+      "dependencies": [
+        "jquery",
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.IcoonFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/IcoonFilter.js",
+      "dependencies": [
+        "jquery",
+        "com_kampinfo-hitkiezer.script.util",
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.LeeftijdFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/LeeftijdFilter.js",
+      "dependencies": [
+        "jquery",
+        "com_kampinfo-hitkiezer.script.date_util",
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.OuderKindFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/OuderKindFilter.js",
+      "dependencies": [
+        "jquery",
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.LocatieFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/LocatieFilter.js",
+      "dependencies": [
+        "jquery",
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.VolFilter",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/VolFilter.js",
+      "dependencies": [
+        "com_kampinfo-hitkiezer.script.filter.Filter"
+      ],
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-hitkiezer.script.filter.CookieWrapper",
+      "type": "script",
+      "uri": "com_kampinfo/hitkiezer/filters/CookieWrapper.js",
+      "attributes": {
+        "type": "module"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "name": "com_kampinfo-jquery-cookies",
+      "type": "script",
+      "uri": "com_kampinfo/jquery.cookies.2.2.0.min.js",
+      "dependencies": [
+        "jquery"
+      ]
+    }
+  ]
+}

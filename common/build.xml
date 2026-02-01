@@ -23,7 +23,7 @@
             destfile="dist/${str.destfilename}"
             basedir="."
             update="false"
-            excludes="build.*, **/doc/**, dist"
+            excludes="build.*, **/doc/**, dist, **/node_modules/**, **/package.json, **/package-lock.json, **/*.spec.js, **/*.max.js, **/.git/**, **/.vscode/**, **/js/coverage/**"
         />
     </target>
 

@@ -22,7 +22,7 @@ class HtmlView extends BaseHtmlView {
 
         $this->activiteit = $model->getActiviteit();
 
-        $document->getWebAssetManager()->useStyle('com_kampinfo-activiteit');
+        $document->getWebAssetManager()->useStyle('com_kampinfo.style.activiteit');
 
         $document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 

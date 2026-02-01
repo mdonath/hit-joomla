@@ -1,15 +1,15 @@
-import { createDate, parseDate } from '../date_util.js';
-import { Filter } from './Filter.js';
+import { createDate, parseDate } from "../date_util.js";
+import { Filter } from "./Filter.js";
 
-const SELECTOR_DAG = '#filter_geboortedag';
-const SELECTOR_MAAND = '#filter_geboortemaand';
-const SELECTOR_JAAR = '#filter_geboortejaar';
+export const SELECTOR_DAG = "#filter_geboortedag";
+export const SELECTOR_MAAND = "#filter_geboortemaand";
+export const SELECTOR_JAAR = "#filter_geboortejaar";
+export const SELECTOR_LEEFTIJD = "#leeftijd";
 
 /**
  * Filter voor leeftijd.
  */
 export class LeeftijdFilter extends Filter {
-
     #peildatum;
     #geboortedatum;
 
@@ -22,42 +22,36 @@ export class LeeftijdFilter extends Filter {
     #initVelden() {
         // Geboortedag
         for (let i = 1; i < 32; i++) {
-            $("<option>")
-                .attr("value", i)
-                .text(i)
-                .appendTo(SELECTOR_DAG);
+            $("<option>").attr("value", i).text(i).appendTo(SELECTOR_DAG);
         }
         $(SELECTOR_DAG).change(() => this.update());
 
         // Geboortemaand
         [
-            'januari',
-            'februari',
-            'maart',
-            'april',
-            'mei',
-            'juni',
-            'juli',
-            'augustus',
-            'september',
-            'oktober',
-            'november',
-            'december'
-        ].forEach((maand, index) => 
+            "januari",
+            "februari",
+            "maart",
+            "april",
+            "mei",
+            "juni",
+            "juli",
+            "augustus",
+            "september",
+            "oktober",
+            "november",
+            "december",
+        ].forEach((maand, index) =>
             $("<option>")
                 .attr("value", index + 1)
                 .text(maand)
-                .appendTo(SELECTOR_MAAND)
+                .appendTo(SELECTOR_MAAND),
         );
         $(SELECTOR_MAAND).change(() => this.update());
 
         // Geboortejaar; afhankelijk van minimum- en maximumleeftijd.
-        const {min, max} = this.#minMaxJaar();
+        const { min, max } = this.#minMaxJaar();
         for (let i = min; i >= max; i--) {
-            $("<option>")
-                .attr("value", i)
-                .text(i)
-                .appendTo(SELECTOR_JAAR);
+            $("<option>").attr("value", i).text(i).appendTo(SELECTOR_JAAR);
         }
         $(SELECTOR_JAAR).change(() => this.update());
     }
@@ -66,17 +60,17 @@ export class LeeftijdFilter extends Filter {
         let min = 100;
         let max = 0;
 
-        this.hit.hitPlaatsen.forEach(plaats =>
-            plaats.kampen.forEach(kamp => {
+        this.hit.hitPlaatsen.forEach((plaats) =>
+            plaats.kampen.forEach((kamp) => {
                 min = Math.min(min, kamp.minimumLeeftijd);
                 max = Math.max(max, kamp.maximumLeeftijd);
-            })
+            }),
         );
 
         const hitjaar = this.hitjaar;
         return {
             min: hitjaar - min,
-            max: hitjaar - max
+            max: hitjaar - max,
         };
     }
 
@@ -84,86 +78,105 @@ export class LeeftijdFilter extends Filter {
         return this.#peildatum.getFullYear();
     }
 
+    /**
+     * Geeft aan of het kamp door het filter komt.
+     *
+     * @param {*} kamp
+     * @param {*} ouderkindFilterActief
+     * @returns true als het kamp door het filter komt, anders false.
+     */
     filter(kamp, ouderkindFilterActief) {
-        return this.#geboortedatum == null || this.#isKindLeeftijdInRange(kamp) || this.#isOuderLeeftijdInRange(kamp, ouderkindFilterActief);
+        return (
+            this.#isFilterLeeg() ||
+            this.#isKindLeeftijdInRange(kamp) ||
+            this.#isOuderLeeftijdInRange(kamp, ouderkindFilterActief)
+        );
+    }
+
+    #isFilterLeeg() {
+        return this.#geboortedatum == null;
+    }
+
+    #isKindLeeftijdInRange(kamp) {
+        const minimum = this.#relativeDate(
+            kamp.eindDatumTijd,
+            -(kamp.maximumLeeftijd + 1),
+            -kamp.margeAantalDagenTeOud,
+        );
+        const maximum = this.#relativeDate(
+            kamp.startDatumTijd,
+            -kamp.minimumLeeftijd,
+            +kamp.margeAantalDagenTeJong,
+        );
+
+        return this.#inRange(minimum, this.#geboortedatum, maximum);
     }
 
     #isOuderLeeftijdInRange(kamp, ouderkindFilterActief) {
         if (ouderkindFilterActief) {
-            const geborenNaOuder = this.#relativeDate(
+            const minimum = this.#relativeDate(
                 kamp.eindDatumTijd,
-                kamp.maximumLeeftijdOuder + 1,
-                -1
+                -(kamp.maximumLeeftijdOuder + 1),
+                0,
             );
-            const geborenVoorOuder = this.#relativeDate(
+            const maximum = this.#relativeDate(
                 kamp.startDatumTijd,
-                kamp.minimumLeeftijdOuder,
-                0
+                -kamp.minimumLeeftijdOuder,
+                0,
             );
-            return (this.#geboortedatum >= geborenNaOuder && this.#geboortedatum <= geborenVoorOuder);
+            return this.#inRange(minimum, this.#geboortedatum, maximum);
         }
         return false;
     }
 
-    #isKindLeeftijdInRange(kamp) {
-        const geborenNa = this.#relativeDate(
-            kamp.eindDatumTijd,
-            kamp.maximumLeeftijd + 1, // +1; want hele jaar telt mee 
-            kamp.margeAantalDagenTeOud - 1 // -1; bij marge=0 mag je op einddatum nog niet maxlft+1 zijn
-        );
-        const geborenVoor = this.#relativeDate(
-            kamp.startDatumTijd,
-            kamp.minimumLeeftijd,
-            kamp.margeAantalDagenTeJong
-        );
-        return (this.#geboortedatum >= geborenNa && this.#geboortedatum <= geborenVoor);
-    }
-
     #relativeDate(datumTijd, jaarOffset, dagOffset) {
         return createDate(
-            datumTijd.getFullYear() - jaarOffset,
+            datumTijd.getFullYear() + jaarOffset,
             datumTijd.getMonth() + 1,
-            datumTijd.getDate() - dagOffset
+            datumTijd.getDate() + dagOffset,
         );
+    }
+
+    #inRange(min, date, max) {
+        return min <= date && date <= max;
     }
 
     /**
      * Als de geboortedatum aangepast wordt.
      */
-    update() {
-        const jaar = $('#filter_geboortejaar').val();
-        const maand = $('#filter_geboortemaand').val();
-        const dag = $('#filter_geboortedag').val();
+    update(init) {
+        const jaar = $(SELECTOR_JAAR).val();
+        const maand = $(SELECTOR_MAAND).val();
+        const dag = $(SELECTOR_DAG).val();
 
         if (this.#validateGeboortedatumForm(jaar, maand, dag)) {
             this.#geboortedatum = createDate(jaar, maand, dag);
             const leeftijd = this.#leeftijdOpPeildatum();
-            $("#leeftijd").text(", dan is je leeftijd tijdens de HIT " + leeftijd + " jaar.");
+            $(SELECTOR_LEEFTIJD).text(
+                ", dan is je leeftijd tijdens de HIT " + leeftijd + " jaar.",
+            );
         } else {
             this.#geboortedatum = null;
-            $("#leeftijd").text('');
+            $(SELECTOR_LEEFTIJD).text("");
         }
 
-        this.updateEvent();
+        this.updateEvent(init);
     }
 
     #validateGeboortedatumForm(jaar, maand, dag) {
-        return !(jaar === '' || maand === '' || dag === '');
+        return !(jaar === "" || maand === "" || dag === "");
     }
 
     #leeftijdOpPeildatum() {
-        let result = -1;
-        if (this.#geboortedatum != null) {
-            result = this.hitjaar - this.#geboortedatum.getFullYear();
-            const verjaardagInHitJaar = createDate(
-                    this.hitjaar,
-                    this.#geboortedatum.getMonth() + 1,
-                    this.#geboortedatum.getDate());
-            if (verjaardagInHitJaar > this.#peildatum) {
-                result--;
-            }
+        let result = this.hitjaar - this.#geboortedatum.getFullYear();
+        const verjaardagInHitJaar = createDate(
+            this.hitjaar,
+            this.#geboortedatum.getMonth() + 1,
+            this.#geboortedatum.getDate(),
+        );
+        if (verjaardagInHitJaar > this.#peildatum) {
+            result--;
         }
         return result;
     }
-
 }

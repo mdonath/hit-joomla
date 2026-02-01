@@ -1,12 +1,12 @@
 import { Filter } from "./Filter.js";
+// import { $ } from "jquery";
 
-const SELECTOR = '#filter_budget';
+export const SELECTOR = "#filter_budget";
 
 /**
  * Filter voor te betalen deelnemerbijdrage.
  */
 export class BudgetFilter extends Filter {
-
     #value = -1;
 
     constructor(hitkiezer) {
@@ -16,19 +16,19 @@ export class BudgetFilter extends Filter {
 
     #initVelden() {
         const prijzen = [];
-        this.hit.hitPlaatsen.forEach(plaats =>
-            plaats.kampen.forEach(kamp => {
+        this.hit.hitPlaatsen.forEach((plaats) =>
+            plaats.kampen.forEach((kamp) => {
                 if (prijzen.indexOf(kamp.deelnamekosten) === -1) {
                     prijzen.push(kamp.deelnamekosten);
                 }
-            })
+            }),
         );
 
         // prijzen
         prijzen.sort((a, b) => a - b); // sorteer numeriek
-        const lowest = (Math.round(prijzen[0] / 10) * 10) + 10;
-        const highest = (Math.round(prijzen[prijzen.length - 1] / 10) * 10) + 10;
-        for (let prijs = lowest; prijs < highest; prijs += 10) {
+        const lowest = Math.floor(prijzen[0] / 10) * 10 + 10;
+        const highest = Math.floor(prijzen[prijzen.length - 1] / 10) * 10 + 10;
+        for (let prijs = lowest; prijs <= highest; prijs += 10) {
             let found = false;
             for (let p = prijs - 10; !found && p <= prijs + 10; p++) {
                 found = prijzen.indexOf(p) != -1;
@@ -36,18 +36,22 @@ export class BudgetFilter extends Filter {
             if (found) {
                 $("<option>")
                     .attr("value", prijs)
-                    .text((prijs - 10) + " tot " + (prijs + 10))
+                    .text(prijs - 10 + " tot " + (prijs + 10))
                     .appendTo(SELECTOR);
             }
-        };
+        }
 
         $(SELECTOR).change(() => this.update());
     }
 
-    update() {
+    update(init) {
         const value = $(SELECTOR).val();
-        this.#value = parseInt(value);
-        this.updateEvent();
+        if (value == null) {
+            this.#value = -1;
+        } else {
+            this.#value = parseInt(value);
+        }
+        this.updateEvent(init);
     }
 
     score(kamp, baseScore) {
@@ -62,7 +66,10 @@ export class BudgetFilter extends Filter {
     }
 
     filter(kamp) {
-        return this.#value === -1 || ( (kamp.deelnamekosten <= this.#value + 10) && (kamp.deelnamekosten >= this.#value - 10) );
+        return (
+            this.#value === -1 ||
+            (kamp.deelnamekosten <= this.#value + 10 &&
+                kamp.deelnamekosten >= this.#value - 10)
+        );
     }
-
 }

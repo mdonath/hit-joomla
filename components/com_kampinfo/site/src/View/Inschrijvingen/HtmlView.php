@@ -22,7 +22,7 @@ class HtmlView extends BaseHtmlView {
 
         $this->project = $model->getProject();
 
-        $document->getWebAssetManager()->useStyle('com_kampinfo-inschrijvingen');
+        $document->getWebAssetManager()->useStyle('com_kampinfo.style.inschrijvingen');
 
         return parent::display($tpl);
     }
