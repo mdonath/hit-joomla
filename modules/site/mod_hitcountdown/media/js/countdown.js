@@ -1,15 +1,14 @@
-import HitCounter from "./HitCounter.js";
+import HitCountdown from "./HitCountdown.js";
 
 if (!window.Joomla) {
-    throw new Error('Joomla API was not properly initialised');
+    throw new Error("Joomla API was not properly initialised");
 }
 
 /**
  * A global function to start the countdown timer.
  */
 window.startTimer = (endDate, someOffset, elementId) => {
-    jQuery(document).ready(() => {
-        new HitCounter(endDate, someOffset, elementId)
-            .startTimer();
+    $(() => {
+        new HitCountdown(endDate, someOffset, elementId).startTimer();
     });
 };

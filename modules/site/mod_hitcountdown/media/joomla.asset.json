@@ -20,7 +20,7 @@
       "dependencies": [
         "core",
         "jquery",
-        "mod_hitcountdown.HitCounter"
+        "mod_hitcountdown.HitCountdown"
       ],
       "attributes": {
         "type": "module"
@@ -28,9 +28,9 @@
       "version": "1.0.0"
     },
     {
-      "name": "mod_hitcountdown.HitCounter",
+      "name": "mod_hitcountdown.HitCountdown",
       "type": "script",
-      "uri": "mod_hitcountdown/HitCounter.js",
+      "uri": "mod_hitcountdown/HitCountdown.js",
       "dependencies": [
         "core",
         "jquery",

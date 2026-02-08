@@ -60,23 +60,23 @@ $showSeconds = $params->get('showSeconds', 1);
     <ul id="mhc-countdown" class="<?= $showSeconds ? 'showfour' : 'showthree' ?>">
 
         <li id="days">
-            <div class="number">00</div>
+            <div class="number">0</div>
             <div class="label"><?= $textDays ?></div>
         </li>
 
         <li id="hours">
-            <div class="number">00</div>
+            <div class="number">0</div>
             <div class="label"><?= $textHours ?></div>
         </li>
 
         <li id="minutes">
-            <div class="number">00</div>
+            <div class="number">0</div>
             <div class="label"><?= $textMinutes ?></div>
         </li>
 
         <?php if ($showSeconds) { ?>
             <li id="seconds">
-                <div class="number">00</div>
+                <div class="number">0</div>
                 <div class="label"><?= $textSeconds ?></div>
             </li>
         <?php } ?>
