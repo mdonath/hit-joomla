@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, jest } from "@jest/globals";
-import { mock, mockFn } from "jest-mock-extended";
+import { mockFn } from "jest-mock-extended";
 import { SELECTOR, IcoonFilter } from "./IcoonFilter";
 import { CookieWrapper } from "./CookieWrapper";
 import { kampinfoConfig } from "../util";

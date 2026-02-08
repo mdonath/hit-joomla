@@ -86,7 +86,12 @@ function createInschrijfFormulierLink($template, $id) {
                 }
             ?></b></span>
             <span>|</span>
-            <span style="white-space: nowrap;">Prijs: <b>€ <?= $activiteit->deelnamekosten ?></b></span>
+            <span style="white-space: nowrap;">
+                Prijs: <b>€ <?= $activiteit->deelnamekosten ?></b>
+                <?php if ($activiteit->isouderkind == '1') { ?>
+                    p.p.
+                <?php } ?>
+            </span>
         </p>
     </div>
 
