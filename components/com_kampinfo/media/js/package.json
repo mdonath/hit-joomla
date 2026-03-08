@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --collectCoverage"
+    "test": "LC_ALL=nl_NL.UTF8 NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --collectCoverage"
   },
   "dependencies": {
     "jquery": "^3.5.33"
