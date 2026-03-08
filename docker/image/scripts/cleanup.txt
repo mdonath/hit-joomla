@@ -11,3 +11,5 @@ mysql> select * from joom_user_profiles;
 TODO: Disable sending statistics
 joom_extensions mode:3
 
+
+TODO: Maak Nederlands de standaardtaal voor de website

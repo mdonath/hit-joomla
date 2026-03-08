@@ -14,7 +14,7 @@
         <delete dir="${cfg.docker}" />
     </target>
 
-    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_kampinfo, plg_socialmedia, plg_group_cli, plg_kampinfo_cli, tpl_kampinfopreview, lib_kampinfo, mod_hitcountdown, plg_task_updateinschrijvingen">
+    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_content_kampinfo, plg_content_socialmedia, plg_console_group, plg_console_kampinfo, tpl_kampinfopreview, lib_kampinfo, mod_hitcountdown, plg_task_updateinschrijvingen">
         <copy todir="${cfg.docker}" flatten="true" verbose="true">
             <fileset dir=".">
                 <filename name="components/**/dist/*.zip" />
@@ -45,31 +45,31 @@
          </antcall>
     </target>
 
-    <target name="plg_kampinfo" depends="init">
+    <target name="plg_content_kampinfo" depends="init">
          <antcall target="buildAndCopy">
             <param name="cmp.dir" value="plugins/content" />
-            <param name="cmp.name" value="plg_kampinfo" />
+            <param name="cmp.name" value="plg_content_kampinfo" />
          </antcall>
     </target>
 
-    <target name="plg_socialmedia" depends="init">
+    <target name="plg_content_socialmedia" depends="init">
          <antcall target="buildAndCopy">
             <param name="cmp.dir" value="plugins/content" />
-            <param name="cmp.name" value="plg_socialmedia" />
+            <param name="cmp.name" value="plg_content_socialmedia" />
          </antcall>
     </target>
 
-    <target name="plg_group_cli" depends="init">
+    <target name="plg_console_group" depends="init">
          <antcall target="buildAndCopy">
-            <param name="cmp.dir" value="plugins/cli" />
-            <param name="cmp.name" value="plg_group_cli" />
+            <param name="cmp.dir" value="plugins/console" />
+            <param name="cmp.name" value="plg_console_group" />
          </antcall>
     </target>
 
-    <target name="plg_kampinfo_cli" depends="init">
+    <target name="plg_console_kampinfo" depends="init">
          <antcall target="buildAndCopy">
-            <param name="cmp.dir" value="plugins/cli" />
-            <param name="cmp.name" value="plg_kampinfo_cli" />
+            <param name="cmp.dir" value="plugins/console" />
+            <param name="cmp.name" value="plg_console_kampinfo" />
          </antcall>
     </target>
 
@@ -100,13 +100,6 @@
             <param name="cmp.name" value="mod_hitcountdown" />
          </antcall>
     </target>
-
-    <!-- <target name="com_hitdownloads" depends="init">
-         <antcall target="buildAndCopy">
-            <param name="cmp.dir" value="components" />
-            <param name="cmp.name" value="com_hitdownloads" />
-         </antcall>
-    </target> -->
 
     <target name="buildAndCopy">
         <ant dir="${cmp.dir}/${cmp.name}" />

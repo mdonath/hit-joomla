@@ -3,7 +3,7 @@
 
     <description>PLG_TASK_UPDATEINSCHRIJVINGEN_XML_DESCRIPTION</description>
 
-    <name>Update HIT Inschrijvingen</name>
+    <name>plg_task_updateinschrijvingen</name>
     <version>1.0</version>
 
     <creationDate>Januari 2026</creationDate>

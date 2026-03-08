@@ -43,23 +43,23 @@ echo "Installing HIT Joomla extensions"
 echo "================================"
 
 echo "Installing KampInfo and Im/Export Components"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/com_kampinfo-3.x.zip
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/com_kampinfoimexport-2.x.zip
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/com_kampinfo.zip
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/com_kampinfoimexport.zip
 
 echo "Installing and enabling Library 'lib_kampinfo'"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/lib_kampinfo-1.x.zip
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/lib_kampinfo.zip
 ${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type = "library" and element = "Kampinfo";'
 
-echo "Installing and enabling Content plugin 'plg_kampinfo'"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_kampinfo-3.x.zip
+echo "Installing and enabling Content plugin 'plg_content_kampinfo'"
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_content_kampinfo.zip
 ${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="content" and element = "kampinfo";'
 
-echo "Installing and enabling Content plugin 'plg_socialmedia'"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_socialmedia-1.x.zip
+echo "Installing and enabling Content plugin 'plg_content_socialmedia'"
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_content_socialmedia.zip
 ${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="content" and element = "socialmedia";'
 
 echo "Installing and enabling Task plugin 'plg_task_updateinschrijvingen'"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_task_updateinschrijvingen-1.x.zip
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_task_updateinschrijvingen.zip
 ${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="task" and element = "updateinschrijvingen";'
 
 
@@ -67,13 +67,13 @@ echo "================================"
 echo "Installing CLI Joomla extensions"
 echo "================================"
 
-echo "Installing and enabling CLI plugin 'group:add'"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_group_cli-1.x.zip
-${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="console" and element = "group_cli";'
+echo "Installing and enabling CLI plugin 'plg_console_group'"
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_console_group.zip
+${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="console" and element = "group";'
 
-echo "Installing and enabling CLI plugin 'kampinfo:import' and kampinfo:export"
-${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_kampinfo_cli-1.x.zip
-${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="console" and element = "kampinfo_cli";'
+echo "Installing and enabling CLI plugin 'plg_console_kampinfo'"
+${JOOMLA_CLI} extension:install --path=${OWN_EXTENSION_DIR}/plg_console_kampinfo.zip
+${SQL_EXECUTE} 'update joom_extensions set enabled = 1 where type="plugin" and folder="console" and element = "kampinfo";'
 
 
 echo "================================"
