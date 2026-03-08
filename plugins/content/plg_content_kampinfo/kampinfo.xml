@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" method="upgrade">
 
-    <description>Toont het overzicht van de kamponderdelen in een Joomla article</description>
+    <description>PLG_CONTENT_KAMPINFO_XML_DESCRIPTION</description>
 
     <name>plg_content_kampinfo</name>
     <version>3.1</version>
@@ -13,7 +13,14 @@
 
     <files>
         <folder plugin="kampinfo">services</folder>
+        <folder>language</folder>
         <folder>src</folder>
+        <folder>tmpl</folder>
     </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_content_kampinfo.sys.ini</language>
+        <language tag="nl-NL">language/nl-NL/plg_content_kampinfo.sys.ini</language>
+    </languages>
 
 </extension>

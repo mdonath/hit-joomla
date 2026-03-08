@@ -4,26 +4,22 @@ namespace HITScoutingNL\Plugin\Content\SocialMedia\Extension;
 // No direct access
 defined('_JEXEC') or die ('Restricted access');
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Event\Content\ContentPrepareEvent;
-use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
-use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Database\DatabaseAwareTrait;
+
 use Joomla\Database\ParameterType;
-use Joomla\Event\SubscriberInterface;
-use Joomla\Registry\Registry;
+
+use HITScoutingNL\Library\KampInfo\ContentPlugin\AbstractContentPlugin;
 
 
-final class Socialmedia extends CMSPlugin implements SubscriberInterface
-{
-    use DatabaseAwareTrait;
-    use HTMLRegistryAwareTrait;
+final class Socialmedia extends AbstractContentPlugin {
 
-    public static function getSubscribedEvents(): array {
-        return [
-            'onContentPrepare' => 'onContentPrepare',
-        ];
+    private const PLUGIN_CODE = 'socialmedia';
+
+    protected function getPluginName() {
+        return static::PLUGIN_CODE;
+    }
+
+    protected function getAllowedContexts() {
+        return ['com_content.article', 'com_content.featured', 'com_content.category'];
     }
 
     /*
@@ -31,57 +27,19 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
      * 
      * {socialmedia [jaar="<jaartal>"] plaats="<Alphen|Dwingeloo|Harderwijk|Heerenveen|Nijmegen|Ommen|Zandvoort|Zeeland>" } 
      */
-    public function onContentPrepare(ContentPrepareEvent $event) {
-        $context = $event->getContext();
-        if ($context === 'com_finder.indexer') {
-            return;
-        }
-        $allowed_contexts = ['com_content.article', 'com_content.featured', 'com_content.category'];
-        if (!in_array($context, $allowed_contexts, true)) {
-            return;
-        }
+    protected function renderPlugin($pluginParameters) {
+        $config = $pluginParameters;
+        $config['projectId'] = $this->getKampInfoConfig()->get('huidigeActieveJaar');
 
-        $params = $event->getParams();
-        if (!($params instanceof Registry)) {
-            return;
+        // Indien geen jaar, val dan terug op huidige actieve jaar
+        $jaar = $this->getParamIfExists($config, 'jaar');
+        if ($jaar != null) {
+            $config['jaar'] = $jaar;
         }
 
-        $row = $event->getItem();
-        if (!isset($row->id) || !(int) $row->id) {
-            return;
-        }
+        $html = $this->genereerSocialMediaOverzicht($config);
 
-        $plugincode = 'socialmedia';
-        $regex = "/{". $plugincode ."\ ([^}]+)\s*\}|{". $plugincode ."\s*\}/m";
-        if (preg_match_all($regex, $row->text, $matches)) {
-
-            $kampInfoConfig = ComponentHelper::getParams('com_kampinfo');
-            $projectId = $kampInfoConfig->get('huidigeActieveJaar');
-
-            for ($i = 0; $i < count($matches[0]); $i++) {
-                $config = [];
-                $config['projectId'] = $projectId;
-
-                // collect parameters
-                $pluginParameters = explode(' ', $matches[1][$i]);
-                foreach ($pluginParameters as $item) {
-                    if ($item !== '') {
-                        list($key, $value) = explode("=", $item);
-                        $config[$key] = str_replace(["'",'"'], '', $value);
-                    }
-                }
-
-                // Indien geen jaar, val dan terug op huidige actieve jaar
-                $jaar = $this->getParamIfExists($config, 'jaar');
-                if ($jaar != null) {
-                    $config['jaar'] = $jaar;
-                }
-
-                $result = $this->genereerSocialMediaOverzicht($config);
-
-                $row->text = str_replace($matches[0][$i], $result, $row->text);
-            }
-        }
+        return $html;
     }
 
     private function genereerSocialMediaOverzicht($config) {
@@ -89,18 +47,17 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
 
         $result = $this->getData($config);
 
-        $output = "";
-        if ($result != null && ($this->isGevuld($result->facebook) || $this->isGevuld($result->instagram))) {
-            $path = PluginHelper::getLayoutPath('content', 'socialmedia', 'icons');
-            ob_start();
-            include $path;
-            $output = ob_get_clean();
-        }
-        return $output;
+        return $this->renderTemplate(
+            static::PLUGIN_CODE,
+            'icons',
+            [
+                'config' => $config,
+                'result' => $result,
+            ]
+        );
     }
 
     private function getData($config) {
-
         $db = $this->getDatabase();
         $query = $db->getQuery(true)
             ->select([
@@ -135,17 +92,6 @@ final class Socialmedia extends CMSPlugin implements SubscriberInterface
         $db->setQuery($query);
         $result = $db->loadObject();
         return $result;
-    }
-
-    private function isGevuld($value) {
-        return $value != null && $value != '';
-    }
-
-    private function getParamIfExists($config, $key) {
-        if (array_key_exists($key, $config)) {
-            return $config[$key];
-        }
-        return null;
     }
 
 }
