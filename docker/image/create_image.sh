@@ -10,12 +10,20 @@ if ! [ -d $SOURCE_DIR ]; then
   exit 1;
 fi
 
-cp ${SOURCE_DIR}/com_kampinfo-3.* ${TARGET_DIR}/com_kampinfo-3.0.0.zip
-cp ${SOURCE_DIR}/com_kampinfoimexport-2.* ${TARGET_DIR}/com_kampinfoimexport-2.0.0.zip
-cp ${SOURCE_DIR}/plg_kampinfo-1.* ${TARGET_DIR}/plg_kampinfo-1.0.zip
-cp ${SOURCE_DIR}/plg_group_cli-1.* ${TARGET_DIR}/plg_group_cli-1.0.zip
+# curl -o /tmp/hit/ext/j4scoutingtc4_111.zip -Sl https://extensions.scouting.nl/templates/j4scoutingtc4_111.zip
 
-docker build \
+cp ${SOURCE_DIR}/com_kampinfo-3.* ${TARGET_DIR}/com_kampinfo-3.x.zip
+cp ${SOURCE_DIR}/lib_kampinfo-1.* ${TARGET_DIR}/lib_kampinfo-1.x.zip
+cp ${SOURCE_DIR}/plg_kampinfo-3.* ${TARGET_DIR}/plg_kampinfo-3.x.zip
+cp ${SOURCE_DIR}/plg_socialmedia-3.* ${TARGET_DIR}/plg_socialmedia-1.x.zip
+cp ${SOURCE_DIR}/plg_task_updateinschrijvingen-1.* ${TARGET_DIR}/plg_task_updateinschrijvingen-1.x.zip
+cp ${SOURCE_DIR}/tpl_kampinfopreview-1.* ${TARGET_DIR}/tpl_kampinfopreview-1.x.zip
+cp ${SOURCE_DIR}/com_kampinfoimexport-2.* ${TARGET_DIR}/com_kampinfoimexport-2.x.zip
+
+cp ${SOURCE_DIR}/plg_group_cli-1.* ${TARGET_DIR}/plg_group_cli-1.x.zip
+cp ${SOURCE_DIR}/plg_kampinfo_cli-1.* ${TARGET_DIR}/plg_kampinfo_cli-1.x.zip
+
+podman build \
   --tag hit_dev_docker_j5 \
   .
 

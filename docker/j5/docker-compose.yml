@@ -1,9 +1,8 @@
 services:
 
   joomla:
-    # image: joomla:5
     image: hit_dev_docker_j5:latest
-    container_name: hit_joomla
+    container_name: hit_joomla_web
     restart: always
     depends_on:
       - db
@@ -20,13 +19,13 @@ services:
       JOOMLA_ADMIN_PASSWORD: adminadminadmin
       JOOMLA_ADMIN_EMAIL: kampinfo@hit.scouting.nl
     volumes:
-      - hit-j5-joomla-data:/var/www/html
+      - hit-joomla-web-data:/var/www/html
       - ./php.ini:/usr/local/etc/php/php.ini
     networks:
       - joomla_network
 
   db:
-    image: mysql:8.1
+    image: docker.io/mysql:8.1
     container_name: hit_joomla_db
     restart: always
     ports:
@@ -37,13 +36,13 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
-      - hit-j5-mysql-data:/var/lib/mysql
+      - hit-joomla-database-data:/var/lib/mysql
     networks:
       - joomla_network
 
 volumes:
-  hit-j5-joomla-data:
-  hit-j5-mysql-data:
+  hit-joomla-web-data:
+  hit-joomla-database-data:
 
 networks:
   joomla_network:

@@ -1,0 +1,13 @@
+TODO: Disable guided tours:
+
+mysql> select * from joom_user_profiles;
++---------+------------------+---------------------+----------+
+| user_id | profile_key      | profile_value       | ordering |
++---------+------------------+---------------------+----------+
+|     157 | guidedtour.id.12 | {"state":"skipped"} |        0 |
++---------+------------------+---------------------+----------+
+
+
+TODO: Disable sending statistics
+joom_extensions mode:3
+

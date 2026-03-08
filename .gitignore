@@ -6,5 +6,7 @@ API-KEY
 **/dist
 **/build.number
 **/venv/
+**/node_modules
+**/coverage
 
 /vendor/
