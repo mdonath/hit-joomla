@@ -6,6 +6,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Projects\HtmlView $this */
+
 $user = $this->getCurrentUser();
 
 $canEdit    = $user->authorise('hitproject.edit', 'com_kampinfo');

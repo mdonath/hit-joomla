@@ -5,11 +5,10 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 \defined('_JEXEC') or die('Restricted access');
 
 use Joomla\Database\ParameterType;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
 
 /**
@@ -34,7 +33,7 @@ class IconField extends FormField {
     /**
      * Method to get the field options.
      *
-     * @return  object[]  The field option objects.
+     * @return  string  The field input markup.
      */
     protected function getInput() {
         $html = [];

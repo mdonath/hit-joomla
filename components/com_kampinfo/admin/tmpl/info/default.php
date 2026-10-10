@@ -4,8 +4,14 @@
 
 use Joomla\CMS\Language\Text;
 
+use HITScoutingNL\Component\KampInfo\Administrator\View\Info\HtmlView;
+use HITScoutingNL\Component\KampInfo\Administrator\Model\InfoModel;
 
-$manifest = $this->getModel()->getItems();
+
+/** @var HtmlView $this */
+/** @var InfoModel $model */
+$model = $this->getModel();
+$manifest = $model->getItems();
 ?>
 
 <div class="row">

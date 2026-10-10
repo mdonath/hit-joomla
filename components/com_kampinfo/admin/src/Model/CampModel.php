@@ -5,16 +5,27 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
+
+use HITScoutingNL\Component\KampInfo\Administrator\Table\CampTable;
 
 
 class CampModel extends AdminModel {
 
+    /**
+     * Method to get the group form.
+     *
+     * @param   array    $data      Data for the form.
+     * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+     *
+     * @return  \Joomla\CMS\Form\Form|bool  A Form object on success, false on failure.
+     */
     public function getForm($data = [], $loadData = true) {
         $form = $this->loadForm(
             'com_kampinfo.camp',
-            'camp',                  // admin/forms/camp.xml
+            'camp', // admin/forms/camp.xml
             [
                 'control' => 'jform',
                 'load_data' => $loadData
@@ -45,7 +56,9 @@ class CampModel extends AdminModel {
     }
 
     protected function loadFormData() {
-        $data = Factory::getApplication()->getUserState('com_kampinfo.edit.camp.data', []);
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+        $data = $app->getUserState('com_kampinfo.edit.camp.data', []);
 
         if (empty($data)) {
             $data = $this->getItem();
@@ -57,6 +70,7 @@ class CampModel extends AdminModel {
     }
 
     public function akkoordPlaats(&$pks, $value = 1) {
+        /** @var CampTable $table */
         $table = $this->getTable();
         $pks   = (array) $pks;
 
@@ -81,6 +95,7 @@ class CampModel extends AdminModel {
     }
 
     public function akkoordKamp(&$pks, $value = 1) {
+        /** @var CampTable $table */
         $table = $this->getTable();
         $pks   = (array) $pks;
 

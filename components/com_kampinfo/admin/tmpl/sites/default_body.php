@@ -3,9 +3,8 @@
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Sites\HtmlView $this */
 $user = $this->getCurrentUser();
 ?>
 

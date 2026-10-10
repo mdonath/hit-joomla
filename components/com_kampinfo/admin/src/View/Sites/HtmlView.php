@@ -4,18 +4,19 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\View\Sites;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
+use HITScoutingNL\Component\KampInfo\Administrator\Model\SitesModel;
 
 
 class HtmlView extends BaseHtmlView {
 
+    /** @var Form */
     public $filterForm;
     public $activeFilters = [];
 
@@ -26,6 +27,7 @@ class HtmlView extends BaseHtmlView {
     private $isEmptyState = false;
 
     function display($tpl = null): void {
+        /** @var SitesModel $model */
         $model               = $this->getModel();
         $this->items         = $model->getItems();
         $this->state         = $model->getState();

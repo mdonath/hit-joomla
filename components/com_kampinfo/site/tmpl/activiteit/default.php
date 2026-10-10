@@ -9,6 +9,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
+/** @var HITScoutingNL\Component\KampInfo\Site\View\Activiteit\HtmlView $this */
+
 // config
 $params = ComponentHelper::getParams('com_kampinfo');
 $inschrijfLink = $params->get('inschrijfLink', 'https://hit.scoutingportal.nl/inschrijven/?event_year=2026&event_slug={0}');

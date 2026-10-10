@@ -4,12 +4,17 @@ namespace HITScoutingNL\Component\KampInfoImExport\Administrator\View\Export;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\JsonView as BaseJsonView;
+
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Model\ExportModel;
+
 
 class JsonView extends BaseJsonView {
 
+    public $items;
+
     function display($tpl = null) {
+        /** @var ExportModel $model */
         $model       = $this->getModel();
         $this->items = $model->getItems();
 
@@ -19,7 +24,7 @@ class JsonView extends BaseJsonView {
 
         parent::display($tpl);
 
-        echo $this->document->getBuffer();
+        echo $this->getDocument()->getBuffer();
     }
 
 }

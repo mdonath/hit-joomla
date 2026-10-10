@@ -4,8 +4,11 @@ namespace HITScoutingNL\Component\KampInfo\Site\View\Activiteit;
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
+use  HITScoutingNL\Component\KampInfo\Site\Model\ActiviteitModel;
 
 
 /**
@@ -13,10 +16,12 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView {
 
-    protected $activiteit;
+    public $activiteit;
 
     public function display($tpl = null) {
+        /** @var ActiviteitModel $model */
         $model      = $this->getModel();
+        /** @var CMSApplication $app */
         $app        = Factory::getApplication();
         $document   = $app->getDocument();
 
@@ -26,7 +31,7 @@ class HtmlView extends BaseHtmlView {
 
         $document->setTitle($this->activiteit->naam . ' in ' . $this->activiteit->plaats);
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
 }

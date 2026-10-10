@@ -6,8 +6,11 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\View\Projects;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+
+use HITScoutingNL\Component\KampInfo\Administrator\Model\ProjectsModel;
 
 
 class HtmlView extends BaseHtmlView {
@@ -15,13 +18,14 @@ class HtmlView extends BaseHtmlView {
     public $filterForm;
     public $activeFilters = [];
 
-    protected $items = [];
-    protected $state;
-    protected $pagination;
+    public $items = [];
+    public $state;
+    public $pagination;
 
     private $isEmptyState = false;
 
     public function display($tpl = null): void {
+        /** @var ProjectsModel $model */
         $model               = $this->getModel();
         $this->items         = $model->getItems();
         $this->state         = $model->getState();

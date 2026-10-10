@@ -4,8 +4,8 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
 \defined('_JEXEC') or die('Restricted access');
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
-use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 
 
 class ActiviteitField extends ListField {

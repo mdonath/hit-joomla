@@ -3,9 +3,14 @@
 defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Language\Text;
+use HITScoutingNL\Component\KampInfoImExport\Administrator\View\Info\HtmlView;
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Model\InfoModel;
 
 
-$manifest = $this->getModel()->getItems();
+/** @var HtmlView $this */
+/** @var InfoModel $model */
+$model = $this->getModel();
+$manifest = $model->getItems();
 ?>
 
 <p>Dit is KampInfo Import &amp; Export, een Joomla component speciaal voor de HIT om KampInfo data te importeren en te exporteren.</p>

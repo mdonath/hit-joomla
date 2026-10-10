@@ -6,6 +6,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
 
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Model\ImportModel;
+
+
 class ImportController extends AdminController {
 
     public function getModel($name = 'Import', $prefix = 'Administrator', $config = array('ignore_request' => true)) {
@@ -16,6 +19,7 @@ class ImportController extends AdminController {
         // Check for request forgeries
         $this->checkToken();
 
+        /** @var ImportModel $model */
         $model = $this->getModel();
         $model->importAlles();
     }
@@ -25,6 +29,7 @@ class ImportController extends AdminController {
         // Check for request forgeries
         $this->checkToken();
 
+        /** @var ImportModel $model */
         $model = $this->getModel();
         $model->importEenPlaats();
     }

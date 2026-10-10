@@ -3,6 +3,9 @@
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Language\Text;
+
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Camps\HtmlView $this */
 ?>
 
 <?php if (empty($this->items)) : ?>

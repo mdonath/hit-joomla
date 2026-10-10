@@ -3,6 +3,8 @@ namespace HITScoutingNL\Library\KampInfo\ImportExport;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\GenericDataException;
+
 use HITScoutingNL\Library\KampInfo\ImportExport\Util;
 
 
@@ -31,7 +33,7 @@ class KampInfoImporter {
         $project = $hit->projecten[0];
         $jaar = $project->jaar;
 
-        $projectTable = $this->getTable('HitProject');
+        $projectTable = Util::getHitTable('HitProject');
         $projectDB = $projectTable->find(['jaar' => $jaar]);
         $projectId = $projectDB[0]->id;
 

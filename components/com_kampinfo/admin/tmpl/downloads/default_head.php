@@ -4,6 +4,8 @@
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Downloads\HtmlView $this */
+
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 ?>

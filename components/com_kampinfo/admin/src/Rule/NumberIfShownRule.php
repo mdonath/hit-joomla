@@ -34,7 +34,7 @@ class NumberIfShownRule extends FormRule {
 
         // MODIFICATION HERE - START
 
-        if ($required && $element['showon'] ?? false) {
+        if ($required && ($element['showon'] ?? false)) {
             $showon = explode(':', $element['showon']);
             $showon_field = $showon[0];
             $showon_value = $showon[1] ?? null;

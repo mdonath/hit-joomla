@@ -6,6 +6,7 @@ namespace HITScoutingNL\Library\KampInfo\Helper;
 
 use DateTimeZone;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Date\Date;
 
 
@@ -59,7 +60,7 @@ abstract class KampInfoHelper {
     /**
      * Geeft alle mogelijke categorieën van icoontjes in een Map met de code als key en de omschrijving als value.
 
-     * @return array{?: string, A: string, B: string, I: string, K: string, O: string, S: string}
+     * @return array
      */
     public static function getHitIconSoortOptions() {
         return [
@@ -99,12 +100,14 @@ abstract class KampInfoHelper {
      * @return mixed
      */
     public static function getTimeZone() {
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
         $timeZone = '';
-        $userTz = Factory::getUser()->getParam('timezone');
+        $userTz = $app->getIdentity()->getParam('timezone');
         if ($userTz) {
             $timeZone = $userTz;
         } else {
-            $timeZone = Factory::getConfig()->get('offset');
+            $timeZone = $app->getConfig()->get('offset');
         }
         return new DateTimeZone($timeZone);
     }
@@ -232,11 +235,11 @@ abstract class KampInfoHelper {
     /**
      * Valt het moment 'nu' in de opgegeven range tussen $beginMoment en $eindMoment.
      * 
-     * @param mixed $beginMoment
-     * @param mixed $eindMoment
+     * @param string $beginMoment
+     * @param string $eindMoment
      * @return bool
      */
-    private static function isActief($beginMoment, $eindMoment) {
+    private static function isActief(string $beginMoment, string$eindMoment) {
         $nu = (new Date('now'))->getTimestamp();
         return  $nu >= ((new Date($beginMoment))->getTimestamp()) 
                 && $nu <= ((new Date($eindMoment))->getTimestamp());

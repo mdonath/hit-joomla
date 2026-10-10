@@ -2,9 +2,8 @@
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-// <?= HTMLHelper::date($item->bijgewerktOp, Text::_('COM_KAMPINFO_DATETIME_FORMAT')); ?>
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Downloads\HtmlView $this */
 ?>
 
 <tbody>

@@ -3,6 +3,7 @@ namespace HITScoutingNL\Library\KampInfo\Icoon;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\Database\DatabaseInterface;
 
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;

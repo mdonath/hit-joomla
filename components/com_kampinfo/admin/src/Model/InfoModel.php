@@ -6,13 +6,15 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
 
-use HITScoutingNL\Library\KampInfo\Metadata\ManifestUtil;
+use HITScoutingNL\Library\KampInfo\Metadata\ManifestTrait;
 
 
 class InfoModel extends ListModel {
 
+    use ManifestTrait;
+
     public function getItems() {
-        return ManifestUtil::getManifest($this->getDatabase(), 'com_kampinfo');
+        return $this->getManifestData('com_kampinfo');
     }
 
 }

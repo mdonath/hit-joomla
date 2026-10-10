@@ -3,6 +3,9 @@
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Language\Text;
+
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Projects\HtmlView $this */
 ?>
 
 <?php if (empty($this->items)) : ?>
@@ -21,4 +24,3 @@ use Joomla\CMS\Language\Text;
     <?php echo $this->pagination->getListFooter(); ?>
 
 <?php endif; ?>
-

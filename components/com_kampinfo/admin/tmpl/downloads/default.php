@@ -5,6 +5,8 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Downloads\HtmlView $this */
 ?>
 
 <form   action="<?= Route::_('index.php?option=com_kampinfo&view=downloads'); ?>"

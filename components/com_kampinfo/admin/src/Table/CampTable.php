@@ -5,7 +5,6 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Table;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Access\Rules;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Asset;
 use Joomla\CMS\Table\Table;

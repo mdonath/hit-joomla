@@ -32,7 +32,7 @@ class ActivityareaField extends FormField {
     /**
      * Method to get the field options.
      *
-     * @return  object[]  The field option objects.
+     * @return  string  The field input markup.
      */
     protected function getInput() {
         $html = [];

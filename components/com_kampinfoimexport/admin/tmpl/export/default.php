@@ -1,10 +1,17 @@
 <?php
 
-use Joomla\CMS\Router\Route;
-
 defined('_JEXEC') or die('Restricted Access');
 
-$projecten = $this->getModel()->getItems();
+use Joomla\CMS\Router\Route;
+
+use HITScoutingNL\Component\KampInfoImExport\Administrator\View\Export\HtmlView;
+use HITScoutingNL\Component\KampInfoImExport\Administrator\Model\ExportModel;
+
+
+/** @var HtmlView $this */
+/** @var ExportModel $model */
+$model = $this->getModel();
+$projecten = $model->getItems();
 
 ?>
 <div class="row">

@@ -4,9 +4,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Field;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Form\Field\RangeField;
 use Joomla\CMS\Form\Field\NumberField;
-use Joomla\CMS\HTML\HTMLHelper;
 
 
 class RangenumField extends NumberField {
@@ -18,6 +16,11 @@ class RangenumField extends NumberField {
      */
     protected $type = 'Rangenum';
 
+    /**
+     * Method to get the field options.
+     *
+     * @return  string  The field input markup.
+     */
     protected function getInput() {
         $attributes = [
             $this->class ? 'class="form-range ' . $this->class . '"' : 'class="form-range"',
@@ -31,7 +34,7 @@ class RangenumField extends NumberField {
         ];
 
         $value = $this->value;
-        $value = is_numeric($value) ? (float) $value : $min;
+        $value = is_numeric($value) ? (float) $value : $this->min;
         $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
 
         $html = [];

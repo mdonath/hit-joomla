@@ -1,0 +1,21 @@
+parameters:
+    level: 2
+    bootstrapFiles:
+        - tests/bootstrap.php
+    paths:
+        - components
+        - libraries/lib_kampinfo/src
+        #- modules
+        #- plugins
+        #- templates
+    #excludePaths:
+    #    - components/com_kampinfo/admin/libraries/fpdf/fpdf.php
+    ignoreErrors:
+    -
+        message: '#Access to protected property [a-zA-Z0-9\\_]+\\HtmlView::\$[a-zA-Z0-9\\_]+.#'
+        paths:
+            - components/*
+    -
+        message: '#Call to protected method [a-zA-Z0-9\\_]+\(\) of class Joomla\\CMS\\MVC\\View\\[a-zA-Z0-9\\_]+View\.#'
+        paths:
+            - components/*

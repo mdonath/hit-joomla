@@ -9,14 +9,17 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+use HITScoutingNL\Component\KampInfo\Administrator\Model\ProjectModel;
+
 
 class HtmlView extends BaseHtmlView {
 
-    protected $form;
-    protected $item;
-    protected $state;
+    public $form;
+    public $item;
+    public $state;
 
     public function display($tpl = null): void {
+        /** @var ProjectModel $model */
         $model       = $this->getModel();
         $this->form  = $model->getForm();
         $this->item  = $model->getItem();

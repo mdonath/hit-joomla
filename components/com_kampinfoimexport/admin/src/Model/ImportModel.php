@@ -5,9 +5,11 @@ namespace HITScoutingNL\Component\KampInfoImExport\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\View\GenericDataException;
 
 use HITScoutingNL\Library\KampInfo\ImportExport\KampInfoImporter;
 
@@ -56,8 +58,8 @@ class ImportModel extends AdminModel {
         $app->enqueueMessage('File: ' . $file);
 
         try {
-            $importer = new KampInfoImporterExporter();
-            $importer->importEnkelePlaats($hit);
+            $importer = new KampInfoImporter();
+            $importer->importEenPlaats($file);
             $app->enqueueMessage('Enkele plaats geïmporteerd');
         } catch (GenericDataException $e) {
             $app->enqueueMessage("Error {$e}");
@@ -65,6 +67,7 @@ class ImportModel extends AdminModel {
     }
 
     private function getUploadedFile($fieldname) {
+        /** @var CMSApplication $app */
         $app = Factory::getApplication();
 
         // Make sure that file uploads are enabled in php
@@ -82,7 +85,7 @@ class ImportModel extends AdminModel {
         }
 
         // Build the appropriate paths
-        $tmp_path = Factory::getConfig()->get('tmp_path');
+        $tmp_path = $app->getConfig()->get('tmp_path');
         $tmp_src = $uploadedFile['tmp_name'];
         $tmp_dest = $tmp_path . '/' . $uploadedFile['name'];
 

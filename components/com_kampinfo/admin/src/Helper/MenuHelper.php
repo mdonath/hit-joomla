@@ -213,8 +213,6 @@ class MenuHelper {
     /**
      * Maakt op basis van de data een menuitem aan onder de parentId op opgegeven position.
      * 
-     * @param int $parentId onder welke parent het komt te hangen
-     * @param string $position op welke plek onder de parent moet het worden toegevoegd ('before', 'after', 'first-child', 'last-child')
      * @param array $data data voor het nieuwe menu
      * @throws \Exception
      * @return Menu

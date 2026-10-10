@@ -7,6 +7,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
 
+/** @var HITScoutingNL\Component\KampInfo\Site\View\Inschrijvingen\HtmlView $this */
 
 // config
 $params = ComponentHelper::getParams('com_kampinfo');

@@ -7,10 +7,13 @@ use HITScoutingNL\Library\KampInfo\Helper\KampInfoHelper;
 \defined('_JEXEC') or die('Restricted Access');
 
 use DateTimeZone;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Uri\Uri;
+
+use  HITScoutingNL\Component\KampInfo\Site\Model\KiezerModel;
 
 
 /**
@@ -21,7 +24,9 @@ class HtmlView extends BaseHtmlView {
     protected $project;
 
     public function display($tpl = null) {
+        /** @var KiezerModel $model */
         $model      = $this->getModel();
+        /** @var CMSApplication $app */
         $app        = Factory::getApplication();
         $document   = $app->getDocument();
         $wa         = $document->getWebAssetManager();
@@ -46,7 +51,7 @@ class HtmlView extends BaseHtmlView {
             ->useScript('com_kampinfo-hitkiezer.scripts')
         ;
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
     private static function convertAllDatesToLocal($project) {

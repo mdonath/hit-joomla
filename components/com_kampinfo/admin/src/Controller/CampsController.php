@@ -10,6 +10,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\Utilities\ArrayHelper;
 
+use HITScoutingNL\Component\KampInfo\Administrator\Model\CampModel;
+
 
 class CampsController extends AdminController {
 
@@ -39,6 +41,7 @@ class CampsController extends AdminController {
             $this->getLogger()->warning(Text::_('Geen plaatsen geselecteerd'), ['category' => 'jerror']);
         } else {
             // Get the model.
+            /** @var CampModel */
             $model = $this->getModel();
 
             // Change the state of the records.
@@ -82,6 +85,7 @@ class CampsController extends AdminController {
             $this->getLogger()->warning(Text::_('Geen kampen geselecteerd'), ['category' => 'jerror']);
         } else {
             // Get the model.
+            /** @var CampModel */
             $model = $this->getModel();
 
             // Change the state of the records.

@@ -4,7 +4,9 @@
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
+
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Camps\HtmlView $this */
 
 $user = $this->getCurrentUser();
 ?>

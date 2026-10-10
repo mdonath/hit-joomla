@@ -4,7 +4,6 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Controller;
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\FormController;
 
 
@@ -15,6 +14,8 @@ class SiteController extends FormController {
         if (!empty($id)) {
             return $this->app->getIdentity()->authorise("hitsite.edit", "com_kampinfo.site." . $id );
         }
+
+        return false;
     }
 
 }

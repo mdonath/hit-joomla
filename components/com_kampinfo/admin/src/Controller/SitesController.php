@@ -9,6 +9,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
 
+use HITScoutingNL\Component\KampInfo\Administrator\Model\SiteModel;
+
 
 class SitesController extends AdminController {
 
@@ -30,6 +32,7 @@ class SitesController extends AdminController {
         if (empty($cids)) {
             $this->app->enqueueMessage('Geen plaatsen geselecteerd', 'warning');
         } else {
+            /** @var SiteModel */
             $model = $this->getModel();
 
             $model->createMenu($cids);
@@ -47,6 +50,7 @@ class SitesController extends AdminController {
         if (empty($cids)) {
             $this->app->enqueueMessage('Geen plaatsen geselecteerd', 'warning');
         } else {
+            /** @var SiteModel */
             $model = $this->getModel();
 
             // Kopieer de kampen van vorig jaar
@@ -74,6 +78,7 @@ class SitesController extends AdminController {
         if (empty($ids)) {
             $this->app->enqueueMessage('Geen plaatsen geselecteerd', 'warning');
         } else {
+            /** @var SiteModel */
             $model = $this->getModel();
 
             // Change the state of the records.

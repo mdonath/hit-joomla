@@ -6,7 +6,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-$wa = $this->document->getWebAssetManager();
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Site\HtmlView $this */
+
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->getDocument()->getWebAssetManager();
 $wa ->useScript('keepalive')
     ->useScript('form.validate');
 

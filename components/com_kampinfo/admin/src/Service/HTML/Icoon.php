@@ -35,6 +35,8 @@ class Icoon {
             $folder = $params->get('iconFolderLarge');
         } else if ($size === 'small') {
             $folder = $params->get('iconFolderSmall');
+        } else {
+            $folder = $params->get('iconFolderSmall');
         }
 
         return HTMLHelper::_('image', $folder .'/'. $naam . $iconExtension, $titel, ['title' => $titel, 'class' => 'hiticon']);

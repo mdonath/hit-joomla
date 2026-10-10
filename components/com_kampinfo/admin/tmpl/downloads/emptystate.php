@@ -4,6 +4,8 @@
 
 use Joomla\CMS\Layout\LayoutHelper;
 
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Downloads\HtmlView $this */
+
 $displayData = [
     'textPrefix' => 'COM_KAMPINFO_DOWNLOADS',
     'formURL'    => 'index.php?option=com_kampinfo',

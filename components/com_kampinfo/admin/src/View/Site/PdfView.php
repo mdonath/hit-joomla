@@ -7,10 +7,12 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\View\Site;
 use Joomla\CMS\MVC\View\AbstractView;
 
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\PDF\PlaatsPdf;
+use HITScoutingNL\Component\KampInfo\Administrator\Model\SiteModel;
 
 class PdfView extends AbstractView {
 
     public function display($tpl = null): void {
+        /** @var SiteModel $model */
         $model      = $this->getModel();
         $plaats     = $model->getItem();
         $kampen     = $model->getKampen($plaats);

@@ -2,8 +2,9 @@
 
 \defined('_JEXEC') or die('Restricted Access');
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Sites\HtmlView $this */
 
 $displayData = [
     'textPrefix' => 'COM_KAMPINFO_HITSITE',

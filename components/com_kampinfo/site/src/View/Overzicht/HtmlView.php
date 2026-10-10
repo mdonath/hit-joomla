@@ -4,8 +4,11 @@ namespace HITScoutingNL\Component\KampInfo\Site\View\Overzicht;
 
 \defined('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
+use  HITScoutingNL\Component\KampInfo\Site\Model\OverzichtModel;
 
 
 /**
@@ -13,10 +16,12 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
  */
 class HtmlView extends BaseHtmlView {
 
-    protected $project;
+    public $project;
 
     public function display($tpl = null) {
+        /** @var OverzichtModel $model */
         $model      = $this->getModel();
+        /** @var CMSApplication $app */
         $app        = Factory::getApplication();
         $document   = $app->getDocument();
 
@@ -24,7 +29,7 @@ class HtmlView extends BaseHtmlView {
 
         $document->getWebAssetManager()->useStyle('com_kampinfo.style.overzicht');
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
 }

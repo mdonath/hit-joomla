@@ -5,13 +5,11 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\CMS\Table\Table;
 use Joomla\Database\ParameterType;
-use Joomla\Registry\Registry;
-
 
 class CampsModel extends ListModel {
 
@@ -43,6 +41,7 @@ class CampsModel extends ListModel {
             // gebruik huidige actieve jaar
             $jaar = ComponentHelper::getParams('com_kampinfo')->get('huidigeActieveJaar');
             // update filter op het scherm
+            /** @var CMSApplication $app */
             $app = Factory::getApplication();
             $app->setUserState($this->context . '.filter.jaar', $jaar);
         }

@@ -5,6 +5,7 @@ namespace HITScoutingNL\Component\KampInfo\Administrator\Model;
 \defined('_JEXEC') or die('Restricted Access');
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -12,10 +13,19 @@ use Joomla\Database\ParameterType;
 
 use HITScoutingNL\Library\KampInfo\Icoon\IcoonUtil;
 use HITScoutingNL\Component\KampInfo\Administrator\Helper\MenuHelper;
+use HITScoutingNL\Component\KampInfo\Administrator\Table\SiteTable;
 
 
 class SiteModel extends AdminModel {
 
+    /**
+     * Method to get the group form.
+     *
+     * @param   array    $data      Data for the form.
+     * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+     *
+     * @return  \Joomla\CMS\Form\Form|bool  A Form object on success, false on failure.
+     */
     public function getForm($data = [], $loadData = true) {
         $form = $this->loadForm(
             'com_kampinfo.site',
@@ -80,7 +90,9 @@ class SiteModel extends AdminModel {
     }
 
     protected function loadFormData() {
-        $data = Factory::getApplication()->getUserState('com_kampinfo.edit.site.data', []);
+        /** @var CMSApplication $app */
+        $app = Factory::getApplication();
+        $data = $app->getUserState('com_kampinfo.edit.site.data', []);
 
         if (empty($data)) {
             $data = $this->getItem();
@@ -97,6 +109,7 @@ class SiteModel extends AdminModel {
     }
 
     public function createMenu(&$pks) {
+        /** @var CMSApplication $app */
         $app = Factory::getApplication();
         $sitemenu = $app->getMenu('site');
         $sitemenu->load();
@@ -112,6 +125,7 @@ class SiteModel extends AdminModel {
 
 
     public function copyKampen(&$pks) {
+        /** @var SiteTable $table */
         $table = $this->getTable();
         $pks   = (array) $pks;
 
@@ -137,6 +151,7 @@ class SiteModel extends AdminModel {
     }
 
     public function akkoordPlaats(&$pks, $value = 1) {
+        /** @var SiteTable $table */
         $table = $this->getTable();
         $pks   = (array) $pks;
 

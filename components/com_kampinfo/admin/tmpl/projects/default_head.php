@@ -5,6 +5,9 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
+
+/** @var HITScoutingNL\Component\KampInfo\Administrator\View\Projects\HtmlView $this */
+
 $listOrder  = $this->escape($this->state->get('list.ordering'));
 $listDirn   = $this->escape($this->state->get('list.direction'));
 ?>
