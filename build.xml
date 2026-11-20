@@ -14,7 +14,7 @@
         <delete dir="${cfg.docker}" />
     </target>
 
-    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_content_kampinfo, plg_content_socialmedia, plg_console_group, plg_console_kampinfo, tpl_kampinfopreview, lib_kampinfo, mod_hitcountdown, plg_task_updateinschrijvingen">
+    <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_content_kampinfo, plg_content_kampinfoaantallen, plg_content_socialmedia, plg_console_group, plg_console_kampinfo, tpl_kampinfopreview, lib_kampinfo, mod_hitcountdown, plg_task_updateinschrijvingen">
         <copy todir="${cfg.docker}" flatten="true" verbose="true">
             <fileset dir=".">
                 <filename name="components/**/dist/*.zip" />
@@ -49,6 +49,13 @@
          <antcall target="buildAndCopy">
             <param name="cmp.dir" value="plugins/content" />
             <param name="cmp.name" value="plg_content_kampinfo" />
+         </antcall>
+    </target>
+
+    <target name="plg_content_kampinfoaantallen" depends="init">
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="plugins/content" />
+            <param name="cmp.name" value="plg_content_kampinfoaantallen" />
          </antcall>
     </target>
 

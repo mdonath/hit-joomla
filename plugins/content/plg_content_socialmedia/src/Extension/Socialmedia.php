@@ -19,7 +19,11 @@ final class Socialmedia extends AbstractContentPlugin {
     }
 
     protected function getAllowedContexts() {
-        return ['com_content.article', 'com_content.featured', 'com_content.category'];
+        return [
+            'com_content.article',
+            'com_content.featured',
+            'com_content.category'
+        ];
     }
 
     /*

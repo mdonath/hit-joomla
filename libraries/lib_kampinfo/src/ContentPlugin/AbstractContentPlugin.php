@@ -46,7 +46,7 @@ abstract class AbstractContentPlugin extends CMSPlugin implements SubscriberInte
         }
 
         $row = $event->getItem();
-        if (!isset($row->id) || !(int) $row->id) {
+        if (!isset($row->text) || !is_string($row->text)) {
             return;
         }
 

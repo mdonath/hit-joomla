@@ -11,13 +11,14 @@ use HITScoutingNL\Component\KampInfo\Administrator\Model\InfoModel;
 /** @var HtmlView $this */
 /** @var InfoModel $model */
 $model = $this->getModel();
-$manifest = $model->getItems();
+$manifest = $model->getItem();
 ?>
 
 <div class="row">
     <div class="col-md-12">
         <div id="j-main-container" class="j-main-container">
-           <p>Dit is KampInfo, een Joomla component speciaal voor de HIT.</p>
+            <h1><?= Text::_($manifest['name']) ?></h1>
+            <p>Dit is KampInfo, een Joomla component speciaal voor de HIT.</p>
 
             <table class="table table-striped">
             <tbody>
@@ -43,6 +44,7 @@ $manifest = $model->getItems();
             <h2>Laatste wijzigingen:</h2>
             <table class="table table-striped">
                 <tr><th>Datum</th><th>Wijzigingen</th></tr>
+                <tr><td>10-10-2026</td><td>Technische aanpassingen, geen functionele wijzigingen, klaar voor HIT 2027</td></tr>
                 <tr><td>Q2-2025</td><td>Herbouw naar Joomla 5</td></tr>
                 <tr><td>Q3-2023</td><td>Herbouw naar Joomla 4</td></tr>
                 <tr><td>17-01-2020</td><td>Link naar HIT Helpdesk formulier gewijzigd</td></tr>
