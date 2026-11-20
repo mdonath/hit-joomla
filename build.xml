@@ -5,9 +5,11 @@
     <description>Ant Build File for KampInfo Joomla! extensions</description>
 
     <property name="cfg.docker" value="docker/j5/work_directory/kampinfo" />
+    <property name="cfg.packages" value="packages/pkg_kampinfo/packages" />
 
     <target name="init">
         <mkdir dir="${cfg.docker}" />
+        <mkdir dir="${cfg.packages}" />
     </target>
 
     <target name="delete_all">
@@ -16,6 +18,9 @@
 
     <target name="copy" depends="delete_all, com_kampinfo, com_kampinfoimexport, plg_content_kampinfo, plg_content_kampinfoaantallen, plg_content_socialmedia, plg_console_group, plg_console_kampinfo, tpl_kampinfopreview, lib_kampinfo, mod_hitcountdown, plg_task_updateinschrijvingen">
         <copy todir="${cfg.docker}" flatten="true" verbose="true">
+            <fileset dir=".">
+                <filename name="libraries/**/dist/*.zip" />
+            </fileset>
             <fileset dir=".">
                 <filename name="components/**/dist/*.zip" />
             </fileset>
@@ -29,6 +34,30 @@
                 <filename name="templates/**/dist/*.zip" />
             </fileset>
         </copy>
+    </target>
+
+    <target name="pkg_kampinfo" depends="lib_kampinfo, com_kampinfo, com_kampinfoimexport, plg_content_kampinfo, plg_content_kampinfoaantallen, plg_content_socialmedia, mod_hitcountdown, plg_task_updateinschrijvingen">
+        <delete dir="${cfg.packages}" />
+        <copy todir="${cfg.packages}" flatten="true" verbose="true">
+            <fileset dir=".">
+                <filename name="libraries/**/dist/*.zip" />
+            </fileset>
+            <fileset dir=".">
+                <filename name="components/**/dist/*.zip" />
+            </fileset>
+            <fileset dir=".">
+                <filename name="plugins/**/dist/*.zip" />
+                <exclude name="plugins/console/**/dist/*.zip" />
+            </fileset>
+            <fileset dir=".">
+                <filename name="modules/**/dist/*.zip" />
+            </fileset>
+            <regexpmapper from="^.*\/([a-z_]+).*\.zip$" to="\1.zip"/>
+        </copy>
+         <antcall target="buildAndCopy">
+            <param name="cmp.dir" value="packages" />
+            <param name="cmp.name" value="pkg_kampinfo" />
+         </antcall>
     </target>
 
     <target name="com_kampinfo" depends="init">

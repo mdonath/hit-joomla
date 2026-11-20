@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+    <name>KampInfo (alles voor prod)</name>
+    <packagename>kampinfo</packagename>
+    <author>Martijn Donath</author>
+    <creationDate>2026-11-20</creationDate>
+    <license>GNU General Public License version 2 or later</license>
+    <version>1.0.0</version>
+    <description>Joomla package met KampInfo voor productie</description>
+
+    <files folder="packages">
+        <file type="library"    id="kampinfo">lib_kampinfo.zip</file>
+
+        <file type="component"  id="com_kampinfo">com_kampinfo.zip</file>
+        <file type="component"  id="com_kampinfoimexport">com_kampinfoimexport.zip</file>
+
+        <file type="plugin"     id="kampinfo"               group="content">plg_content_kampinfo.zip</file>
+        <file type="plugin"     id="socialmedia"            group="content">plg_content_socialmedia.zip</file>
+        <file type="plugin"     id="kampinfoaantallen"      group="content">plg_content_kampinfoaantallen.zip</file>
+
+        <file type="plugin"     id="updateinschrijvingen"   group="task">plg_task_updateinschrijvingen.zip</file>
+
+        <file type="module"     id="mod_hitcountdown"       client="site">mod_hitcountdown.zip</file>
+    </files>
+</extension>
