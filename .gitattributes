@@ -1,0 +1,23 @@
+# Set default behavior to automatically normalize text files to LF in the repo
+* text=auto
+
+# Force LF (Unix) line endings for scripts and web/config files
+*.sh text eol=lf
+*.bash text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+
+# Force CRLF (Windows) line endings for Windows-specific scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Explicitly mark binary files so Git never modifies their bytes
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+
