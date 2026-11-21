@@ -3,6 +3,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
+
 $delim = $this->outputDelimiter($config);
 ?>
 
@@ -11,11 +13,11 @@ $delim = $this->outputDelimiter($config);
 <?php endif; ?>
 
 <?php foreach ($result as $row): ?>
-    <div class='kamp'>
-        <span class='"plaats'><?= $row->plaats ?></span>
+    <div class="kamp ki-kamp--<?= KampInfoUrlHelper::capaciteitClass($row) ?>">
+        <span class="plaats"><?= $row->plaats ?></span>
         <?= $delim ?>
-        <span class='"naam'><?= $this->kampLink($row, $config) ?></span>
+        <span class="naam"><?= $this->kampLink($row, $config) ?></span>
         <?= $delim ?>
-        <span class='leeftijd'><?= "{$row->minl}-{$row->maxl} jaar" ?></span>
+        <span class="leeftijd"><?= "{$row->minl}-{$row->maxl} jaar" ?></span>
     </div>
 <?php endforeach; ?>

@@ -59,6 +59,19 @@ abstract class KampInfoUrlHelper {
         return OutputFilter::stringURLSafe($kamp->naam);
     }
 
+    public static function capaciteitClass($kamp) {
+        if (KampInfoUrlHelper::isVol($kamp)) {
+            return 'vol';
+        }
+
+        $watMaaktHetKampVol = max($kamp->maximumAantalDeelnemers / 10, $kamp->subgroepsamenstellingMinimum);
+        $aantal = $kamp->maximumAantalDeelnemers - $kamp->gereserveerd;
+        if ($watMaaktHetKampVol < $aantal) {
+            return 'open';
+        } 
+        return 'bijna';
+    }
+
     public static function fuzzyIndicatieVol($kamp) {
         if (KampInfoUrlHelper::isVol($kamp)) {
             if (KampInfoUrlHelper::volOfLoterij($kamp) == 'loterij') {

@@ -5,6 +5,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+use HITScoutingNL\Library\KampInfo\Helper\KampInfoUrlHelper;
+
 $delim = $this->outputDelimiter($config);
 ?>
 
@@ -14,17 +16,17 @@ $delim = $this->outputDelimiter($config);
 
 
 <?php foreach ($result as $row): ?>
-    <div class='kamp'>
-        <span class='"naam'><?= $this->kampLink($row, $config) ?></span>
+    <div class="kamp ki-kamp--<?= KampInfoUrlHelper::capaciteitClass($row) ?>">
+        <span class="naam"><?= $this->kampLink($row, $config) ?></span>
         <?= $delim ?>
-        <span class='leeftijd'><?= "{$row->minl}-{$row->maxl} jaar" ?></span>
+        <span class="leeftijd"><?= "{$row->minl}-{$row->maxl} jaar" ?></span>
         <?php if ($this->getParamIfExists($config, 'icons') == '1') : ?>
             <?= $delim ?>
-            <span class='icons'><?= HtmlHelper::_('kamp.icoontjes', $row, 'small') ?></span>
+            <span class="icons"><?= HtmlHelper::_('kamp.icoontjes', $row, 'small') ?></span>
         <?php endif; ?>
         <?php if ($this->getParamIfExists($config, 'hitcourant') == '1') : ?>
             <?= $delim ?>
-            <span class='hitcourant'><?= $row->hitcourant ?></span>
+            <span class="hitcourant"><?= $row->hitcourant ?></span>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
