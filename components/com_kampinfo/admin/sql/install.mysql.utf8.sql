@@ -20,6 +20,11 @@ CREATE TABLE `#__kampinfo_hitproject` (
 ,   `maandag`                               DATETIME
 ,   `thema`                                 VARCHAR(255)
 ,   `ouderkind`                             TEXT
+,   `zichtbaarVanaf`                        DATETIME
+,   `courantOnlineVanaf`                    DATETIME
+,   `courantLink`                           VARCHAR(255)
+,   `courantVoorkant`                       VARCHAR(255)
+,   `tweedeRondeTekst`                      VARCHAR(255)
 
 ,    PRIMARY KEY (`id`)
 );

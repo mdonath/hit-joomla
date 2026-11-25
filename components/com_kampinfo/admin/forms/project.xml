@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form>
+<form
+        addfieldprefix="HITScoutingNL\Component\KampInfo\Administrator\Field"
+>
     <fieldset
             name="algemeen"
             label="Algemeen"
@@ -131,8 +133,7 @@
             name="teksten"
             label="Teksten"
     >
-        <field
-                name="thema"
+        <field  name="thema"
                 type="text"
                 label="Thema"
                 description="Het motto/thema/leus/spreuk op het naambandje"
@@ -146,6 +147,43 @@
                 description="Deze tekst wordt standaard toegevoegd bij alle ouder-kind kampen"
                 required="true"
                 filter="safehtml"
+        />
+    </fieldset>
+    <fieldset
+            name="website"
+            label="Website"
+    >
+        <field  name="zichtbaarVanaf"
+                type="calendar"
+                showtime="true"
+                filter="SERVER_UTC"
+                format="%d-%m-%Y %H:%M"
+                label="Kampen zichtbaar vanaf"
+                description="Vanaf dit moment staan de kampen van dit jaar op de site. Leeg = meteen."
+        />
+        <field  name="courantOnlineVanaf"
+                type="calendar"
+                showtime="true"
+                filter="SERVER_UTC"
+                format="%d-%m-%Y %H:%M"
+                label="Courant online vanaf"
+        />
+        <field  name="courantLink"
+                type="phocadownloadfile"
+                label="Link naar de Courant (pdf)"
+                description="Selecteer het pdf-bestand van de Courant"
+                required="false"
+                default=""
+                filter="string">
+                <option value="">JNONE</option>
+        </field>
+        <field  name="courantVoorkant"
+                type="media"
+                label="Voorkant Courant"
+        />
+        <field  name="tweedeRondeTekst"
+                type="text"
+                label="Tekst 2e ronde (mag leeg)"
         />
     </fieldset>
 

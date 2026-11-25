@@ -52,6 +52,14 @@ $wa ->useScript('keepalive')
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'website', 'Website'); ?>
+        <div class="row">
+            <div class="col-lg-6">
+                <?php echo $this->form->renderFieldset('website'); ?>
+            </div>
+        </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
     </div>
 
